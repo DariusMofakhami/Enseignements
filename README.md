@@ -2,6 +2,12 @@
 
 Planches de TD et corrections, rédigées en [Quarto](https://quarto.org).
 
+## TD n°1 — Optique
+
+- 📄 [Énoncé (PDF)](https://dariusmofakhami.github.io/Enseignements/TD_optique.pdf)
+- ✅ [Corrigé (PDF)](https://dariusmofakhami.github.io/Enseignements/TD_optique_solution.pdf)
+- 🖥️ [Solutions interactives (slides)](https://dariusmofakhami.github.io/Enseignements/TD_optique_solutions_interactives.html)
+
 ## Contenu
 
 - `TD_optique.qmd` — planche de TD (PDF), avec un interrupteur `solution:` dans
@@ -13,11 +19,6 @@ Planches de TD et corrections, rédigées en [Quarto](https://quarto.org).
   paramètres deviennent des curseurs ajustables dans le navigateur.
 - `td-template.tex` — gabarit LaTeX commun (mise en page, en-tête/pied de
   page) utilisé par les rendus PDF.
-
-## Consulter les solutions interactives
-
-Les pages HTML sont publiées via GitHub Pages : voir les réglages du dépôt
-pour le lien exact une fois Pages activé.
 
 ## Compiler soi-même
 
