@@ -36,7 +36,8 @@ def prisme(i1, n, A):
     r2 = A - r1                                              # A = r1 + r2
     s = n * np.sin(np.radians(r2))                           # Descartes en I2
     # si s > 1 : réflexion totale en I2, pas de rayon émergent (i2 = NaN)
-    i2 = np.where(s <= 1, np.degrees(np.arcsin(np.minimum(s, 1))), np.nan)
+    # tolérance 1e-9 : au point limite s peut valoir 1 + epsilon par arrondi flottant
+    i2 = np.where(s <= 1 + 1e-9, np.degrees(np.arcsin(np.clip(s, -1, 1))), np.nan)
     return r1, r2, i2, i1 + i2 - A                           # D = i1 + i2 - A
 ```
 
@@ -60,12 +61,18 @@ table = {c: [] for c in cols}
 limites = {c: [] for c in ["n", "A", "i1_lim", "i_m", "D_m"]}
 for n in n_valeurs:
     for A in A_valeurs:
-        r1, r2, i2, D = prisme(i1, n, A)
-        for c, v in zip(cols, [np.full(i1.shape, n), np.full(i1.shape, A), i1, r1, r2, i2, D]):
-            table[c] += [js(x) for x in v]
         ell = np.degrees(np.arcsin(1 / n))
-        with np.errstate(invalid="ignore"):
-            i1_lim = np.degrees(np.arcsin(n * np.sin(np.radians(A - ell))))  # NaN si A > 2 ell
+        s_lim = n * np.sin(np.radians(A - ell))
+        i1_lim = np.degrees(np.arcsin(np.clip(s_lim, -1, 1))) if s_lim <= 1 else np.nan  # NaN si A > 2 ell
+
+        # on insère i1_lim (pas forcément entier) dans la grille
+        grille = i1.astype(float)
+        if np.isfinite(i1_lim) and 0 < i1_lim < 90:
+            grille = np.unique(np.concatenate([grille, [i1_lim]]))
+
+        r1, r2, i2, D = prisme(grille, n, A)
+        for c, v in zip(cols, [np.full(grille.shape, n), np.full(grille.shape, A), grille, r1, r2, i2, D]):
+            table[c] += [js(x) for x in v]
         i_m = np.degrees(np.arcsin(n * np.sin(np.radians(A / 2)))) if A <= 2 * ell else np.nan
         limites["n"].append(n)
         limites["A"].append(A)
@@ -83,7 +90,10 @@ ojs_define(prisme=table, limites=limites)
 //| output: false
 rows = transpose(prisme)
 curve = rows.filter(d => d.A === A && Math.abs(d.n - n) < 1e-6)
-cur = curve[Math.round(i1)]
+// i1 (curseur) est toujours entier ; curve contient tous les entiers 0..90
+// plus, le cas échéant, le point i1_lim non entier — donc recherche par
+// valeur, pas par indice (l'ajout de ce point décale les indices).
+cur = curve.find(d => d.i1 === i1)
 lim = transpose(limites).find(d => d.A === A && Math.abs(d.n - n) < 1e-6)
 navy = "#0E3A5C"
 blue = "#1274B6"
@@ -212,7 +222,7 @@ diagram = {
           : htl.html`<li>${tex`A \le \ell = ${f(ell)}`} : le rayon ressort pour toute incidence.</li>`,
         htl.html`<li>Minimum de déviation ${tex`D_m = ${f(lim.D_m)}`} pour ${tex`i_1 = i_m = ${f(lim.i_m)}`} : trajet symétrique, ${tex`r_1 = r_2 = A/2`}.</li>`,
         lim.i1_lim > 0
-          ? htl.html`<li>Retour inverse de la lumière : incidence limite et incidence rasante donnent la même déviation, ${tex`D = ${f(curve[90].D)}`}.</li>`
+          ? htl.html`<li>Retour inverse de la lumière : incidence limite et incidence rasante donnent la même déviation, ${tex`D = ${f(curve.find(d => d.i1 === 90).D)}`}.</li>`
           : null
       ];
   return htl.html`<div style="font-size:0.5em;margin-top:1em"><p style="margin:0"><b>À observer :</b></p>
