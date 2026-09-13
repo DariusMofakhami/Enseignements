@@ -25,7 +25,7 @@ Pour compiler avec les solutions :   quarto render TD_optique.qmd --metadata sol
 (ou changer directement "solution: true" dans l'en-tête ci-dessus)
 -->
 
-## Mesure de l'indice du verre d'un prisme
+## Déviation d'un prisme et mesure de l'indice du verre
 
 ```{=latex}
 \noindent
@@ -94,12 +94,11 @@ $$
 n = \frac{\sin\left(\dfrac{A + D_m}{2}\right)}{\sin\left(\dfrac{A}{2}\right)}
 $$
 
+**5.** Que vaut la dérivée $\frac{d\hat{D}}{di_1}$ de l'angle de déviation par rapport à l'angle d'incidence en
+
 ::: {.content-visible when-meta="solution"}
 
-```{=latex}
-\noindent 
-\tdtab \textcolor{tdblue}{\textbf{Solution :}}
-```
+### Solution
 
 **1.** Lois de Descartes :
 
@@ -133,7 +132,7 @@ $$
 
 :::
 
-## II. Fibre optique
+## Fibre optique
 
 **1.** Décrire le phénomène de réflexion totale sur un dioptre séparant les milieux d'indice $n_1$ et $n_2$, où $n_1$ est l'indice du milieu du rayon incident. Quelle inégalité doivent vérifier $n_1$ et $n_2$ ? Définir et exprimer un angle limite.
 
@@ -153,7 +152,7 @@ La lumière arrive dans un cône d'angle au sommet $\theta_0$ (soit $\theta$ pre
 
 ::: {.content-visible when-meta="solution"}
 
-### Solution — II
+### Solution
 
 **1.** Lorsqu'un rayon lumineux passe d'un milieu d'indice $n_1$ vers un milieu d'indice $n_2 < n_1$ (donc du milieu le plus réfringent vers le moins réfringent), il existe un angle d'incidence limite $\ell$ au-delà duquel il n'y a plus de rayon réfracté : toute la lumière est réfléchie (réflexion totale). Il faut $n_1 > n_2$, et l'angle limite vérifie $\sin \ell = n_2/n_1$.
 
@@ -197,7 +196,7 @@ $$
 
 
 
-## III. Microscope
+## Microscope
 
 Soit un objet $AB$ de taille $30\ \mu m$. La résolution de l'œil est $\beta = 1'$ d'angle (avec $60' = 1°$).
 
@@ -221,7 +220,7 @@ Données : $f_1' = 10.0\ \text{cm}$, $f_2' = 4.00\ \text{cm}$, l'objet est plac�
 
 ::: {.content-visible when-meta="solution"}
 
-### Solution — III
+### Solution
 
 **1.** $\beta = 1' = \dfrac{1}{60}° = \dfrac{1}{60}\times\dfrac{\pi}{180}\ \text{rad} \approx 2.91\times10^{-4}\ \text{rad}$.
 
@@ -268,7 +267,7 @@ Comme $\alpha \gg \beta$, l'objet devient parfaitement résolu à travers le mic
 
 
 
-## IV. Détermination d'un indice optique
+## Détermination d'un indice optique
 
 Sur la face horizontale $(D_2)$ d'un parallélépipède de verre, d'indice $n_v$, on dépose une goutte de liquide dont on veut déterminer l'indice $n_g$. La face verticale $(D_1)$ du parallélépipède de verre est éclairée par un faisceau cylindrique de lumière monochromatique sous l'incidence $i$.
 
@@ -280,7 +279,7 @@ Déterminer $n_g$ pour $i_\ell = 48.71°$. On donne $n_v = 1.607$.
 
 ::: {.content-visible when-meta="solution"}
 
-### Solution — IV
+### Solution
 
 Pour que le rayon puisse ressortir rasant côté air par la face $(D_1)$ après avoir traversé le dioptre verre/liquide sans réflexion totale, il faut que le liquide soit **moins réfringent que le verre** : $n_g < n_v$.
 
@@ -317,7 +316,7 @@ $$
 
 
 
-## V. Indice d'un gaz
+## Indice d'un gaz
 
 Une lumière monochromatique avec $\lambda = 0.6\ \mu m$ issue d'une source ponctuelle $S_0$ placée au foyer d'une lentille traverse deux cuves $C_1$ et $C_2$ de longueur $L$, puis deux trous distants de $a$. La cuve $C_1$ contient de l'air d'indice $n_1 = 1.0002926$. La cuve $C_2$ contient initialement de l'air dans les mêmes conditions. On observe sur un écran placé à une distance $D$ des trous.
 
@@ -327,7 +326,7 @@ Une lumière monochromatique avec $\lambda = 0.6\ \mu m$ issue d'une source ponc
 
 ::: {.content-visible when-meta="solution"}
 
-### Solution — V
+### Solution
 
 **1.** Dispositif de type fentes d'Young : la figure observée sur l'écran est un système de franges rectilignes, équidistantes, parallèles aux fentes, d'éclairement variant sinusoïdalement (frange centrale brillante au centre, symétrie du dispositif). L'interfrange est :
 $$
@@ -350,7 +349,7 @@ $$
 
 
 
-## VI. Fentes d'Young
+## Fentes d'Young
 
 Un écran opaque percé de deux fentes d'Young identiques de largeur $b = 17\ \mu m$ et dont les centres sont distants de $a$, est éclairé par une fente source fine placée dans le plan focal objet d'une lentille $L_1$ de focale $f_1' = 20\ \text{cm}$. On observe la figure de diffraction dans le plan focal image d'une lentille convergente $L_2$ de focale $f_2' = 50\ \text{cm}$.
 
@@ -366,7 +365,7 @@ Un écran opaque percé de deux fentes d'Young identiques de largeur $b = 17\ \m
 
 ::: {.content-visible when-meta="solution"}
 
-### Solution — VI
+### Solution
 
 **1.** Les deux rayons interférant en $M(x)$ proviennent des deux fentes $S_1$ et $S_2$ ; après la lentille $L_2$ (qui envoie les rayons parallèles en sortie des fentes vers un point de son plan focal image), la différence de marche s'écrit :
 $$
@@ -412,7 +411,7 @@ Numériquement : $d < 1.6\ \text{mm}$.
 
 
 
-## VII. Réseau de diffraction
+## Réseau de diffraction
 
 On considère un réseau de diffraction par transmission caractérisé par un nombre de traits par unité de longueur : $n = 300\ \text{traits}\cdot\text{mm}^{-1}$. On oriente les angles dans le sens horaire.
 
@@ -426,7 +425,7 @@ On considère un réseau de diffraction par transmission caractérisé par un no
 
 ::: {.content-visible when-meta="solution"}
 
-### Solution — VII
+### Solution
 
 **1.** Pour un réseau de pas $p = 1/n$, la condition d'interférence constructive entre deux traits consécutifs impose une différence de marche $\delta = p(\sin i_k - \sin i_0) = k\lambda$ ($k\in\mathbb{Z}$, convention d'angles orientés dans le sens horaire), soit la **formule des réseaux** :
 $$
@@ -466,7 +465,7 @@ $$
 
 
 
-## VIII. Interféromètre de Michelson
+## Interféromètre de Michelson
 
 On place l'écran à une distance $D = 1.6\ \text{m}$ du miroir $M_2$. On dispose d'une lentille de focale image $f' = 30\ \text{cm}$.
 
@@ -480,7 +479,7 @@ On place l'écran à une distance $D = 1.6\ \text{m}$ du miroir $M_2$. On dispos
 
 ::: {.content-visible when-meta="solution"}
 
-### Solution — VIII
+### Solution
 
 **1.** Le Michelson est réglé en **coin d'air** (lame d'air d'épaisseur variable / miroirs non rigoureusement parallèles, ou plus généralement configuration où les miroirs (ou leur image $M_1'$ par rapport à la séparatrice) ne sont pas confondus). Les miroirs sont éclairés par une source étendue en lumière quasi-parallèle (ou source large), et les franges — localisées sur les miroirs eux-mêmes (ou leur image) — doivent donc être imagées par une lentille sur un écran pour être observées nettement.
 
@@ -506,7 +505,7 @@ soit $|\gamma| = 3$.
 
 
 
-## IX. Mesure de l'épaisseur d'un film alimentaire
+## Mesure de l'épaisseur d'un film alimentaire
 
 On dispose d'un interféromètre de Michelson réglé en configuration lame d'air, éclairé par une source de lumière blanche.
 
@@ -518,7 +517,7 @@ On règle le Michelson au contact optique, puis on insère dans l'un des bras de
 
 ::: {.content-visible when-meta="solution"}
 
-### Solution — IX
+### Solution
 
 **1.** En configuration lame d'air éclairée en lumière blanche, sous incidence quasi-normale et pour de faibles épaisseurs, on observe des **anneaux d'égale inclinaison** (ou, au contact optique avec un léger coin d'air, des franges rectilignes) localisés à l'infini : on les observe donc dans le plan focal d'une lentille de convergence, ou à l'œil accommodé à l'infini.
 
@@ -539,7 +538,7 @@ Application numérique : $e \approx 15.4\ \mu m$.
 
 
 
-## X. Doublet du sodium
+## Doublet du sodium
 
 Dans un premier temps, on considère un interféromètre de Michelson réglé en lame d'air, éclairé par une source de longueur d'onde $\lambda$.
 
@@ -555,7 +554,7 @@ Le Michelson est éclairé par une lampe spectrale présentant un doublet de lon
 
 ::: {.content-visible when-meta="solution"}
 
-### Solution — X
+### Solution
 
 **1.** En configuration lame d'air éclairée par une source ponctuelle (ou étendue) monochromatique, on observe des **anneaux d'égale inclinaison**, localisés à l'infini. La lentille de projection ($f'=60\ \text{cm}$) est donc placée après le Michelson (n'importe où sur le trajet des rayons parallèles émergents), et l'écran est placé dans le plan focal image de la lentille, soit à $60\ \text{cm}$ de celle-ci.
 

@@ -46,13 +46,25 @@ $hypersetup.latex()$
 % pour une identité typographique cohérente (mainfont ne pilote que le \rmfamily).
 \renewcommand{\familydefault}{\sfdefault}
 
-% -- Titres de section colorés (les "## Exercice" du .qmd deviennent \subsection) --
+% -- Titres de section colorés --
+% Pandoc mappe le "##" du .qmd (plus haut niveau de titre utilisé dans le
+% document) sur \section, et "###" sur \subsection.
+% Numérotation forcée à "Ex. N" quel que soit le réglage number-sections du
+% .qmd (secnumdepth=1 : seul \section est numéroté).
+\setcounter{secnumdepth}{1}
+
 \titleformat{\section}
-  {\color{tdnavy}\normalfont\Large\bfseries}{\thesection}{1em}{}
+  {\color{tdnavy}\normalfont\Large\bfseries}{Ex.~\thesection}{1em}{}
+
+% -- Titres "### Solution" : texte "Solution de l'Ex. N" et filet bleu --
+% Le contenu tapé après "### " dans le .qmd est ignoré : le titre affiché est
+% entièrement recalculé à partir du numéro d'exercice courant (\thesection).
 \titleformat{\subsection}
-  {\color{tdnavy}\normalfont\large\bfseries}{\thesubsection}{1em}{}
-\titleformat{\subsubsection}
-  {\color{tdblue}\normalfont\normalsize\bfseries}{\thesubsubsection}{1em}{}
+  {\color{tdblue}\normalfont\normalsize\bfseries}
+  {}{0pt}
+  {\color{tdblue}\rule{\linewidth}{1.2pt}\\[6pt]}
+\let\tdoldsubsection\subsection
+\renewcommand{\subsection}[1]{\tdoldsubsection{Solution de l'Ex.~\thesection}}
 
 % -- En-tête / pied de page --
 \pagestyle{fancy}
