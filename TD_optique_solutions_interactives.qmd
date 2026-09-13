@@ -1,0 +1,262 @@
+---
+title: "Planche d'Optique"
+subtitle: "Solutions interactives"
+author: "Darius Mofakhami"
+format:
+  revealjs:
+    theme: simple
+    slide-number: true
+    width: 1280
+    height: 720
+jupyter: python3
+---
+# Exercice 1 : Mesure de l’indice du verre d’un prisme {background-color="#1b3959"}
+
+## Résultat théorique trouvé
+
+Prisme d'angle $\hat{A}$ et d'indice $n$, plongé dans l'air :
+
+- Descartes en $I_1$ : $\sin i_1 = n \sin r_1$
+- Géométrie : $\hat{A} = r_1 + r_2$
+- Descartes en $I_2$ : $n \sin r_2 = \sin i_2$, possible seulement si $n \sin r_2 \le 1$
+- Déviation totale : $D = i_1 + i_2 - A$
+
+Avec les données de l'énoncé : $A = 60°$, $n = 1.60$.
+
+## Transcription en python
+
+```{python}
+#| echo: true
+import numpy as np
+
+def prisme(i1, n, A):
+    """Trajet dans un prisme d'angle A et d'indice n (angles en degrés)."""
+    i1 = np.asarray(i1, dtype=float)
+    r1 = np.degrees(np.arcsin(np.sin(np.radians(i1)) / n))   # Descartes en I1
+    r2 = A - r1                                              # A = r1 + r2
+    s = n * np.sin(np.radians(r2))                           # Descartes en I2
+    # si s > 1 : réflexion totale en I2, pas de rayon émergent (i2 = NaN)
+    i2 = np.where(s <= 1, np.degrees(np.arcsin(np.minimum(s, 1))), np.nan)
+    return r1, r2, i2, i1 + i2 - A                           # D = i1 + i2 - A
+```
+
+On balaie $i_1$ de 0 à 90°, pour plusieurs verres et plusieurs prismes :
+
+```{python}
+#| echo: true
+i1 = np.arange(0, 91)              # i1 de 0° à 90° par pas de 1°
+n_valeurs = [1.4, 1.5, 1.6, 1.7, 1.8]
+A_valeurs = [40, 50, 60, 70, 80]
+```
+
+```{python}
+#| echo: false
+#| output: false
+def js(v):
+    return round(float(v), 3) if np.isfinite(v) else None
+
+cols = ["n", "A", "i1", "r1", "r2", "i2", "D"]
+table = {c: [] for c in cols}
+limites = {c: [] for c in ["n", "A", "i1_lim", "i_m", "D_m"]}
+for n in n_valeurs:
+    for A in A_valeurs:
+        r1, r2, i2, D = prisme(i1, n, A)
+        for c, v in zip(cols, [np.full(i1.shape, n), np.full(i1.shape, A), i1, r1, r2, i2, D]):
+            table[c] += [js(x) for x in v]
+        ell = np.degrees(np.arcsin(1 / n))
+        with np.errstate(invalid="ignore"):
+            i1_lim = np.degrees(np.arcsin(n * np.sin(np.radians(A - ell))))  # NaN si A > 2 ell
+        i_m = np.degrees(np.arcsin(n * np.sin(np.radians(A / 2)))) if A <= 2 * ell else np.nan
+        limites["n"].append(n)
+        limites["A"].append(A)
+        limites["i1_lim"].append(js(max(i1_lim, 0.0)) if np.isfinite(i1_lim) else None)
+        limites["i_m"].append(js(i_m))
+        limites["D_m"].append(js(2 * i_m - A))
+
+ojs_define(prisme=table, limites=limites)
+```
+
+## Simulation interactive
+
+```{ojs}
+//| echo: false
+//| output: false
+rows = transpose(prisme)
+curve = rows.filter(d => d.A === A && Math.abs(d.n - n) < 1e-6)
+cur = curve[Math.round(i1)]
+lim = transpose(limites).find(d => d.A === A && Math.abs(d.n - n) < 1e-6)
+navy = "#0E3A5C"
+blue = "#1274B6"
+red = "#B03A2E"
+grey = "#8A8A8A"
+```
+
+:::: {.columns}
+
+::: {.column width="50%"}
+```{ojs}
+//| echo: false
+diagram = {
+  const deg = Math.PI / 180;
+  const dir = a => [Math.cos(a * deg), Math.sin(a * deg)];
+  const add = (P, u, t) => [P[0] + t * u[0], P[1] + t * u[1]];
+  const cross = (a, b) => a[0] * b[1] - a[1] * b[0];
+
+  // Prisme isocèle de côté 1, sommet en haut (coordonnées physiques, y vers le haut)
+  const T = [0, Math.cos(A / 2 * deg)];
+  const BL = [-Math.sin(A / 2 * deg), 0], BR = [Math.sin(A / 2 * deg), 0];
+  const edges = [[T, BL], [BL, BR], [BR, T]];
+
+  // Premier bord du prisme atteint depuis P dans la direction d
+  const exit = (P, d) => {
+    let best = null;
+    for (const [U, V] of edges) {
+      const e = [V[0] - U[0], V[1] - U[1]], w = [U[0] - P[0], U[1] - P[1]];
+      const den = cross(d, e);
+      if (Math.abs(den) < 1e-12) continue;
+      const t = cross(w, e) / den, s = cross(w, d) / den;
+      if (t > 1e-9 && s > -1e-9 && s < 1 + 1e-9 && (!best || t < best.t)) best = {t, U, p: add(P, d, t)};
+    }
+    return best;
+  };
+
+  // Directions : normale entrante en I1 à -A/2, normale sortante en I2 à +A/2
+  const I1 = [(T[0] + BL[0]) / 2, (T[1] + BL[1]) / 2];
+  const uIn = dir(-A / 2 + i1);
+  const uGlass = dir(-A / 2 + cur.r1);
+  const hit = exit(I1, uGlass), I2 = hit.p;
+  const onFace2 = hit.U === BR;
+  const emerges = onFace2 && Number.isFinite(cur.i2);
+
+  // Passage en coordonnées SVG (cadre fixe : la figure ne saute pas quand A change)
+  const x0 = -1.25, yTop = 1.15, sc = 200;
+  const W = 2.5 * sc, H = (yTop + 0.55) * sc;
+  const X = p => (p[0] - x0) * sc, Y = p => (yTop - p[1]) * sc;
+  const P = p => `${X(p).toFixed(1)},${Y(p).toFixed(1)}`;
+  const mid = (a, b) => [(a[0] + b[0]) / 2, (a[1] + b[1]) / 2];
+  const ray = (a, b) =>
+    `<polyline points="${[a, mid(a, b), b].map(P).join(" ")}" fill="none" stroke="${navy}" stroke-width="2.5" marker-mid="url(#arrow)"/>`;
+  const dashed = (a, b, color) =>
+    `<line x1="${X(a)}" y1="${Y(a)}" x2="${X(b)}" y2="${Y(b)}" stroke="${color}" stroke-width="1.5" stroke-dasharray="6,4"/>`;
+  const text = (p, s, dx, dy, color = navy) =>
+    `<text x="${X(p) + dx}" y="${Y(p) + dy}" fill="${color}" text-anchor="middle">${s}</text>`;
+
+  const parts = [
+    `<polygon points="${[T, BL, BR].map(P).join(" ")}" fill="${blue}" fill-opacity="0.12" stroke="${navy}" stroke-width="2"/>`,
+    dashed(add(I1, dir(-A / 2), -0.35), add(I1, dir(-A / 2), 0.35), grey),
+    ray(add(I1, uIn, -0.9), I1),
+    ray(I1, I2),
+    text(T, "A", 0, 34),
+    text([0, 0.1], `n = ${n.toFixed(2)}`, 0, 0),
+    text(I1, "I<tspan baseline-shift='sub' font-size='14'>1</tspan>", 4, 28)
+  ];
+
+  if (onFace2) {
+    parts.push(dashed(add(I2, dir(A / 2), -0.35), add(I2, dir(A / 2), 0.35), grey));
+    parts.push(text(I2, "I<tspan baseline-shift='sub' font-size='14'>2</tspan>", -4, 28));
+  }
+
+  if (emerges) {
+    const uOut = dir(A / 2 - cur.i2);
+    parts.push(ray(I2, add(I2, uOut, 0.9)));
+    // Déviation : angle entre le prolongement du rayon incident et le rayon émergent
+    const K = add(I1, uIn, cross([I2[0] - I1[0], I2[1] - I1[1]], uOut) / cross(uIn, uOut));
+    const rArc = 0.2, a = add(K, uIn, rArc), b = add(K, uOut, rArc);
+    parts.push(dashed(I1, add(K, uIn, 0.4), blue));
+    parts.push(dashed(I2, K, blue));
+    parts.push(`<path d="M ${P(a)} A ${rArc * sc} ${rArc * sc} 0 0 1 ${P(b)}" fill="none" stroke="${blue}" stroke-width="2"/>`);
+    parts.push(text(add(K, dir((i1 - cur.i2) / 2), 0.33), "D", 0, 7, blue));
+  } else if (onFace2) {
+    const m = dir(A / 2), k = 2 * (uGlass[0] * m[0] + uGlass[1] * m[1]);
+    const back = exit(I2, [uGlass[0] - k * m[0], uGlass[1] - k * m[1]]);
+    if (back) parts.push(ray(I2, back.p));
+    parts.push(text([0.75, 1.0], "réflexion totale en I₂", 0, 0, red));
+  } else {
+    parts.push(text([0.75, 1.0], "le rayon atteint la base", 0, 0, red));
+  }
+
+  const el = document.createElement("div");
+  el.innerHTML = `<svg viewBox="0 0 ${W} ${H}" width="${W}" height="${H}"
+      style="max-width:100%;height:auto;font-family:sans-serif;font-size:20px">
+    <defs><marker id="arrow" viewBox="0 0 10 10" refX="5" refY="5" markerWidth="6" markerHeight="6" orient="auto">
+      <path d="M0,0 L10,5 L0,10 z" fill="${navy}"/></marker></defs>
+    ${parts.join("\n")}
+  </svg>`;
+  return el;
+}
+```
+
+```{ojs}
+//| echo: false
+{
+  const f = x => x.toFixed(1) + "°";
+  const style = "font-size:0.55em;margin:0";
+  if (Number.isFinite(cur.i2))
+    return htl.html`<p style=${style}>r<sub>1</sub> = ${f(cur.r1)} &nbsp;·&nbsp; r<sub>2</sub> = ${f(cur.r2)} &nbsp;·&nbsp;
+      i<sub>2</sub> = ${f(cur.i2)} &nbsp;·&nbsp; <b>D = ${f(cur.D)}</b></p>`;
+  return htl.html`<p style=${style}>r<sub>1</sub> = ${f(cur.r1)} &nbsp;·&nbsp; r<sub>2</sub> = ${f(cur.r2)} &nbsp;·&nbsp;
+    <span style="color:${red}">pas de rayon émergent</span></p>`;
+}
+```
+
+```{ojs}
+//| echo: false
+{
+  const f = x => x.toFixed(1) + "^\\circ";
+  const ell = Math.asin(1 / n) * 180 / Math.PI;
+  const items = !Number.isFinite(lim.i1_lim)
+    ? [htl.html`<li>${tex`A > 2\ell = ${f(2 * ell)}`} : aucun rayon ne ressort du prisme, quelle que soit l'incidence.</li>`]
+    : [
+        lim.i1_lim > 0
+          ? htl.html`<li>Pour ${tex`i_1 < ${f(lim.i1_lim)}`}, on a ${tex`r_2 > \ell`} : réflexion totale en ${tex`I_2`}.</li>`
+          : htl.html`<li>${tex`A \le \ell = ${f(ell)}`} : le rayon ressort pour toute incidence.</li>`,
+        htl.html`<li>Minimum de déviation ${tex`D_m = ${f(lim.D_m)}`} pour ${tex`i_1 = i_m = ${f(lim.i_m)}`} : trajet symétrique, ${tex`r_1 = r_2 = A/2`}.</li>`,
+        lim.i1_lim > 0
+          ? htl.html`<li>Retour inverse de la lumière : incidence limite et incidence rasante donnent la même déviation, ${tex`D = ${f(curve[90].D)}`}.</li>`
+          : null
+      ];
+  return htl.html`<div style="font-size:0.5em;margin-top:1em"><p style="margin:0"><b>À observer :</b></p>
+    <ul style="display:block;margin:0 0 0 1.2em">${items}</ul></div>`;
+}
+```
+:::
+
+::: {.column width="50%"}
+```{ojs}
+//| echo: false
+viewof i1 = Inputs.range([0, 90], {value: 50, step: 1, label: "i₁ (°)", width: 560})
+viewof n = Inputs.range([1.4, 1.8], {value: 1.6, step: 0.1, label: "n", width: 560})
+viewof A = Inputs.range([40, 80], {value: 60, step: 10, label: "A (°)", width: 560})
+```
+
+```{ojs}
+//| echo: false
+{
+  const emerging = curve.filter(d => Number.isFinite(d.D));
+  const limit = Number.isFinite(lim.i1_lim) ? lim.i1_lim : 90;
+  const hasMin = Number.isFinite(lim.D_m);
+  return Plot.plot({
+    width: 580,
+    height: 320,
+    marginLeft: 60,
+    marginBottom: 45,
+    style: {fontSize: "15px"},
+    x: {label: "i₁ (°)", labelAnchor: "center", labelArrow: "none", domain: [0, 90], grid: true},
+    y: {label: "D (°)", labelAnchor: "center", labelArrow: "none", grid: true, nice: true,
+        domain: emerging.length ? undefined : [0, 90]},
+    marks: [
+      limit > 0 ? Plot.rect([{a: 0, b: limit}], {x1: "a", x2: "b", fill: red, fillOpacity: 0.08}) : null,
+      limit > 0 ? Plot.text([{x: limit / 2, t: "réflexion\ntotale"}], {x: "x", text: "t", frameAnchor: "middle", fill: red}) : null,
+      hasMin ? Plot.ruleY([lim.D_m], {stroke: blue, strokeDasharray: "5,4"}) : null,
+      hasMin ? Plot.text([{x: lim.i_m > 45 ? 2 : 88, y: lim.D_m, t: `D_m = ${lim.D_m.toFixed(1)}°`}],
+                         {x: "x", y: "y", text: "t", dy: -10, textAnchor: lim.i_m > 45 ? "start" : "end", fill: blue}) : null,
+      Plot.line(emerging, {x: "i1", y: "D", stroke: navy, strokeWidth: 2.5}),
+      Plot.ruleX([i1], {stroke: grey}),
+      Plot.dot(Number.isFinite(cur.D) ? [cur] : [], {x: "i1", y: "D", r: 7, fill: blue, stroke: "white"})
+    ]
+  });
+}
+```
+:::
+
+::::

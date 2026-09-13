@@ -1,0 +1,147 @@
+% Options for packages loaded elsewhere
+$passoptions.latex()$
+%
+$doc-class.tex()$
+
+$if(beamerarticle)$
+\usepackage{beamerarticle} % needs to be loaded first
+$endif$
+\usepackage{xcolor}
+$if(geometry)$
+\usepackage[$for(geometry)$$geometry$$sep$,$endfor$]{geometry}
+$endif$
+\usepackage{amsmath,amssymb}
+$--
+$-- section numbering
+$--
+$if(numbersections)$
+\setcounter{secnumdepth}{$if(secnumdepth)$$secnumdepth$$else$5$endif$}
+$else$
+\setcounter{secnumdepth}{-\maxdimen} % remove section numbering
+$endif$
+$fonts.latex()$
+$font-settings.latex()$
+$common.latex()$
+$after-header-includes.latex()$
+$hypersetup.latex()$
+
+% ---------------------------------------------------------------------------
+% Gabarit TD — identité visuelle inspirée du logo (hexagone bleu nuit / chevron
+% bleu azur). Deux couleurs, quelques filets, un en-tête et un pied de page
+% qui rappellent la forme, sans reproduire le logo lui-même.
+% ---------------------------------------------------------------------------
+\definecolor{tdnavy}{HTML}{0E3A5C}
+\definecolor{tdblue}{HTML}{1274B6}
+
+\usepackage{graphicx}
+\usepackage{enumitem}
+\usepackage{titlesec}
+\usepackage{fancyhdr}
+\usepackage{lastpage}
+\usepackage{tikz}
+\usetikzlibrary{angles, quotes, calc, arrows.meta}
+
+% -- Police du corps de texte alignée sur celle du titre (Latin Modern Sans) --
+% Le titre est composé en \sffamily ; on l'applique aussi au corps du document
+% pour une identité typographique cohérente (mainfont ne pilote que le \rmfamily).
+\renewcommand{\familydefault}{\sfdefault}
+
+% -- Titres de section colorés (les "## Exercice" du .qmd deviennent \subsection) --
+\titleformat{\section}
+  {\color{tdnavy}\normalfont\Large\bfseries}{\thesection}{1em}{}
+\titleformat{\subsection}
+  {\color{tdnavy}\normalfont\large\bfseries}{\thesubsection}{1em}{}
+\titleformat{\subsubsection}
+  {\color{tdblue}\normalfont\normalsize\bfseries}{\thesubsubsection}{1em}{}
+
+% -- En-tête / pied de page --
+\pagestyle{fancy}
+\fancyhf{}
+\renewcommand{\headrulewidth}{0pt}
+\renewcommand{\footrulewidth}{0pt}
+
+% petit fanion bleu évoquant le chevron du logo, accolé à un texte
+\newcommand{\tdtab}{\textcolor{tdblue}{\rule[0pt]{4pt}{11pt}}\,}
+
+% -- Contenu de l'en-tête et du pied de page --
+% Par défaut, l'en-tête reprend le titre/sous-titre ; on peut le personnaliser
+% indépendamment via les champs de métadonnées header-left / header-right /
+% footer-left / footer-right dans l'en-tête YAML du .qmd, par exemple :
+%   header-left: "..."
+%   header-right: "PC — IPESUP"
+%   footer-left: "Année 2026-2027"
+%   footer-right: "À rendre le ..."
+% (le numéro de page reste toujours affiché à droite du pied de page)
+\newcommand{\tdheaderleft}{$if(header-left)$$header-left$$else$$title$$endif$}
+\newcommand{\tdheaderright}{$if(header-right)$$header-right$$else$$subtitle$$endif$}
+\newcommand{\tdfooterleft}{$if(footer-left)$$footer-left$$else$$subtitle$$endif$}
+\newcommand{\tdfooterright}{$if(footer-right)$$footer-right$\ ---\ $endif$\thepage/\pageref{LastPage}}
+
+\fancyhead[L]{\color{tdnavy}\sffamily\bfseries \tdheaderleft}
+\fancyhead[R]{\color{tdnavy}\sffamily \tdheaderright}
+\renewcommand{\headrule}{\color{tdnavy}\hrule height 1pt width \headwidth}
+
+\fancyfoot[L]{\color{tdnavy}\sffamily\footnotesize \tdfooterleft}
+\fancyfoot[R]{\color{tdnavy}\sffamily\footnotesize \tdfooterright}
+\renewcommand{\footrule}{\color{tdnavy}\hrule height 1pt width \headwidth}
+
+\fancypagestyle{plain}{%
+  \fancyhf{}
+  \fancyhead[L]{\color{tdnavy}\sffamily\bfseries \tdheaderleft}
+  \fancyhead[R]{\color{tdnavy}\sffamily \tdheaderright}
+  \fancyfoot[L]{\color{tdnavy}\sffamily\footnotesize \tdfooterleft}
+  \fancyfoot[R]{\color{tdnavy}\sffamily\footnotesize \tdfooterright}
+  \renewcommand{\headrule}{\color{tdnavy}\hrule height 1pt width \headwidth}
+  \renewcommand{\footrule}{\color{tdnavy}\hrule height 1pt width \headwidth}
+}
+
+\author{$for(authors)$$it.name.literal$$sep$ \and $endfor$}
+\date{$date$}
+
+\begin{document}
+
+% -- Bandeau de titre compact (au lieu d'une page de titre classique) --
+\begingroup
+\begin{center}
+% \color{tdnavy}\rule[4pt]{0.32\linewidth}{1.6pt}\\
+% \vspace{6pt}
+{\sffamily\bfseries\huge \color{tdnavy} $title$}\\[4pt]
+$if(subtitle)$
+{\sffamily\Large \color{tdblue} $subtitle$}\\[6pt]
+$endif$
+\color{tdnavy}\rule[4pt]{0.32\linewidth}{1.6pt}
+\end{center}
+\vspace{6pt}
+\endgroup
+
+$for(include-before)$
+$include-before$
+
+$endfor$
+$toc.tex()$
+
+$if(linestretch)$
+\setstretch{$linestretch$}
+$endif$
+$if(has-frontmatter)$
+\mainmatter
+$endif$
+$body$
+
+$before-bib.tex()$
+
+$if(has-frontmatter)$
+\backmatter
+$endif$
+$if(nocite-ids)$
+\nocite{$for(nocite-ids)$$it$$sep$, $endfor$}
+$endif$
+$biblio.tex()$
+
+$for(include-after)$
+$include-after$
+
+$endfor$
+$after-body.tex()$
+
+\end{document}

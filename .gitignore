@@ -1,0 +1,6 @@
+.DS_Store
+.quarto/
+.claude/
+Ressources_TD/
+~$*.docx
+*.docx#
