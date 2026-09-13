@@ -94,7 +94,7 @@ $$
 n = \frac{\sin\left(\dfrac{A + D_m}{2}\right)}{\sin\left(\dfrac{A}{2}\right)}
 $$
 
-**5.** Que vaut la dérivée $\frac{d\hat{D}}{di_1}$ de l'angle de déviation par rapport à l'angle d'incidence en
+<!-- **5.** Que vaut la dérivée $\frac{d\hat{D}}{di_1}$ de l'angle de déviation par rapport à l'angle d'incidence en -->
 
 ::: {.content-visible when-meta="solution"}
 
@@ -133,12 +133,63 @@ $$
 :::
 
 ## Fibre optique
-
 **1.** Décrire le phénomène de réflexion totale sur un dioptre séparant les milieux d'indice $n_1$ et $n_2$, où $n_1$ est l'indice du milieu du rayon incident. Quelle inégalité doivent vérifier $n_1$ et $n_2$ ? Définir et exprimer un angle limite.
 
 **2.** Une fibre optique est composée d'un milieu d'indice $n_1$ (cœur de la fibre) inséré dans un milieu d'indice $n_2$ (gaine de la fibre). L'ensemble est placé dans l'air d'indice $1$.
 
 Données : $n_1 = 1.5227$, $n_2 = 1.5200$, $L = 10\ \text{cm}$.
+
+```{=latex}
+\begin{center}
+\begin{tikzpicture}[scale=1.3, >=Stealth, every node/.style={font=\small}]
+  % Géométrie : bande inférieure (gaine n2), coeur (n1), bande supérieure (gaine n2)
+  \pgfmathsetmacro{\W}{9}       % largeur totale
+  \pgfmathsetmacro{\HB}{1.3}    % hauteur gaine du bas
+  \pgfmathsetmacro{\HC}{1.3}    % hauteur du coeur
+  \pgfmathsetmacro{\HT}{1.0}    % hauteur gaine du haut
+  \pgfmathsetmacro{\axisY}{\HB+\HC/2}      % ordonnée de l'axe (centre du coeur)
+  \pgfmathsetmacro{\thA}{32}    % theta : incidence externe (air -> coeur)
+  \pgfmathsetmacro{\rA}{18}     % r : réfraction interne, par rapport à l'axe
+  \pgfmathsetmacro{\dxP}{\HC/2/tan(\rA)}   % abscisse du point de réflexion P1
+  \coordinate (P0) at (0,\axisY);
+  \coordinate (P1) at (\dxP,\HB+\HC);
+
+  % Rectangle de la fibre et bandes internes (coeur / gaines)
+  \draw[thick] (0,0) rectangle (\W,\HB+\HC+\HT);
+  \draw[thick] (0,\HB) -- (\W,\HB);
+  \draw[thick] (0,\HB+\HC) -- (\W,\HB+\HC);
+
+  % Axe optique en pointillés, et normale verticale au point de réflexion
+  \draw[dashed] (0,\axisY) -- (\dxP+1.2,\axisY);
+  \draw[dashed] (P1) ++(0,-0.35) -- ++(0,0.95);
+
+  % Rayon incident (air), rayon réfracté dans le coeur, rayon réfléchi
+  \draw[thick,->] ($(P0)+({180+\thA}:2.1)$) -- (P0);
+  \draw[thick,->] (P0) -- (P1);
+  \draw[thick,->] (P1) -- ($(P1)+({-\rA}:2.1)$);
+
+  % Arcs et labels des angles
+  \draw (P0) ++(180:0.55) arc[start angle=180, end angle={180+\thA}, radius=0.55];
+  \node at ($(P0)+({180+\thA/2}:0.95)$) {$\theta$};
+  \draw (P0) ++(0:0.45) arc[start angle=0, end angle=\rA, radius=0.45];
+  \node at ($(P0)+({\rA/2}:0.75)$) {$r$};
+  \draw (P1) ++(\rA:0.5) arc[start angle=\rA, end angle=90, radius=0.5];
+  \node at ($(P1)+({(90+\rA)/2}:0.8)$) {$i$};
+
+  % Indices optiques
+  \node[draw, circle, inner sep=1.5pt] at (-1.1,\axisY) {$1$};
+  \node[draw, circle, inner sep=1.5pt] at (\W/2,\HB+\HC/2-0.35) {$n_1$};
+  \node[draw, circle, inner sep=1.5pt] at (\W/2,\HB+\HC+\HT/2) {$n_2$};
+  \node[draw, circle, inner sep=1.5pt] at (\W/2,\HB/2) {$n_2$};
+
+  % Cote de longueur L
+  \draw (0,-0.15) -- (0,-0.55);
+  \draw (\W,-0.15) -- (\W,-0.55);
+  \draw[<->] (0,-0.4) -- (\W,-0.4);
+  \node at (\W/2,-0.75) {$L$};
+\end{tikzpicture}
+\end{center}
+```
 
 **2.a.** Tracer le trajet du rayon lumineux qui sort rasant au dioptre séparant les milieux d'indices $n_1$ et $n_2$. Exprimer les angles limites correspondants $i_\ell$ et $\theta_\ell$. Montrer que $\theta_\ell = \arcsin\!\left(\sqrt{n_1^2 - n_2^2}\right)$.
 
@@ -190,8 +241,6 @@ $$
 f < \frac{1}{\Delta t}
 $$
 
-**Réponses :** $t_{min} = \dfrac{n_1 L}{c}$, $t_{max} = \dfrac{n_1 L}{c\sqrt{1-\sin^2\theta_0/n_1^2}}$.
-
 :::
 
 
@@ -240,7 +289,6 @@ Grandissement : $\gamma_1 = \dfrac{\overline{O_1A_1}}{\overline{O_1A}} = \dfrac{
 
 $A_1B_1 = \gamma_1 \times AB = -2.5 \times 30\ \mu m = -75\ \mu m$ (image renversée, taille $75\ \mu m$).
 
-**Réponses :** $\overline{O_1A_1} = 35\ \text{cm}$, $|A_1B_1| = 75\ \mu m$.
 
 **4.** Pour qu'un œil normal (emmétrope) observe sans accommoder, l'image finale $A_2B_2$ doit se former à l'infini : $L_2$ doit donc recevoir $A_1B_1$ dans son plan focal objet, c'est-à-dire que $A_1$ est confondu avec le foyer objet $F_2$ de $L_2$.
 
@@ -250,7 +298,6 @@ $$
 
 Attention aux signes : $\overline{A_1O_2} = -\overline{O_2F_2} = -(-f_2') = f_2'$ donc $\overline{O_1O_2} = 35 + 4 = 39\ \text{cm}$.
 
-**Réponse :** $\overline{O_1O_2} = 39\ \text{cm}$.
 
 **5.** L'image finale étant à l'infini, l'angle sous lequel elle est vue est donné par $\alpha = \dfrac{A_1B_1}{f_2'}$ (angle du rayon issu de $A_1B_1$ passant par le centre optique $O_2$, ou de façon équivalente $\tan\alpha \approx \alpha = |A_1B_1|/f_2'$) :
 $$
@@ -259,7 +306,6 @@ $$
 
 Comme $\alpha \gg \beta$, l'objet devient parfaitement résolu à travers le microscope : c'est tout l'intérêt de l'instrument (grossissement).
 
-**Réponses :** $\alpha_{ref} = 2.91\times10^{-4}\ \text{rad}$ (objet non visible à l'œil nu), $\overline{O_1A_1} = 35\ \text{cm}$, $A_1B_1 = 75\ \mu m$, $\overline{O_1O_2} = 39\ \text{cm}$, $\alpha = 1.9\times10^{-3}\ \text{rad}$.
 
 **6.** *(Construction graphique — voir tracé au tableau : rayon parallèle à l'axe passant par $F_2'$ après $L_1$/$L_2$, rayon passant par le centre optique, rayon passant par le foyer objet.)*
 
@@ -310,7 +356,6 @@ $$
 n_g \approx 1.42
 $$
 
-**Réponse :** $n_g = 1.42$.
 
 :::
 
@@ -343,7 +388,6 @@ $$
 
 *(Valeur arrondie fournie par l'énoncé : $n_2-n_1 = 4.6\times10^{-3}$ — à vérifier selon les valeurs exactes de $p$, $\lambda$, $L$ utilisées.)*
 
-**Réponses :** $i = 0.6\ \text{mm}$ ; $n_2 - n_1 = 4.6\times10^{-3}$.
 
 :::
 
@@ -405,7 +449,6 @@ d < \frac{\lambda f_1'}{2a}
 $$
 Numériquement : $d < 1.6\ \text{mm}$.
 
-**Réponses :** $i = \dfrac{\lambda f_2'}{a}$ ; $\lambda = 542\ \text{nm}$ ; $a = 68\ \mu m$ ; $\dfrac{A'B'}{AB} = \dfrac{f_2'}{f_1'}$, $h = 0.5\ \text{cm}$ ; $d < 1.6\ \text{mm}$.
 
 :::
 
@@ -438,7 +481,6 @@ $\sin i_1 = -0.342 + 0.1767 = -0.1653 \Rightarrow i_1 \approx -9.5°$
 
 Déviation $D = i_1 - i_0 = -9.5° - (-20°) = 10.5°$
 
-**Réponse :** $D = 10.5°$.
 
 **3.** Les ordres observables sont ceux pour lesquels $|\sin i_k| \le 1$, soit $|\sin i_0 + kn\lambda| \le 1$. Avec $i_0 = 30°$, $n\lambda = 300\times10^3\times632\times10^{-9} = 0.1896$ :
 
@@ -459,7 +501,6 @@ $$
 D_m = 41.4°
 $$
 
-**Réponses :** $D = 10.5°$ ; $10$ ordres observables ; $D_m = 41.4°$.
 
 :::
 
@@ -497,7 +538,6 @@ $$
 $$
 soit $|\gamma| = 3$.
 
-**Réponses :** $x = 0.4\ \text{m}$, grandissement $= 3$.
 
 **3.** L'angle pertinent est l'angle d'inclinaison $\theta$ du coin d'air (angle entre les deux miroirs, ou leurs images), qui détermine l'écartement angulaire des franges rectilignes observées ; il est relié au pas des franges $i_x$ observées sur l'écran par $\theta = \dfrac{\lambda}{2\,i_x/\gamma}$ (l'angle du coin d'air se retrouve, après grandissement par la lentille, dans l'interfrange mesuré sur l'écran).
 
@@ -532,7 +572,6 @@ $$
 
 Application numérique : $e \approx 15.4\ \mu m$.
 
-**Réponse :** $e = 15.4\ \mu m$.
 
 :::
 
@@ -568,7 +607,6 @@ Numériquement : $\theta_4 = \sqrt{\dfrac{8\times632\times10^{-9}}{356\times10^{
 
 *(L'énoncé donne $r_4 = 4.8\ \text{cm}$ ; l'écart provient de la définition exacte retenue pour l'ordre au centre et l'anneau considéré — à ajuster selon la convention du cours.)*
 
-**Réponse :** $r_4 = 4.8\ \text{cm}$.
 
 **3.** Pour de petits déplacements (quelques secondes, soit un déplacement de miroir de quelques $\mu m$), les deux composantes du doublet restent quasiment en phase : l'battement dû à l'écart $\Delta\lambda = \lambda_1-\lambda_2$ (très fin) n'est pas encore perceptible sur une échelle de temps aussi courte, et l'éclairement oscille simplement à la fréquence associée à $\lambda_m = (\lambda_1+\lambda_2)/2$ :
 $$
@@ -593,6 +631,5 @@ $$
 \Delta\lambda = \frac{(594\times10^{-9})^2}{2\times1.65\times10^{-6}\times180} \approx 6.3\times10^{-10}\ \text{m}
 $$
 
-**Réponses :** $\lambda_m = 594\ \text{nm}$ ; $\Delta\lambda = 6.3\times10^{-10}\ \text{m}$ (soit $\approx 0.63\ \text{nm}$, cohérent avec le doublet du sodium $589.0/589.6\ \text{nm}$).
 
 :::

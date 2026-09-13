@@ -54,7 +54,7 @@ $hypersetup.latex()$
 \setcounter{secnumdepth}{1}
 
 \titleformat{\section}
-  {\color{tdnavy}\normalfont\Large\bfseries}{Ex.~\thesection}{1em}{}
+  {\color{tdnavy}\normalfont\Large\bfseries}{Exercice \thesection : }{0.5em}{}
 
 % -- Titres "### Solution" : texte "Solution de l'Ex. N" et filet bleu --
 % Le contenu tapé après "### " dans le .qmd est ignoré : le titre affiché est
@@ -62,9 +62,9 @@ $hypersetup.latex()$
 \titleformat{\subsection}
   {\color{tdblue}\normalfont\normalsize\bfseries}
   {}{0pt}
-  {\color{tdblue}\rule{\linewidth}{1.2pt}\\[6pt]}
+  {\color{tdblue}\rule{0.3\linewidth}{1.2pt}\\[6pt]}
 \let\tdoldsubsection\subsection
-\renewcommand{\subsection}[1]{\tdoldsubsection{Solution de l'Ex.~\thesection}}
+\renewcommand{\subsection}[1]{\tdoldsubsection{\tdtab~Solution de l'exercice~\thesection~ :}}
 
 % -- En-tête / pied de page --
 \pagestyle{fancy}
@@ -73,7 +73,7 @@ $hypersetup.latex()$
 \renewcommand{\footrulewidth}{0pt}
 
 % petit fanion bleu évoquant le chevron du logo, accolé à un texte
-\newcommand{\tdtab}{\textcolor{tdblue}{\rule[0pt]{4pt}{11pt}}\,}
+\newcommand{\tdtab}{\textcolor{tdblue}{\rule[-1.5pt]{4pt}{11pt}}\,}
 
 % -- Contenu de l'en-tête et du pied de page --
 % Par défaut, l'en-tête reprend le titre/sous-titre ; on peut le personnaliser
@@ -89,7 +89,7 @@ $hypersetup.latex()$
 \newcommand{\tdfooterleft}{$if(footer-left)$$footer-left$$else$$subtitle$$endif$}
 \newcommand{\tdfooterright}{$if(footer-right)$$footer-right$\ ---\ $endif$\thepage/\pageref{LastPage}}
 
-\fancyhead[L]{\color{tdnavy}\sffamily\bfseries \tdheaderleft}
+\fancyhead[L]{\color{tdnavy}\sffamily \tdheaderleft}
 \fancyhead[R]{\color{tdnavy}\sffamily \tdheaderright}
 \renewcommand{\headrule}{\color{tdnavy}\hrule height 1pt width \headwidth}
 
