@@ -1,0 +1,434 @@
+---
+title: "Planche de colle n°1 — Optique"
+subtitle: "Diviseurs de front d'onde"
+solution: false
+header-left: "Colle IPESUP 2026-2027"
+header-right: "Optique (PC-MP)"
+footer-left: "D. Mofakhami"
+footer-right: ""
+format:
+  pdf:
+    documentclass: article
+    template: ../../TD/td-template.tex
+    geometry: margin=2.5cm,headheight=28pt
+    fontsize: 11pt
+    number-sections: true
+    toc: false
+mainfont: "Latin Modern Roman"
+---
+
+<!--
+Pour compiler l'énoncé seul :        quarto render Colle_optique_1.qmd
+Pour compiler avec les solutions :   quarto render Colle_optique_1.qmd --metadata solution:true
+(ou ../../TD/render_td.sh Colle_optique_1.qmd --solution pour obtenir Colle_optique_1_solution.pdf)
+-->
+
+## Trous d'Young et largeur de la source
+
+On considère deux trous $T_1$ et $T_2$ identiques, distants de $a$. Les distances $D$ et $d$ sont très grandes devant $a$. L'indice de l'air vaut $1$. La source de lumière, de longueur d'onde dans le vide $\lambda_0$, est placée en $S$ tel que $ST_1 = ST_2$.
+
+**1.** Comment s'appelle le dispositif ?
+
+**2.** Démontrer la formule de Fresnel.
+
+**3.** Déterminer l'intensité vibratoire en un point $M$ de l'écran repéré par son abscisse $x$ et son ordonnée $y$. On suppose que $x \ll D$ et $y \ll D$. Que vaut l'interfrange ?
+
+**4.** On tient compte de la largeur $b$ de la source $S$. Pour quelle valeur de $b$ observe-t-on le premier brouillage de la figure d'interférences ?
+
+**5.** Est-ce contraignant en séance de travaux pratiques ? Proposer une application numérique.
+
+```{=latex}
+\begin{center}
+\begin{tikzpicture}[scale=0.9, >=Stealth, every node/.style={font=\small}]
+  \coordinate (S)  at (0,0);
+  \coordinate (T1) at (2.4,1.0);
+  \coordinate (T2) at (2.4,-1.0);
+  \coordinate (O)  at (9,0);
+  \coordinate (M)  at (9,1.8);
+
+  % Écran opaque percé des trous T1 et T2
+  \draw[thick] (2.4,2.1)   -- (2.4,1.12);
+  \draw[thick] (2.4,0.88)  -- (2.4,-0.88);
+  \draw[thick] (2.4,-1.12) -- (2.4,-2.1);
+
+  % Écran d'observation (axe x) et axe optique (axe z)
+  \draw[thick,->] (9,-1.9) -- (9,2.7) node[above] {$x$};
+  \draw[dashed,->] (S) -- (10.1,0) node[right] {$z$};
+
+  % Rayons S -> T1 -> M et S -> T2 -> M
+  \draw (S) -- (T1) -- (M);
+  \draw (S) -- (T2) -- (M);
+
+  \foreach \P in {S,T1,T2,O,M} \fill (\P) circle (1.5pt);
+  \node[below left]  at (S)  {$S$};
+  \node[above left]  at (T1) {$T_1$};
+  \node[below left]  at (T2) {$T_2$};
+  \node[above right] at (O)  {$O$};
+  \node[right]       at (M)  {$M$};
+
+  % Axe y sortant du plan de la figure
+  \draw (8.55,-0.4) circle (0.1);
+  \fill (8.55,-0.4) circle (0.025);
+  \node[left] at (8.43,-0.45) {$y$};
+
+  % Cotes d et D
+  \draw[<->] (0,-2.5)   -- node[below] {$d$} (2.4,-2.5);
+  \draw[<->] (2.4,-2.5) -- node[below] {$D$} (9,-2.5);
+\end{tikzpicture}
+\end{center}
+```
+
+::: {.content-visible when-meta="solution"}
+
+### Solution
+
+**1.** Il s'agit du dispositif des **trous d'Young**. C'est un interféromètre à **division du front d'onde** : les deux ondes qui interfèrent en $M$ proviennent de deux portions distinctes du front d'onde issu de $S$, diffractées par $T_1$ et $T_2$.
+
+**2.** En $M$, les deux ondes, de même pulsation $\omega$ et issues du même point source (donc cohérentes), s'écrivent $s_1 = S_1\cos(\omega t - \varphi_1)$ et $s_2 = S_2\cos(\omega t - \varphi_2)$. L'intensité est proportionnelle à la moyenne temporelle du carré du signal total :
+$$
+I = K\langle (s_1+s_2)^2\rangle = K\langle s_1^2\rangle + K\langle s_2^2\rangle + 2K\langle s_1 s_2\rangle
+$$
+Avec $I_j = K\langle s_j^2\rangle = \dfrac{K S_j^2}{2}$ et $\langle\cos(\omega t-\varphi_1)\cos(\omega t-\varphi_2)\rangle = \dfrac{1}{2}\cos(\varphi_2-\varphi_1)$ (le terme en $\cos(2\omega t-\varphi_1-\varphi_2)$ est de moyenne nulle), on obtient la **formule de Fresnel** :
+$$
+I = I_1 + I_2 + 2\sqrt{I_1I_2}\,\cos\Delta\varphi, \qquad \Delta\varphi = \varphi_2-\varphi_1 = \frac{2\pi\,\delta}{\lambda_0}
+$$
+où $\delta = (SM)_2 - (SM)_1$ est la différence de marche. Hypothèses : même pulsation, déphasage indépendant du temps (ondes issues du même point source, $\delta$ inférieure à la longueur de cohérence), même polarisation (modèle scalaire). Pour deux trous identiques, $I_1 = I_2 = I_0$ et $I = 2I_0\left(1+\cos\dfrac{2\pi\delta}{\lambda_0}\right)$.
+
+**3.** On repère $T_1$ et $T_2$ par leurs abscisses $+a/2$ et $-a/2$ dans le plan des trous, situé à la distance $D$ de l'écran. Pour $M(x,y)$, avec $a, |x|, |y| \ll D$ :
+$$
+T_1M = \sqrt{D^2 + \left(x-\tfrac{a}{2}\right)^2 + y^2} \approx D + \frac{\left(x-\frac{a}{2}\right)^2 + y^2}{2D}, \qquad T_2M \approx D + \frac{\left(x+\frac{a}{2}\right)^2 + y^2}{2D}
+$$
+Comme $ST_1 = ST_2$ :
+$$
+\delta = T_2M - T_1M \approx \frac{\left(x+\frac{a}{2}\right)^2 - \left(x-\frac{a}{2}\right)^2}{2D} = \frac{a\,x}{D}
+\qquad\Rightarrow\qquad
+I(x,y) = 2I_0\left[1 + \cos\left(\frac{2\pi a x}{\lambda_0 D}\right)\right]
+$$
+L'intensité ne dépend pas de $y$ : les franges sont **rectilignes, parallèles à $Oy$** (perpendiculaires à $T_1T_2$) et équidistantes, avec une frange centrale brillante en $x = 0$ ($\delta = 0$). L'interfrange vaut :
+$$
+i = \frac{\lambda_0 D}{a}
+$$
+
+**4.** On modélise la source par une fente de largeur $b$ selon $Ox$, centrée sur l'axe, à la distance $d$ des trous. Ses différents points sont mutuellement incohérents. Pour un point $P$ d'abscisse $X$, le calcul de la question **3.** appliqué côté source donne $PT_2 - PT_1 \approx \dfrac{aX}{d}$, d'où :
+$$
+\delta(X) = \frac{aX}{d} + \frac{ax}{D}
+$$
+Chaque point source crée le même système de franges, translaté de $-XD/d$. Les intensités s'ajoutent (incohérence) ; en répartissant uniformément l'intensité sur la largeur $b$ :
+$$
+I(x) = \int_{-b/2}^{b/2} \frac{2I_0}{b}\left[1+\cos\left(\frac{2\pi a}{\lambda_0}\left(\frac{X}{d}+\frac{x}{D}\right)\right)\right]\mathrm{d}X
+= 2I_0\left[1 + \mathrm{sinc}\left(\frac{\pi a b}{\lambda_0 d}\right)\cos\left(\frac{2\pi a x}{\lambda_0 D}\right)\right]
+$$
+avec $\mathrm{sinc}\,u = \dfrac{\sin u}{u}$. Le contraste $C = \left|\mathrm{sinc}\left(\dfrac{\pi a b}{\lambda_0 d}\right)\right|$ s'annule pour la première fois quand $\dfrac{\pi a b}{\lambda_0 d} = \pi$, soit :
+$$
+b_1 = \frac{\lambda_0 d}{a}
+$$
+On retrouve ce résultat avec le critère semi-quantitatif $|p(X = b/2) - p(X = 0)| < \dfrac{1}{2}$, soit $\dfrac{ab}{2\lambda_0 d} < \dfrac{1}{2}$. En revanche, une extension de la source selon $Oy$ ne modifie pas $\delta$ au premier ordre : une fente source parallèle à $Oy$ ne brouille pas les franges.
+
+**5.** Application numérique avec des valeurs typiques de TP : $\lambda_0 = 0{,}6\ \mu\text{m}$, $a = 0{,}2\ \text{mm}$, $d = 20\ \text{cm}$ et $D = 1\ \text{m}$ :
+$$
+b_1 = \frac{0{,}6\times10^{-6}\times0{,}20}{0{,}2\times10^{-3}} = 0{,}6\ \text{mm}, \qquad i = \frac{\lambda_0 D}{a} = 3\ \text{mm}
+$$
+Pour garder un bon contraste, il faut donc une source nettement plus fine que $0{,}6\ \text{mm}$ (en pratique une fente d'environ $0{,}1\ \text{mm}$). C'est contraignant : la source est alors très peu lumineuse. En TP, on contourne cette difficulté en utilisant une fente source fine **parallèle** aux trous (ou aux fentes d'Young), qui laisse passer plus de lumière sans brouiller les franges, ou bien un laser, spatialement cohérent.
+
+:::
+
+
+
+## Étoiles à l'infini et trous d'Young
+
+On considère deux étoiles à l'infini faisant entre elles un angle $\alpha$ très faible, de même intensité vibratoire, de même longueur d'onde $\lambda_0$. La lumière est diffractée par deux trous $T_1$ et $T_2$ identiques, distants de $a$ et très fins. Un écran est placé dans le plan focal d'une lentille convergente de distance focale $f'$ située après les trous d'Young.
+
+**1.** Déterminer l'intensité vibratoire due à chaque étoile en un point $M$ de l'écran repéré par son abscisse $x$.
+
+**2.** On augmente progressivement $a$ en partant de $a = 0$. Déterminer pour quelle valeur de $a$ on observe le premier brouillage de la figure d'interférences.
+
+```{=latex}
+\begin{center}
+\begin{tikzpicture}[scale=0.9, >=Stealth, every node/.style={font=\small}]
+  \pgfmathsetmacro{\al}{12}   % alpha/2 (exagéré pour la lisibilité)
+  \coordinate (T1) at (0,1.2);
+  \coordinate (T2) at (0,-1.2);
+
+  % Axe optique
+  \draw[->] (-4.4,0) -- (5.8,0) node[below] {$z$};
+
+  % Plan opaque percé des trous T1 et T2
+  \draw[line width=1.5pt] (0,2.2)   -- (0,1.32);
+  \draw[line width=1.5pt] (0,1.08)  -- (0,-1.08);
+  \draw[line width=1.5pt] (0,-1.32) -- (0,-2.2);
+  \fill (T1) circle (1.5pt);
+  \fill (T2) circle (1.5pt);
+  \node[above right] at (T1) {$T_1$};
+  \node[below right] at (T2) {$T_2$};
+
+  % Rayons issus des étoiles A (d'en haut) et B (d'en bas), sur chaque trou
+  \foreach \T in {T1,T2} {
+    \draw[->] ($(\T)+(180-\al:3.2)$) -- ($(\T)+(180-\al:1.5)$);
+    \draw     ($(\T)+(180-\al:1.5)$) -- (\T);
+    \draw[->] ($(\T)+(180+\al:3.2)$) -- ($(\T)+(180+\al:1.5)$);
+    \draw     ($(\T)+(180+\al:1.5)$) -- (\T);
+    \node[left] at ($(\T)+(180-\al:3.2)$) {étoile A};
+    \node[left] at ($(\T)+(180+\al:3.2)$) {étoile B};
+  }
+
+  % Angle alpha/2 entre l'étoile A et l'axe, au niveau de T1
+  \draw[dashed] (T1) -- ++(-2.6,0);
+  \draw[->] ($(T1)+(180:2.2)$) arc[start angle=180, end angle={180-\al}, radius=2.2];
+  \node[left] at ($(T1)+(180-\al/2:2.25)$) {$\alpha/2$};
+
+  % Lentille L et écran
+  \draw[<->] (2.6,-2.3) -- (2.6,2.3) node[above] {$L$};
+  \draw (5,-2.3) -- (5,2.3);
+  \fill (5,0.8) circle (1.5pt) node[right] {$M$};
+
+  % Cote f'
+  \draw[<->] (2.6,-2.7) -- node[below] {$f'$} (5,-2.7);
+
+  % Repère (x, y, z)
+  \draw[->] (6.4,1.8) -- ++(0,0.6) node[left] {$x$};
+  \draw[->] (6.4,1.8) -- ++(0.6,0) node[right] {$z$};
+  \draw (6.4,1.8) circle (0.09);
+  \fill (6.4,1.8) circle (0.02);
+  \node[below left] at (6.4,1.75) {$y$};
+\end{tikzpicture}
+\end{center}
+```
+
+::: {.content-visible when-meta="solution"}
+
+### Solution
+
+**1.** On repère $T_1$ et $T_2$ par leurs abscisses $+a/2$ et $-a/2$. Chaque étoile, à l'infini, envoie une onde plane. D'après la figure, l'étoile A arrive avec une direction $\vec{u}_A$ inclinée de $\alpha/2$ vers le bas par rapport à $Oz$, et l'étoile B avec une direction $\vec{u}_B$ inclinée de $\alpha/2$ vers le haut.
+
+*Avant les trous.* Pour une onde plane de direction $\vec{u}$, les surfaces d'onde sont des plans orthogonaux à $\vec{u}$. Le chemin optique jusqu'à un point $T$ vaut donc, à une constante près, $\vec{u}\cdot\overrightarrow{OT}$. D'où :
+$$
+(AT_2) - (AT_1) = \vec{u}_A\cdot\overrightarrow{T_1T_2} = \left(-\sin\frac{\alpha}{2}\right)(-a) \approx \frac{a\alpha}{2},
+\qquad
+(BT_2) - (BT_1) \approx -\frac{a\alpha}{2}
+$$
+
+*Après les trous.* Les rayons qui convergent en $M(x)$, dans le plan focal image de $L$, sont parallèles avant la lentille et inclinés de $\theta \approx x/f'$ sur l'axe. D'après le théorème de Malus (et le stigmatisme de la lentille), $(T_2M) - (T_1M) = a\sin\theta \approx \dfrac{ax}{f'}$.
+
+Les différences de marche $\delta = (SM)_2 - (SM)_1$ pour chaque étoile sont donc :
+$$
+\delta_A = \frac{ax}{f'} + \frac{a\alpha}{2}, \qquad \delta_B = \frac{ax}{f'} - \frac{a\alpha}{2}
+$$
+Pour deux trous identiques, en notant $I_0$ l'intensité due à un trou seul, la formule de Fresnel donne :
+$$
+I_A(x) = 2I_0\left[1 + \cos\left(\frac{2\pi a}{\lambda_0}\left(\frac{x}{f'} + \frac{\alpha}{2}\right)\right)\right],
+\qquad
+I_B(x) = 2I_0\left[1 + \cos\left(\frac{2\pi a}{\lambda_0}\left(\frac{x}{f'} - \frac{\alpha}{2}\right)\right)\right]
+$$
+Les deux systèmes de franges ont le même interfrange $i = \dfrac{\lambda_0 f'}{a}$. Ils sont translatés l'un par rapport à l'autre : la frange d'ordre $0$ de A est en $x = -\alpha f'/2$ et celle de B en $x = +\alpha f'/2$. Ce sont les images géométriques des étoiles par la lentille.
+
+**2.** Les deux étoiles sont incohérentes entre elles : les intensités s'ajoutent. Avec $\cos p + \cos q = 2\cos\dfrac{p+q}{2}\cos\dfrac{p-q}{2}$ :
+$$
+I(x) = I_A + I_B = 4I_0\left[1 + \cos\left(\frac{\pi a\alpha}{\lambda_0}\right)\cos\left(\frac{2\pi a x}{\lambda_0 f'}\right)\right]
+$$
+Le contraste vaut $C(a) = \left|\cos\left(\dfrac{\pi a\alpha}{\lambda_0}\right)\right|$. Il vaut $1$ pour $a \to 0$ (franges très larges mais bien contrastées), puis diminue quand $a$ augmente. Il s'annule pour la première fois quand $\dfrac{\pi a\alpha}{\lambda_0} = \dfrac{\pi}{2}$ :
+$$
+a_1 = \frac{\lambda_0}{2\alpha}
+$$
+Interprétation : les deux systèmes de franges sont en anticoïncidence, car leur écart d'ordre vaut $\Delta p = \dfrac{\delta_A - \delta_B}{\lambda_0} = \dfrac{a\alpha}{\lambda_0} = \dfrac{1}{2}$.
+
+C'est le principe de l'**interféromètre stellaire** de Fizeau–Michelson : mesurer $a_1$ donne l'écart angulaire $\alpha = \lambda_0/(2a_1)$. Par exemple, pour $\alpha = 1'' \approx 4{,}8\times10^{-6}\ \text{rad}$ et $\lambda_0 = 0{,}55\ \mu\text{m}$, on trouve $a_1 \approx 5{,}7\ \text{cm}$.
+
+:::
+
+
+
+## Trous d'Young et lame
+
+On réalise l'expérience des trous d'Young sur la figure ci-dessous, d'abord sans la lame d'indice $n$. $T_1$ et $T_2$ sont deux trous identiques. La source $S$ monochromatique (de longueur d'onde dans le vide $\lambda_0 = 0{,}60\ \mu\text{m}$) coïncide avec le foyer objet de la lentille $L_1$. L'écran d'observation se trouve dans le plan focal image de la lentille $L_2$ de distance focale $f' = 1{,}0\ \text{m}$. La distance $T_1T_2$ est égale à $a = 1{,}0\ \text{mm}$. L'indice de l'air vaut $1{,}0$. On repère un point $M$ de l'écran par son abscisse $x$.
+
+**1.** Calculer l'interfrange $i$ sur l'écran.
+
+**2.** Sur le trajet des rayons issus de $T_1$, on place une lame d'épaisseur $e$ et d'indice $n$. Décrire la nouvelle figure d'interférences pour $n = 1{,}5$ et $e = 10\ \mu\text{m}$.
+
+```{=latex}
+\begin{center}
+\begin{tikzpicture}[scale=0.9, >=Stealth, every node/.style={font=\small}]
+  % Axe optique
+  \draw (-0.4,0) -- (9.8,0);
+
+  % Source S au foyer objet de L1
+  \fill (0,0) circle (1.5pt);
+  \node[above] at (0,0) {$S$};
+
+  % Lentille L1
+  \draw[<->] (1.8,-1.8) -- (1.8,1.8) node[above] {$L_1$};
+  \node[below right] at (1.8,0) {$O_1$};
+
+  % Plan des trous T1 et T2
+  \draw[thick] (4.4,1.8)   -- (4.4,1.12);
+  \draw[thick] (4.4,0.88)  -- (4.4,-0.88);
+  \draw[thick] (4.4,-1.12) -- (4.4,-1.8);
+  \node[left]        at (4.4,1.0)  {$T_1$};
+  \node[left]        at (4.4,-1.0) {$T_2$};
+  \node[below right] at (4.4,0)    {$O$};
+
+  % Lame d'indice n devant T1
+  \filldraw[fill=gray!40] (4.75,0.72) rectangle (4.9,1.28);
+  \node[above] at (4.825,1.28) {$n$};
+
+  % Lentille L2
+  \draw[<->] (7,-1.8) -- (7,1.8) node[above] {$L_2$};
+  \node[below right] at (7,0) {$O_2$};
+
+  % Écran (axe x)
+  \draw[->] (9.4,-1.8) -- (9.4,2.1) node[right] {$x$};
+  \fill (9.4,0.6) circle (1.5pt) node[right] {$M$};
+
+  % Cotes f'1 et f'
+  \draw[<->] (0,-2.3)   -- node[below] {$f_1'$} (1.8,-2.3);
+  \draw[<->] (7,-2.3)   -- node[below] {$f'$}   (9.4,-2.3);
+\end{tikzpicture}
+\end{center}
+```
+
+::: {.content-visible when-meta="solution"}
+
+### Solution
+
+**1.** La source est au foyer objet de $L_1$ : une onde plane parallèle à l'axe éclaire $T_1$ et $T_2$, qui vibrent donc en phase. L'écran est dans le plan focal image de $L_2$ : comme dans l'exercice 2 (avec $\alpha = 0$), et en plaçant $T_1$ en $x = +a/2$, on a :
+$$
+\delta = (SM)_2 - (SM)_1 = \frac{a x}{f'}
+\qquad\Rightarrow\qquad
+I(x) = 2I_0\left[1 + \cos\left(\frac{2\pi a x}{\lambda_0 f'}\right)\right]
+$$
+Les franges sont rectilignes, parallèles à $Oy$, et l'interfrange vaut :
+$$
+i = \frac{\lambda_0 f'}{a} = \frac{0{,}60\times10^{-6}\times1{,}0}{1{,}0\times10^{-3}} = 6{,}0\times10^{-4}\ \text{m} = 0{,}60\ \text{mm}
+$$
+
+**2.** Les rayons issus de $T_1$ traversent la lame sous incidence quasi normale. Sur l'épaisseur $e$, le chemin optique passe de $e$ (air) à $ne$ : $(SM)_1$ augmente de $(n-1)e$. D'où :
+$$
+\delta' = \frac{ax}{f'} - (n-1)e
+\qquad\Rightarrow\qquad
+I(x) = 2I_0\left[1 + \cos\left(\frac{2\pi}{\lambda_0}\left(\frac{ax}{f'} - (n-1)e\right)\right)\right]
+$$
+La nouvelle figure est la même que la précédente, mais translatée :
+
+- mêmes franges rectilignes, parallèles à $Oy$, avec le **même interfrange** $i = 0{,}60\ \text{mm}$ ;
+- la frange d'ordre $0$ ($\delta' = 0$) se trouve maintenant en
+$$
+x_0 = \frac{(n-1)\,e\,f'}{a} = \frac{0{,}5\times10\times10^{-6}\times1{,}0}{1{,}0\times10^{-3}} = 5{,}0\ \text{mm}
+$$
+Le système de franges s'est donc translaté de $5{,}0\ \text{mm}$ vers les $x > 0$, **du côté du trou $T_1$ couvert par la lame** ;
+- ce décalage correspond à $\dfrac{x_0}{i} = \dfrac{(n-1)e}{\lambda_0} \approx 8{,}3$ franges ;
+- en $O$ ($x = 0$), l'ordre vaut $p = -8{,}33$ : $I(O) = 2I_0\left[1 + \cos(2\pi\times8{,}33)\right] = 2I_0\left(1 + \cos\dfrac{2\pi}{3}\right) = I_0$. C'est le quart de l'intensité maximale $4I_0$ : le point $O$ n'est ni sur une frange brillante ni sur une frange sombre.
+
+*Remarque :* en lumière monochromatique, la figure translatée est indiscernable de la figure initiale. On ne met en évidence la translation qu'en suivant le défilement des franges pendant l'introduction de la lame, ou en lumière blanche, où la frange centrale achromatique est repérable. On a ici négligé la dispersion du verre.
+
+:::
+
+
+
+## Vélocimétrie laser
+
+La mesure de la vitesse d'un fluide peut s'effectuer directement par voie optique sans perturbation de l'écoulement. La recombinaison de deux faisceaux 1 et 2 issus d'un même laser crée une figure d'interférences dans un petit domaine de l'espace centré sur le point de mesure. Chaque faisceau est une onde plane progressive monochromatique de longueur d'onde dans le vide $\lambda_0 = 0{,}52\ \mu\text{m}$. Lorsqu'une particule solide de petites dimensions, entraînée par l'écoulement, traverse cette figure, elle rencontre des zones alternativement brillantes et sombres. Éclairée par cette figure d'interférences, elle réémet par diffusion une onde lumineuse reçue par un détecteur. La différence de marche est nulle au point $O$. L'indice du milieu vaut $n = 1{,}33$.
+
+**1.** Calculer la largeur de la figure d'interférences en $z = 0$ sachant que $2D = 1{,}0\ \text{mm}$ et $\theta = 5{,}0°$.
+
+**2.** Calculer par deux méthodes l'ordre d'interférences en un point $M$ de la figure d'interférences. En déduire l'interfrange $i$ et le nombre de franges brillantes contenues dans le champ d'interférences en $z = 0$.
+
+**3.** Une particule se déplace à la vitesse $\vec{v} = v\,\vec{u}_x$. Calculer la vitesse du fluide sachant que la période du signal reçu par le détecteur vaut $50\ \text{ms}$.
+
+```{=latex}
+\begin{center}
+\begin{tikzpicture}[scale=1.0, >=Stealth, every node/.style={font=\small}]
+  \pgfmathsetmacro{\tht}{20}           % theta (exagéré pour la lisibilité)
+  \pgfmathsetmacro{\DD}{0.8}           % demi-largeur D des faisceaux
+  \pgfmathsetmacro{\ct}{cos(\tht)}
+  \pgfmathsetmacro{\st}{sin(\tht)}
+  \pgfmathsetmacro{\L}{4.2}            % demi-longueur des bords tracés
+
+  % Axes
+  \draw[->] (-4.4,0) -- (4.7,0) node[right] {$z$};
+  \draw[->] (0,-2.5) -- (0,2.7)  node[right] {$x$};
+  \fill (0,0) circle (1.5pt);
+  \node[above left] at (0,0) {$O$};
+
+  % Bords des faisceaux : faisceau 1 selon (cos t, sin t), faisceau 2 selon (cos t, -sin t)
+  \foreach \sg in {-1,1} {
+    \draw ({-\L*\ct - \sg*\DD*\st},{-\L*\st + \sg*\DD*\ct}) -- ({\L*\ct - \sg*\DD*\st},{\L*\st + \sg*\DD*\ct});
+    \draw ({-\L*\ct + \sg*\DD*\st},{\L*\st + \sg*\DD*\ct})  -- ({\L*\ct + \sg*\DD*\st},{-\L*\st + \sg*\DD*\ct});
+  }
+
+  % Largeurs 2D des faisceaux
+  \draw[<->] ({-3*\ct + \DD*\st},{-3*\st - \DD*\ct}) -- node[left] {$2D$} ({-3*\ct - \DD*\st},{-3*\st + \DD*\ct});
+  \draw[<->] ({-3*\ct - \DD*\st},{3*\st - \DD*\ct})  -- node[left] {$2D$} ({-3*\ct + \DD*\st},{3*\st + \DD*\ct});
+
+  % Vecteurs d'onde
+  \draw[->, thick] ({-2*\ct},{-2*\st}) -- ++(\tht:0.7)  node[midway, below right] {$\vec{k}_1$};
+  \draw[->, thick] ({-2*\ct},{2*\st})  -- ++(-\tht:0.7) node[midway, above right] {$\vec{k}_2$};
+
+  % Angles theta au sommet droit du losange d'interférences
+  \coordinate (R) at ({\DD/\st},0);
+  \draw (R) ++(0:0.9) arc[start angle=0, end angle=\tht,  radius=0.9];
+  \draw (R) ++(0:0.9) arc[start angle=0, end angle=-\tht, radius=0.9];
+  \node at ($(R)+(\tht/2:1.2)$)  {$\theta$};
+  \node at ($(R)+(-\tht/2:1.2)$) {$\theta$};
+
+  % Légendes des faisceaux
+  \node[left] at ({-\L*\ct - 0.2},{\L*\st})  {faisceau 2};
+  \node[left] at ({-\L*\ct - 0.2},{-\L*\st}) {faisceau 1};
+\end{tikzpicture}
+\end{center}
+```
+
+::: {.content-visible when-meta="solution"}
+
+### Solution
+
+**1.** Chaque faisceau occupe une bande de largeur $2D$, perpendiculaire à sa direction de propagation et centrée sur la droite passant par $O$. Un point $M(x, z)$ appartient au faisceau 1 si sa distance à l'axe de ce faisceau est inférieure à $D$, c'est-à-dire si $|x\cos\theta - z\sin\theta| \leqslant D$. En $z = 0$, cela donne $|x| \leqslant D/\cos\theta$, et on obtient la même condition pour le faisceau 2. Le champ d'interférences (zone de recouvrement en losange) a donc pour largeur, en $z = 0$ :
+$$
+\ell = \frac{2D}{\cos\theta} = \frac{1{,}0\ \text{mm}}{\cos 5{,}0°} \approx 1{,}0\ \text{mm}
+$$
+
+**2.** *Méthode 1 : vecteurs d'onde.* Dans le milieu d'indice $n$ :
+$$
+\vec{k}_1 = \frac{2\pi n}{\lambda_0}\left(\cos\theta\,\vec{u}_z + \sin\theta\,\vec{u}_x\right),
+\qquad
+\vec{k}_2 = \frac{2\pi n}{\lambda_0}\left(\cos\theta\,\vec{u}_z - \sin\theta\,\vec{u}_x\right)
+$$
+Les deux ondes sont en phase en $O$ (différence de marche nulle). En $M$, leur déphasage vaut donc :
+$$
+\Delta\varphi(M) = \left(\vec{k}_1 - \vec{k}_2\right)\cdot\overrightarrow{OM} = \frac{4\pi n\sin\theta}{\lambda_0}\,x
+\qquad\Rightarrow\qquad
+p(M) = \frac{\Delta\varphi}{2\pi} = \frac{2n\,x\sin\theta}{\lambda_0}
+$$
+
+*Méthode 2 : chemins optiques (théorème de Malus).* Pour le faisceau $j$, les surfaces d'onde sont des plans orthogonaux à $\vec{u}_j = \vec{k}_j/\|\vec{k}_j\|$. On a donc $(SM)_j = (SO)_j + n\,\vec{u}_j\cdot\overrightarrow{OM}$. Comme $(SO)_1 = (SO)_2$ :
+$$
+\delta(M) = (SM)_1 - (SM)_2 = n\left(\vec{u}_1 - \vec{u}_2\right)\cdot\overrightarrow{OM} = 2n\,x\sin\theta
+\qquad\Rightarrow\qquad
+p(M) = \frac{\delta}{\lambda_0} = \frac{2n\,x\sin\theta}{\lambda_0}
+$$
+
+L'ordre ne dépend que de $x$ : les franges sont des **plans $x = \text{cste}$**, parallèles au plan $(Oy, Oz)$, donc parallèles à la bissectrice $Oz$ des deux faisceaux. L'interfrange ($\Delta p = 1$) vaut :
+$$
+i = \frac{\lambda_0}{2n\sin\theta} = \frac{0{,}52\times10^{-6}}{2\times1{,}33\times\sin 5{,}0°} \approx 2{,}2\ \mu\text{m}
+$$
+En $z = 0$, les franges brillantes correspondent aux ordres entiers $p$ tels que $|x| \leqslant D/\cos\theta$, soit :
+$$
+|p| \leqslant p_{\max} = \frac{2nD\tan\theta}{\lambda_0} = \frac{2\times1{,}33\times0{,}50\times10^{-3}\times\tan 5{,}0°}{0{,}52\times10^{-6}} \approx 223{,}8
+$$
+On a donc $p \in \{-223, \dots, 223\}$, soit **$N = 447$ franges brillantes**. On retrouve bien $N \approx \ell/i \approx 447$.
+
+**3.** La particule se déplace selon $\vec{u}_x$, perpendiculairement aux franges. Pendant une période $T$ du signal diffusé, elle parcourt exactement un interfrange :
+$$
+v = \frac{i}{T} = \frac{2{,}24\times10^{-6}}{50\times10^{-3}} \approx 4{,}5\times10^{-5}\ \text{m}\cdot\text{s}^{-1} = 45\ \mu\text{m}\cdot\text{s}^{-1}
+$$
+De façon équivalente, la fréquence du signal vaut $f = \dfrac{v}{i} = \dfrac{2nv\sin\theta}{\lambda_0}$ : la mesure de $f$ donne directement $v$.
+
+*Remarque :* cette vitesse est très faible pour un écoulement. Avec une période de $50\ \mu\text{s}$, on trouverait $v \approx 4{,}5\ \text{cm}\cdot\text{s}^{-1}$, valeur plus réaliste. La donnée est à vérifier dans la source.
+
+:::
+
+\vspace{1em}
+
+**Sources des exercices :**
+
+- *Physique : exercices incontournables*, Jean-Noël Beury (2020).
+[Les corrigés me sont propres]
