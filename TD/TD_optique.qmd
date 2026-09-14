@@ -1,9 +1,9 @@
 ---
 title: "Planche d'Optique (PC)"
-# subtitle: "Énoncés"
-# solution: false
-subtitle: "Solutions"
-solution: true
+subtitle: "Énoncés"
+solution: false
+# subtitle: "Solutions"
+# solution: true
 header-left: "TD IPESUP 2026-2027"
 header-right: "Optique (PC)"
 footer-left: "D. Mofakhami"
@@ -818,5 +818,7 @@ $$
 \Delta\lambda = \frac{(594\times10^{-9})^2}{2\times1.65\times10^{-6}\times180} \approx 6.3\times10^{-10}\ \text{m}
 $$
 
-
 :::
+
+**Sources des exercices :**
+- *Planche de TD d'optique PC* du Lycée Dumont D’Urville à Toulon (énoncés uniquement)
