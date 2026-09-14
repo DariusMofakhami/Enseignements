@@ -4,7 +4,7 @@ subtitle: "Solutions interactives"
 author: "Darius Mofakhami"
 format:
   revealjs:
-    theme: simple
+    theme: [simple, td-slides.scss]
     slide-number: true
     width: 1280
     height: 720
@@ -200,7 +200,7 @@ diagram = {
 //| echo: false
 {
   const f = x => x.toFixed(1) + "°";
-  const style = "font-size:0.55em;margin:0";
+  const style = "font-size:0.8em;margin:0";
   if (Number.isFinite(cur.i2))
     return htl.html`<p style=${style}>r<sub>1</sub> = ${f(cur.r1)} &nbsp;·&nbsp; r<sub>2</sub> = ${f(cur.r2)} &nbsp;·&nbsp;
       i<sub>2</sub> = ${f(cur.i2)} &nbsp;·&nbsp; <b>D = ${f(cur.D)}</b></p>`;
@@ -225,7 +225,7 @@ diagram = {
           ? htl.html`<li>Retour inverse de la lumière : incidence limite et incidence rasante donnent la même déviation, ${tex`D = ${f(curve.find(d => d.i1 === 90).D)}`}.</li>`
           : null
       ];
-  return htl.html`<div style="font-size:0.5em;margin-top:1em"><p style="margin:0"><b>À observer :</b></p>
+  return htl.html`<div style="font-size:0.7em;margin-top:1em"><p style="margin:0"><b>À observer :</b></p>
     <ul style="display:block;margin:0 0 0 1.2em">${items}</ul></div>`;
 }
 ```
@@ -265,6 +265,513 @@ viewof A = Inputs.range([40, 80], {value: 60, step: 10, label: "A (°)", width: 
       Plot.dot(Number.isFinite(cur.D) ? [cur] : [], {x: "i1", y: "D", r: 7, fill: blue, stroke: "white"})
     ]
   });
+}
+```
+:::
+
+::::
+
+# Exercice 3 : Fibre optique {background-color="#1b3959"}
+
+## Résultat théorique trouvé {#resultat-fibre}
+
+Fibre de longueur $L$ : cœur d'indice $n_1$, gaine d'indice $n_2$, le tout dans l'air. Rayon entrant sous l'angle $\theta$ :
+
+- Descartes à l'entrée : $\sin\theta = n_1 \sin r$
+- Incidence sur le dioptre cœur/gaine : $i = 90° - r$
+- Réflexion totale si $n_1 > n_2$ et $i \ge \ell$, avec $\sin\ell = n_2/n_1$, soit $\theta \le \theta_\ell = \arcsin\sqrt{n_1^2 - n_2^2}$
+- Rayon guidé : chemin $L/\cos r$ parcouru à la vitesse $c/n_1$, d'où $t(\theta) = \dfrac{n_1 L}{c\cos r}$
+- De $t_{min} = \dfrac{n_1 L}{c}$ (en $\theta = 0$) à $t_{max} = \dfrac{n_1^2 L}{c\,n_2}$ (en $\theta = \theta_\ell$) : $\Delta t_{max} = \dfrac{n_1 L\,(n_1 - n_2)}{c\,n_2}$
+
+Avec les données de l'énoncé : $n_1 = 1.5227$, $n_2 = 1.5200$, $L = 10\ \text{cm}$.
+
+## Transcription en python {#python-fibre}
+
+```{python}
+#| echo: true
+c = 3.00e8   # vitesse de la lumière dans le vide (m/s)
+L = 0.10     # longueur de la fibre (m)
+
+def fibre(theta, n1, n2):
+    """Rayon entrant sous l'angle theta (degrés) dans une fibre de cœur n1 et de gaine n2."""
+    theta = np.asarray(theta, dtype=float)
+    r = np.degrees(np.arcsin(np.sin(np.radians(theta)) / n1))   # Descartes à l'entrée
+    i = 90 - r                                                   # incidence sur la gaine
+    # guidé si réflexion totale (n1 > n2 et n1 sin i >= n2), ou si le rayon est axial
+    # tolérance 1e-9 : en theta_lim, n1 sin i vaut n2 aux arrondis flottants près
+    guide = (theta == 0) | ((n1 > n2) & (n1 * np.sin(np.radians(i)) >= n2 - 1e-9))
+    t = np.where(guide, n1 * L / (c * np.cos(np.radians(r))), np.nan)
+    return r, i, guide, t, t - n1 * L / c                        # Δt = t - t_min
+```
+
+On balaie $\theta$ de 0 à 90°, pour plusieurs couples $(n_1, n_2)$ et pour les indices de l'énoncé :
+
+```{python}
+#| echo: true
+theta = np.arange(0, 91)                               # θ de 0° à 90° par pas de 1°
+n_valeurs = np.round(np.arange(1.40, 1.71, 0.05), 2)   # n1 et n2 de 1.40 à 1.70
+n_enonce = (1.5227, 1.5200)                            # indices de l'énoncé
+```
+
+```{python}
+#| echo: false
+#| output: false
+cols_f = ["n1", "n2", "theta", "r", "i", "guide", "t", "dt"]
+table_f = {k: [] for k in cols_f}
+lim_f = {k: [] for k in ["n1", "n2", "theta_lim", "t_min", "dt_max"]}
+paires = [(a, b) for a in n_valeurs for b in n_valeurs] + [n_enonce]
+for n1, n2 in paires:
+    n1, n2 = float(n1), float(n2)
+    th_lim = np.degrees(np.arcsin(min(1.0, np.sqrt(n1**2 - n2**2)))) if n1 > n2 else 0.0
+
+    # on insère theta_lim (pas forcément entier) dans la grille
+    grille = theta.astype(float)
+    if 0 < th_lim < 90:
+        grille = np.unique(np.concatenate([grille, [th_lim]]))
+
+    r, i, guide, t, dt = fibre(grille, n1, n2)
+    table_f["n1"] += [n1] * len(grille)
+    table_f["n2"] += [n2] * len(grille)
+    table_f["guide"] += [bool(g) for g in guide]
+    for k, v in zip(["theta", "r", "i", "t", "dt"], [grille, r, i, t * 1e9, dt * 1e12]):  # t en ns, Δt en ps
+        table_f[k] += [js(x) for x in v]
+    lim_f["n1"].append(n1)
+    lim_f["n2"].append(n2)
+    lim_f["theta_lim"].append(js(th_lim))
+    lim_f["t_min"].append(js(n1 * L / c * 1e9))
+    lim_f["dt_max"].append(js(fibre([th_lim], n1, n2)[4][0] * 1e12))
+
+ojs_define(fibre_data=table_f, fibre_lim=lim_f)
+```
+
+## Simulation interactive {#simulation-fibre}
+
+```{ojs}
+//| echo: false
+//| output: false
+frows = transpose(fibre_data)
+N1 = enonce ? 1.5227 : n1
+N2 = enonce ? 1.52 : n2
+fcurve = frows.filter(d => Math.abs(d.n1 - N1) < 1e-6 && Math.abs(d.n2 - N2) < 1e-6)
+// theta (curseur) est entier ; recherche par valeur car theta_lim est inséré dans la grille
+fcur = fcurve.find(d => d.theta === theta)
+flim = transpose(fibre_lim).find(d => Math.abs(d.n1 - N1) < 1e-6 && Math.abs(d.n2 - N2) < 1e-6)
+// géométrie du schéma : longueur, demi-épaisseur du cœur, épaisseur de gaine (non à l'échelle)
+fgeom = ({W: 10, h: 0.5, hg: 0.45})
+fmtDt = x => x < 10 ? x.toFixed(3) : x.toFixed(1)
+```
+
+:::: {.columns}
+
+::: {.column width="50%"}
+```{ojs}
+//| echo: false
+fdiagram = {
+  const deg = Math.PI / 180;
+  const {W, h, hg} = fgeom;
+  const tanr = Math.tan(fcur.r * deg);
+
+  // Zigzag dans le cœur, entre y = +h et y = -h, depuis le centre de la face d'entrée
+  const segs = [], hits = [];
+  let P = [0, 0], s = 1, leak = null, exitPt = null;
+  for (let k = 0; k < 200; k++) {
+    const dx = tanr > 1e-9 ? (h - s * P[1]) / tanr : Infinity;
+    if (P[0] + dx >= W) {
+      exitPt = [W, P[1] + s * tanr * (W - P[0])];
+      segs.push([P, exitPt]);
+      break;
+    }
+    const H = [P[0] + dx, s * h];
+    segs.push([P, H]);
+    hits.push({H, s});
+    if (!fcur.guide) { leak = {H, s}; break; }
+    P = H;
+    s = -s;
+  }
+
+  // Passage en coordonnées SVG (cadre fixe, y vers le haut)
+  const x0 = -2.4, x1 = W + 2.4, yTop = h + hg + 0.75, yBot = -(h + hg) - 1.2, sc = 40;
+  const Wpx = (x1 - x0) * sc, Hpx = (yTop - yBot) * sc;
+  const X = p => (p[0] - x0) * sc, Y = p => (yTop - p[1]) * sc;
+  const Pt = p => `${X(p).toFixed(1)},${Y(p).toFixed(1)}`;
+  const add = (p, u, t) => [p[0] + t * u[0], p[1] + t * u[1]];
+  const mid = (a, b) => [(a[0] + b[0]) / 2, (a[1] + b[1]) / 2];
+  const ray = (a, b, color = navy, marker = "arrowF") =>
+    `<polyline points="${[a, mid(a, b), b].map(Pt).join(" ")}" fill="none" stroke="${color}" stroke-width="2.5" marker-mid="url(#${marker})"/>`;
+  const dashed = (a, b) =>
+    `<line x1="${X(a)}" y1="${Y(a)}" x2="${X(b)}" y2="${Y(b)}" stroke="${grey}" stroke-width="1.5" stroke-dasharray="6,4"/>`;
+  const arc = (C, rad, a0, a1) => {
+    const pts = Array.from({length: 13}, (_, k) => {
+      const a = (a0 + (a1 - a0) * k / 12) * deg;
+      return [C[0] + rad * Math.cos(a), C[1] + rad * Math.sin(a)];
+    });
+    return `<polyline points="${pts.map(Pt).join(" ")}" fill="none" stroke="${navy}" stroke-width="1.5"/>`;
+  };
+  const text = (p, str, dx, dy, color = navy, anchor = "middle") =>
+    `<text x="${X(p) + dx}" y="${Y(p) + dy}" fill="${color}" text-anchor="${anchor}">${str}</text>`;
+  const rect = (y0, y1, fill, op) =>
+    `<rect x="${X([0, 0])}" y="${Y([0, y1])}" width="${W * sc}" height="${(y1 - y0) * sc}" fill="${fill}" fill-opacity="${op}"/>`;
+
+  const sub = k => `<tspan baseline-shift='sub' font-size='12'>${k}</tspan>`;
+  const parts = [
+    rect(h, h + hg, grey, 0.18),
+    rect(-h - hg, -h, grey, 0.18),
+    rect(-h, h, blue, 0.12),
+    `<rect x="${X([0, 0])}" y="${Y([0, h + hg])}" width="${W * sc}" height="${2 * (h + hg) * sc}" fill="none" stroke="${navy}" stroke-width="2"/>`,
+    `<line x1="${X([0, h])}" y1="${Y([0, h])}" x2="${X([W, h])}" y2="${Y([0, h])}" stroke="${navy}" stroke-width="1.2"/>`,
+    `<line x1="${X([0, -h])}" y1="${Y([0, -h])}" x2="${X([W, -h])}" y2="${Y([0, -h])}" stroke="${navy}" stroke-width="1.2"/>`,
+    dashed([-1.6, 0], [1.2, 0]),
+    text([W / 2, h + hg], `cœur : n${sub(1)} = ${N1.toFixed(enonce ? 4 : 2)} &#160;&#160;·&#160;&#160; gaine : n${sub(2)} = ${N2.toFixed(enonce ? 4 : 2)}`, 0, -10),
+    text([-1.3, h + hg], "air (n = 1)", 0, -10),
+    `<line x1="${X([0, -h - hg - 0.5])}" y1="${Y([0, -h - hg - 0.5])}" x2="${X([W, -h - hg - 0.5])}" y2="${Y([0, -h - hg - 0.5])}" stroke="${navy}" stroke-width="1.2" marker-start="url(#arrowF)" marker-end="url(#arrowF)"/>`,
+    text([W / 2, -h - hg - 0.5], "L (schéma non à l'échelle)", 0, 20)
+  ];
+
+  // Rayon incident (depuis le bas à gauche) et trajet dans le cœur
+  const dir = a => [Math.cos(a * deg), Math.sin(a * deg)];
+  // longueur réduite aux grands angles pour ne pas croiser la cote L
+  parts.push(ray(add([0, 0], dir(theta), -Math.min(1.8, 1.35 / Math.max(Math.sin(theta * deg), 1e-6))), [0, 0]));
+  for (const [a, b] of segs) parts.push(ray(a, b));
+
+  // Angle i, repéré au 2e point de réflexion s'il existe (à l'écart des angles θ et r)
+  const hi = hits.length > 1 && fcur.guide ? hits[1] : hits[0];
+
+  // Angles θ (air, par rapport à l'axe) et r (cœur) ; aux petits angles, étiquette décalée hors de l'angle.
+  // r est omis si i est repéré sur un point de réflexion trop proche de l'entrée (r reste affiché sous le schéma).
+  if (theta > 0) {
+    parts.push(arc([0, 0], 0.5, 180, 180 + theta));
+    parts.push(text(add([0, 0], dir(theta >= 30 ? 180 + theta / 2 : 180 + theta + 14), 1.3), "θ", 0, 6));
+    if (!(hi === hits[0] && hi && hi.H[0] < 2)) {
+      const rr = Math.min(0.9, 0.6 * (hits.length ? hits[0].H[0] : Infinity));
+      parts.push(arc([0, 0], rr, 0, fcur.r));
+      parts.push(text(add([0, 0], dir(fcur.r >= 20 ? fcur.r / 2 : -14), rr + 0.35), "r", 0, 6));
+    }
+  }
+  if (hi) {
+    const [a0, a1] = hi.s > 0 ? [180 + fcur.r, 270] : [90, 180 - fcur.r];
+    parts.push(dashed([hi.H[0], hi.s * (h - 0.75)], [hi.H[0], hi.s * (h + hg + 0.1)]));
+    parts.push(arc(hi.H, 0.4, a0, a1));
+    parts.push(text(add(hi.H, dir((a0 + a1) / 2), 0.65), "i", 0, 6));
+  }
+
+  // Sortie : rayon émergent (guidé) ou fuite dans la gaine (non guidé)
+  if (exitPt && fcur.guide)
+    parts.push(ray(exitPt, add(exitPt, [Math.cos(theta * deg), s * Math.sin(theta * deg)], 1.4)));
+  if (leak) {
+    const i2 = Math.asin(Math.min(1, N1 * Math.sin(fcur.i * deg) / N2));
+    const u = [Math.sin(i2), leak.s * Math.cos(i2)];
+    const t = Math.min(hg / Math.max(Math.cos(i2), 1e-6), (W - leak.H[0]) / Math.max(Math.sin(i2), 1e-6));
+    parts.push(ray(leak.H, add(leak.H, u, t), red, "arrowR"));
+  }
+
+  const el = document.createElement("div");
+  el.innerHTML = `<svg viewBox="0 0 ${Wpx} ${Hpx}" width="${Wpx}" height="${Hpx}"
+      style="max-width:100%;height:auto;font-family:sans-serif;font-size:16px">
+    <defs>
+      <marker id="arrowF" viewBox="0 0 10 10" refX="5" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+        <path d="M0,0 L10,5 L0,10 z" fill="${navy}"/></marker>
+      <marker id="arrowR" viewBox="0 0 10 10" refX="5" refY="5" markerWidth="6" markerHeight="6" orient="auto">
+        <path d="M0,0 L10,5 L0,10 z" fill="${red}"/></marker>
+    </defs>
+    ${parts.join("\n")}
+  </svg>`;
+  return el;
+}
+```
+
+```{ojs}
+//| echo: false
+{
+  const f = x => x.toFixed(1) + "°";
+  const style = "font-size:0.8em;margin:0";
+  const ell = N1 > N2 ? Math.asin(N2 / N1) * 180 / Math.PI : null;
+  const src = enonce ? htl.html` &nbsp;<i>(indices de l'énoncé)</i>` : "";
+  if (theta === 0)
+    return htl.html`<p style=${style}>Rayon axial : il ne rencontre jamais la gaine &nbsp;·&nbsp;
+      t = t<sub>min</sub> = ${fcur.t.toFixed(3)} ns &nbsp;·&nbsp; <b>Δt = 0</b>${src}</p>`;
+  if (fcur.guide)
+    return htl.html`<p style=${style}>r = ${f(fcur.r)} &nbsp;·&nbsp; i = ${f(fcur.i)} ≥ ℓ = ${f(ell)} &nbsp;·&nbsp;
+      t = ${fcur.t.toFixed(3)} ns &nbsp;·&nbsp; <b>Δt = ${fmtDt(fcur.dt)} ps</b>${src}</p>`;
+  const why = ell === null
+    ? htl.html`n<sub>1</sub> ≤ n<sub>2</sub> : pas de réflexion totale possible`
+    : htl.html`i = ${f(fcur.i)} &lt; ℓ = ${f(ell)} : pas de réflexion totale`;
+  const hors = Math.tan(fcur.r * Math.PI / 180) * fgeom.W < fgeom.h
+    ? " (plus loin dans la fibre réelle, bien plus longue que sur le schéma)" : "";
+  return htl.html`<p style=${style}>r = ${f(fcur.r)} &nbsp;·&nbsp;
+    <span style="color:${red}">${why}, le rayon quitte le cœur${hors}</span>${src}</p>`;
+}
+```
+
+```{ojs}
+//| echo: false
+{
+  const f = x => x.toFixed(1) + "^\\circ";
+  let items;
+  if (N1 > N2) {
+    const tl = flim.theta_lim;
+    const fGHz = 1000 / flim.dt_max;
+    const fstr = fGHz >= 1000 ? `${(fGHz / 1000).toFixed(2)}\\ \\text{THz}` : `${fGHz.toFixed(1)}\\ \\text{GHz}`;
+    items = [
+      tl < 90
+        ? htl.html`<li>Rayons guidés pour ${tex`\theta \le \theta_\ell = ${f(tl)}`} : réflexion totale à chaque contact avec la gaine.</li>`
+        : htl.html`<li>${tex`n_1^2 - n_2^2 \ge 1`} : tous les rayons entrants sont guidés.</li>`,
+      htl.html`<li>${tex`\Delta t`} croît de 0 (rayon axial) à ${tex`\Delta t_{max} = ${fmtDt(flim.dt_max)}\ \text{ps}`} en ${tex`\theta = ${f(tl)}`}.</li>`,
+      htl.html`<li>Pour que les impulsions ne se chevauchent pas : ${tex`f < 1/\Delta t_{max} \approx ${fstr}`}.</li>`
+    ];
+  } else {
+    items = [
+      htl.html`<li>${tex`n_1 \le n_2`} : pas d'angle limite, donc jamais de réflexion totale sur la gaine.</li>`,
+      htl.html`<li>Seul le rayon axial (${tex`\theta = 0`}) traverse : la fibre n'est <b>pas fonctionnelle</b>.</li>`
+    ];
+  }
+  return htl.html`<div style="font-size:0.7em;margin-top:1em"><p style="margin:0"><b>À observer :</b></p>
+    <ul style="display:block;margin:0 0 0 1.2em">${items}</ul></div>`;
+}
+```
+:::
+
+::: {.column width="50%"}
+```{ojs}
+//| echo: false
+viewof theta = Inputs.range([0, 90], {value: 20, step: 1, label: "θ (°)", width: 560})
+viewof n1 = Inputs.range([1.40, 1.70], {value: 1.60, step: 0.05, label: "n₁ (cœur)", width: 560})
+viewof n2 = Inputs.range([1.40, 1.70], {value: 1.50, step: 0.05, label: "n₂ (gaine)", width: 560})
+```
+
+```{ojs}
+//| echo: false
+{
+  const guided = fcurve.filter(d => d.guide);
+  const tl = flim.theta_lim;
+  return Plot.plot({
+    width: 580,
+    height: 300,
+    marginLeft: 60,
+    marginBottom: 45,
+    style: {fontSize: "15px"},
+    x: {label: "θ (°)", labelAnchor: "center", labelArrow: "none", domain: [0, 90], grid: true},
+    y: {label: "Δt = t − t_min (ps)", labelAnchor: "center", labelArrow: "none", grid: true, nice: true,
+        domain: flim.dt_max > 0 ? undefined : [0, 1]},
+    marks: [
+      tl < 90 ? Plot.rect([{a: tl, b: 90}], {x1: "a", x2: "b", fill: red, fillOpacity: 0.08}) : null,
+      tl < 90 ? Plot.text([{x: (tl + 90) / 2, t: "rayons\nnon guidés"}], {x: "x", text: "t", frameAnchor: "middle", fill: red}) : null,
+      flim.dt_max > 0 ? Plot.ruleY([flim.dt_max], {stroke: blue, strokeDasharray: "5,4"}) : null,
+      flim.dt_max > 0 ? Plot.text([{x: 2, y: flim.dt_max, t: `Δt_max = ${fmtDt(flim.dt_max)} ps`}],
+                                  {x: "x", y: "y", text: "t", dy: -10, textAnchor: "start", fill: blue}) : null,
+      Plot.line(guided, {x: "theta", y: "dt", stroke: navy, strokeWidth: 2.5}),
+      Plot.ruleX([theta], {stroke: grey}),
+      Plot.dot(fcur.guide ? [fcur] : [], {x: "theta", y: "dt", r: 7, fill: blue, stroke: "white"})
+    ]
+  });
+}
+viewof enonce = Inputs.toggle({label: "Indices énoncé", value: false})
+```
+:::
+
+::::
+
+# Exercice 5 : Indice d'un gaz {background-color="#1b3959"}
+
+## Résultat théorique trouvé {#resultat-gaz}
+
+Trous d'Young distants de $a$, éclairés en onde plane (source au foyer de la lentille), écran à la distance $D$. L'axe $x$ de l'écran est orienté vers le haut, $C_1$ devant le trou du haut et $C_2$ devant le trou du bas :
+
+- Sans gaz ($n_2 = n_1$) : $\delta(x) = \dfrac{a\,x}{D}$, franges rectilignes d'interfrange $i = \dfrac{\lambda D}{a}$
+- Avec le gaz dans $C_2$ : $\delta(x) = (SM)_2 - (SM)_1 = \dfrac{a\,x}{D} + (n_2 - n_1)L$ et $I(x) = 2I_0\left[1 + \cos\dfrac{2\pi\,\delta(x)}{\lambda}\right]$
+- Frange d'ordre 0 ($\delta = 0$) en $x_0 = -\dfrac{(n_2 - n_1)L\,D}{a}$ : même interfrange, figure translatée vers le bas si $n_2 > n_1$
+- Nombre de franges qui défilent : $p = \dfrac{(n_2 - n_1)L}{\lambda}$, indépendant de $a$ et de $D$
+
+Avec les données de l'énoncé ($\lambda = 0.6\ \mu m$, $L = 10\ \text{cm}$, $p = 70$ franges) : $n_2 - n_1 = \dfrac{p\,\lambda}{L} = 4.2\times10^{-4}$.
+
+## Transcription en python {#python-gaz}
+
+```{python}
+#| echo: true
+lam = 0.6e-6          # longueur d'onde (m)
+n_air = 1.0002926     # indice de l'air dans C1
+L_cuve = 0.10         # longueur des cuves (m)
+
+def intensite(x, dn, a, D):
+    """I/Imax au point d'abscisse x (m) de l'écran, pour n2 = n_air + dn."""
+    delta = a * x / D + dn * L_cuve       # (SM)2 - (SM)1 : trous + cuves
+    return (1 + np.cos(2 * np.pi * delta / lam)) / 2
+```
+
+Quelques valeurs de $a$ et $D$ à tester, et les résultats de l'énoncé :
+
+```{python}
+#| echo: true
+a_valeurs = [0.5e-3, 1e-3, 2e-3]      # distance entre les trous (m)
+D_valeurs = [0.5, 1.0, 2.0]           # distance trous-écran (m)
+print(f"i = {lam * 1.0 / 1e-3 * 1e3:.2f} mm pour a = 1 mm et D = 1 m")
+print(f"n2 - n1 = {70 * lam / L_cuve:.1e} pour 70 franges")
+```
+
+La simulation évalue `intensite` dans le navigateur à chaque position du curseur ($n_2 - n_1$ balayé par pas de $10^{-6}$).
+
+```{python}
+#| echo: false
+#| output: false
+ojs_define(gaz={"lam": lam, "n1": n_air, "L": L_cuve, "a": a_valeurs, "D": D_valeurs})
+```
+
+## Simulation interactive {#simulation-gaz}
+
+```{ojs}
+//| echo: false
+//| output: false
+gdn = dn6 * 1e-6
+gi = gaz.lam * Dm / (aMM * 1e-3)          // interfrange (m)
+gp = gdn * gaz.L / gaz.lam                // nombre de franges de décalage
+gx0 = -gp * gi                            // position de la frange d'ordre 0 (m)
+gX = 5e-3                                 // demi-fenêtre d'observation (m)
+gInt = (x, dn) => (1 + Math.cos(2 * Math.PI * (aMM * 1e-3 * x / Dm + dn * gaz.L) / gaz.lam)) / 2
+gpts = Array.from({length: 2001}, (_, k) => {
+  const x = -gX + 2 * gX * k / 2000;
+  return {x: x * 1e3, I: gInt(x, gdn), I0: gInt(x, 0)};
+})
+```
+
+:::: {.columns}
+
+::: {.column width="50%"}
+```{ojs}
+//| echo: false
+gdiagram = {
+  const Wpx = 600, Hpx = 310, yAx = 150, yT1 = 105, yT2 = 195;
+  const xS = 30, xLens = 85, xC0 = 130, xC1 = 265, xHoles = 320, xScr = 470, wScr = 50, yScrTop = 20, yScrBot = 280;
+  const lum = "#FF8C1A";                                    // lumière à 600 nm
+  const Y = x => yAx - (x / gX) * (yAx - yScrTop);          // abscisse x (m) -> ordonnée sur l'écran
+  const line = (x1, y1, x2, y2, color = navy, w = 1.5, extra = "") =>
+    `<line x1="${x1}" y1="${y1}" x2="${x2}" y2="${y2}" stroke="${color}" stroke-width="${w}" ${extra}/>`;
+  const text = (x, y, s, color = navy, anchor = "middle", size = 16) =>
+    `<text x="${x}" y="${y}" fill="${color}" text-anchor="${anchor}" font-size="${size}">${s}</text>`;
+  const sub = k => `<tspan baseline-shift='sub' font-size='11'>${k}</tspan>`;
+  const arrows = 'marker-start="url(#arrowG)" marker-end="url(#arrowG)"';
+
+  // Bande de franges sur l'écran : une ligne horizontale par pixel
+  const band = [];
+  for (let y = yScrTop; y < yScrBot; y++) {
+    const x = (yAx - (y + 0.5)) / (yAx - yScrTop) * gX;
+    band.push(`<rect x="${xScr}" y="${y}" width="${wScr}" height="1" fill="${lum}" fill-opacity="${gInt(x, gdn).toFixed(3)}"/>`);
+  }
+
+  // C2 teintée selon n2 - n1 (bleu si n2 > n1, rouge si n2 < n1)
+  const tint = gdn >= 0 ? blue : red, op = 0.06 + 0.45 * Math.min(1, Math.abs(dn6) / 500);
+  const parts = [
+    line(15, yAx, xScr + wScr + 10, yAx, grey, 1, 'stroke-dasharray="6,4"'),
+    `<rect x="${xC0}" y="${yT1 - 25}" width="${xC1 - xC0}" height="50" fill="${grey}" fill-opacity="0.12" stroke="${navy}" stroke-width="1.5"/>`,
+    `<rect x="${xC0}" y="${yT2 - 25}" width="${xC1 - xC0}" height="50" fill="${tint}" fill-opacity="${op}" stroke="${navy}" stroke-width="1.5"/>`,
+    text((xC0 + xC1) / 2, yT1 - 32, `C${sub(1)} : air (n${sub(1)})`),
+    text((xC0 + xC1) / 2, yT2 + 44, `C${sub(2)} : gaz (n${sub(2)})`),
+    line(xC0, 262, xC1, 262, navy, 1.2, arrows),
+    text((xC0 + xC1) / 2, 280, `L = ${(gaz.L * 100).toFixed(0)} cm`, navy, "middle", 14),
+    `<circle cx="${xS}" cy="${yAx}" r="4" fill="${navy}"/>`,
+    text(xS, yAx + 24, "S"),
+    line(xLens, 40, xLens, 260, navy, 2, arrows),
+    line(xS, yAx, xLens, yT1), line(xLens, yT1, xHoles, yT1),
+    line(xS, yAx, xLens, yT2), line(xLens, yT2, xHoles, yT2),
+    line(xHoles, 30, xHoles, yT1 - 6, navy, 3), line(xHoles, yT1 + 6, xHoles, yT2 - 6, navy, 3), line(xHoles, yT2 + 6, xHoles, 270, navy, 3),
+    line(xHoles - 12, yT1, xHoles - 12, yT2, navy, 1.2, arrows),
+    text(xHoles - 20, yAx - 6, `a = ${aMM} mm`, navy, "end", 14),
+    line(xHoles, 298, xScr, 298, navy, 1.2, arrows),
+    text((xHoles + xScr) / 2, 291, `D = ${Dm} m`, navy, "middle", 14),
+    `<rect x="${xScr}" y="${yScrTop}" width="${wScr}" height="${yScrBot - yScrTop}" fill="black"/>`,
+    ...band,
+    `<rect x="${xScr}" y="${yScrTop}" width="${wScr}" height="${yScrBot - yScrTop}" fill="none" stroke="${navy}" stroke-width="1.5"/>`,
+    line(xScr, yAx, xScr + wScr, yAx, "white", 1, 'stroke-dasharray="3,3"'),
+    text(xScr + wScr / 2, 14, "écran", navy, "middle", 14)
+  ];
+  // Graduations ; celle que recouvrirait l'étiquette « ordre 0 » n'est pas écrite
+  const inWin = Math.abs(gx0) <= gX, y0 = Y(gx0);
+  for (const xmm of [-5, 0, 5]) {
+    const yt = Y(xmm * 1e-3);
+    parts.push(line(xScr + wScr, yt, xScr + wScr + 6, yt));
+    if (!(inWin && Math.abs(yt - y0) < 16))
+      parts.push(text(xScr + wScr + 9, yt + 5, `${xmm > 0 ? "+" : ""}${xmm} mm`, navy, "start", 13));
+  }
+
+  // Frange d'ordre 0 : repérée sur l'écran si elle est dans la fenêtre, sinon flèche vers sa position
+  if (inWin) {
+    parts.push(line(xHoles, yT1, xScr, y0, blue, 1.2, 'stroke-opacity="0.7"'));
+    parts.push(line(xHoles, yT2, xScr, y0, blue, 1.2, 'stroke-opacity="0.7"'));
+    parts.push(line(xScr, y0, xScr + wScr + 6, y0, blue, 2.5));
+    parts.push(text(xScr + wScr + 9, y0 + 5, "ordre 0", blue, "start", 13));
+  } else {
+    const up = gx0 > 0, yA = up ? yScrTop : yScrBot;
+    parts.push(line(xScr - 14, up ? yA + 40 : yA - 40, xScr - 14, yA, blue, 2, 'marker-end="url(#arrowB)"'));
+    parts.push(text(xScr - 22, up ? yA + 22 : yA - 30, "ordre 0 :", blue, "end", 14));
+    parts.push(text(xScr - 22, up ? yA + 40 : yA - 12, `x${sub(0)} = ${(gx0 * 1e3).toFixed(1)} mm`, blue, "end", 14));
+  }
+
+  const el = document.createElement("div");
+  el.innerHTML = `<svg viewBox="0 0 ${Wpx} ${Hpx}" width="${Wpx}" height="${Hpx}"
+      style="max-width:100%;height:auto;font-family:sans-serif">
+    <defs>
+      <marker id="arrowG" viewBox="0 0 10 10" refX="5" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+        <path d="M0,0 L10,5 L0,10 z" fill="${navy}"/></marker>
+      <marker id="arrowB" viewBox="0 0 10 10" refX="5" refY="5" markerWidth="6" markerHeight="6" orient="auto">
+        <path d="M0,0 L10,5 L0,10 z" fill="${blue}"/></marker>
+    </defs>
+    ${parts.join("\n")}
+  </svg>`;
+  return el;
+}
+```
+
+```{ojs}
+//| echo: false
+{
+  const style = "font-size:0.8em;margin:0";
+  return htl.html`<p style=${style}>n<sub>2</sub> = ${(gaz.n1 + gdn).toFixed(7)} &nbsp;·&nbsp; décalage p = ${gp.toFixed(1)} franges
+    &nbsp;·&nbsp; i = ${(gi * 1e3).toFixed(2)} mm &nbsp;·&nbsp; <b>x<sub>0</sub> = ${(gx0 * 1e3).toFixed(1)} mm</b></p>`;
+}
+```
+
+```{ojs}
+//| echo: false
+{
+  const items = [
+    htl.html`<li>Interfrange ${tex`i = \lambda D/a = ${(gi * 1e3).toFixed(2)}\ \text{mm}`} : il ne dépend pas de ${tex`n_2`}, la figure est seulement translatée.</li>`,
+    htl.html`<li>Frange d'ordre 0 en ${tex`x_0 = -(n_2 - n_1)LD/a`} : vers le bas si ${tex`n_2 > n_1`}, vers le haut si ${tex`n_2 < n_1`}.</li>`,
+    htl.html`<li>${tex`p = (n_2 - n_1)L/\lambda`} franges défilent, quels que soient ${tex`a`} et ${tex`D`} : 70 franges pour ${tex`n_2 - n_1 = 4.2\times10^{-4}`}.</li>`,
+    htl.html`<li>En lumière monochromatique, la figure translatée ressemble à l'initiale : on compte les franges qui défilent pendant le remplissage de ${tex`C_2`}.</li>`
+  ];
+  return htl.html`<div style="font-size:0.7em;margin-top:1em"><p style="margin:0"><b>À observer :</b></p>
+    <ul style="display:block;margin:0 0 0 1.2em">${items}</ul></div>`;
+}
+```
+:::
+
+::: {.column width="50%"}
+```{ojs}
+//| echo: false
+viewof dn6 = Inputs.range([-500, 500], {value: 0, step: 1, label: "n₂ − n₁ (×10⁻⁶)", width: 560})
+viewof aMM = Inputs.radio(gaz.a.map(v => v * 1e3), {value: 1, label: "a (mm)"})
+viewof Dm = Inputs.radio(gaz.D, {value: 1, label: "D (m)"})
+```
+
+```{ojs}
+//| echo: false
+{
+  const inWin = Math.abs(gx0) <= gX;
+  const plot = Plot.plot({
+    width: 580,
+    height: 260,
+    marginLeft: 55,
+    marginBottom: 45,
+    style: {fontSize: "15px"},
+    x: {label: "x (mm)", labelAnchor: "center", labelArrow: "none", domain: [-gX * 1e3, gX * 1e3], grid: true},
+    y: {label: "I / Imax", labelAnchor: "center", labelArrow: "none", domain: [0, 1.15], ticks: 5},
+    marks: [
+      Plot.line(gpts, {x: "x", y: "I0", stroke: grey, strokeWidth: 1.5, strokeDasharray: "4,3"}),
+      Plot.line(gpts, {x: "x", y: "I", stroke: navy, strokeWidth: 2.2}),
+      inWin ? Plot.ruleX([gx0 * 1e3], {stroke: blue, strokeWidth: 2, strokeDasharray: "6,4"}) : null,
+      inWin ? Plot.text([{x: gx0 * 1e3, t: "ordre 0"}], {x: "x", text: "t", frameAnchor: "top", dy: 6, fill: blue}) : null
+    ]
+  });
+  return htl.html`<div>${plot}<p style="font-size:0.6em;margin:0;color:${grey}">- - - sans gaz (n<sub>2</sub> = n<sub>1</sub>)
+    &nbsp;&nbsp;<span style="color:${navy}">——</span> avec le gaz dans C<sub>2</sub></p></div>`;
 }
 ```
 :::
