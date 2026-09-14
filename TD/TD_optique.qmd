@@ -207,30 +207,28 @@ La lumière arrive dans un cône d'angle au sommet $\theta_0$ (soit $\theta$ pre
 
 **1.** Lorsqu'un rayon lumineux passe d'un milieu d'indice $n_1$ vers un milieu d'indice $n_2 < n_1$ (donc du milieu le plus réfringent vers le moins réfringent), il existe un angle d'incidence limite $\ell$ au-delà duquel il n'y a plus de rayon réfracté : toute la lumière est réfléchie (réflexion totale). Il faut $n_1 > n_2$, et l'angle limite vérifie $\sin \ell = n_2/n_1$.
 
-**2.a.** Le rayon entre dans la fibre avec un angle d'incidence $i$ (par rapport à l'axe), se réfracte en $\theta$ (par rapport à l'axe, dans le cœur), puis frappe le dioptre cœur/gaine avec un angle d'incidence $(90° - \theta)$ par rapport à la normale à ce dioptre (qui est perpendiculaire à l'axe).
+**2.a.** Le rayon entre dans la fibre avec un angle d'incidence $\theta$ (par rapport à l'axe, dans l'air), et se réfracte selon la loi de Descartes en un angle $r$ (par rapport à l'axe, dans le cœur) : $\sin\theta = n_1 \sin r$. Il frappe ensuite le dioptre cœur/gaine avec un angle d'incidence $i = 90° - r$ par rapport à la normale à ce dioptre (perpendiculaire à l'axe).
 
-Le rayon limite sortant rasant au dioptre cœur-gaine correspond à un angle d'incidence sur ce dioptre égal à l'angle limite $\ell$ tel que $\sin \ell = n_2/n_1$, soit un angle par rapport à l'axe $\theta_\ell = 90° - \ell$.
+Le rayon limite, qui sort rasant au dioptre cœur-gaine, correspond à un angle d'incidence sur ce dioptre égal à l'angle limite $\ell$ défini en **1.** (avec $\sin \ell = n_2/n_1$) : c'est l'angle $i_\ell = \ell$. L'angle interne correspondant, par rapport à l'axe, est alors $r_\ell = 90° - \ell$.
 
-En entrée : $\sin i_\ell = n_1 \sin \theta_\ell$ (loi de Descartes air/cœur).
+En entrée, la loi de Descartes donne l'angle externe limite associé :
+$$
+\sin\theta_\ell = n_1 \sin r_\ell = n_1 \sin(90°-\ell) = n_1\cos\ell = n_1\sqrt{1-\sin^2\ell} = n_1\sqrt{1 - n_2^2/n_1^2} = \sqrt{n_1^2-n_2^2}
+$$
+d'où $\theta_\ell = \arcsin\!\left(\sqrt{n_1^2-n_2^2}\right)$ (c'est l'angle d'ouverture numérique de la fibre).
 
-$\sin\theta_\ell = \cos\ell = \sqrt{1-\sin^2\ell} = \sqrt{1 - n_2^2/n_1^2}$
+**2.b.** Puisque $\theta_0 < \theta_\ell$ et que la loi de Descartes à l'entrée est croissante, tout rayon admis a un angle interne $r < r_\ell = 90° - \ell$, donc un angle au dioptre cœur/gaine $i = 90° - r > \ell$ : il subit donc une réflexion totale à chaque réflexion sur la gaine, et reste piégé dans le cœur tout au long de la fibre (propagation en zigzag sans perte).
 
-d'où $\theta_\ell = \arcsin\!\left(\sqrt{1 - n_2^2/n_1^2}\right)$, et en entrée $\sin i_\ell = n_1\sin\theta_\ell = \sqrt{n_1^2-n_2^2}$, soit finalement $\theta_\ell = \arcsin\!\left(\sqrt{n_1^2-n_2^2}\right)$ correspond à l'angle limite d'admission côté air (c'est bien la formule demandée, avec $i_\ell = \theta_\ell$ dans les notations de l'énoncé, l'angle d'ouverture numérique de la fibre).
-
-**2.b.** Puisque $\theta_0 < \theta_\ell$, tout rayon entrant dans le cône d'admission frappe le dioptre cœur/gaine avec un angle d'incidence supérieur à l'angle limite $\ell$ : il subit donc une réflexion totale à chaque réflexion sur la gaine, et reste piégé dans le cœur tout au long de la fibre (propagation en zigzag sans perte).
-
-**2.c.** Le chemin le plus court correspond au rayon axial ($\theta = 0$), qui parcourt la distance $L$ en ligne droite dans un milieu d'indice $n_1$ :
+**2.c.** Le chemin le plus court correspond au rayon axial ($r = 0$), qui parcourt la distance $L$ en ligne droite dans un milieu d'indice $n_1$ :
 $$
 t_{min} = \frac{n_1 L}{c}
 $$
 
-**2.d.** Le rayon le plus long correspond à l'angle maximal admis $\theta_0$. Le trajet en zigzag parcourt une longueur totale $L' = \dfrac{L}{\cos\theta}$ (projection de chaque segment sur l'axe valant $L$ au total). Avec $\sin i = n_1 \sin\theta$ à l'entrée (rayon d'angle $\theta$ dans le cœur correspondant à l'angle $\theta_0$ maximal admis) :
+**2.d.** Le rayon le plus long correspond au plus grand angle interne admis, $r_0$, associé par la loi de Descartes à l'angle externe maximal $\theta_0$ : $\sin\theta_0 = n_1 \sin r_0$. Le trajet en zigzag parcourt une longueur totale $L' = \dfrac{L}{\cos r_0}$ (projection de chaque segment sur l'axe valant $L$ au total), d'où :
 
 $$
-t_{max} = \frac{n_1 L'}{c} = \frac{n_1 L}{c\cos\theta_0} = \frac{n_1 L}{c\sqrt{1-\sin^2\theta_0}} = \frac{n_1 L}{c\sqrt{1 - \dfrac{\sin^2\theta_0}{n_1^2}}}
+t_{max} = \frac{n_1 L'}{c} = \frac{n_1 L}{c\cos r_0} = \frac{n_1 L}{c\sqrt{1-\sin^2 r_0}} = \frac{n_1 L}{c\sqrt{1 - \dfrac{\sin^2\theta_0}{n_1^2}}}
 $$
-
-(en utilisant $\sin\theta_0$ dans le cœur relié à l'angle d'incidence externe via Descartes, cf. énoncé).
 
 $$
 \Delta t = t_{max}-t_{min} = \frac{n_1L}{c}\left(\frac{1}{\sqrt{1-\sin^2\theta_0/n_1^2}} - 1\right)
@@ -323,6 +321,50 @@ Montrer que seuls les rayons ayant une incidence supérieure à $i_\ell$ peuvent
 
 Déterminer $n_g$ pour $i_\ell = 48.71°$. On donne $n_v = 1.607$.
 
+```{=latex}
+\begin{center}
+\begin{tikzpicture}[scale=1.1, >=Stealth, every node/.style={font=\small}]
+  % Parallélépipède de verre (dioptre D1 = face verticale droite, D2 = face horizontale du dessus)
+  \coordinate (BL) at (0,0);
+  \coordinate (BR) at (4,0);
+  \coordinate (TR) at (4,2.2);
+  \coordinate (TL) at (0,2.2);
+  \draw[thick] (BL) rectangle (TR);
+
+  % Goutte de liquide (dôme) posée sur le dioptre D2
+  \draw[thick] (TL) to[out=75, in=180] (2,3.5) to[out=0, in=105] (TR);
+
+  % Points du trajet du rayon lumineux
+  \coordinate (P1) at (4,1.3);   % entrée sur D1
+  \coordinate (P2) at (1.7,2.2); % sortie sur D2, entrée dans la goutte
+  \coordinate (P3) at (0.55,2.65); % sortie de la goutte
+
+  % Normale (pointillés) et angle d'incidence limite au point d'entrée sur D1
+  \draw[dashed] ($(P1)+(-1.3,0)$) -- ($(P1)+(1.3,0)$);
+  \draw ($(P1)+(-25:0.6)$) arc[start angle=-25, end angle=0, radius=0.6];
+  \node at ($(P1)+(-13:0.95)$) {$i_\ell$};
+
+  % Trajet du rayon lumineux (air -> verre -> goutte -> air), fléché par segments
+  \draw[thick,->] ($(P1)+(-25:2.3)$) -- (P1);
+  \draw[thick,->] (P1) -- (P2);
+  \draw[thick,->] (P2) -- (P3);
+  \draw[thick,->] (P3) -- ($(P2)!1.7!(P3)$);
+
+  % Labels des dioptres
+  \node[left] at (-0.1,2.2) {\shortstack{dioptre\\$(D_2)$}};
+  \node[below] at (3.0,-0.15) {\shortstack{dioptre\\$(D_1)$}};
+
+  % Milieux
+  \node at (1.0,0.65) {verre};
+  \node[draw, circle, inner sep=1.5pt] at (1.0,0.3) {$n_v$};
+  \node at (2.3,4.1) {goutte de};
+  \node at (2.3,3.8) {liquide};
+  \node[draw, circle, inner sep=1.5pt] at (2.9,3.0) {$n_g$};
+  \node[draw, circle, inner sep=1.5pt] at (5.1,0.55) {$1$};
+\end{tikzpicture}
+\end{center}
+```
+
 ::: {.content-visible when-meta="solution"}
 
 ### Solution
@@ -365,6 +407,44 @@ $$
 
 Une lumière monochromatique avec $\lambda = 0.6\ \mu m$ issue d'une source ponctuelle $S_0$ placée au foyer d'une lentille traverse deux cuves $C_1$ et $C_2$ de longueur $L$, puis deux trous distants de $a$. La cuve $C_1$ contient de l'air d'indice $n_1 = 1.0002926$. La cuve $C_2$ contient initialement de l'air dans les mêmes conditions. On observe sur un écran placé à une distance $D$ des trous.
 
+```{=latex}
+\begin{center}
+\begin{tikzpicture}[scale=1.0, >=Stealth, every node/.style={font=\small}]
+  % Axe optique
+  \draw[->] (-0.5,0) -- (7.7,0);
+  \draw (0.2,-0.12) -- (0.2,0.12);
+  \node[below] at (0.2,-0.15) {$S=F$};
+
+  % Double flèche verticale décorative à gauche des cuves
+  \draw[<->] (1.3,-1.35) -- (1.3,1.35);
+
+  % Cuves C1 (au-dessus de l'axe) et C2 (en dessous, symétrique)
+  \draw (1.5,0.5) rectangle node{cuve $C_1$} (3.3,1.1);
+  \draw (1.5,-1.1) rectangle node{cuve $C_2$} (3.3,-0.5);
+
+  % Cote de longueur L (sous les cuves)
+  \draw (1.5,-1.5) -- (1.5,-1.65);
+  \draw (3.3,-1.5) -- (3.3,-1.65);
+  \draw[<->] (1.5,-1.6) -- (3.3,-1.6);
+  \node[below] at (2.4,-1.65) {$L$};
+
+  % Trous, distants de a
+  \draw (4.3,0.5) -- (4.3,0.85);
+  \draw (4.3,-0.5) -- (4.3,-0.85);
+  \draw[<->] (4.3,0.65) -- (4.3,-0.65);
+  \node[right] at (4.35,0) {$a$};
+
+  % Écran
+  \draw (7.0,-1.35) -- (7.0,1.35);
+  \node[above] at (7.0,1.4) {écran};
+
+  % Cote de distance D (trous -> écran)
+  \draw[<->] (4.3,-1.6) -- (7.0,-1.6);
+  \node[below] at (5.65,-1.65) {$D$};
+\end{tikzpicture}
+\end{center}
+```
+
 **1.** Décrire la figure d'interférences et déterminer l'expression puis la valeur de l'interfrange $i$ avec $a = 1\ \text{mm}$ et $D = 1\ \text{m}$.
 
 **2.** On remplace l'air de $C_2$ par un gaz $G_2$ d'indice $n_2$. On constate que le système de franges s'est translaté vers le bas de $70$ franges. Prévoir le signe de $n_2 - n_1$ et calculer la valeur de $n_2-n_1$ pour $L = 10\ \text{cm}$.
@@ -393,13 +473,68 @@ $$
 
 
 
-## Fentes d'Young
+## Fentes d'Young et largeur de source
 
 Un écran opaque percé de deux fentes d'Young identiques de largeur $b = 17\ \mu m$ et dont les centres sont distants de $a$, est éclairé par une fente source fine placée dans le plan focal objet d'une lentille $L_1$ de focale $f_1' = 20\ \text{cm}$. On observe la figure de diffraction dans le plan focal image d'une lentille convergente $L_2$ de focale $f_2' = 50\ \text{cm}$.
+
+```{=latex}
+\begin{center}
+\begin{tikzpicture}[scale=1.0, >=Stealth, every node/.style={font=\small}]
+  % Axe optique Oz
+  \draw[->] (-0.8,0) -- (9.3,0) node[above right] {$Oz$};
+
+  % Source S = F1
+  \draw (0,0.1) -- (0,0.5);
+  \draw[<->] (0.18,0.1) -- (0.18,0.5);
+  \node[right] at (0.22,0.3) {$d$};
+  \draw (0,-0.05) -- (0,0.05);
+  \node[below] at (0,-0.08) {$S=F_1$};
+
+  % Lentille L1
+  \draw[<->] (1.8,-1.3) -- (1.8,1.3) node[above] {$L_1$};
+  \node[below] at (1.8,-0.08) {$O_1$};
+
+  % Fentes d'Young S1 (au-dessus) et S2 (en dessous)
+  \draw[very thick] (4,0.15) -- (4,0.55);
+  \draw[very thick] (4,-0.55) -- (4,-0.15);
+  \draw[<->] (3.75,0.15) -- (3.75,0.55);
+  \node[left] at (3.72,0.35) {$b$};
+  \draw[<->] (4.25,0.35) -- (4.25,-0.35);
+  \node[right] at (4.3,0) {$a$};
+  \node[above left] at (4,0.6) {$S_1$};
+  \node[below left] at (4,-0.6) {$S_2$};
+
+  % Lentille L2
+  \draw[<->] (6.2,-1.3) -- (6.2,1.3) node[above] {$L_2$};
+  \node[below] at (6.2,-0.08) {$O_2$};
+
+  % Repère au plan focal image de L2
+  \draw[->] (8.3,0) -- (8.3,1.7) node[above] {$Ox$};
+  \draw (8.3,0) circle (0.09);
+  \fill (8.3,0) circle (0.02);
+  \node[left] at (8.15,0.15) {$Oy$};
+  \node[below] at (8.3,-0.08) {$O=F_2'$};
+  \draw (8.15,1.15) -- (8.45,1.15);
+  \node[right] at (8.5,1.15) {$M(x)$};
+
+  % Cotes f'1 et f'2
+  \draw[<->] (0,-1.6) -- (1.8,-1.6);
+  \node[below] at (0.9,-1.65) {$f_1'$};
+  \draw[<->] (6.2,-1.6) -- (8.3,-1.6);
+  \node[below] at (7.25,-1.65) {$f_2'$};
+\end{tikzpicture}
+\end{center}
+```
 
 **1.** Représenter les deux rayons lumineux qui interfèrent en $M$ et exprimer la différence de marche entre ces deux rayons en fonction des données et de $x$, position de $M$ sur $Ox$. En déduire l'expression de l'interfrange.
 
 **2.** Mesurer la largeur de la tache centrale de diffraction et en déduire une estimation de la longueur d'onde de la source. *Donnée :* la demi-largeur angulaire de la tache centrale de diffraction par une fente de largeur $b$ est $\theta_{1/2} = \lambda/b$.
+
+```{=latex}
+\begin{center}
+\includegraphics[width=0.7\linewidth]{img/interfrange_trous_Young.png}
+\end{center}
+```
 
 **3.** Estimer l'interfrange et donc la valeur de $a$ le plus précisément possible.
 
@@ -456,7 +591,59 @@ Numériquement : $d < 1.6\ \text{mm}$.
 
 ## Réseau de diffraction
 
-On considère un réseau de diffraction par transmission caractérisé par un nombre de traits par unité de longueur : $n = 300\ \text{traits}\cdot\text{mm}^{-1}$. On oriente les angles dans le sens horaire.
+```{=latex}
+\noindent
+\begin{minipage}[t]{0.58\linewidth}
+  \vspace{0pt}
+  On considère un réseau de diffraction par transmission caractérisé par un
+  nombre de traits par unité de longueur : $n = 300\ \text{traits}\cdot\text{mm}^{-1}$.
+  On oriente les angles dans le sens horaire.
+\end{minipage}%
+\hfill
+\begin{minipage}[t]{0.4\linewidth}
+  \vspace{0pt}
+  \centering
+  \begin{tikzpicture}[scale=0.85, >=Stealth, every node/.style={font=\small}]
+    \pgfmathsetmacro{\inA}{55}   % angle des rayons incidents / horizontale
+    \pgfmathsetmacro{\outA}{25}  % angle des rayons diffractés / horizontale
+
+    % Plan du réseau (trait pointillé incliné)
+    \coordinate (A) at (2.1,3.1);
+    \coordinate (B) at (0.9,0.2);
+    \draw[dashed] (A) -- (B);
+    \coordinate (P1) at ($(A)!0.18!(B)$);
+    \coordinate (P2) at ($(A)!0.55!(B)$);
+    \coordinate (P3) at ($(A)!0.88!(B)$);
+
+    % Rayons incidents et diffractés (parallèles entre eux), pour chaque point
+    \foreach \P in {P1,P2,P3} {
+      \draw[thick] ($(\P)+({180+\inA}:1.3)$) -- (\P);
+      \draw[thick] (\P) -- ($(\P)+(\outA:1.7)$);
+      \draw[thick,-{Stealth}] ($(\P)+({180+\inA}:0.85)$) -- ++({\inA}:0.3);
+      \draw[thick,-{Stealth}] ($(\P)+(\outA:0.85)$) -- ++({\outA}:0.3);
+    }
+
+    % Angle d'incidence i (au point P1), référencé à l'horizontale pointillée
+    \draw[dashed] ($(P1)+(180:0.9)$) -- ($(P1)+(0:0.3)$);
+    \draw ($(P1)+(180:0.55)$) arc[start angle=180, end angle={180+\inA}, radius=0.55];
+    \node at ($(P1)+({180+\inA/2}:0.85)$) {$i$};
+
+    % Angle diffracté i' (au point P2), référencé à l'horizontale pointillée
+    \draw[dashed] ($(P2)+(180:0.3)$) -- ($(P2)+(0:0.9)$);
+    \draw ($(P2)+(\outA:0.55)$) arc[start angle=\outA, end angle=0, radius=0.55];
+    \node at ($(P2)+({\outA/2}:0.85)$) {$i'$};
+
+    % Convention de signe positif
+    \draw[-{Stealth}] (3.4,3.2) arc[start angle=200, end angle=90, radius=0.3];
+    \node at (3.35,3.65) {$+$};
+    \node[align=left, font=\scriptsize] at (5.1,3.35) {Sens positif pour la\\ mesure des angles};
+
+    % Légende
+    \node[align=left, font=\scriptsize] at (1.5,-0.55) {Onde incidente plane,\\ monochromatique};
+  \end{tikzpicture}
+\end{minipage}
+\vspace{6pt}
+```
 
 **1.** Démontrer la formule des réseaux.
 
