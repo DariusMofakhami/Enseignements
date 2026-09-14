@@ -7,7 +7,6 @@ Mes supports de cours, TD, TP et Colles. Rédigé en Quarto/LaTeX. Solutions int
 - `TP/` — travaux pratiques
 - `Cours/` — cours
 - `Colles/` — supports de colles
-- `Ressources_TD/` — ressources tierces (non publiées, voir `.gitignore`)
 
 ## TD n°1 — Optique
 

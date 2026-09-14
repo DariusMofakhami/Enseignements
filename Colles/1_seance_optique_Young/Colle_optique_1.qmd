@@ -20,7 +20,7 @@ mainfont: "Latin Modern Roman"
 <!--
 Pour compiler l'énoncé seul :        quarto render Colle_optique_1.qmd
 Pour compiler avec les solutions :   quarto render Colle_optique_1.qmd --metadata solution:true
-(ou ../../TD/render_td.sh Colle_optique_1.qmd --solution pour obtenir Colle_optique_1_solution.pdf)
+Pour produire les deux PDF (énoncé + _solution) : ../../render_solution.sh Colle_optique_1.qmd
 -->
 
 ## Trous d'Young et largeur de la source

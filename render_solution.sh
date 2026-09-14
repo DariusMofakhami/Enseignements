@@ -1,10 +1,12 @@
 #!/bin/bash
 # Compile un fichier .qmd (TD, colle...) en deux PDF : l'énoncé et le corrigé.
 #
-# Usage :
-#   ./render_solution.sh <fichier.qmd>
+# Usage (depuis la racine du dépôt, ou avec un chemin relatif depuis ailleurs) :
+#   ./render_solution.sh <chemin/vers/fichier.qmd>
+#   ./render_solution.sh TD/TD_optique.qmd
+#   ./render_solution.sh Colles/1_seance_optique_Young/Colle_optique_1.qmd
 #
-# Produit, à côté du .qmd :
+# Produit, dans le dossier du .qmd :
 #   <nom>.pdf            énoncé seul          (solution: false)
 #   <nom>_solution.pdf   énoncé + solutions   (solution: true)
 #
