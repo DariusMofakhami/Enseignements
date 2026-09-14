@@ -11,6 +11,6 @@ Mes supports de cours, TD, TP et Colles. Rédigé en Quarto/LaTeX. Solutions int
 ## TD n°1 — Optique
 
 - 📄 [Énoncé (PDF)](https://dariusmofakhami.github.io/Enseignements/TD/TD_optique.pdf)
-- ✅ [Corrigé (PDF)](https://dariusmofakhami.github.io/Enseignements/TD/TD_optique_solution.pdf)
+- ✅ [Corrigé (PDF)](https://dariusmofakhami.github.io/Enseignements/TD/TD_optique_solutions.pdf)
 - 🖥️ [Solutions interactives (slides)](https://dariusmofakhami.github.io/Enseignements/TD/TD_optique_solutions_interactives.html)
 
