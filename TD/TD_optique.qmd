@@ -25,6 +25,74 @@ Pour compiler avec les solutions :   quarto render TD_optique.qmd --metadata sol
 (ou changer directement "solution: true" dans l'en-tête ci-dessus)
 -->
 
+## Microscope
+
+Soit un objet $AB$ de taille $30\ \mu m$. La résolution de l'œil est $\beta = 1'$ d'angle (avec $60' = 1°$).
+
+**1.** Convertir $\beta$ en radian.
+
+**2.** Calculer $\alpha_{ref}$, l'angle sous lequel l'observateur verrait l'objet $AB$ à l'œil nu en se plaçant à la distance conventionnelle $d_m = 25\ \text{cm}$ de celui-ci. Cet objet est-il vu par l'œil ?
+
+On observe cet objet à travers un microscope, modélisé par l'association de deux lentilles $L_1$ et $L_2$ convergentes, de centres respectifs $O_1$ et $O_2$, et de distances focales respectives $f_1'$ et $f_2'$. On note $AB \xrightarrow{L_1} A_1B_1 \xrightarrow{L_2} A_2B_2$.
+
+Données : $f_1' = 10.0\ \text{cm}$, $f_2' = 4.00\ \text{cm}$, l'objet est placé à la distance $\overline{O_1A} = -14\ \text{cm}$ devant la lentille $L_1$.
+
+**3.** Calculer la position et la taille de $A_1B_1$.
+
+**4.** Le système est réglé pour qu'un œil normal n'ait pas besoin d'accommoder lorsqu'il observe l'objet à travers le microscope. Où se forme l'image $A_2B_2$ ? Avec quel point particulier $A_1$ est-il confondu ? En déduire la distance $\overline{O_1O_2}$.
+
+**5.** Calculer l'angle $\alpha$ sous lequel l'observateur voit l'objet $AB$ à travers le microscope. Conclure.
+
+**6.** Faire une construction avec trois rayons lumineux issus de $B$ (ne pas tenir compte de l'échelle).
+
+*Rappel :* $\dfrac{1}{\overline{OA'}} - \dfrac{1}{\overline{OA}} = \dfrac{1}{f'}$ et $\gamma = \dfrac{\overline{OA'}}{\overline{OA}} = \dfrac{\overline{A'B'}}{\overline{AB}}$.
+
+::: {.content-visible when-meta="solution"}
+
+### Solution
+
+**1.** $\beta = 1' = \dfrac{1}{60}° = \dfrac{1}{60}\times\dfrac{\pi}{180}\ \text{rad} \approx 2.91\times10^{-4}\ \text{rad}$.
+
+**2.** $\alpha_{ref} = \dfrac{AB}{d_m} = \dfrac{30\times10^{-6}}{0.25} = 1.2\times10^{-4}\ \text{rad}$.
+
+Comme $\alpha_{ref} = 1.2\times10^{-4}\ \text{rad} < \beta = 2.91\times10^{-4}\ \text{rad}$, l'objet **n'est pas résolu à l'œil nu**.
+
+**3.** Relation de conjugaison sur $L_1$ :
+$$
+\frac{1}{\overline{O_1A_1}} = \frac{1}{f_1'} + \frac{1}{\overline{O_1A}} = \frac{1}{10} - \frac{1}{14}
+$$
+$$
+\overline{O_1A_1} = \frac{10\times14}{14-10} = 35\ \text{cm}
+$$
+
+Grandissement : $\gamma_1 = \dfrac{\overline{O_1A_1}}{\overline{O_1A}} = \dfrac{35}{-14} = -2.5$
+
+$A_1B_1 = \gamma_1 \times AB = -2.5 \times 30\ \mu m = -75\ \mu m$ (image renversée, taille $75\ \mu m$).
+
+
+**4.** Pour qu'un œil normal (emmétrope) observe sans accommoder, l'image finale $A_2B_2$ doit se former à l'infini : $L_2$ doit donc recevoir $A_1B_1$ dans son plan focal objet, c'est-à-dire que $A_1$ est confondu avec le foyer objet $F_2$ de $L_2$.
+
+$$
+\overline{O_1O_2} = \overline{O_1A_1} + \overline{A_1O_2} = \overline{O_1A_1} + \overline{F_2O_2} = \overline{O_1A_1} - f_2'= 35 - 4 = ...
+$$
+
+Attention aux signes : $\overline{A_1O_2} = -\overline{O_2F_2} = -(-f_2') = f_2'$ donc $\overline{O_1O_2} = 35 + 4 = 39\ \text{cm}$.
+
+
+**5.** L'image finale étant à l'infini, l'angle sous lequel elle est vue est donné par $\alpha = \dfrac{A_1B_1}{f_2'}$ (angle du rayon issu de $A_1B_1$ passant par le centre optique $O_2$, ou de façon équivalente $\tan\alpha \approx \alpha = |A_1B_1|/f_2'$) :
+$$
+\alpha = \frac{75\times10^{-6}}{0.04} = 1.9\times10^{-3}\ \text{rad}
+$$
+
+Comme $\alpha \gg \beta$, l'objet devient parfaitement résolu à travers le microscope : c'est tout l'intérêt de l'instrument (grossissement).
+
+
+**6.** *(Construction graphique — voir tracé au tableau : rayon parallèle à l'axe passant par $F_2'$ après $L_1$/$L_2$, rayon passant par le centre optique, rayon passant par le foyer objet.)*
+
+:::
+
+
+
 ## Déviation d'un prisme et mesure de l'indice du verre
 
 ```{=latex}
@@ -143,9 +211,9 @@ Données : $n_1 = 1.5227$, $n_2 = 1.5200$, $L = 10\ \text{cm}$.
 \begin{center}
 \begin{tikzpicture}[scale=1.3, >=Stealth, every node/.style={font=\small}]
   % Géométrie : bande inférieure (gaine n2), coeur (n1), bande supérieure (gaine n2)
-  \pgfmathsetmacro{\W}{9}       % largeur totale
-  \pgfmathsetmacro{\HB}{1.3}    % hauteur gaine du bas
-  \pgfmathsetmacro{\HC}{1.3}    % hauteur du coeur
+  \pgfmathsetmacro{\W}{8}       % largeur totale
+  \pgfmathsetmacro{\HB}{1.0}    % hauteur gaine du bas
+  \pgfmathsetmacro{\HC}{1.4}    % hauteur du coeur
   \pgfmathsetmacro{\HT}{1.0}    % hauteur gaine du haut
   \pgfmathsetmacro{\axisY}{\HB+\HC/2}      % ordonnée de l'axe (centre du coeur)
   \pgfmathsetmacro{\thA}{32}    % theta : incidence externe (air -> coeur)
@@ -155,12 +223,12 @@ Données : $n_1 = 1.5227$, $n_2 = 1.5200$, $L = 10\ \text{cm}$.
   \coordinate (P1) at (\dxP,\HB+\HC);
 
   % Rectangle de la fibre et bandes internes (coeur / gaines)
-  \draw[thick] (0,0) rectangle (\W,\HB+\HC+\HT);
-  \draw[thick] (0,\HB) -- (\W,\HB);
-  \draw[thick] (0,\HB+\HC) -- (\W,\HB+\HC);
+  \draw[thick,fill=black,fill opacity=0.06] (0,0) rectangle (\W,\HB);
+  \draw[thick] (0,\HB) rectangle (\W,\HB+\HC);
+  \draw[thick,fill=black,fill opacity=0.1] (0,\HB+\HC) rectangle (\W,\HB+\HC+\HT);
 
   % Axe optique en pointillés, et normale verticale au point de réflexion
-  \draw[dashed] (0,\axisY) -- (\dxP+1.2,\axisY);
+  \draw[dashed] (-1,\axisY) -- (\dxP+1.2,\axisY);
   \draw[dashed] (P1) ++(0,-0.35) -- ++(0,0.95);
 
   % Rayon incident (air), rayon réfracté dans le coeur, rayon réfléchi
@@ -177,10 +245,10 @@ Données : $n_1 = 1.5227$, $n_2 = 1.5200$, $L = 10\ \text{cm}$.
   \node at ($(P1)+({(90+\rA)/2}:0.8)$) {$i$};
 
   % Indices optiques
-  \node[draw, circle, inner sep=1.5pt] at (-1.1,\axisY) {$1$};
-  \node[draw, circle, inner sep=1.5pt] at (\W/2,\HB+\HC/2-0.35) {$n_1$};
-  \node[draw, circle, inner sep=1.5pt] at (\W/2,\HB+\HC+\HT/2) {$n_2$};
-  \node[draw, circle, inner sep=1.5pt] at (\W/2,\HB/2) {$n_2$};
+  \node[draw, circle, inner sep=1.5pt] at (-1.5,\axisY) {$1$};
+  \node[draw, circle, inner sep=1.5pt] at (3*\W/4,\HB+\HC/2) {$n_1$};
+  \node[draw, circle, inner sep=1.5pt] at (3*\W/4,\HB+\HC+\HT/2) {$n_2$};
+  \node[draw, circle, inner sep=1.5pt] at (3*\W/4,\HB/2) {$n_2$};
 
   % Cote de longueur L
   \draw (0,-0.15) -- (0,-0.55);
@@ -242,84 +310,15 @@ $$
 :::
 
 
-
-## Microscope
-
-Soit un objet $AB$ de taille $30\ \mu m$. La résolution de l'œil est $\beta = 1'$ d'angle (avec $60' = 1°$).
-
-**1.** Convertir $\beta$ en radian.
-
-**2.** Calculer $\alpha_{ref}$, l'angle sous lequel l'observateur verrait l'objet $AB$ à l'œil nu en se plaçant à la distance conventionnelle $d_m = 25\ \text{cm}$ de celui-ci. Cet objet est-il vu par l'œil ?
-
-On observe cet objet à travers un microscope, modélisé par l'association de deux lentilles $L_1$ et $L_2$ convergentes, de centres respectifs $O_1$ et $O_2$, et de distances focales respectives $f_1'$ et $f_2'$. On note $AB \xrightarrow{L_1} A_1B_1 \xrightarrow{L_2} A_2B_2$.
-
-Données : $f_1' = 10.0\ \text{cm}$, $f_2' = 4.00\ \text{cm}$, l'objet est placé à la distance $\overline{O_1A} = -14\ \text{cm}$ devant la lentille $L_1$.
-
-**3.** Calculer la position et la taille de $A_1B_1$.
-
-**4.** Le système est réglé pour qu'un œil normal n'ait pas besoin d'accommoder lorsqu'il observe l'objet à travers le microscope. Où se forme l'image $A_2B_2$ ? Avec quel point particulier $A_1$ est-il confondu ? En déduire la distance $\overline{O_1O_2}$.
-
-**5.** Calculer l'angle $\alpha$ sous lequel l'observateur voit l'objet $AB$ à travers le microscope. Conclure.
-
-**6.** Faire une construction avec trois rayons lumineux issus de $B$ (ne pas tenir compte de l'échelle).
-
-*Rappel :* $\dfrac{1}{\overline{OA'}} - \dfrac{1}{\overline{OA}} = \dfrac{1}{f'}$ et $\gamma = \dfrac{\overline{OA'}}{\overline{OA}} = \dfrac{\overline{A'B'}}{\overline{AB}}$.
-
-::: {.content-visible when-meta="solution"}
-
-### Solution
-
-**1.** $\beta = 1' = \dfrac{1}{60}° = \dfrac{1}{60}\times\dfrac{\pi}{180}\ \text{rad} \approx 2.91\times10^{-4}\ \text{rad}$.
-
-**2.** $\alpha_{ref} = \dfrac{AB}{d_m} = \dfrac{30\times10^{-6}}{0.25} = 1.2\times10^{-4}\ \text{rad}$.
-
-Comme $\alpha_{ref} = 1.2\times10^{-4}\ \text{rad} < \beta = 2.91\times10^{-4}\ \text{rad}$, l'objet **n'est pas résolu à l'œil nu**.
-
-**3.** Relation de conjugaison sur $L_1$ :
-$$
-\frac{1}{\overline{O_1A_1}} = \frac{1}{f_1'} + \frac{1}{\overline{O_1A}} = \frac{1}{10} - \frac{1}{14}
-$$
-$$
-\overline{O_1A_1} = \frac{10\times14}{14-10} = 35\ \text{cm}
-$$
-
-Grandissement : $\gamma_1 = \dfrac{\overline{O_1A_1}}{\overline{O_1A}} = \dfrac{35}{-14} = -2.5$
-
-$A_1B_1 = \gamma_1 \times AB = -2.5 \times 30\ \mu m = -75\ \mu m$ (image renversée, taille $75\ \mu m$).
-
-
-**4.** Pour qu'un œil normal (emmétrope) observe sans accommoder, l'image finale $A_2B_2$ doit se former à l'infini : $L_2$ doit donc recevoir $A_1B_1$ dans son plan focal objet, c'est-à-dire que $A_1$ est confondu avec le foyer objet $F_2$ de $L_2$.
-
-$$
-\overline{O_1O_2} = \overline{O_1A_1} + \overline{A_1O_2} = \overline{O_1A_1} + \overline{F_2O_2} = \overline{O_1A_1} - f_2'= 35 - 4 = ...
-$$
-
-Attention aux signes : $\overline{A_1O_2} = -\overline{O_2F_2} = -(-f_2') = f_2'$ donc $\overline{O_1O_2} = 35 + 4 = 39\ \text{cm}$.
-
-
-**5.** L'image finale étant à l'infini, l'angle sous lequel elle est vue est donné par $\alpha = \dfrac{A_1B_1}{f_2'}$ (angle du rayon issu de $A_1B_1$ passant par le centre optique $O_2$, ou de façon équivalente $\tan\alpha \approx \alpha = |A_1B_1|/f_2'$) :
-$$
-\alpha = \frac{75\times10^{-6}}{0.04} = 1.9\times10^{-3}\ \text{rad}
-$$
-
-Comme $\alpha \gg \beta$, l'objet devient parfaitement résolu à travers le microscope : c'est tout l'intérêt de l'instrument (grossissement).
-
-
-**6.** *(Construction graphique — voir tracé au tableau : rayon parallèle à l'axe passant par $F_2'$ après $L_1$/$L_2$, rayon passant par le centre optique, rayon passant par le foyer objet.)*
-
-:::
-
-
-
 ## Détermination d'un indice optique
 
 Sur la face horizontale $(D_2)$ d'un parallélépipède de verre, d'indice $n_v$, on dépose une goutte de liquide dont on veut déterminer l'indice $n_g$. La face verticale $(D_1)$ du parallélépipède de verre est éclairée par un faisceau cylindrique de lumière monochromatique sous l'incidence $i$.
 
-Sur le schéma, on a représenté le rayon limite qui sort rasant au dioptre $(D_1)$. Déduire du schéma l'inégalité entre $n_g$ et $n_v$. Montrer que l'on a $\sin i_\ell = \sqrt{n_v^2 - n_g^2}$.
+**1.** Sur le schéma, on a représenté le rayon limite qui sort rasant au dioptre $(D_1)$. Déduire du schéma l'inégalité entre $n_g$ et $n_v$. Montrer que l'on a $\sin i_\ell = \sqrt{n_v^2 - n_g^2}$.
 
-Montrer que seuls les rayons ayant une incidence supérieure à $i_\ell$ peuvent traverser le dioptre verre-liquide.
+**2.** Montrer que seuls les rayons ayant une incidence supérieure à $i_\ell$ peuvent traverser le dioptre verre-liquide.
 
-Déterminer $n_g$ pour $i_\ell = 48.71°$. On donne $n_v = 1.607$.
+**3.** Déterminer $n_g$ pour $i_\ell = 48.71°$. On donne $n_v = 1.607$.
 
 ```{=latex}
 \begin{center}
@@ -332,35 +331,36 @@ Déterminer $n_g$ pour $i_\ell = 48.71°$. On donne $n_v = 1.607$.
   \draw[thick] (BL) rectangle (TR);
 
   % Goutte de liquide (dôme) posée sur le dioptre D2
-  \draw[thick] (TL) to[out=75, in=180] (2,3.5) to[out=0, in=105] (TR);
+  \draw[thick,fill=black,fill opacity=0.06] (TL) to[out=75, in=180] (2,3.5) to[out=0, in=105] (TR);
 
   % Points du trajet du rayon lumineux
-  \coordinate (P1) at (4,1.3);   % entrée sur D1
+  \coordinate (P1) at (4,2.0);   % entrée sur D1
   \coordinate (P2) at (1.7,2.2); % sortie sur D2, entrée dans la goutte
-  \coordinate (P3) at (0.55,2.65); % sortie de la goutte
+  \coordinate (P3) at (0.6,2.5); % sortie de la goutte
 
   % Normale (pointillés) et angle d'incidence limite au point d'entrée sur D1
   \draw[dashed] ($(P1)+(-1.3,0)$) -- ($(P1)+(1.3,0)$);
   \draw ($(P1)+(-25:0.6)$) arc[start angle=-25, end angle=0, radius=0.6];
   \node at ($(P1)+(-13:0.95)$) {$i_\ell$};
+  \draw[dashed] ($(P2)+(0,-0.5)$) -- ($(P2)+(0,0.5)$);
 
   % Trajet du rayon lumineux (air -> verre -> goutte -> air), fléché par segments
   \draw[thick,->] ($(P1)+(-25:2.3)$) -- (P1);
   \draw[thick,->] (P1) -- (P2);
   \draw[thick,->] (P2) -- (P3);
-  \draw[thick,->] (P3) -- ($(P2)!1.7!(P3)$);
+  %\draw[thick,->] (P3) -- ($(P2)!1.7!(P3)$);
 
   % Labels des dioptres
   \node[left] at (-0.1,2.2) {\shortstack{dioptre\\$(D_2)$}};
-  \node[below] at (3.0,-0.15) {\shortstack{dioptre\\$(D_1)$}};
+  \node[below] at ($(BR)+(0,-0.3)$) {\shortstack{dioptre\\$(D_1)$}};
 
   % Milieux
-  \node at (1.0,0.65) {verre};
-  \node[draw, circle, inner sep=1.5pt] at (1.0,0.3) {$n_v$};
+  \node[draw, circle, inner sep=1.5pt] (V) at (1.0,0.4) {$n_v$};
+  \node[anchor=south] at ($(V)+(0,0.3)$) {verre};
   \node at (2.3,4.1) {goutte de};
   \node at (2.3,3.8) {liquide};
-  \node[draw, circle, inner sep=1.5pt] at (2.9,3.0) {$n_g$};
-  \node[draw, circle, inner sep=1.5pt] at (5.1,0.55) {$1$};
+  \node[draw, circle, inner sep=1.5pt] at (2.9,2.8) {$n_g$};
+  \node[draw, circle, inner sep=1.5pt] at (5.1,0.5) {$1$};
 \end{tikzpicture}
 \end{center}
 ```
@@ -410,37 +410,37 @@ Une lumière monochromatique avec $\lambda = 0.6\ \mu m$ issue d'une source ponc
 ```{=latex}
 \begin{center}
 \begin{tikzpicture}[scale=1.0, >=Stealth, every node/.style={font=\small}]
-  % Axe optique
-  \draw[->] (-0.5,0) -- (7.7,0);
-  \draw (0.2,-0.12) -- (0.2,0.12);
-  \node[below] at (0.2,-0.15) {$S=F$};
+  \pgfmathsetmacro{\tk}{0.12} %demi épaisseur de tick
+  \coordinate (F1) at (0,0); %position source et foyer obj.
 
-  % Double flèche verticale décorative à gauche des cuves
-  \draw[<->] (1.3,-1.35) -- (1.3,1.35);
+  % Axe optique
+  \draw[->] (-0.8,0) -- (7.7,0);
+  \draw ($(F1)-(0,\tk)$) -- ($(F1)+(0,\tk)$);
+  \node[below] at (F1) {$S=F$};
+
+  % Lentille source
+  \draw[<->] ($(F1)+(0.8,-1.35)$) -- ($(F1)+(0.8,1.35)$);
 
   % Cuves C1 (au-dessus de l'axe) et C2 (en dessous, symétrique)
   \draw (1.5,0.5) rectangle node{cuve $C_1$} (3.3,1.1);
   \draw (1.5,-1.1) rectangle node{cuve $C_2$} (3.3,-0.5);
 
   % Cote de longueur L (sous les cuves)
-  \draw (1.5,-1.5) -- (1.5,-1.65);
-  \draw (3.3,-1.5) -- (3.3,-1.65);
-  \draw[<->] (1.5,-1.6) -- (3.3,-1.6);
-  \node[below] at (2.4,-1.65) {$L$};
+  <!-- \draw (1.5,-1.45) -- (1.5,-1.65);
+  \draw (3.3,-1.45) -- (3.3,-1.65); -->
+  \draw[<->] (1.5,-1.6) -- (3.3,-1.6) node[midway,below]{$L$};
+  \draw[<->] (4.3,-1.6) -- (7.0,-1.6) node[midway,below]{$D$};  
 
   % Trous, distants de a
-  \draw (4.3,0.5) -- (4.3,0.85);
-  \draw (4.3,-0.5) -- (4.3,-0.85);
-  \draw[<->] (4.3,0.65) -- (4.3,-0.65);
-  \node[right] at (4.35,0) {$a$};
+  \coordinate (Y) at (4.3,0);
+  \draw ($(Y)+(0,-1.2)$) -- ($(Y)+(0,1.2)$);
+  \draw[white,thick] ($(Y)+(0,0.6)$) -- ($(Y)+(0,0.8)$);
+  \draw[white,thick] ($(Y)+(0,-0.6)$) -- ($(Y)+(0,-0.8)$);
+  \draw[<->] ($(Y)+(0.3,-0.7)$) -- ($(Y)+(0.3,0.7)$) node[midway,anchor=south west] {a};
 
   % Écran
-  \draw (7.0,-1.35) -- (7.0,1.35);
-  \node[above] at (7.0,1.4) {écran};
+  \draw (7.0,-1.35) -- (7.0,1.35) node[above] {écran};
 
-  % Cote de distance D (trous -> écran)
-  \draw[<->] (4.3,-1.6) -- (7.0,-1.6);
-  \node[below] at (5.65,-1.65) {$D$};
 \end{tikzpicture}
 \end{center}
 ```
@@ -480,42 +480,40 @@ Un écran opaque percé de deux fentes d'Young identiques de largeur $b = 17\ \m
 ```{=latex}
 \begin{center}
 \begin{tikzpicture}[scale=1.0, >=Stealth, every node/.style={font=\small}]
-  % Axe optique Oz
-  \draw[->] (-0.8,0) -- (9.3,0) node[above right] {$Oz$};
+  \pgfmathsetmacro{\tk}{0.12} %demi épaisseur de tick
 
   % Source S = F1
-  \draw (0,0.1) -- (0,0.5);
-  \draw[<->] (0.18,0.1) -- (0.18,0.5);
-  \node[right] at (0.22,0.3) {$d$};
-  \draw (0,-0.05) -- (0,0.05);
-  \node[below] at (0,-0.08) {$S=F_1$};
+  \coordinate (S) at (0,0);
+  \draw ($(S)+(0,-1)$) -- ($(S)+(0,1)$);
+  \draw[thick, white] ($(S)+(0,-0.15)$) -- ($(S)+(0,0.15)$)node[anchor=south west,black] {$d$};
+  \node[anchor=north east] at (S) {$S=F_1$};
 
   % Lentille L1
-  \draw[<->] (1.8,-1.3) -- (1.8,1.3) node[above] {$L_1$};
-  \node[below] at (1.8,-0.08) {$O_1$};
+  \coordinate (L1) at (1.8,0);
+  \draw[<->] ($(L1)+(0,-1.3)$) -- ($(L1)+(0,1.3)$) node[above] {$L_1$};
+  \node[anchor=north east] at (L1) {$O_1$};
 
   % Fentes d'Young S1 (au-dessus) et S2 (en dessous)
-  \draw[very thick] (4,0.15) -- (4,0.55);
-  \draw[very thick] (4,-0.55) -- (4,-0.15);
-  \draw[<->] (3.75,0.15) -- (3.75,0.55);
-  \node[left] at (3.72,0.35) {$b$};
-  \draw[<->] (4.25,0.35) -- (4.25,-0.35);
-  \node[right] at (4.3,0) {$a$};
-  \node[above left] at (4,0.6) {$S_1$};
-  \node[below left] at (4,-0.6) {$S_2$};
+  \coordinate (Y) at (4,0);
+  \draw[thick] ($(Y)+(0,-1.7)$) -- ($(Y)+(0,1.7)$);
+  \draw[very thick, white] ($(Y)+(0,0.6)$) -- ($(Y)+(0,0.8)$) node[anchor=south west,black] {$b$} node[midway,anchor=east,black] {$S_1$};
+  \draw[very thick, white] ($(Y)+(0,-0.6)$) -- ($(Y)+(0,-0.8)$) node[anchor=north west,black] {$b$} node[midway,anchor=east,black] {$S_2$};
+
+  \draw[<->] ($(Y)+(0.2,-0.7)$) -- ($(Y)+(0.2,0.7)$) node[midway,anchor=south west] {$a$};
 
   % Lentille L2
   \draw[<->] (6.2,-1.3) -- (6.2,1.3) node[above] {$L_2$};
-  \node[below] at (6.2,-0.08) {$O_2$};
+  \node[anchor=north east] at (6.2,0) {$O_2$};
 
-  % Repère au plan focal image de L2
-  \draw[->] (8.3,0) -- (8.3,1.7) node[above] {$Ox$};
-  \draw (8.3,0) circle (0.09);
-  \fill (8.3,0) circle (0.02);
-  \node[left] at (8.15,0.15) {$Oy$};
-  \node[below] at (8.3,-0.08) {$O=F_2'$};
-  \draw (8.15,1.15) -- (8.45,1.15);
-  \node[right] at (8.5,1.15) {$M(x)$};
+  % Repère au plan focal image de L2 et axes
+  \draw[->] (-1,0) -- (9.3,0) node[above right] {$O_z$};  
+  \coordinate (O) at (8.3,0);
+  \draw[->] ($(O)+(0,-1.7)$) -- ($(O)+(0,1.7)$) node[above] {$O_x$};
+  \draw (O) circle (0.1);
+  \fill (O) circle (0.04);
+  \node[anchor=south east] at (O) {$O_y$};
+  \node[anchor=north west] at (O) {$O=F_2'$};
+  \draw ($(O)+(-0.15,1.1)$) -- ($(O)+(0.15,1.1)$) node[right] {$M(x)$};
 
   % Cotes f'1 et f'2
   \draw[<->] (0,-1.6) -- (1.8,-1.6);
@@ -606,17 +604,20 @@ Numériquement : $d < 1.6\ \text{mm}$.
   \begin{tikzpicture}[scale=0.85, >=Stealth, every node/.style={font=\small}]
     \pgfmathsetmacro{\inA}{55}   % angle des rayons incidents / horizontale
     \pgfmathsetmacro{\outA}{25}  % angle des rayons diffractés / horizontale
+    \pgfmathsetmacro{\w}{0.2}  % taille du trou
 
-    % Plan du réseau (trait pointillé incliné)
-    \coordinate (A) at (2.1,3.1);
-    \coordinate (B) at (0.9,0.2);
-    \draw[dashed] (A) -- (B);
-    \coordinate (P1) at ($(A)!0.18!(B)$);
-    \coordinate (P2) at ($(A)!0.55!(B)$);
-    \coordinate (P3) at ($(A)!0.88!(B)$);
+
+    % Plan du réseau (trait pointillé)
+    \coordinate (A) at (2,3);
+    \coordinate (B) at (2,0);
+    \draw[] (A) -- (B);
+    \coordinate (P1) at ($(A)!0.2!(B)$);
+    \coordinate (P2) at ($(A)!0.5!(B)$);
+    \coordinate (P3) at ($(A)!0.8!(B)$);
 
     % Rayons incidents et diffractés (parallèles entre eux), pour chaque point
     \foreach \P in {P1,P2,P3} {
+      \draw[white,thick] ($(\P)+(0,-\w/2)$)-- ($(\P)+(0,\w/2)$);
       \draw[thick] ($(\P)+({180+\inA}:1.3)$) -- (\P);
       \draw[thick] (\P) -- ($(\P)+(\outA:1.7)$);
       \draw[thick,-{Stealth}] ($(\P)+({180+\inA}:0.85)$) -- ++({\inA}:0.3);
@@ -634,12 +635,13 @@ Numériquement : $d < 1.6\ \text{mm}$.
     \node at ($(P2)+({\outA/2}:0.85)$) {$i'$};
 
     % Convention de signe positif
-    \draw[-{Stealth}] (3.4,3.2) arc[start angle=200, end angle=90, radius=0.3];
-    \node at (3.35,3.65) {$+$};
-    \node[align=left, font=\scriptsize] at (5.1,3.35) {Sens positif pour la\\ mesure des angles};
+    %\draw[-{Stealth}] (3.4,3.2) arc[start angle=200, end angle=90, radius=0.3];
+    %\node at (3.35,3.65) {$+$};
+    %\node[align=left, font=\scriptsize] at (5.1,3.35) {Sens positif pour la\\ mesure des angles};
 
     % Légende
-    \node[align=left, font=\scriptsize] at (1.5,-0.55) {Onde incidente plane,\\ monochromatique};
+    \node[align=left, font=\scriptsize,anchor=north] at ($(P3)+({180+\inA}:1.3)$) {Onde incidente plane,\\ monochromatique};
+    \node[anchor=south] at (A) {réseau};
   \end{tikzpicture}
 \end{minipage}
 \vspace{6pt}
@@ -692,7 +694,7 @@ $$
 :::
 
 
-
+<!-- 
 ## Interféromètre de Michelson
 
 On place l'écran à une distance $D = 1.6\ \text{m}$ du miroir $M_2$. On dispose d'une lentille de focale image $f' = 30\ \text{cm}$.
@@ -818,7 +820,11 @@ $$
 \Delta\lambda = \frac{(594\times10^{-9})^2}{2\times1.65\times10^{-6}\times180} \approx 6.3\times10^{-10}\ \text{m}
 $$
 
-:::
+::: -->
+
+&nbsp;
+
+&nbsp;
 
 **Sources des exercices :**
 - *Planche de TD d'optique PC* du Lycée Dumont D’Urville à Toulon (énoncés uniquement)
