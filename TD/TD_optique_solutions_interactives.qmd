@@ -10,7 +10,7 @@ format:
     height: 720
 jupyter: python3
 ---
-# Exercice 1 : Mesure de l’indice du verre d’un prisme {background-color="#1b3959"}
+# Exercice 2 : Mesure de l’indice du verre d’un prisme {background-color="#1b3959"}
 
 ## Résultat théorique trouvé
 

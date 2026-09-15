@@ -314,7 +314,7 @@ $$
 
 Sur la face horizontale $(D_2)$ d'un parallélépipède de verre, d'indice $n_v$, on dépose une goutte de liquide dont on veut déterminer l'indice $n_g$. La face verticale $(D_1)$ du parallélépipède de verre est éclairée par un faisceau cylindrique de lumière monochromatique sous l'incidence $i$.
 
-**1.** Sur le schéma, on a représenté le rayon limite qui sort rasant au dioptre $(D_1)$. Déduire du schéma l'inégalité entre $n_g$ et $n_v$. Montrer que l'on a $\sin i_\ell = \sqrt{n_v^2 - n_g^2}$.
+**1.** Sur le schéma, on a représenté le rayon limite qui qui permet une sortie (rasante) au dioptre $(D_2)$. Déduire du schéma l'inégalité entre $n_g$ et $n_v$. Montrer que pour l'angle limite $i_\ell$ correspondant on a $\sin i_\ell = \sqrt{n_v^2 - n_g^2}$.
 
 **2.** Montrer que seuls les rayons ayant une incidence supérieure à $i_\ell$ peuvent traverser le dioptre verre-liquide.
 
@@ -334,9 +334,9 @@ Sur la face horizontale $(D_2)$ d'un parallélépipède de verre, d'indice $n_v$
   \draw[thick,fill=black,fill opacity=0.06] (TL) to[out=75, in=180] (2,3.5) to[out=0, in=105] (TR);
 
   % Points du trajet du rayon lumineux
-  \coordinate (P1) at (4,2.0);   % entrée sur D1
+  \coordinate (P1) at (4,1.8);   % entrée sur D1
   \coordinate (P2) at (1.7,2.2); % sortie sur D2, entrée dans la goutte
-  \coordinate (P3) at (0.6,2.5); % sortie de la goutte
+  \coordinate (P3) at (0,2.2); % sortie de la goutte
 
   % Normale (pointillés) et angle d'incidence limite au point d'entrée sur D1
   \draw[dashed] ($(P1)+(-1.3,0)$) -- ($(P1)+(1.3,0)$);
@@ -369,30 +369,30 @@ Sur la face horizontale $(D_2)$ d'un parallélépipède de verre, d'indice $n_v$
 
 ### Solution
 
-Pour que le rayon puisse ressortir rasant côté air par la face $(D_1)$ après avoir traversé le dioptre verre/liquide sans réflexion totale, il faut que le liquide soit **moins réfringent que le verre** : $n_g < n_v$.
+**1.** Pour que le rayon puisse ressortir rasant après avoir traversé le dioptre verre/liquide $(D_2)$ sans réflexion totale, il faut que le liquide soit **moins réfringent que le verre** : $n_g < n_v$.
 
 Soit $r$ l'angle de réfraction dans le verre à l'entrée sur $(D_1)$ : $\sin i = n_v \sin r$.
 
-Ce rayon atteint ensuite le dioptre horizontal $(D_2)$ verre/liquide avec un angle d'incidence $(90°-r)$ par rapport à la normale à $(D_2)$ (les deux dioptres étant perpendiculaires). Le rayon limite (qui ressort rasant, i.e. réfracté à $90°$ côté liquide) correspond à l'angle limite $\ell$ de ce dioptre :
+Ce rayon atteint ensuite le dioptre horizontal $(D_2)$ verre/liquide avec un angle d'incidence $(\frac{\pi}{2}-r)$ par rapport à la normale à $(D_2)$ (les deux dioptres étant perpendiculaires). Le rayon limite (qui ressort rasant donc réfracté à $\frac{\pi}{2}$ côté liquide) correspond à l'angle limite d'incidence $\frac{\pi}{2}-r_\ell$ sur $(D_2)$
 $$
-n_v \sin(90° - \ell) = n_g \sin 90° = n_g \quad\Rightarrow\quad n_v\cos\ell = n_g
+n_v \sin(\frac{\pi}{2} - r_\ell) = n_g \sin \frac{\pi}{2} = n_g \quad\Rightarrow\quad n_v\cos r_\ell = n_g
 $$
 
 Pour le rayon incident correspondant sur $(D_1)$, d'angle d'incidence $i_\ell$ :
 $$
-\sin i_\ell = n_v \sin r = n_v \sin(90°-\ell) = n_v\cos\ell
+\sin i_\ell = n_v \sin r_\ell = n_v \sqrt{1-\cos^2 r_\ell}
 $$
 
-En combinant : $\sin i_\ell = n_v \cos\ell$ et $n_g = n_v\cos\ell$, donc $\sin i_\ell = n_g$... en reprenant plus soigneusement avec $\cos\ell = \sqrt{1-\sin^2\ell} = \sqrt{1-(n_g/n_v)^2}$ :
+Et en injectant le résultat trouvé au dioptre $(D_2)$, on déduit :
 $$
 \sin i_\ell = n_v\sqrt{1-\left(\frac{n_g}{n_v}\right)^2} = \sqrt{n_v^2-n_g^2}
 $$
 
-Seuls les rayons d'incidence $i > i_\ell$ donnent, dans le verre, un angle $r$ plus petit, donc un angle d'incidence $(90°-r)$ sur $(D_2)$ plus grand que l'angle limite $\ell$ : ces rayons subissent la réflexion totale sur $(D_2)$ et ne traversent donc **pas** vers le liquide. Inversement, pour $i < i_\ell$, l'incidence sur $(D_2)$ est inférieure à $\ell$ : le rayon traverse le dioptre verre-liquide et se réfracte dans le liquide.
+**2.** Les rayons d'incidence $i < i_\ell$ donnent, dans le verre, un angle $r<r_\ell$ donc $(\frac{\pi}{2}-r) > (\frac{\pi}{2}-r_\ell)$ sur $(D_2)$, et donc un angle réfracté plus grand que $\frac{\pi}{2}$, i.e. en dehors de la goutte : il y a réflexion totale.
 
-*(Note : c'est donc l'inverse — seuls les rayons d'incidence **inférieure** à $i_\ell$ traversent effectivement vers le liquide ; il convient de vérifier le sens de variation sur le schéma de l'énoncé.)*
+Ainsi, seuls les rayons d'incidence $i > i_\ell$ donnent, dans le verre, un angle $r$ plus grand, donc un angle d'incidence $(\frac{\pi}{2}-r)$ sur $(D_2)$ plus petit que $(\frac{\pi}{2}-r)$ sur $(D_2)$ et donc un angle de réfraction inférieur à $\frac{\pi}{2}$ (dans la goutte)
 
-Application numérique : $\sin i_\ell = \sqrt{n_v^2-n_g^2} \Rightarrow n_g = \sqrt{n_v^2 - \sin^2 i_\ell} = \sqrt{1.607^2 - \sin^2(48.71°)}$
+**3.** Application numérique : $\sin i_\ell = \sqrt{n_v^2-n_g^2} \Rightarrow n_g = \sqrt{n_v^2 - \sin^2 i_\ell} = \sqrt{1.607^2 - \sin^2(48.71°)}$
 
 $$
 n_g \approx 1.42
@@ -405,7 +405,7 @@ $$
 
 ## Indice d'un gaz
 
-Une lumière monochromatique avec $\lambda = 0.6\ \mu m$ issue d'une source ponctuelle $S_0$ placée au foyer d'une lentille traverse deux cuves $C_1$ et $C_2$ de longueur $L$, puis deux trous distants de $a$. La cuve $C_1$ contient de l'air d'indice $n_1 = 1.0002926$. La cuve $C_2$ contient initialement de l'air dans les mêmes conditions. On observe sur un écran placé à une distance $D$ des trous.
+Une lumière monochromatique avec $\lambda = 0.6\ \mu m$ issue d'une source ponctuelle $S$ placée au foyer d'une lentille traverse deux cuves $C_1$ et $C_2$ de longueur $L$, puis deux trous distants de $a$. La cuve $C_1$ contient de l'air d'indice $n_1 = 1.0002926$. La cuve $C_2$ contient initialement de l'air dans les mêmes conditions. On observe sur un écran placé à une distance $D$ des trous.
 
 ```{=latex}
 \begin{center}
@@ -458,7 +458,7 @@ $$
 i = \frac{\lambda D}{a} = \frac{0.6\times10^{-6}\times 1}{1\times10^{-3}} = 0.6\times10^{-3}\ \text{m} = 0.6\ \text{mm}
 $$
 
-**2.** En rajoutant un gaz d'indice $n_2$ dans $C_2$, la différence de marche supplémentaire introduite est $(n_2-n_1)L$. Le système de franges se translate d'un nombre de franges $p = \dfrac{(n_2-n_1)L}{\lambda}$.
+**2.** En rajoutant un gaz d'indice $n_2$ dans $C_2$, la différence de marche supplémentaire introduite est $(n_2-n_1)L$ : en changeant de gaz dans $C_2$, on remplace le chemin optique $n_1L$ par le chemin optique $n_2L$. Le système de franges se translate d'un nombre de franges $p = \dfrac{(n_2-n_1)L}{\lambda}$.
 
 La translation se fait "vers le bas", ce qui correspond (selon l'orientation du schéma) à une augmentation du chemin optique dans $C_2$, donc à $n_2 > n_1$ : $n_2 - n_1 > 0$.
 
