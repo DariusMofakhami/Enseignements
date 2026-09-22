@@ -8,9 +8,13 @@ Mes supports de cours, TD, TP et Colles. Rédigé en Quarto/LaTeX. Solutions int
 - `Cours/` — cours
 - `Colles/` — supports de colles
 
-## TD n°1 — Optique
+## TD n°1 — Optique (Réfraction, Fentes d'Young, Réseau)
 
 - 📄 [Énoncé (PDF)](https://dariusmofakhami.github.io/Enseignements/TD/TD_optique.pdf)
 - ✅ [Corrigé (PDF)](https://dariusmofakhami.github.io/Enseignements/TD/TD_optique_solutions.pdf)
 - 🖥️ [Solutions interactives (slides)](https://dariusmofakhami.github.io/Enseignements/TD/TD_optique_solutions_interactives.html)
+
+## TD n°2 — Optique (Michelson)
+
+- 📄 [Énoncé (PDF)](https://dariusmofakhami.github.io/Enseignements/TD/TD_optique_Michelson.pdf)
 
