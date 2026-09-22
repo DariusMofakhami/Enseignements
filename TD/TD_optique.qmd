@@ -1,8 +1,7 @@
 ---
 title: "Planche d'Optique (PC)"
-subtitle: "Énoncés"
+subtitle: "– Optique géométrique, réfraction, fentes d'Young et Réseau –"
 solution: false
-# subtitle: "Solutions"
 # solution: true
 header-left: "TD IPESUP 2026-2027"
 header-right: "Optique (PC)"
@@ -530,7 +529,7 @@ Un écran opaque percé de deux fentes d'Young identiques de largeur $b = 17\ \m
 
 ```{=latex}
 \begin{center}
-\includegraphics[width=0.7\linewidth]{img/interfrange_trous_Young.png}
+\includegraphics[width=0.5\linewidth]{img/interfrange_trous_Young.png}
 \end{center}
 ```
 
@@ -556,15 +555,15 @@ $$
 
 **2.** Sur la photo, on mesure la largeur totale de la tache centrale de diffraction (distance entre les deux premiers zéros d'intensité, symétriques par rapport au centre). L'angle correspondant, ramené dans le plan focal, donne accès à $\theta_{1/2} = \lambda/b$, d'où :
 $$
-\lambda = b\,\theta_{1/2}
+\lambda = b\,\theta_{1/2} = b\frac{x}{f_2}
 $$
-Numériquement (mesure sur la photo) : $\lambda \approx 542\ \text{nm}$.
+A. N. : en mesurant 2cm sur la photo, on trouve : $\lambda \approx 680nm\ \text{nm}$, un laser bien rouge (la photo peut avoir été mal calibré pour l'impression au format A4 sur votre TD).
 
 **3.** En comptant le nombre de franges à l'intérieur de la tache centrale de diffraction (ou en mesurant directement l'interfrange sur la photo) et en utilisant $i = \lambda f_2'/a$, on isole :
 $$
 a = \frac{\lambda f_2'}{i}
 $$
-Numériquement : $a \approx 68\ \mu m$.
+A. N. : $a \sim$ plusieurs dizaine de $\mu m$ (dépend de la taille de la photo sur votre version imprimé du TD).
 
 **4.** L'association de deux lentilles avec objet au foyer objet de $L_1$ et image dans le plan focal image de $L_2$ constitue un système afocal. Le grandissement transversal d'un système afocal vaut :
 $$
@@ -694,133 +693,6 @@ $$
 :::
 
 
-<!-- 
-## Interféromètre de Michelson
-
-On place l'écran à une distance $D = 1.6\ \text{m}$ du miroir $M_2$. On dispose d'une lentille de focale image $f' = 30\ \text{cm}$.
-
-**1.** Préciser comment est réglé le Michelson, comment sont éclairés les miroirs, la localisation des franges.
-
-**2.** Déterminer la distance miroir $M_2$–lentille pour faire l'image agrandie du miroir sur l'écran et calculer le grandissement de la lentille pour cette position.
-
-*Rappel :* $\dfrac{1}{\overline{OA'}} - \dfrac{1}{\overline{OA}} = \dfrac{1}{f'}$ et $\gamma = \dfrac{\overline{OA'}}{\overline{OA}} = \dfrac{\overline{A'B'}}{\overline{AB}}$. On propose de poser $x = \overline{OA}$.
-
-**3.** En déduire un angle pertinent pour ce Michelson.
-
-::: {.content-visible when-meta="solution"}
-
-### Solution
-
-**1.** Le Michelson est réglé en **coin d'air** (lame d'air d'épaisseur variable / miroirs non rigoureusement parallèles, ou plus généralement configuration où les miroirs (ou leur image $M_1'$ par rapport à la séparatrice) ne sont pas confondus). Les miroirs sont éclairés par une source étendue en lumière quasi-parallèle (ou source large), et les franges — localisées sur les miroirs eux-mêmes (ou leur image) — doivent donc être imagées par une lentille sur un écran pour être observées nettement.
-
-**2.** On cherche $x = \overline{OA}$ (distance lentille–miroir $M_2$, ou son image) tel que l'image se forme sur l'écran à $\overline{OA'} = D - x = 1.6-x$ (l'écran étant fixe à $D=1.6\ m$ du miroir, la lentille est placée à une distance $x$ du miroir donc à $D-x$ de l'écran) :
-$$
-\frac{1}{D-x} - \frac{1}{-x} = \frac{1}{f'}
-$$
-En résolvant cette équation du second degré en $x$ avec $D = 1.6\ \text{m}$ et $f' = 0.3\ \text{m}$, on obtient deux solutions, dont celle donnant l'image agrandie :
-$$
-x = 0.4\ \text{m}
-$$
-Le grandissement correspondant :
-$$
-\gamma = \frac{\overline{OA'}}{\overline{OA}} = \frac{D-x}{-x} = \frac{1.2}{-0.4} = -3
-$$
-soit $|\gamma| = 3$.
-
-
-**3.** L'angle pertinent est l'angle d'inclinaison $\theta$ du coin d'air (angle entre les deux miroirs, ou leurs images), qui détermine l'écartement angulaire des franges rectilignes observées ; il est relié au pas des franges $i_x$ observées sur l'écran par $\theta = \dfrac{\lambda}{2\,i_x/\gamma}$ (l'angle du coin d'air se retrouve, après grandissement par la lentille, dans l'interfrange mesuré sur l'écran).
-
-:::
-
-
-
-## Mesure de l'épaisseur d'un film alimentaire
-
-On dispose d'un interféromètre de Michelson réglé en configuration lame d'air, éclairé par une source de lumière blanche.
-
-**1.** Décrire le dispositif, notamment l'allure des franges d'interférences et la façon de les observer.
-
-On règle le Michelson au contact optique, puis on insère dans l'un des bras de l'interféromètre un film alimentaire tendu, assimilé à une lame à faces parallèles d'épaisseur $e$ d'indice $n=1.5$. L'écran apparaît blanc dans les deux cas.
-
-**2.** On donne le spectre de la lumière au centre de l'écran en présence du film. Commenter la courbe et en déduire la valeur numérique de $e$.
-
-::: {.content-visible when-meta="solution"}
-
-### Solution
-
-**1.** En configuration lame d'air éclairée en lumière blanche, sous incidence quasi-normale et pour de faibles épaisseurs, on observe des **anneaux d'égale inclinaison** (ou, au contact optique avec un léger coin d'air, des franges rectilignes) localisés à l'infini : on les observe donc dans le plan focal d'une lentille de convergence, ou à l'œil accommodé à l'infini.
-
-**2.** Sans le film, au contact optique, la différence de marche est nulle pour toutes les longueurs d'onde : l'écran est uniformément blanc (teinte de blanc d'ordre supérieur nulle, pas de cannelures).
-
-En insérant le film d'épaisseur $e$ et d'indice $n$ dans un bras, on introduit une différence de marche supplémentaire $\delta = 2(n-1)e$ (traversée aller-retour du film, en configuration Michelson). Le spectre cannelé observé (plusieurs maxima/minima régulièrement espacés en $\lambda$) correspond aux longueurs d'onde en phase ($\delta = k\lambda$) ou en opposition de phase.
-
-En mesurant l'écart entre deux maxima consécutifs du spectre (ou en comptant le nombre de cannelures entre deux longueurs d'onde $\lambda_1,\lambda_2$), on remonte à $\delta$, puis à :
-$$
-e = \frac{\delta}{2(n-1)}
-$$
-
-Application numérique : $e \approx 15.4\ \mu m$.
-
-
-:::
-
-
-
-## Doublet du sodium
-
-Dans un premier temps, on considère un interféromètre de Michelson réglé en lame d'air, éclairé par une source de longueur d'onde $\lambda$.
-
-**1.** Préciser la forme et la localisation des franges. Pour observer ces franges on utilise une lentille de focale $f' = 60\ \text{cm}$. Préciser les positions de la lentille et de l'écran.
-
-**2.** Calculer la taille de la 4ème frange brillante en partant du centre de l'écran. Données : épaisseur de la lame d'air $e = 356\ \mu m$ et $\lambda = 632\ \text{nm}$.
-
-Le Michelson est éclairé par une lampe spectrale présentant un doublet de longueurs d'onde $\lambda_1$ et $\lambda_2$. On déplace un des miroirs à une vitesse $v = 1.65\ \mu m/s$. On observe les franges sur un écran à l'aide d'une lentille de focale $f' = 1\ \text{m}$. On mesure l'éclairement reçu au centre de l'écran à l'aide d'un capteur.
-
-**3.** La première courbe donne l'éclairement en fonction du temps pour un temps variant de $0$ à $5\ \text{s}$. Sur cette courbe, tout se passe comme si le Michelson était éclairé par une source monochromatique de longueur d'onde $\lambda_m$ égale à la longueur d'onde moyenne de la source.
-
-**4.** La seconde courbe donne l'éclairement en fonction du temps pour un temps variant de $0$ à $750\ \text{s}$. Nommer le phénomène qui se produit aux instants $t=210\ \text{s}$, $t\approx 390\ \text{s}$, $t\approx 570\ \text{s}$ et $t\approx 720\ \text{s}$. Exprimer les valeurs de l'épaisseur de la lame d'air qui conduisent à ce phénomène. Commenter la courbe et en déduire les longueurs d'onde du doublet.
-
-::: {.content-visible when-meta="solution"}
-
-### Solution
-
-**1.** En configuration lame d'air éclairée par une source ponctuelle (ou étendue) monochromatique, on observe des **anneaux d'égale inclinaison**, localisés à l'infini. La lentille de projection ($f'=60\ \text{cm}$) est donc placée après le Michelson (n'importe où sur le trajet des rayons parallèles émergents), et l'écran est placé dans le plan focal image de la lentille, soit à $60\ \text{cm}$ de celle-ci.
-
-**2.** Le rayon angulaire du $p$-ième anneau brillant vérifie $\delta = 2e\cos\theta_p \approx 2e\left(1-\dfrac{\theta_p^2}{2}\right) = p\lambda$ (ordre décroissant depuis le centre). Au centre, l'ordre est $p_0 = 2e/\lambda$ (non nécessairement entier) ; le 4ème anneau brillant en partant du centre correspond à une perte d'ordre de $4$ unités :
-$$
-\theta_p^2 = \frac{4\lambda}{e}\times ...
-$$
-plus précisément $\theta_p = \sqrt{\dfrac{2\times4\times\lambda}{e}}$, puis $r_4 = f'\theta_p$ (position sur l'écran).
-
-Numériquement : $\theta_4 = \sqrt{\dfrac{8\times632\times10^{-9}}{356\times10^{-6}}} \approx 0.119\ \text{rad}$, et $r_4 = f'\times\theta_4 = 0.60\times0.119 \approx 7.1\ \text{cm}$.
-
-*(L'énoncé donne $r_4 = 4.8\ \text{cm}$ ; l'écart provient de la définition exacte retenue pour l'ordre au centre et l'anneau considéré — à ajuster selon la convention du cours.)*
-
-
-**3.** Pour de petits déplacements (quelques secondes, soit un déplacement de miroir de quelques $\mu m$), les deux composantes du doublet restent quasiment en phase : l'battement dû à l'écart $\Delta\lambda = \lambda_1-\lambda_2$ (très fin) n'est pas encore perceptible sur une échelle de temps aussi courte, et l'éclairement oscille simplement à la fréquence associée à $\lambda_m = (\lambda_1+\lambda_2)/2$ :
-$$
-\lambda_m \approx 594\ \text{nm}
-$$
-
-**4.** Aux instants $t=210\ \text{s}$, $390\ \text{s}$, $570\ \text{s}$, $720\ \text{s}$, on observe un phénomène de **brouillage total des franges** (contraste nul) : les deux systèmes de franges associés à $\lambda_1$ et $\lambda_2$ sont alors en opposition de phase (une frange brillante de l'un coïncide avec une frange sombre de l'autre), de sorte que leur superposition incohérente donne un éclairement uniforme.
-
-Ce brouillage se produit pour des épaisseurs de lame d'air telles que :
-$$
-2e = \left(p+\frac{1}{2}\right)\frac{\lambda_1\lambda_2}{|\lambda_1-\lambda_2|} \approx \left(p+\frac12\right)\frac{\lambda_m^2}{\Delta\lambda}, \quad p\in\mathbb{N}
-$$
-
-Entre deux brouillages successifs, l'épaisseur varie de $\Delta e = \dfrac{\lambda_m^2}{2\Delta\lambda}$. Or $e = vt/2$ (déplacement du miroir à vitesse $v$, l'épaisseur variant deux fois moins vite que le miroir... en réalité $\delta = 2e$ varie comme $2vt$ donc $e=vt$ selon la convention ; on prend la durée entre deux brouillages consécutifs $\tau \approx 180\ \text{s}$, donnant $\Delta e = v\tau$) :
-
-$$
-\Delta\lambda = \frac{\lambda_m^2}{2\,v\,\tau}
-$$
-
-Numériquement, avec $\tau \approx 180\ \text{s}$ et $v=1.65\ \mu m/s$ :
-$$
-\Delta\lambda = \frac{(594\times10^{-9})^2}{2\times1.65\times10^{-6}\times180} \approx 6.3\times10^{-10}\ \text{m}
-$$
-
-::: -->
 
 &nbsp;
 
