@@ -1,6 +1,6 @@
 ---
 title: "Planche d'Optique (PC)"
-subtitle: "– Michelson –"
+subtitle: "– Michelson & cohérence temporelle –"
 solution: false
 # solution: true
 header-left: "TD IPESUP 2026-2027"
@@ -121,7 +121,7 @@ Application numérique : $e \approx 15.4\ \mu m$.
 
 
 
-## Doublet du sodium
+## Doublet du sodium en lame d'air
 
 Dans un premier temps, on considère un interféromètre de Michelson réglé en lame d'air, éclairé par une source de longueur d'onde $\lambda$.
 
@@ -184,5 +184,257 @@ Numériquement, avec $\tau \approx 180\ \text{s}$ et $v=1.65\ \mu m/s$ :
 $$
 \Delta\lambda = \frac{(594\times10^{-9})^2}{2\times1.65\times10^{-6}\times180} \approx 6.3\times10^{-10}\ \text{m}
 $$
+
+:::
+
+
+
+## Doublet du sodium en coin d'air
+
+Un interféromètre de Michelson est constitué d'une lame semi-réfléchissante non absorbante, appelée séparatrice $S_P$, dont les facteurs de transmission et de réflexion valent $1/2$, et de deux miroirs plans $M_1$ et $M_2$ perpendiculaires l'un à l'autre. Les distances $JA_1$ et $JA_2$ sont égales, et $S_P$ est inclinée à $45°$ par rapport aux normales à $M_1$ et $M_2$.
+
+La source primaire est une lampe à vapeur de sodium dont on suppose que le spectre d'émission ne contient que deux raies jaunes intenses, de même intensité, de longueurs d'onde dans le vide $\lambda_1 = \lambda_0 - \dfrac{\Delta\lambda}{2}$ et $\lambda_2 = \lambda_0 + \dfrac{\Delta\lambda}{2}$, avec $\lambda_0 = 589.3\ \text{nm}$ et $\Delta\lambda \ll \lambda_0$. L'indice de l'air vaut $1.0$.
+
+On se place au contact optique, puis on fait tourner le miroir $M_2$ d'un angle $\alpha$ très petit autour d'un axe perpendiculaire au plan $JA_1A_2$ et passant par $A_2$.
+
+```{=latex}
+\begin{center}
+\begin{tikzpicture}[scale=1.0, >=Stealth, every node/.style={font=\small}]
+  \coordinate (J)  at (0,0);
+  \coordinate (A1) at (0,2.2);
+  \coordinate (A2) at (2.2,0);
+
+  % Axes : x vers la droite, y vers le bas (sens d'observation)
+  \draw[->] (-3.3,0) -- (3.5,0) node[below right] {$x$};
+  \draw[->] (A1) -- (0,-2.9) node[below right] {$y$};
+
+  % Source étendue
+  \draw[fill=gray!25] (-2.9,-0.45) rectangle (-2.75,0.45);
+  \node[] at (-2.82,0.7) {$S$};
+  \node[anchor=south] at (-2.82,0.8) {source étendue};
+  \draw[->] (-2.7,0) -- (-0.7,0);
+
+  % Séparatrice à 45°
+  \draw[thick] (-0.95,-0.95) -- (0.95,0.95);
+  \node[left] at (-1.0,-0.95) {$S_P$};
+
+  % Miroir M1 (horizontal, en haut), hachuré au dos
+  \draw[thick] (-1.2,2.2) -- (1.2,2.2);
+  \foreach \i in {-1.15,-0.9,...,1.15} \draw (\i,2.2) -- ++(0.16,0.22);
+  \node[left] at (-1.3,2.2) {$M_1$};
+
+  % Miroir M2 (vertical, à droite), hachuré au dos
+  \draw[thick] (2.2,-1.2) -- (2.2,1.2);
+  \foreach \j in {-1.15,-0.9,...,1.15} \draw (2.2,\j) -- ++(0.22,0.16);
+  \node[below] at (2.35,-1.35) {$M_2$};
+
+  % Points remarquables
+  \foreach \P in {J,A1,A2} \fill (\P) circle (1.5pt);
+  \node[anchor=south east]  at (J)  {$J$};
+  \node[below right] at (A1) {$A_1$};
+  \node[above left]  at (A2) {$A_2$};
+
+  % Lentille de projection
+  \draw[<->] (-0.7,-2.3) -- (0.7,-2.3);
+  \node[left] at (-0.8,-2.3) {$L$};
+\end{tikzpicture}
+\end{center}
+```
+
+**1.** Déterminer l'ordre d'interférences pour la longueur d'onde $\lambda_1$ et caractériser le système de franges.
+
+**2.** Sans modifier l'angle $\alpha$, on translate le miroir $M_2$ de façon à faire défiler les franges. On observe un premier brouillage au centre de la figure d'interférences lorsque le déplacement de $M_2$ vaut $d = 0.15\ \text{mm}$. Expliquer le phénomène.
+
+**3.** En déduire $\Delta\lambda$ en raisonnant sur les ordres de chaque système d'interférences au point $A_1$.
+
+::: {.content-visible when-meta="solution"}
+
+### Solution
+
+**1.** Le dispositif est à **division d'amplitude**. Le Michelson est réglé en **coin d'air** d'arête $A_1$ : on raisonne sur le schéma équivalent, dans lequel $M_2'$ est le symétrique de $M_2$ par rapport à la séparatrice. Les interférences sont localisées au voisinage des miroirs $M_1$ et $M_2'$.
+
+```{=latex}
+\begin{center}
+\begin{tikzpicture}[scale=1.0, >=Stealth, every node/.style={font=\small}]
+  \pgfmathsetmacro{\al}{12}   % angle du coin d'air (exagéré pour la lisibilité)
+
+  % M1 (horizontal) et M2' (incliné de alpha) : le coin d'air s'ouvre vers la droite
+  \draw[thick] (0,0) -- (4.6,0);
+  \foreach \i in {0.15,0.4,...,4.5} \draw (\i,0) -- ++(-0.16,-0.22);
+  \node[below] at (4.5,-0.35) {$M_1$};
+  \draw[thick] (0,0) -- ({4.6},{4.6*tan(\al)});
+  \foreach \i in {0.35,0.6,...,4.45} \draw ({\i},{\i*tan(\al)}) -- ++(0.16,0.22);
+  \node[right] at ({4.6},{4.6*tan(\al)}) {$M_2'$};
+
+  % Angle alpha à l'arête
+  \draw (1.0,0) arc[start angle=0, end angle=\al, radius=1.0];
+  \node at ({1.3*cos(\al/2)},{1.3*sin(\al/2)}) {$\alpha$};
+
+  % Épaisseur e de la lame d'air
+  \draw[<->] (3.95,0.05) -- (3.95,{3.95*tan(\al)-0.05});
+  \node[right] at (3.95,{3.95*tan(\al)/2}) {$e$};
+
+  % Rayons (1), réfléchi sur M1 en B, et (2), réfléchi sur M2' en M
+  \draw[thick,->] (3.2,-1.5) -- (3.2,-0.7);
+  \draw[thick] (3.2,-0.7) -- (3.2,{3.2*tan(\al)});
+  \node[left] at (3.2,-1.25) {$(1)$};
+  \draw[thick,->] ({3.2+1.0*tan(2*\al)},{3.2*tan(\al)-1.0}) -- ({3.2+1.9*tan(2*\al)},{3.2*tan(\al)-1.9});
+  \draw[thick] (3.2,{3.2*tan(\al)}) -- ({3.2+1.0*tan(2*\al)},{3.2*tan(\al)-1.0});
+  \node[right] at ({3.2+1.9*tan(2*\al)},{3.2*tan(\al)-1.75}) {$(2)$};
+
+  \fill (0,0) circle (1.5pt);   \node[below left]  at (0,0) {$A_1$};
+  \fill (3.2,0) circle (1.5pt); \node[below right] at (3.2,0) {$B$};
+  \fill (3.2,{3.2*tan(\al)}) circle (1.5pt); \node[above left] at (3.2,{3.2*tan(\al)}) {$M$};
+
+  % Cote x = A1B
+  \draw[<->] (0,-1.9) -- node[below] {$x$} (3.2,-1.9);
+\end{tikzpicture}
+\end{center}
+```
+
+On pose $x = \overline{A_1B} \approx \overline{A_1M}$, l'angle $\alpha$ étant petit : l'épaisseur de la lame d'air en $x$ vaut $e = \alpha x$.
+
+Les deux rayons subissent chacun une réflexion métallique qui ajoute $\lambda_1/2$ au chemin optique : ce terme disparaît dans la différence des chemins optiques. La différence de marche entre les rayons $(2)$ et $(1)$ vaut donc, sous incidence quasi normale :
+$$
+\delta = [SM]_2 - [SM]_1 \approx 2\,n_{\text{air}}\,e = 2e = 2\alpha x
+$$
+d'où l'ordre d'interférences pour $\lambda_1$ :
+$$
+p = \frac{\delta}{\lambda_1} = \frac{2\alpha x}{\lambda_1}
+$$
+
+On observe des franges **rectilignes, parallèles à l'arête du coin d'air**, équidistantes, d'interfrange $i = \dfrac{\lambda_1}{2\alpha}$.
+
+**2.** Les deux raies du doublet sont **incohérentes** entre elles : les intensités s'ajoutent, et l'on superpose deux systèmes de franges d'interfranges légèrement différents ($i_1 = \lambda_1/2\alpha$ et $i_2 = \lambda_2/2\alpha$).
+
+- Avant la translation, en $A_1$ ($x = 0$), la différence de marche est nulle pour les deux longueurs d'onde : il y a **coïncidence**, les franges brillantes des deux systèmes se superposent et le contraste est maximal.
+- Après translation du miroir de $d$, la différence de marche en $A_1$ vaut $\delta = 2d$. Les deux systèmes se sont décalés l'un par rapport à l'autre ; lorsque les franges brillantes de l'un tombent sur les franges sombres de l'autre, il y a **anticoïncidence** : l'éclairement devient uniforme, c'est le **brouillage** de la figure.
+
+**3.** Le brouillage a lieu lorsque les ordres en $A_1$ vérifient $p_1 - p_2 = \dfrac{1}{2} + k$, avec $k$ entier relatif. Après le déplacement du miroir, $\delta = 2d$ en $A_1$, donc :
+$$
+p_1 = \frac{2d}{\lambda_1}, \qquad p_2 = \frac{2d}{\lambda_2}
+$$
+Comme $\Delta\lambda \ll \lambda_0$, on a $\lambda_1\lambda_2 \approx \lambda_0^2$ et :
+$$
+p_1 - p_2 = \frac{2d}{\lambda_1} - \frac{2d}{\lambda_2} = \frac{2d\,\Delta\lambda}{\lambda_1\lambda_2} \approx \frac{2d\,\Delta\lambda}{\lambda_0^2} = \frac{1}{2} + k
+$$
+
+Le **premier** brouillage correspond à $k = 0$, d'où :
+$$
+\Delta\lambda = \frac{\lambda_0^2}{4d} = \frac{(589.3\times10^{-9})^2}{4\times0.15\times10^{-3}} \approx 0.58\ \text{nm}
+$$
+
+**Intensité totale et facteur de contraste.** Prise seule, chaque raie donne une figure d'interférences à deux ondes de même intensité $I_0$ (formule de Fresnel) :
+$$
+I_j(\delta) = 2I_0\left[1 + \cos\left(\frac{2\pi\delta}{\lambda_j}\right)\right], \qquad j = 1,\,2
+$$
+Les deux raies étant incohérentes entre elles, les intensités s'ajoutent :
+$$
+I(\delta) = I_1 + I_2 = 2I_0\left[2 + \cos\frac{2\pi\delta}{\lambda_1} + \cos\frac{2\pi\delta}{\lambda_2}\right]
+$$
+On factorise avec $\cos p + \cos q = 2\cos\dfrac{p-q}{2}\,\cos\dfrac{p+q}{2}$, en utilisant $\lambda_1 + \lambda_2 = 2\lambda_0$ et $\lambda_1\lambda_2 \approx \lambda_0^2$ :
+$$
+\frac{p-q}{2} = \pi\delta\left(\frac{1}{\lambda_1} - \frac{1}{\lambda_2}\right) = \frac{\pi\delta\,\Delta\lambda}{\lambda_1\lambda_2} \approx \frac{\pi\,\delta\,\Delta\lambda}{\lambda_0^2}
+\qquad
+\frac{p+q}{2} = \pi\delta\,\frac{\lambda_1+\lambda_2}{\lambda_1\lambda_2} \approx \frac{2\pi\delta}{\lambda_0}
+$$
+d'où l'intensité totale :
+$$
+I(\delta) = 4I_0\left[1 + C(\delta)\,\cos\left(\frac{2\pi\delta}{\lambda_0}\right)\right]
+\qquad\text{avec}\qquad
+C(\delta) = \cos\left(\frac{\pi\,\delta\,\Delta\lambda}{\lambda_0^2}\right)
+$$
+
+On reconnaît des franges d'interférences associées à la longueur d'onde moyenne $\lambda_0$ (terme rapidement variable), modulées par un **facteur de contraste** $C(\delta)$ lentement variable. Le contraste au sens de Michelson vaut $\mathcal{C} = \dfrac{I_{max}-I_{min}}{I_{max}+I_{min}} = |C(\delta)|$ :
+
+- $|C| = 1$ (coïncidence, contraste maximal) pour $\delta = k\,\dfrac{\lambda_0^2}{\Delta\lambda}$ ;
+- $C = 0$ (anticoïncidence, brouillage) pour $\delta = \left(k+\dfrac{1}{2}\right)\dfrac{\lambda_0^2}{\Delta\lambda}$.
+
+Le contraste se rétablit donc périodiquement : c'est un **battement** entre les deux systèmes de franges, de période $\dfrac{\lambda_0^2}{\Delta\lambda} \approx 0.6\ \text{mm}$ en différence de marche. En $A_1$, où $\delta = 2d$, le premier brouillage correspond à $2d = \dfrac{\lambda_0^2}{2\Delta\lambda}$ : on retrouve bien $\Delta\lambda = \dfrac{\lambda_0^2}{4d}$.
+
+:::
+
+
+
+## Michelson en coin d'air et raie à profil rectangulaire
+
+On reprend l'interféromètre de Michelson de l'exercice précédent (séparatrice $S_P$ inclinée à $45°$, miroirs $M_1$ et $M_2$ perpendiculaires, $JA_1 = JA_2$). La radiation utilisée est la raie rouge du cadmium, **à profil rectangulaire** : les fréquences émises sont comprises entre $\nu_0 - \dfrac{\Delta\nu}{2}$ et $\nu_0 + \dfrac{\Delta\nu}{2}$, la fréquence centrale correspondant à la longueur d'onde dans le vide $\lambda_0 = 643.8\ \text{nm}$. L'indice de l'air vaut $1.0$.
+
+On se place au contact optique, puis on fait tourner le miroir $M_2$ d'un angle $\alpha \ll 1$ autour d'un axe perpendiculaire à $JA_1A_2$ et passant par $A_2$.
+
+**1.** Déterminer la différence de marche et caractériser le système de franges pour la longueur d'onde $\lambda_0$.
+
+**2.** On translate le miroir $M_2$ d'une distance $d$ de façon à faire défiler les franges. Le brouillage apparaît la première fois au point $A_1$ pour $d = 15\ \text{cm}$. Calculer $\Delta\nu$.
+
+::: {.content-visible when-meta="solution"}
+
+### Solution
+
+**1.** Le raisonnement de l'exercice précédent s'applique à l'identique : dispositif à division d'amplitude, réglé en coin d'air d'arête $A_1$, interférences localisées au voisinage des miroirs $M_1$ et $M_2'$. En posant $x = \overline{A_1B}$ :
+$$
+\delta = [SM]_2 - [SM]_1 \approx 2\,n_{\text{air}}\,e = 2e = 2\alpha x
+\qquad\Rightarrow\qquad
+p = \frac{\delta}{\lambda_0} = \frac{2\alpha x}{\lambda_0}
+$$
+On observe des franges rectilignes, parallèles à l'arête du coin d'air, d'interfrange $i = \dfrac{\lambda_0}{2\alpha}$.
+
+**2.** Après translation du miroir de $d$ dans le sens des $x > 0$, la différence de marche en $A_1$ vaut $\delta = 2d$.
+
+On utilise le critère semi-quantitatif de brouillage $|\Delta p| > \dfrac{1}{2}$, où $|\Delta p|$ est évalué sur la **moitié** de l'étendue spectrale de la source. L'ordre s'écrit $p = \dfrac{\delta}{\lambda} = \dfrac{\delta\,\nu}{c}$, d'où, pour les fréquences $\nu_0 + \dfrac{\Delta\nu}{4}$ et $\nu_0 - \dfrac{\Delta\nu}{4}$ :
+$$
+\Delta p = \frac{\delta}{c}\left(\frac{\Delta\nu}{2}\right) = \frac{2d}{c}\left(\frac{\Delta\nu}{2}\right)
+$$
+Le premier brouillage apparaît pour $\Delta p = \dfrac{1}{2}$, soit :
+$$
+\Delta\nu = \frac{c}{2d} = \frac{3.0\times10^{8}}{2\times0.15} = 1.0\ \text{GHz}
+$$
+
+On retrouve la **longueur de cohérence** de la source, $\ell_c = \dfrac{c}{\Delta\nu} = 2d = 30\ \text{cm}$ : le brouillage apparaît lorsque la différence de marche atteint $\ell_c$. En longueur d'onde, $\Delta\lambda = \dfrac{\lambda_0^2}{c}\Delta\nu \approx 1.4\times10^{-3}\ \text{nm}$.
+
+**Intensité en un point $M(x)$ pour une raie de largeur $\Delta\nu$.** Les composantes spectrales d'une même source sont incohérentes entre elles : on somme leurs intensités. Pour un profil **rectangulaire**, la densité spectrale d'intensité est uniforme sur la bande :
+$$
+\frac{\mathrm{d}I_0}{\mathrm{d}\nu} = \frac{I_0}{\Delta\nu}
+\quad \text{pour} \quad \nu \in \left[\nu_0 - \frac{\Delta\nu}{2},\ \nu_0 + \frac{\Delta\nu}{2}\right],
+\qquad 0 \ \text{ailleurs}
+$$
+
+Chaque tranche $\mathrm{d}\nu$ donne, par la formule de Fresnel, une figure d'interférences à deux ondes de même intensité, de déphasage $\dfrac{2\pi\delta}{\lambda} = \dfrac{2\pi\nu\delta}{c}$ :
+$$
+\mathrm{d}I = \frac{2I_0}{\Delta\nu}\left[1 + \cos\left(\frac{2\pi\nu\delta}{c}\right)\right]\mathrm{d}\nu
+$$
+
+En un point $M(x)$ du coin d'air, la différence de marche $\delta = 2\alpha x$ est fixée : on intègre sur le profil spectral. En posant $k = \dfrac{2\pi\delta}{c}$ :
+$$
+\int_{\nu_0-\Delta\nu/2}^{\nu_0+\Delta\nu/2}\cos(k\nu)\,\mathrm{d}\nu
+= \frac{2}{k}\,\cos(k\nu_0)\,\sin\!\left(\frac{k\,\Delta\nu}{2}\right)
+= \Delta\nu\ \mathrm{sinc}\!\left(\frac{\pi\,\delta\,\Delta\nu}{c}\right)\cos\left(\frac{2\pi\delta}{\lambda_0}\right)
+$$
+avec $\mathrm{sinc}\,u = \dfrac{\sin u}{u}$. L'intensité s'écrit donc :
+$$
+I(x) = 2I_0\left[1 + C(\delta)\,\cos\left(\frac{2\pi\delta}{\lambda_0}\right)\right],
+\qquad
+C(\delta) = \mathrm{sinc}\!\left(\frac{\pi\,\delta\,\Delta\nu}{c}\right),
+\qquad \delta = 2\alpha x
+$$
+soit, explicitement en fonction de $x$ :
+$$
+I(x) = 2I_0\left[1 + \mathrm{sinc}\!\left(\frac{2\pi\alpha\,\Delta\nu}{c}\,x\right)\cos\left(\frac{4\pi\alpha}{\lambda_0}\,x\right)\right]
+$$
+
+**Lien avec la cohérence temporelle.** En introduisant le retard $\tau = \dfrac{\delta}{c}$ entre les deux ondes et le **temps de cohérence** $\tau_c = \dfrac{1}{\Delta\nu}$, le facteur de contraste s'écrit :
+$$
+C = \mathrm{sinc}\!\left(\pi\,\Delta\nu\,\tau\right) = \mathrm{sinc}\!\left(\frac{\pi\,\tau}{\tau_c}\right) = \mathrm{sinc}\!\left(\frac{\pi\,\delta}{\ell_c}\right)
+$$
+
+Le contraste ne dépend donc que du retard comparé au temps de cohérence : les deux ondes n'interfèrent avec un bon contraste que si elles proviennent du même train d'onde, c'est-à-dire si $\tau \ll \tau_c$, soit $\delta \ll \ell_c$. Le contraste vaut $1$ en $\delta = 0$ (sur l'arête $A_1$ au contact optique), puis décroît et s'annule pour la première fois quand :
+$$
+\frac{\pi\,\delta\,\Delta\nu}{c} = \pi
+\qquad\Longleftrightarrow\qquad
+\delta = \frac{c}{\Delta\nu} = \ell_c
+$$
+
+Avec $\delta = 2d$ en $A_1$, on retrouve exactement $\Delta\nu = \dfrac{c}{2d}$ : pour un profil rectangulaire, le critère semi-quantitatif du **2.** donne ici le même résultat que le calcul exact. Au-delà, le contraste reprend des valeurs faibles (lobes secondaires du sinus cardinal, $|C| \le 0.22$), et la figure reste pratiquement brouillée.
+
+*Remarque :* ce résultat est général — le facteur de contraste est la transformée de Fourier du profil spectral normalisé (théorème de Wiener-Khintchine). Un profil rectangulaire donne un sinus cardinal ; un profil gaussien donnerait une gaussienne ; deux raies fines (exercice précédent) donnent un cosinus, d'où les battements du contraste.
 
 :::
