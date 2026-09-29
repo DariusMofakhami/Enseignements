@@ -422,8 +422,6 @@ v = \frac{i}{T} = \frac{2{,}24\times10^{-6}}{50\times10^{-3}} \approx 4{,}5\time
 $$
 De façon équivalente, la fréquence du signal vaut $f = \dfrac{v}{i} = \dfrac{2nv\sin\theta}{\lambda_0}$ : la mesure de $f$ donne directement $v$.
 
-*Remarque :* cette vitesse est très faible pour un écoulement. Avec une période de $50\ \mu\text{s}$, on trouverait $v \approx 4{,}5\ \text{cm}\cdot\text{s}^{-1}$, valeur plus réaliste. La donnée est à vérifier dans la source.
-
 :::
 
 \vspace{1em}
