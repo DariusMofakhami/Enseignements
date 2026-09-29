@@ -1114,5 +1114,6 @@ en agissant sur $U$, on agit sur la fréquence sélectionnée par le filtre pass
 &nbsp;
 
 **Sources des exercices :**
+
 - *Physique tout-en-un* de S. Cardini et. al.
 - *Physique – exercices incontournables* de Jean-Noël Beury

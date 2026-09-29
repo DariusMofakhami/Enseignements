@@ -152,13 +152,25 @@ Le Michelson est éclairé par une lampe spectrale présentant un doublet de lon
 
 **1.** En configuration lame d'air éclairée par une source ponctuelle (ou étendue) monochromatique, on observe des **anneaux d'égale inclinaison**, localisés à l'infini. La lentille de projection ($f'=60\ \text{cm}$) est donc placée après le Michelson (n'importe où sur le trajet des rayons parallèles émergents), et l'écran est placé dans le plan focal image de la lentille, soit à $60\ \text{cm}$ de celle-ci.
 
-**2.** Le rayon angulaire du $p$-ième anneau brillant vérifie $\delta = 2e\cos\theta_p \approx 2e\left(1-\dfrac{\theta_p^2}{2}\right) = p\lambda$ (ordre décroissant depuis le centre). Au centre, l'ordre est $p_0 = 2e/\lambda$ (non nécessairement entier) ; le 4ème anneau brillant en partant du centre correspond à une perte d'ordre de $4$ unités :
-$$
-\theta_p^2 = \frac{4\lambda}{e}\times ...
-$$
-plus précisément $\theta_p = \sqrt{\dfrac{2\times4\times\lambda}{e}}$, puis $r_4 = f'\theta_p$ (position sur l'écran).
+**2.** Le rayon angulaire du $n$-ième anneau brillant vérifie $\delta(i_n) = 2e\cos i_n \approx 2e\left(1-\dfrac{i_n^2}{2}\right) = p_n\lambda$ (ordre décroissant depuis le centre). Au centre, l'ordre est $p_0 = 2e/\lambda$ (non nécessairement entier : intensité central plus ou moins brillante) ; le 4ème anneau brillant en partant du centre correspond à une perte d'ordre de $4$ unités à partir de l'arrondi entier de $p_0$.
 
-Numériquement : $\theta_4 = \sqrt{\dfrac{8\times632\times10^{-9}}{356\times10^{-6}}} \approx 0.119\ \text{rad}$, et $r_4 = f'\times\theta_4 = 0.60\times0.119 \approx 7.1\ \text{cm}$.
+Numériquement : $p_0 = \frac{2\times 356\times 10^{-6}}{632\times 10^{-9}} = 1126.5$ (demi entier donc sombre). On en déduit $p_1=1126$ et $p_4=1123$
+
+Pour calculer le rayon correspondant, on reprend notre développement :
+$$
+i_n^2 = 2\left(1 - \frac{p_n}{p_0}\right)
+$$
+On utilise ensuite la relation géométrique $\tan i_n=r_n/f'$ (projection depuis l'infini avec un angle d'incidence $i_p$ sur un écran au plan focal) qui donne $r_n \simeq f'i_n$ en condtion de Gauss.
+
+On obtient la formule finale :
+$$
+r_n = f'\sqrt{2\left(1-\frac{p_n}{p_0}\right)}
+$$
+
+Numériquement : 
+$$
+r_4 = 0.6\sqrt{2\left(1-\frac{1123}{1126.5}\right)} \simeq 4.5 cm
+$$
 
 
 
@@ -444,5 +456,6 @@ Avec $\delta = 2d$ en $A_1$, on retrouve exactement $\Delta\nu = \dfrac{c}{2d}$ 
 &nbsp;
 
 **Sources des exercices :**
+
 - *Planche de TD d'optique PC* du Lycée Dumont D’Urville à Toulon (énoncés uniquement)
 - *Physique – exercices incontournables* de Jean-Noël Beury
