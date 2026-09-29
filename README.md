@@ -11,13 +11,13 @@ Mes supports de cours, TD, TP et Colles. Rédigé en Quarto/LaTeX. Solutions int
 ## TD n°1 — Optique (Réfraction, Fentes d'Young, Réseau)
 
 - 📄 [Énoncé (PDF)](https://dariusmofakhami.github.io/Enseignements/TD/TD_optique.pdf)
-- ✅ [Corrigé (PDF)](https://dariusmofakhami.github.io/Enseignements/TD/TD_optique_solutions.pdf)
+- ✅ [Corrigé (PDF)](https://dariusmofakhami.github.io/Enseignements/TD/TD_optique_solution.pdf)
 - 🖥️ [Solutions interactives (slides)](https://dariusmofakhami.github.io/Enseignements/TD/TD_optique_solutions_interactives.html)
 
 ## TD n°2 — Optique (Michelson)
 
 - 📄 [Énoncé (PDF)](https://dariusmofakhami.github.io/Enseignements/TD/TD_optique_Michelson.pdf)
-- ✅ [Corrigé (PDF)](https://dariusmofakhami.github.io/Enseignements/TD/TD_optique_Michelson_solutions.pdf)
+- ✅ [Corrigé (PDF)](https://dariusmofakhami.github.io/Enseignements/TD/TD_optique_Michelson_solution.pdf)
 
 ## TD n°3 — Electrostatique (Th. de Gauss & condensateurs)
 
