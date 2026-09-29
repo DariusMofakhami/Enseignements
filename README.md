@@ -17,4 +17,8 @@ Mes supports de cours, TD, TP et Colles. Rédigé en Quarto/LaTeX. Solutions int
 ## TD n°2 — Optique (Michelson)
 
 - 📄 [Énoncé (PDF)](https://dariusmofakhami.github.io/Enseignements/TD/TD_optique_Michelson.pdf)
+- ✅ [Corrigé (PDF)](https://dariusmofakhami.github.io/Enseignements/TD/TD_optique_Michelson_solutions.pdf)
 
+## TD n°3 — Electrostatique (Th. de Gauss & condensateurs)
+
+à venir

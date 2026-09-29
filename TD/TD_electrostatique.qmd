@@ -1,0 +1,1118 @@
+---
+title: "Planche d'Électrostatique (PC)"
+subtitle: "– Théorème de Gauss & Condensateurs –"
+solution: false
+# solution: true
+header-left: "TD IPESUP 2026-2027"
+header-right: "Électrostatique (PC)"
+footer-left: "D. Mofakhami"
+footer-right: ""
+format:
+  pdf:
+    documentclass: article
+    template: td-template.tex
+    geometry: margin=2.5cm,headheight=28pt
+    fontsize: 11pt
+    number-sections: true
+    toc: false
+mainfont: "Latin Modern Roman"
+header-includes:
+  - \usepackage{esint}
+---
+
+<!--
+Pour compiler l'énoncé seul :        quarto render TD_electrostatique.qmd
+Pour compiler avec les solutions :   quarto render TD_electrostatique.qmd --metadata solution:true
+(ou changer directement "solution: true" dans l'en-tête ci-dessus)
+-->
+
+## Champ électrostatique d'une distribution à symétrie sphérique ($\star$)
+
+Soit le champ électrostatique créé dans le vide par une distribution de charges à symétrie sphérique. La composante radiale de ce champ dépend de la distance $r$ au centre $O$ de la distribution selon :
+$$
+E = \frac{k}{2\varepsilon_0} \ \text{si } 0 < r < R \qquad \text{et} \qquad E = \frac{kR^2}{2\varepsilon_0 r^2} \ \text{si } r > R \qquad (k \text{ constante positive}).
+$$
+Dans les conditions du problème, $\operatorname{div}\vec{E} = \dfrac{1}{r^2}\dfrac{\mathrm{d}\left(r^2E\right)}{\mathrm{d}r}$.
+
+**1.** De quelle(s) variable(s) dépend le champ électrostatique en coordonnées sphériques ?
+
+**2.** Quelle est sa direction ?
+
+**3.** Déterminer l'expression du potentiel $V$ en supposant qu'il n'y a pas de charges à l'infini et que des charges infiniment éloignées n'interagissent pas entre elles.
+
+**4.** Tracer l'allure du potentiel en fonction de $r$.
+
+**5.** Exprimer la densité volumique de charges $\rho$.
+
+**6.** Tracer l'allure de la densité volumique de charges en fonction de $r$.
+
+**7.** Exprimer la charge $\mathrm{d}q$ d'une couche sphérique de centre $O$ comprise entre $r$ et $r + \mathrm{d}r$.
+
+**8.** En déduire l'expression de la charge totale $q_0$ de la distribution en fonction de $k$ et $R$.
+
+**9.** Établir que pour $r > R$, on a l'équivalence de cette distribution avec une charge électrique ponctuelle dont on donnera la valeur et la position.
+
+**10.** On considère maintenant deux charges ponctuelles $q_0$ et $q = -q_0$ placées à une distance $a$ l'une de l'autre en $O$ et $A$ respectivement. On notera $\vec{u} = \overrightarrow{OA}/OA$. Donner l'expression de la force $\vec{f}$ exercée par la charge $q_0$ sur la charge $q$.
+
+**11.** Soit $P$ un point équidistant de $O$ et $A$. Déterminer la direction du champ électrostatique créé en $P$ par les charges $q$ et $q_0$.
+
+**12.** Préciser, à l'aide d'un schéma, son sens.
+
+**13.** Si $OP = AP = a$, donner la valeur de la norme de ce champ.
+
+**14.** Calculer le potentiel $V'$ créé en $P$ par les charges $q$ et $q_0$ dans les mêmes conditions qu'à la question précédente.
+
+::: {.content-visible when-meta="solution"}
+
+### Solution
+
+**1.** On a invariance par toute rotation autour de $O$ donc le champ $\vec{E}$ ne dépend que de $r$ en coordonnées sphériques.
+
+**2.** Tout plan passant par $O$ et $M$ est plan de symétrie donc le champ $\vec{E}$ est suivant $\vec{u}_r$.
+
+**3.** D'après la relation $\vec{E} = -\overrightarrow{\operatorname{grad}}\,V = -\dfrac{\mathrm{d}V}{\mathrm{d}r}\,\vec{u}_r$, on a $\mathrm{d}V = -E\,\mathrm{d}r$.
+
+Par intégration sur $r$, on en déduit
+$$
+V = \frac{kR^2}{2\varepsilon_0 r} \ \text{pour } r > R \qquad \text{et} \qquad V = \frac{kR}{\varepsilon_0}\left(1 - \frac{r}{2R}\right) \ \text{pour } r < R.
+$$
+Pour $r > R$, la constante d'intégration est nulle car le potentiel $V$ est choisi nul pour $r$ infini ; pour $r < R$, la constante d'intégration est déterminée par continuité du potentiel en $r = R$.
+
+On remarquera que $E$ étant continu en $r = R$, le potentiel ne présente pas de point anguleux en ce point-là.
+
+**4.** *Cf.* ci-dessus et le graphe ci-dessous (à gauche).
+
+**5.** On applique la relation fournie dans l'énoncé avec $\operatorname{div}\vec{E} = \rho/\varepsilon_0$ et on obtient
+$$
+\rho = \frac{k}{r} \ \text{pour } r < R \qquad \text{et} \qquad \rho = 0 \ \text{pour } r > R.
+$$
+
+**6.** Graphe ci-dessous (à droite).
+
+```{=latex}
+\begin{center}
+\begin{tikzpicture}[scale=0.9, >=Stealth, every node/.style={font=\small}]
+  \draw[->] (0,0) -- (5,0) node[right] {$r$};
+  \draw[->] (0,0) -- (0,2.6) node[above] {$V$};
+  \draw[thick, domain=0:1.5] plot (\x, {2 - 2*\x/3});
+  \draw[thick, domain=1.5:4.8, samples=60] plot (\x, {1.5/\x});
+  \draw[dashed] (1.5,0) node[below] {$R$} -- (1.5,1) -- (0,1) node[left] {$\frac{kR}{2\varepsilon_0}$};
+  \node[left] at (0,2) {$\frac{kR}{\varepsilon_0}$};
+\end{tikzpicture}
+\hspace{1.5cm}
+\begin{tikzpicture}[scale=0.9, >=Stealth, every node/.style={font=\small}]
+  \draw[->] (0,0) -- (4,0) node[right] {$r$};
+  \draw[->] (0,0) -- (0,2.6) node[above] {$\rho$};
+  \draw[thick, domain=0.25:1.5, samples=60] plot (\x, {0.6/\x});
+  \draw[thick] (1.5,0.4) -- (1.5,0) -- (3.8,0);
+  \node[below] at (1.5,0) {$R$};
+\end{tikzpicture}
+\end{center}
+```
+
+**7.** Le volume d'une couronne sphérique est $\mathrm{d}\tau = 4\pi r^2\,\mathrm{d}r$ donc $\mathrm{d}q = 4\pi r^2 \rho\,\mathrm{d}r$.
+
+**8.** On intègre la relation précédente entre $O$ et $R$. On obtient $q_0 = 2\pi k R^2$.
+
+**9.** L'application du théorème de Gauss à une sphère de rayon $r > R$ et de centre $O$ permet de retrouver le champ créé par une charge ponctuelle : $E = \dfrac{kR^2}{2\varepsilon_0 r^2} = \dfrac{q_0}{4\pi\varepsilon_0 r^2}$. On en déduit le résultat pour une charge $q_0$ placée en $O$.
+
+**10.** La force issue de la loi de Coulomb s'écrit, avec les notations de l'énoncé :
+$$
+\vec{f} = \frac{1}{4\pi\varepsilon_0}\,\frac{q q_0}{a^2}\,\vec{u}.
+$$
+
+**11.** Le point $P$ est dans le plan médiateur de $[OA]$, qui est un plan d'antisymétrie ; donc en $P$ le champ est perpendiculaire au plan médiateur : il est donc suivant $\vec{u}$.
+
+**12.** Schéma ci-dessous (cas $q_0 > 0$) : $\vec{E}_O$ est le champ créé par $q_0$ et $\vec{E}_A$ celui créé par $q = -q_0$.
+
+```{=latex}
+\begin{center}
+\begin{tikzpicture}[scale=1.0, >=Stealth, every node/.style={font=\small}]
+  \coordinate (O) at (0,0);
+  \coordinate (A) at (2.4,0);
+  \coordinate (P) at (1.2,2.078);
+  \draw[gray] (O) -- (A) -- (P) -- cycle;
+  \fill (O) circle (1.2pt) node[below left] {$O$};
+  \fill (A) circle (1.2pt) node[below right] {$A$};
+  \fill (P) circle (1.2pt) node[left] {$P$};
+  \draw[->, thick] (P) -- ++(0.6,1.04) node[above] {$\vec{E}_O$};
+  \draw[->, thick] (P) -- ++(0.6,-1.04) node[right] {$\vec{E}_A$};
+  \draw[->, very thick] (P) -- ++(1.2,0) node[right] {$\vec{E}_{\text{tot}}$};
+\end{tikzpicture}
+\end{center}
+```
+
+**13.** Le champ total s'écrit
+$$
+E_{\text{tot}} = 2E\cos 60° = \frac{1}{4\pi\varepsilon_0}\,\frac{q_0}{a^2}.
+$$
+
+**14.** Le potentiel total s'écrit
+$$
+V_{\text{tot}} = \frac{1}{4\pi\varepsilon_0}\,\frac{q_0}{a} + \frac{1}{4\pi\varepsilon_0}\,\frac{-q_0}{a} = 0.
+$$
+
+```{=latex}
+\newpage
+```
+
+:::
+
+## Modèle de l'atome d'hydrogène ($\star$)
+
+On considère le potentiel électrostatique
+$$
+V(r) = \frac{q}{4\pi\varepsilon_0 r}\exp\left(-\frac{r}{a}\right).
+$$
+
+**1.** Déterminer le champ électrostatique créé par cette distribution.
+
+**2.** Étudier les cas limites $r \ll a$ et $r \gg a$.
+
+**3.** Calculer le flux du champ électrostatique à travers une sphère de centre $O$ et de rayon $r$. En déduire la charge $q(r)$ se trouvant à l'intérieur d'une sphère de rayon $r$ centrée en $O$.
+
+**4.** En déduire en $O$ la présence d'une charge ponctuelle à déterminer. Quelle est la charge contenue dans tout l'espace ? Expliquer en quoi ce potentiel peut modéliser la distribution de charges d'un atome d'hydrogène.
+
+**5.** Établir l'expression de la densité volumique de charge $\rho(r)$ à la distance $r$ du point $O$.
+
+**6.** On définit la densité de probabilité de présence $P(r)$ de l'électron dans le volume élémentaire $\mathrm{d}\tau$ par $\mathrm{d}q(r) = -eP(r)\,\mathrm{d}\tau$ où $\mathrm{d}q(r)$ est la charge contenue dans le volume $\mathrm{d}\tau$. Exprimer $P(r)$ puis la probabilité $p(r)$ de trouver l'électron à une distance comprise entre $r$ et $r + \mathrm{d}r$ du noyau. Étudier la fonction $p(r)$. Comment peut-on interpréter $a$ ? Donner l'ordre de grandeur de $a$.
+
+::: {.content-visible when-meta="solution"}
+
+### Solution
+
+**1.** $\vec{E} = -\overrightarrow{\operatorname{grad}}\,V$ et $V$ ne dépendant que de $r$, le champ est radial : $\vec{E} = -\dfrac{\mathrm{d}V}{\mathrm{d}r}\,\vec{u}_r$, d'où
+$$
+\vec{E} = \frac{q}{4\pi\varepsilon_0}\left(1 + \frac{r}{a}\right)\frac{1}{r^2}\exp\left(-\frac{r}{a}\right)\vec{u}_r.
+$$
+
+**2.** $r \gg a$ correspond à la limite $r \to \infty$ où $\vec{E} \to \vec{0}$.
+
+$r \ll a$ correspond à la limite $r \to 0$ et $\vec{E} \underset{0}{\sim} \dfrac{q}{4\pi\varepsilon_0 r^2}\,\vec{u}_r$, ce qui est l'expression du champ créé par une charge ponctuelle.
+
+**3.** $\Phi = 4\pi r^2 E(r) = \dfrac{q}{\varepsilon_0}\left(1 + \dfrac{r}{a}\right)\exp\left(-\dfrac{r}{a}\right)$. En appliquant le théorème de Gauss, on en déduit la charge contenue dans la sphère de rayon $r$ :
+$$
+Q_{\text{int}}(r) = q\left(1 + \frac{r}{a}\right)\exp\left(-\frac{r}{a}\right).
+$$
+La distribution de charges ne dépend que de $r$.
+
+**4.** Quand $r$ tend vers $0$, $q(r)$ tend vers $+q$ et représente la charge du noyau en $O$. Quand $r$ tend vers l'infini, $q(r)$ tend vers $0$ : une charge $-q$ est donc répartie dans tout l'espace autour de $O$ et représente la charge de l'électron.
+
+**5.** Attendu que $Q_{\text{int}}(r)$ dépend de $r$, on ne peut pas se contenter de diviser $Q_{\text{int}}$ par le volume. Il existe deux méthodes.
+
+Entre deux sphères de rayon $r$ et $r + \mathrm{d}r$, qui délimitent un volume $\mathrm{d}\tau = 4\pi r^2\,\mathrm{d}r$, la charge est $\rho(r)\,\mathrm{d}\tau$, mais aussi $\mathrm{d}Q_{\text{int}} = Q_{\text{int}}(r + \mathrm{d}r) - Q_{\text{int}}(r) = \dfrac{\mathrm{d}Q_{\text{int}}}{\mathrm{d}r}\,\mathrm{d}r$. D'où
+$$
+\rho = \frac{1}{4\pi r^2}\,\frac{\mathrm{d}Q_{\text{int}}}{\mathrm{d}r} = \frac{1}{4\pi r^2}\,\frac{\mathrm{d}}{\mathrm{d}r}\left(q\left(1 + \frac{r}{a}\right)\exp\left(-\frac{r}{a}\right)\right) = -\frac{q}{4\pi a^2 r}\exp\left(-\frac{r}{a}\right).
+$$
+L'autre méthode consiste à utiliser l'équation de Maxwell-Gauss et l'expression de la divergence en coordonnées sphériques : $\operatorname{div}\vec{E} = \dfrac{\rho}{\varepsilon_0}$ d'où $\rho = \dfrac{\varepsilon_0}{r^2}\,\dfrac{\mathrm{d}\left(r^2E\right)}{\mathrm{d}r}$. Même résultat.
+
+**6.** Puisqu'il s'agit de l'atome d'hydrogène, $q = e$.
+
+D'autre part, $\mathrm{d}q(r) = -eP(r)\,\mathrm{d}\tau = \rho\,\mathrm{d}\tau$, d'où
+$$
+P(r) = -\frac{\rho}{e} = \frac{1}{4\pi a^2 r}\exp\left(-\frac{r}{a}\right).
+$$
+La probabilité de trouver l'électron entre $r$ et $r + \mathrm{d}r$ vaut $P(r)\,4\pi r^2\,\mathrm{d}r = p(r)\,\mathrm{d}r$, avec
+$$
+p(r) = 4\pi r^2 P(r) = \frac{r}{a^2}\exp\left(-\frac{r}{a}\right).
+$$
+Elle est nulle en $r = 0$ et à l'infini, et maximale en $r = a$ : $a$ est la distance la plus probable de l'électron au noyau, c'est-à-dire le rayon de l'atome d'hydrogène ($a \approx 53\ \text{pm}$, rayon de Bohr).
+
+```{=latex}
+\newpage
+```
+
+:::
+
+## Champ dans une cavité ($\star\star$)
+
+```{=latex}
+\noindent
+\begin{minipage}[t]{0.62\linewidth}
+\vspace{0pt}
+Une boule de rayon $a$ et de centre $O_1$ est uniformément chargée avec une densité volumique de charges $\rho_0 > 0$, mis à part une cavité sphérique, entièrement incluse dans la boule, centrée en $O_2$, de rayon $b$, vide de charge.
+\end{minipage}
+\hfill
+\begin{minipage}[t]{0.33\linewidth}
+\vspace{0pt}
+\begin{center}
+\begin{tikzpicture}[scale=0.9, every node/.style={font=\small}]
+  \fill[gray!45] (0,0) circle (1.5);
+  \draw (0,0) circle (1.5);
+  \fill[white] (0.6,0.55) circle (0.6);
+  \draw (0.6,0.55) circle (0.6);
+  \fill (0,0) circle (1.2pt) node[below left] {$O_1$};
+  \fill (0.6,0.55) circle (1.2pt) node[below, yshift=-1pt] {$O_2$};
+  \fill (0.35,0.85) circle (1.2pt) node[above left] {$M$};
+\end{tikzpicture}
+\end{center}
+\end{minipage}
+```
+
+**1.** Justifier que l'application directe du théorème de Gauss pour le calcul du champ électrique en un point $M$ à l'intérieur de la cavité est impossible.
+
+**2.** Calculer le champ électrique en $M$ quelconque situé à l'intérieur de la cavité, en utilisant le principe de superposition.
+
+::: {.content-visible when-meta="solution"}
+
+### Solution
+
+**1.** La symétrie de la distribution n'est pas élevée. Elle est symétrique par rapport à tout plan qui contient les deux points $O_1$ et $O_2$, donc on sait qu'en tout point de l'axe $(O_1O_2)$ le champ est porté par l'axe $(O_1O_2)$. Mais on ne peut pas prévoir la direction du champ en tout point de l'espace.
+
+**2.** La distribution de charges ne présente pas de symétrie élevée, mais on peut la décomposer en deux distributions $\mathcal{D}_1$ et $\mathcal{D}_2$ présentant chacune une symétrie élevée : $\mathcal{D}_1$ est une boule chargée à $\rho_0$ centrée en $O_1$, et $\mathcal{D}_2$ est une boule chargée à $-\rho_0$ centrée en $O_2$.
+
+Soit $M$ un point à l'intérieur de la cavité. Le champ en $M$ est la somme des champs $\vec{E}_1$ et $\vec{E}_2$ créés par chacune des distributions.
+
+À l'intérieur d'une boule uniformément chargée de centre $C$, le théorème de Gauss appliqué à une sphère de centre $C$ et de rayon $r$ donne $4\pi r^2 E = \dfrac{\rho\,\frac{4}{3}\pi r^3}{\varepsilon_0}$, soit $\vec{E} = \dfrac{\rho}{3\varepsilon_0}\,\overrightarrow{CM}$. On en déduit :
+$$
+\vec{E}_1 = \frac{\rho_0}{3\varepsilon_0}\,\overrightarrow{O_1M} \qquad \text{et} \qquad \vec{E}_2 = \frac{-\rho_0}{3\varepsilon_0}\,\overrightarrow{O_2M}.
+$$
+Finalement,
+$$
+\vec{E} = \vec{E}_1 + \vec{E}_2 = \frac{\rho_0}{3\varepsilon_0}\,\overrightarrow{O_1O_2} :
+$$
+le champ est uniforme dans la cavité.
+
+```{=latex}
+\newpage
+```
+
+:::
+
+## Charges opposées entre deux plans ($\star\star\star$)
+
+```{=latex}
+\noindent
+\begin{minipage}[t]{0.58\linewidth}
+\vspace{0pt}
+L'espace compris entre les deux plans d'équation $x = -2a$ et $x = 0$ est uniformément chargé, avec la densité volumique de charge $-\rho$. De même pour l'espace compris entre les deux plans d'équation $x = 0$ et $x = 2a$, avec la densité volumique de charge $+\rho$. La charge est nulle ailleurs.
+
+\medskip
+Tracer le graphe de $E$ pour tout point de l'espace.
+\end{minipage}
+\hfill
+\begin{minipage}[t]{0.38\linewidth}
+\vspace{0pt}
+\begin{center}
+\begin{tikzpicture}[scale=0.9, >=Stealth, every node/.style={font=\small}]
+  \fill[gray!25] (-1,-1.2) rectangle (0,1.2);
+  \fill[gray!55] (0,-1.2) rectangle (1,1.2);
+  \node at (-0.5,0.5) {$-\rho$};
+  \node at (0.5,0.5) {$\rho$};
+  \node at (-1.6,0.5) {\textit{vide}};
+  \node at (1.6,0.5) {\textit{vide}};
+  \draw[dashed,->] (-2.2,0) -- (2.3,0) node[right] {$x$};
+  \node[below] at (-1,-1.2) {$-2a$};
+  \node[below] at (1,-1.2) {$2a$};
+\end{tikzpicture}
+\end{center}
+\end{minipage}
+```
+
+::: {.content-visible when-meta="solution"}
+
+### Solution
+
+**Première approche : application directe du théorème de Gauss.** La distribution est invariante par toute translation selon $y$ et $z$, et tout plan perpendiculaire aux plans chargés est plan de symétrie : on trouve ainsi $\vec{E}(M) = E(x)\,\vec{u}_x$. La forme de $\vec{E}$ impose comme surface de Gauss $\mathcal{S}$ un cylindre d'axe $(Ox)$, de section $S$, limité par les plans d'abscisses $x$ et $-x$. Le flux de $\vec{E}$ à travers $\mathcal{S}$ vaut $E(x)S - E(-x)S$.
+
+Mais le plan $x = 0$ est ici un plan d'antisymétrie des charges ; donc, de part et d'autre, $\vec{E}(-x) = \vec{E}(x)$, soit $E(-x) = E(x)$. Le flux de $\vec{E}$ à travers $\mathcal{S}$ est donc nul !
+
+De plus, la charge intérieure à $\mathcal{S}$ est nulle, car c'est la somme d'une charge négative et d'une charge positive opposées. L'application directe du théorème de Gauss mène à $0 = 0$, ce qui n'est pas faux mais inutile.
+
+**Seconde approche : principe de superposition.** On découpe le problème en deux problèmes simples. On calcule le champ $\vec{E}^+$ créé par la couche $+\rho$ seule, comme si la couche $-\rho$ n'existait pas, puis le champ $\vec{E}^-$ créé par la couche $-\rho$ seule.
+
+Pour la couche $+\rho$ (épaisseur $2a$), on introduit un axe $(Ox^+)$ dont le zéro est au milieu de la couche. Le plan $x^+ = 0$ est alors plan de symétrie, donc $E^+(-x^+) = -E^+(x^+)$, et le théorème de Gauss sur le cylindre précédent donne $2E^+(x^+)S = Q_{\text{int}}/\varepsilon_0$, soit :
+$$
+E^+(x^+) = \frac{\rho x^+}{\varepsilon_0} \ \text{si } |x^+| < a, \qquad E^+(x^+) = \pm\frac{\rho a}{\varepsilon_0} \ \text{si } x^+ \gtrless \pm a.
+$$
+
+```{=latex}
+\begin{center}
+\begin{tikzpicture}[xscale=0.9, yscale=0.9, >=Stealth, every node/.style={font=\small}]
+  \draw[->] (-3,0) -- (3.2,0) node[right] {$x^+$};
+  \draw[->] (0,-1.6) -- (0,1.7) node[above] {$E^+$};
+  \draw[thick] (-2.8,-1) -- (-1,-1) -- (1,1) -- (2.8,1);
+  \draw[dashed] (1,0) node[below] {$a$} -- (1,1) -- (0,1) node[left] {$\frac{\rho a}{\varepsilon_0}$};
+  \draw[dashed] (-1,0) node[above] {$-a$} -- (-1,-1) -- (0,-1) node[right] {$-\frac{\rho a}{\varepsilon_0}$};
+\end{tikzpicture}
+\end{center}
+```
+
+On procède de même avec $\vec{E}^-$, avec un axe $(Ox^-)$ dont le zéro est au milieu de la couche chargée $-\rho$. Le graphe est similaire en remplaçant $\rho$ par $-\rho$ et $x^+$ par $x^-$.
+
+Puis on trace les deux champs sur le même graphique et on somme. Attention ! $x^+ = 0$ est en $x = a$, et $x^- = 0$ est en $x = -a$.
+
+```{=latex}
+\begin{center}
+\begin{tikzpicture}[xscale=1.0, yscale=0.8, >=Stealth, every node/.style={font=\small}]
+  \draw[->] (-3.8,0) -- (4,0) node[right] {$x$};
+  \draw[->] (0,-2.6) -- (0,1.8) node[above] {$E$};
+  % E+ (gris) et E- (gris pointillé)
+  \draw[gray, thick] (-3.6,-1) -- (0,-1) -- (2,1) -- (3.6,1) node[above] {$E^+$};
+  \draw[gray, thick, dashed] (-3.6,1) node[above] {$E^-$} -- (-2,1) -- (0,-1) -- (3.6,-1);
+  % Champ total
+  \draw[very thick] (-3.6,0) -- (-2,0) -- (0,-2) -- (2,0) -- (3.6,0);
+  \node[below] at (-2,-0.05) {$-2a$};
+  \node[below] at (2,-0.05) {$2a$};
+  \node[above right] at (0,1) {$\frac{\rho a}{\varepsilon_0}$};
+  \node[left] at (-3.6,-1) {$-\frac{\rho a}{\varepsilon_0}$};
+  \node[right] at (0.05,-2.1) {$-\frac{2\rho a}{\varepsilon_0}$};
+  \draw[dashed, gray] (-0.1,1) -- (0.1,1);
+\end{tikzpicture}
+\end{center}
+```
+
+Le champ total (trait épais) est nul en dehors des deux couches, et atteint $-\dfrac{2\rho a}{\varepsilon_0}$ en $x = 0$.
+
+```{=latex}
+\newpage
+```
+
+:::
+
+## Énergie de constitution d'une sphère chargée uniformément ($\star\star\star$)
+
+Une sphère de rayon $R$ porte la charge $Q$ uniformément répartie en volume. On définit l'énergie de constitution (ou énergie coulombienne) de cette sphère comme le travail qu'il faut fournir pour la construire en prenant les charges à l'infini. On admet que cette énergie ne dépend pas de la façon dont on construit la sphère : on la construit par couches sphériques successives.
+
+**1.** La sphère a un rayon $r < R$. Calculer le travail qu'il faut fournir pour augmenter le rayon de cette sphère de $\mathrm{d}r$, en amenant les charges de l'infini.
+
+**2.** En déduire l'expression de l'énergie de constitution de la sphère, en fonction de $Q$ et de $R$.
+
+**3.** Par analogie, en déduire l'énergie gravitationnelle d'une sphère de rayon $R$ et de masse $M$.
+
+::: {.content-visible when-meta="solution"}
+
+### Solution
+
+**1.** Le potentiel créé par une sphère de rayon $r$ uniformément chargée, en un point de sa surface, est celui d'une charge ponctuelle $q = \rho\,\frac{4}{3}\pi r^3$ placée au centre (théorème de Gauss) : $V(r) = \dfrac{q}{4\pi\varepsilon_0 r}$, soit
+$$
+V(r) = \frac{\rho r^2}{3\varepsilon_0}.
+$$
+Pour augmenter le rayon de la sphère de $\mathrm{d}r$, il faut déplacer la charge $\delta q = \rho\,4\pi r^2\,\mathrm{d}r$ d'une région de potentiel nul, à l'infini, à une région de potentiel $V(r)$. On fournit donc le travail
+$$
+\delta W = \delta q\,\big(V(r) - V(\infty)\big) = \rho\,4\pi r^2\,\frac{\rho r^2}{3\varepsilon_0}\,\mathrm{d}r.
+$$
+En effet, dans le cas d'une charge $q$, le travail de la force électrique entre une position à l'infini et une position au rayon $r$ est :
+$$
+W_{\text{él}} = \int_\infty^r \vec{f}\cdot\mathrm{d}\vec{\ell} = q\int_\infty^r \vec{E}\cdot\mathrm{d}\vec{\ell} = -q\int_\infty^r \overrightarrow{\operatorname{grad}}\,V\cdot\mathrm{d}\vec{\ell} = -q\int_\infty^r \mathrm{d}V = -q\big(V(r) - V(\infty)\big),
+$$
+et l'opérateur doit fournir le travail opposé $W = q\big(V(r) - V(\infty)\big)$. D'où le « petit » travail $\delta W$ pour la « petite » charge $\delta q$.
+
+**2.** En intégrant l'expression de $\delta W$ entre $r = 0$ et $r = R$, et avec $Q = \rho\,\dfrac{4\pi R^3}{3}$, on obtient :
+$$
+\mathcal{E} = \frac{3Q^2}{20\pi\varepsilon_0 R}.
+$$
+
+**3.** L'analogie avec la gravitation s'obtient en remplaçant $\dfrac{1}{4\pi\varepsilon_0}$ par $-\mathcal{G}$ et $Q$ par $M$. On en déduit l'énergie gravitationnelle d'une sphère de rayon $R$ et de masse $M$ :
+$$
+\mathcal{E} = -\frac{3}{5}\,\frac{\mathcal{G}M^2}{R}.
+$$
+
+```{=latex}
+\newpage
+```
+
+:::
+
+## Champ créé par une spire chargée ($\star\star$)
+
+```{=latex}
+\noindent
+\begin{minipage}[t]{0.58\linewidth}
+\vspace{0pt}
+La spire circulaire ci-contre, de rayon $R$, de centre $O$, d'axe $(Oz)$ porte une charge positive $Q$ répartie uniformément avec densité linéique de charge $\lambda$ en $\mathrm{C\cdot m^{-1}}$.
+\end{minipage}
+\hfill
+\begin{minipage}[t]{0.38\linewidth}
+\vspace{0pt}
+\begin{center}
+\begin{tikzpicture}[scale=0.9, >=Stealth, every node/.style={font=\small}]
+  \draw (0,0) ellipse (0.5 and 1.2);
+  \draw[->] (0,0) -- (2.8,0) node[right] {$z$};
+  \coordinate (O) at (0,0);
+  \coordinate (T) at (0,1.2);
+  \coordinate (M) at (1.9,0);
+  \draw (T) -- (M);
+  \draw[->] (O) -- (-0.33,0.9);
+  \node at (-0.6,1.3) {$R$};
+  \fill (O) circle (1.2pt) node[below] {$O$};
+  \fill (M) circle (1.2pt) node[below] {$M$};
+  \draw pic[draw, "$\alpha$", angle eccentricity=1.6, angle radius=0.45cm] {angle=T--M--O};
+\end{tikzpicture}
+\end{center}
+\end{minipage}
+```
+
+**1.** **a.** Montrer par des arguments de symétrie que, sur l'axe, le champ électrostatique $\vec{E}$ est porté par l'axe et prend la forme $\vec{E} = E\,\vec{u}_z$ où $\vec{u}_z$ est un vecteur unitaire porté par l'axe $Oz$.
+
+**b.** Comparer $E(z)$ et $E(-z)$.
+
+**c.** Est-il possible d'utiliser le théorème de Gauss pour calculer le champ électrique en un point quelconque de l'axe ? (on ne demande pas de le calculer)
+
+**d.** On donne l'expression de
+$$
+E(z) = \frac{\lambda}{2\varepsilon_0}\,\frac{Rz}{\left(R^2 + z^2\right)^{3/2}}.
+$$
+Tracer le graphe de la fonction $E(z)$.
+
+**2.** On s'intéresse maintenant au champ électrostatique au voisinage de l'axe. On calcule donc le champ en un point $M$ défini par des coordonnées cylindriques $(r, \theta, z)$.
+
+**a.** Montrer par des arguments de symétrie très précis, qu'en $M$, le champ $\vec{E}$ n'a pas de composante orthoradiale $E_\theta$.
+
+**b.** Montrer que la norme de $\vec{E}$ ne dépend que de $r$ et $z$.
+
+**c.** Montrer qu'au voisinage de l'axe, le flux du champ $\vec{E}$ est conservatif. Que peut-on dire de sa circulation sur un contour fermé ?
+
+```{=latex}
+\noindent
+\begin{minipage}[t]{0.66\linewidth}
+\vspace{0pt}
+\textbf{d.} Calculer le flux de $\vec{E}$ à travers une surface fermée cylindrique d'axe $(Oz)$ dont les bases sont des disques de rayon $r$ petit et de cotes $z$ et $z + \mathrm{d}z$ (figure ci-contre). En déduire :
+\end{minipage}
+\hfill
+\begin{minipage}[t]{0.3\linewidth}
+\vspace{0pt}
+\begin{center}
+\begin{tikzpicture}[scale=0.9, >=Stealth, every node/.style={font=\small}]
+  \draw (0,0) ellipse (0.25 and 0.6);
+  \draw (1,0) ellipse (0.25 and 0.6);
+  \draw (0,0.6) -- (1,0.6);
+  \draw (0,-0.6) -- (1,-0.6);
+  \draw[->] (-0.8,0) -- (1.8,0) node[right] {$z$};
+  \draw[->] (1,0) -- (1.12,0.53);
+  \node at (1.35,0.35) {$r$};
+  \node[below] at (0,-0.65) {$z$};
+  \node[below] at (1,-0.65) {$z + \mathrm{d}z$};
+\end{tikzpicture}
+\end{center}
+\end{minipage}
+```
+
+$$
+E_r(r,z) = -\frac{r}{2}\,\frac{\mathrm{d}E_z(0,z)}{\mathrm{d}z}
+$$
+puis établir l'expression de $E_r(r,z)$.
+
+**e.** Calculer de même la circulation du champ électrostatique le long du petit rectangle de sommets $M(r,z)$, $N(r,z+\mathrm{d}z)$, $P(r+\mathrm{d}r,z+\mathrm{d}z)$ et $Q(r+\mathrm{d}r,z)$, en supposant $r$ petit et $\mathrm{d}r$ et $\mathrm{d}z$ encore plus petits. En déduire
+$$
+\frac{\partial E_z}{\partial r} = \frac{\partial E_r}{\partial z} \qquad \text{puis} \qquad E_z(r,z) = E_z(0,z) - \frac{r^2}{4}\,\frac{\mathrm{d}^2 E_z}{\mathrm{d}z^2}(0,z)\,;
+$$
+établir l'expression de $E_z(r,z)$.
+
+::: {.content-visible when-meta="solution"}
+
+### Solution
+
+**1.** **a.** Tout plan contenant l'axe $Oz$ est plan de symétrie de la distribution. Le champ $\vec{E}$ sur l'axe appartient à ces plans, donc à leur intersection qui est l'axe $Oz$ lui-même.
+
+**b.** Le champ $\vec{E}$ a les mêmes symétries que la distribution de charges ; or le plan de la spire est plan de symétrie pour la distribution, donc plan de symétrie pour $\vec{E}$. Ainsi $\vec{E}(-z) = -\vec{E}(z)$.
+
+**c.** Non : la symétrie de la distribution de charges n'est pas assez élevée, elle ne permet pas de connaître la direction du champ électrique en tout point de l'espace. On ne peut pas appliquer le théorème de Gauss pour déterminer le champ électrique en un point de l'axe.
+
+**d.** Tracé ci-dessous : $E(z)$ est impaire, maximale en $z = R/\sqrt{2}$ où elle vaut $\dfrac{\lambda}{3\sqrt{3}\,\varepsilon_0 R}$.
+
+```{=latex}
+\begin{center}
+\begin{tikzpicture}[xscale=0.8, yscale=3, >=Stealth, every node/.style={font=\small}]
+  \draw[->] (-4.5,0) -- (4.7,0) node[right] {$z$};
+  \draw[->] (0,-0.5) -- (0,0.55) node[above] {$E$};
+  \draw[thick, domain=-4.3:4.3, samples=120, smooth] plot (\x, {\x/(1+\x*\x)^1.5});
+  \draw[dashed] (0.707,0) node[below] {$\frac{R}{\sqrt{2}}$} -- (0.707,0.385) -- (0,0.385);
+  \node[left] at (0,0.385) {$\frac{\lambda}{3\sqrt{3}\,\varepsilon_0 R}$};
+\end{tikzpicture}
+\end{center}
+```
+
+**2.** **a.** Le plan contenant le point $M$ et l'axe $Oz$ est plan de symétrie de la distribution de charges. Or ce plan a pour vecteurs directeurs $\vec{u}_r$ et $\vec{u}_z$, donc le champ $\vec{E}$ en $M$, qui appartient à ce plan, n'a pas de composante suivant $\vec{u}_\theta$.
+
+**b.** La distribution de charges est invariante par rotation d'axe $Oz$, donc $\vec{E}$ est indépendant de $\theta$.
+
+**c.** Si l'on considère une surface fermée au voisinage de l'axe, elle ne contient pas de charges. Le théorème de Gauss nous dit que le flux à travers cette surface est nul. Par ailleurs, le champ électrostatique $\vec{E}$ est à circulation conservative : sa circulation sur un contour fermé est nulle.
+
+**d.** D'après ce que l'on vient d'écrire, le flux total $\phi_t$ à travers la surface cylindrique est nul puisqu'elle ne contient pas de charges. Le flux se décompose en trois termes : le flux à travers la surface latérale $\phi_L$, celui à travers la base située en $z$ noté $\phi(z)$, et celui à travers la base située en $z + \mathrm{d}z$ noté $\phi(z + \mathrm{d}z)$. On rappelle que les vecteurs surfaces élémentaires sont orientés vers l'extérieur de la surface. Comme les intégrales portent sur de petites surfaces, elles se ramènent au produit de la composante du champ orthogonale à la surface par l'aire de celle-ci :
+
+- $\phi_L = \displaystyle\iint_{S_L} \vec{E}\cdot\mathrm{d}\vec{S}_L = \iint_{S_L} \vec{E}\cdot\mathrm{d}S_L\,\vec{u}_r = \iint_{S_L} E_r\,\mathrm{d}S_L = E_r(r,z)\,2\pi r\,\mathrm{d}z$ ;
+- $\phi(z) = \displaystyle\iint_{S_z} \vec{E}\cdot\left(-\mathrm{d}S_z\,\vec{u}_z\right) = -\iint_{S_z} E_z\,\mathrm{d}S_z = -\pi r^2 E_z(0,z)$ ;
+- $\phi(z + \mathrm{d}z) = \displaystyle\iint_{S_{z+\mathrm{d}z}} \vec{E}\cdot\mathrm{d}S_{z+\mathrm{d}z}\,\vec{u}_z = \pi r^2 E_z(0,z + \mathrm{d}z)$.
+
+Finalement, on peut écrire le flux total :
+$$
+\begin{aligned}
+0 &= E_r(r,z)\,2\pi r\,\mathrm{d}z + \pi r^2\big(E_z(0,z + \mathrm{d}z) - E_z(0,z)\big) \\
+  &= E_r(r,z)\,2\pi r\,\mathrm{d}z + \pi r^2\,\frac{\mathrm{d}E_z}{\mathrm{d}z}(0,z)\,\mathrm{d}z \\
+\Rightarrow \quad E_r(r,z) &= -\frac{r}{2}\,\frac{\mathrm{d}E_z}{\mathrm{d}z}(0,z).
+\end{aligned}
+$$
+L'expression de $E_r$ au voisinage de l'axe est donc :
+$$
+E_r(r,z) = \frac{\lambda R r\left(2z^2 - R^2\right)}{4\varepsilon_0\left(R^2 + z^2\right)^{5/2}}.
+$$
+
+```{=latex}
+\noindent
+\begin{minipage}[t]{0.66\linewidth}
+\vspace{0pt}
+\textbf{e.} La circulation de $\vec{E}$ le long du contour $MNPQ$ (figure ci-contre) est nulle. Elle s'écrit :
+\[
+\mathcal{C} = E_z(r,z)\,\mathrm{d}z + E_r(r,z+\mathrm{d}z)\,\mathrm{d}r - E_z(r+\mathrm{d}r,z)\,\mathrm{d}z - E_r(r,z)\,\mathrm{d}r = 0.
+\]
+\end{minipage}
+\hfill
+\begin{minipage}[t]{0.3\linewidth}
+\vspace{0pt}
+\begin{center}
+\begin{tikzpicture}[scale=0.8, >=Stealth, every node/.style={font=\small}]
+  \draw[->] (0,-0.3) -- (0,2.6) node[left] {$z$};
+  \draw[dashed] (0,0.8) node[left] {$z$} -- (1.2,0.8);
+  \draw[dashed] (0,2) node[left] {$z+\mathrm{d}z$} -- (1.2,2);
+  \draw[thick, ->] (1.2,0.8) -- (1.2,1.5);
+  \draw[thick] (1.2,1.5) -- (1.2,2) -- (2.4,2) -- (2.4,0.8) -- (1.2,0.8);
+  \draw[thick, ->] (1.2,2) -- (1.9,2);
+  \node[left] at (1.2,0.65) {$M$};
+  \node[above left] at (1.2,2) {$N$};
+  \node[above right] at (2.4,2) {$P$};
+  \node[right] at (2.4,0.8) {$Q$};
+  \draw[<->] (0,0.2) -- (1.2,0.2) node[midway, below] {$r$};
+  \draw[<->] (1.2,0.2) -- (2.4,0.2) node[midway, below] {$\mathrm{d}r$};
+\end{tikzpicture}
+\end{center}
+\end{minipage}
+```
+
+On en déduit, après développement limité et simplification par $\mathrm{d}r\,\mathrm{d}z$ :
+$$
+\frac{\partial E_z}{\partial r}(r,z) = \frac{\partial E_r}{\partial z}(r,z).
+$$
+En utilisant l'expression de $E_r(r,z)$ établie précédemment, on obtient l'équation
+$$
+\frac{\partial E_z}{\partial r}(r,z) = -\frac{r}{2}\,\frac{\mathrm{d}^2 E_z}{\mathrm{d}z^2}(0,z),
+$$
+qui s'intègre (entre $0$ et $r$) en
+$$
+E_z(r,z) = E_z(0,z) - \frac{r^2}{4}\,\frac{\mathrm{d}^2 E_z}{\mathrm{d}z^2}(0,z).
+$$
+Avec $\dfrac{\mathrm{d}^2 E_z}{\mathrm{d}z^2}(0,z) = \dfrac{3\lambda R z\left(2z^2 - 3R^2\right)}{2\varepsilon_0\left(R^2 + z^2\right)^{7/2}}$, on obtient :
+$$
+E_z(r,z) = \frac{\lambda R z}{2\varepsilon_0\left(R^2 + z^2\right)^{3/2}}\left[1 - \frac{3r^2\left(2z^2 - 3R^2\right)}{4\left(R^2 + z^2\right)^2}\right].
+$$
+
+```{=latex}
+\newpage
+```
+
+:::
+
+## Quatre charges aux sommets d'un carré ($\star\star$)
+
+On considère quatre charges ponctuelles $q$ de même valeur placées aux sommets d'un carré de côté $a$. On note $O$ le centre du carré et on s'intéresse au potentiel et au champ électrostatique en un point $M$ situé sur la droite $(Ox)$ perpendiculaire au plan du carré et passant par $O$.
+
+**1.** Déterminer le potentiel électrostatique créé en $M$ par la distribution.
+
+**2.** En déduire l'expression du champ électrostatique créé en $M$.
+
+**3.** Retrouver, en utilisant les symétries, la direction du champ électrostatique en $M$.
+
+**4.** En exploitant les résultats de la question précédente, calculer directement le champ électrostatique créé en $M$.
+
+**5.** Quelle est la parité du champ et du potentiel électrostatiques en $x$ ?
+
+**6.** Tracer les allures de $V(x)$ et $E(x)$.
+
+::: {.content-visible when-meta="solution"}
+
+### Solution
+
+```{=latex}
+\noindent
+\begin{minipage}[t]{0.6\linewidth}
+\vspace{0pt}
+\textbf{1.} On note $A$, $B$, $C$, $D$ les sommets du carré (figure ci-contre). D'après le principe de superposition :
+\[
+V = \frac{q}{4\pi\varepsilon_0}\left(\frac{1}{MA} + \frac{1}{MB} + \frac{1}{MC} + \frac{1}{MD}\right).
+\]
+Or $MA = MB = MC = MD = \sqrt{MO^2 + OA^2}$ et $OA = \dfrac{AC}{2} = \dfrac{a}{\sqrt{2}}$ ; on trouve donc
+\[
+MA = \sqrt{x^2 + \frac{a^2}{2}} = \sqrt{\frac{a^2 + 2x^2}{2}}.
+\]
+\end{minipage}
+\hfill
+\begin{minipage}[t]{0.36\linewidth}
+\vspace{0pt}
+\begin{center}
+\begin{tikzpicture}[scale=0.9, >=Stealth, every node/.style={font=\small}]
+  \coordinate (O) at (0,0);
+  \coordinate (A) at (-1.5,-0.35);
+  \coordinate (B) at (0.5,-0.35);
+  \coordinate (C) at (1.5,0.35);
+  \coordinate (D) at (-0.5,0.35);
+  \coordinate (M) at (0,1.9);
+  \draw (A) -- (B) -- (C) -- (D) -- cycle;
+  \draw[gray] (A) -- (C);
+  \draw[gray] (B) -- (D);
+  \draw[->] (0,-0.5) -- (0,2.6) node[left] {$x$};
+  \draw[dashed] (M) -- (A);
+  \draw[dashed] (M) -- (C);
+  \foreach \P in {A,B,C,D} \fill (\P) circle (1.5pt);
+  \fill (O) circle (1.2pt) node[below right] {$O$};
+  \fill (M) circle (1.2pt) node[right] {$M$};
+  \node[below left] at (A) {$A$};
+  \node[below right] at (B) {$B$};
+  \node[right] at (C) {$C$};
+  \node[above right, xshift=-2pt] at (D) {$D$};
+  \draw pic[draw, "$\theta$", angle eccentricity=1.5, angle radius=0.5cm] {angle=A--M--O};
+\end{tikzpicture}
+\end{center}
+\end{minipage}
+```
+
+On en déduit :
+$$
+V = \frac{4q\sqrt{2}}{4\pi\varepsilon_0\sqrt{a^2 + 2x^2}} = \frac{q\sqrt{2}}{\pi\varepsilon_0\sqrt{a^2 + 2x^2}}.
+$$
+
+**2.** On déduit le champ électrostatique de la relation $\vec{E} = -\overrightarrow{\operatorname{grad}}\,V = -\dfrac{\mathrm{d}V}{\mathrm{d}x}\,\vec{u}_x$, car $V$ ne dépend ici que de $x$ : le champ n'aura de composante non nulle que suivant l'axe $(Ox)$.
+$$
+\vec{E} = \frac{2q\sqrt{2}}{\pi\varepsilon_0}\,\frac{x}{\left(a^2 + 2x^2\right)^{3/2}}\,\vec{u}_x.
+$$
+
+**3.** Les plans $AMC$ et $BMD$ sont des plans de symétrie : le champ électrostatique appartient à l'intersection de ces plans et est donc colinéaire à $\vec{u}_x$. On retrouve une partie du résultat de la question précédente.
+
+**4.** D'après la question précédente, on ne calcule que la composante suivant l'axe $(Ox)$ : on projette donc sur cet axe la relation
+$$
+\vec{E} = \frac{q}{4\pi\varepsilon_0}\left(\frac{\overrightarrow{AM}}{AM^3} + \frac{\overrightarrow{BM}}{BM^3} + \frac{\overrightarrow{CM}}{CM^3} + \frac{\overrightarrow{DM}}{DM^3}\right),
+$$
+soit, avec $\cos\theta = \dfrac{x}{AM}$ :
+$$
+\vec{E} = \frac{q}{4\pi\varepsilon_0}\,\frac{4\cos\theta}{AM^2}\,\vec{u}_x = \frac{2q\sqrt{2}}{\pi\varepsilon_0}\,\frac{x}{\left(a^2 + 2x^2\right)^{3/2}}\,\vec{u}_x.
+$$
+
+**5.** Le plan du carré est un plan de symétrie de la distribution de charges, donc le potentiel est une fonction paire de $x$ : $V(x) = V(-x)$, et le champ une fonction impaire : $E(x) = -E(-x)$.
+
+**6.** Les allures sont données ci-dessous. $E(x)$ est extrémal en $x = \pm a/2$, où $|E| = \dfrac{4q}{3\sqrt{3}\,\pi\varepsilon_0 a^2}$.
+
+```{=latex}
+\begin{center}
+\begin{tikzpicture}[xscale=0.7, yscale=1.4, >=Stealth, every node/.style={font=\small}]
+  \draw[->] (-3.5,0) -- (3.7,0) node[right] {$x$};
+  \draw[->] (0,0) -- (0,1.9) node[left] {$V$};
+  \draw[thick, domain=-3.3:3.3, samples=100, smooth] plot (\x, {1.414/sqrt(1+2*\x*\x)});
+  \draw[dashed] (0,1.414) -- (1.2,1.414) node[right] {$\frac{q\sqrt{2}}{\pi\varepsilon_0 a}$};
+\end{tikzpicture}
+\hspace{1cm}
+\begin{tikzpicture}[xscale=0.7, yscale=2.4, >=Stealth, every node/.style={font=\small}]
+  \draw[->] (-3.5,0) -- (3.7,0) node[right] {$x$};
+  \draw[->] (0,-0.75) -- (0,0.85) node[above] {$E$};
+  \draw[thick, domain=-3.3:3.3, samples=120, smooth] plot (\x, {2.828*\x/(1+2*\x*\x)^1.5});
+  \draw[dashed] (0.5,0) node[below] {$\frac{a}{2}$} -- (0.5,0.544) -- (0,0.544);
+  \node[left] at (0,0.544) {$\frac{4q}{3\sqrt{3}\,\pi\varepsilon_0 a^2}$};
+\end{tikzpicture}
+\end{center}
+```
+
+```{=latex}
+\newpage
+```
+
+:::
+
+## Condensateur cylindrique ($\star$)
+
+```{=latex}
+\noindent
+\begin{minipage}[t]{0.66\linewidth}
+\vspace{0pt}
+Un condensateur cylindrique est constitué de deux armatures. L'armature intérieure est un cylindre de rayon $R_1$ et de hauteur $h$, elle porte la charge $Q$ ; l'armature extérieure est un cylindre de même axe, de rayon $R_2$, de même hauteur et porte la charge $-Q$. L'espace inter-armatures est vide. On néglige les effets de bord.
+\end{minipage}
+\hfill
+\begin{minipage}[t]{0.3\linewidth}
+\vspace{0pt}
+\begin{center}
+\begin{tikzpicture}[scale=0.8, >=Stealth, every node/.style={font=\small}]
+  % cylindre extérieur
+  \draw (0,2) ellipse (1 and 0.3);
+  \draw (-1,2) -- (-1,0);
+  \draw (1,2) -- (1,0);
+  \draw (-1,0) arc (180:360:1 and 0.3);
+  \draw[dashed] (1,0) arc (0:180:1 and 0.3);
+  % cylindre intérieur (base supérieure)
+  \draw (0,2) ellipse (0.5 and 0.15);
+  \draw[->] (0,2) -- (0.45,1.94);
+  \draw[->] (0,2) -- (-0.8,1.82);
+  \node[above right] at (0.35,2.1) {$R_1$};
+  \node[above left] at (-0.7,2.2) {$R_2$};
+  \draw[<->] (1.3,0) -- (1.3,2) node[midway, right] {$h$};
+\end{tikzpicture}
+\end{center}
+\end{minipage}
+```
+
+**1.** Que signifie négliger les effets de bord ?
+
+**2.** Établir l'expression du champ électrique en tout point de l'espace.
+
+**3.** Établir l'expression de la différence de potentiel entre les deux armatures.
+
+**4.** En déduire l'expression de la capacité du condensateur cylindrique.
+
+::: {.content-visible when-meta="solution"}
+
+### Solution
+
+**1.** Cela revient à supposer $h \gg R_2 > R_1$ : on traite les cylindres comme s'ils étaient infinis.
+
+**2.** On cherche $\vec{E}$ au point $M$. Soit $(Oz)$ l'axe des deux cylindres. Le plan qui passe par $M$ et qui contient $(Oz)$ est un plan de symétrie pour les charges, de même que celui qui passe par $M$ et est orthogonal à $(Oz)$, car on néglige les effets de bord. Le champ électrique appartient à leur intersection : $\vec{E}(M) = E(M)\,\vec{u}_r(M)$.
+
+La situation est invariante par rotation autour de $(Oz)$ et par translation le long de $(Oz)$ (car on néglige les effets de bord) ; ainsi $E(M) = E(r)$.
+
+La surface de Gauss $\mathcal{S}$ est un cylindre d'axe $(Oz)$, de rayon $r$ et de hauteur $L < h$ :
+$$
+\oiint_{\mathcal{S}} \vec{E}\cdot\mathrm{d}\vec{S} = \oiint_{\mathcal{S}} E(r)\,\vec{u}_r\cdot\mathrm{d}S\,\vec{u}_r = E(r)\oiint_{\mathcal{S}}\mathrm{d}S = E(r)\,2\pi r L,
+$$
+le flux à travers les deux bases étant nul. Quant à la charge $q_{\mathcal{S}}$ intérieure à $\mathcal{S}$, elle dépend de $r$ :
+$$
+\begin{cases}
+r < R_1 & q_{\mathcal{S}} = 0 \,; \\
+R_1 < r < R_2 & q_{\mathcal{S}} = Q\,\dfrac{L}{h} \,; \\
+R_2 < r & q_{\mathcal{S}} = Q\,\dfrac{L}{h} - Q\,\dfrac{L}{h} = 0.
+\end{cases}
+$$
+On en déduit que pour tout $r < R_1$ et $r > R_2$, $\vec{E} = \vec{0}$. $\vec{E}$ n'est non nul que dans la zone inter-armatures, où
+$$
+\vec{E} = \frac{Q}{2\pi\varepsilon_0 h r}\,\vec{u}_r.
+$$
+
+**3.** En statique, $\vec{E} = -\overrightarrow{\operatorname{grad}}\,V = -\dfrac{\mathrm{d}V}{\mathrm{d}r}\,\vec{u}_r$, donc $\dfrac{\mathrm{d}V}{\mathrm{d}r} = -\dfrac{Q}{2\pi\varepsilon_0 h r}$, soit $\mathrm{d}V = -\dfrac{Q}{2\pi\varepsilon_0 h}\,\dfrac{\mathrm{d}r}{r}$, qu'on intègre entre $R_1$ et $R_2$ :
+$$
+V_2 - V_1 = -\frac{Q}{2\pi\varepsilon_0 h}\ln\left(\frac{R_2}{R_1}\right).
+$$
+
+**4.** Par définition de la capacité $C$ :
+$$
+C = \frac{Q}{V_1 - V_2} = \frac{2\pi\varepsilon_0 h}{\ln\left(R_2/R_1\right)}.
+$$
+On a pris $V_1 - V_2$ (potentiel de l'armature portant $Q$ moins celui de l'armature portant $-Q$), et non l'opposé, afin d'obtenir une capacité positive.
+
+```{=latex}
+\newpage
+```
+
+:::
+
+## Électrostatique terrestre ($\star$)
+
+```{=latex}
+\noindent
+\begin{minipage}[t]{0.6\linewidth}
+\vspace{0pt}
+L'ionosphère est une zone ionisée de l'atmosphère terrestre, située à une altitude d'environ $70\ \text{km}$ de la surface. L'ionisation des molécules provient du bombardement de l'air par les rayons cosmiques. La base de l'ionosphère est une zone très conductrice nommée électrosphère. La surface terrestre et l'électrosphère forment donc un condensateur sphérique, l'une portant la charge $Q$, l'autre la charge $-Q$.
+\end{minipage}
+\hfill
+\begin{minipage}[t]{0.36\linewidth}
+\vspace{0pt}
+\begin{center}
+\begin{tikzpicture}[scale=0.8, >=Stealth, every node/.style={font=\small}]
+  \draw (0,0) circle (1.2);
+  \draw (0,0) circle (2);
+  \fill (0,0) circle (1.2pt) node[below] {$O$};
+  \draw[<->] (0,0) -- (45:1.2) node[midway, above left] {$R_T$};
+  \draw[<->] (45:1.2) -- (45:2) node[midway, above left] {$h$};
+  \node at (-90:1.6) {\footnotesize atmosphère};
+  \node[rotate=-40] at (60:2.35) {électrosphère};
+\end{tikzpicture}
+\end{center}
+\end{minipage}
+```
+
+Au-dessus d'une étendue plate, par temps dégagé, on mesure à la surface terrestre un champ électrique descendant, dirigé de l'électrosphère vers la surface, d'environ $E_{\text{sol}} = 100\ \text{V}\cdot\text{m}^{-1}$.
+
+On précise $R_T = 6370\ \text{km}$, $h = 70\ \text{km}$, et l'air atmosphérique est électriquement assimilable à du vide.
+
+**1.** Que vaut la permittivité relative de l'air ?
+
+**2.** Estimer la différence de potentiel au niveau du sol, sur une distance de $2\ \text{m}$. Pourquoi n'est-on pas électrocuté ? On se souviendra que le corps humain est composé d'eau salée ; il est donc conducteur.
+
+**3.** Qui, de la surface terrestre ou de l'électrosphère, porte la charge $Q > 0$ ? Même question pour la charge $-Q < 0$.
+
+**4.** Établir, en fonction de $Q$ et de $r$, distance entre un point $M$ et le centre $O$ de la Terre, l'expression du champ électrique $\vec{E}(M)$ en tout point $M$ de l'atmosphère.
+
+**5.** En déduire les valeurs numériques de $Q$ et de la charge surfacique $\sigma$ au niveau de la surface terrestre.
+
+**6.** Établir l'expression du potentiel électrique $V(r)$ dans l'atmosphère. Quelle est la valeur numérique de la différence de potentiel $U$ entre la surface terrestre et l'électrosphère ?
+
+*Remarque :* la valeur de $U$ est fortement surestimée. On mesure expérimentalement $U \simeq 4{,}0\cdot 10^5\ \text{V}$.
+
+**7.** Déduire de la question précédente les expressions littérale et numérique de la capacité du condensateur que forme l'ensemble {surface terrestre, atmosphère, électrosphère}.
+
+::: {.content-visible when-meta="solution"}
+
+### Solution
+
+**1.** D'après l'énoncé, l'air se comporte comme du vide, donc $\varepsilon_r = 1$.
+
+**2.** $E_{\text{sol}} = 100\ \text{V}\cdot\text{m}^{-1}$, donc il y a une différence de potentiel de $200\ \text{V}$ sur $2\ \text{m}$.
+
+Le corps humain est conducteur ; on le considère équivalent à un fil électrique, c'est-à-dire qu'il est équipotentiel. Attendu qu'il est lié au sol *via* les pieds, on considère que tout le corps humain est au même potentiel que le sol : aucun courant ne le traverse, il ne risque pas d'être électrocuté.
+
+**3.** Le champ électrique est dirigé des charges positives vers les charges négatives. Ainsi l'électrosphère porte la charge $Q > 0$ et la surface terrestre la charge $-Q < 0$.
+
+```{=latex}
+\noindent
+\begin{minipage}[t]{0.62\linewidth}
+\vspace{0pt}
+\textbf{4.} On se place en coordonnées sphériques. Soit $M$ un point du plan de la feuille. Ce plan, ainsi que le plan qui lui est orthogonal passant par $M$ et $O$, sont plans de symétrie pour la distribution de charges ; $\vec{E}$ est inclus dedans, donc $\vec{E}(M) = E(M)\,\vec{u}_r(M)$.
+
+Invariance par rotation autour de $O$, donc $E(M) = E(r)$. Finalement : $\vec{E}(M) = E(r)\,\vec{u}_r(M)$.
+
+On choisit comme surface de Gauss $\mathcal{S}$ une sphère de rayon $r \in \left]R_T, R_T + h\right[$ (figure ci-contre) :
+\end{minipage}
+\hfill
+\begin{minipage}[t]{0.34\linewidth}
+\vspace{0pt}
+\begin{center}
+\begin{tikzpicture}[scale=0.8, >=Stealth, every node/.style={font=\small}]
+  \draw (0,0) circle (1.2);
+  \draw (0,0) circle (2);
+  \draw[dashed] (0,0) circle (1.6);
+  \fill (0,0) circle (1.2pt) node[left] {$O$};
+  \draw[->] (0,0) -- (60:1.2) node[midway, left] {$R_T$};
+  \draw[->] (0,0) -- (-30:1.6) node[midway, below] {$r$};
+  \node at (-45:1.85) {$\mathcal{S}$};
+  \node[rotate=-40] at (60:2.35) {électrosphère};
+\end{tikzpicture}
+\end{center}
+\end{minipage}
+```
+
+$$
+\oiint_{\mathcal{S}} \vec{E}\cdot\mathrm{d}\vec{S} = \frac{q_{\text{int}}}{\varepsilon_0}, \quad \text{où} \quad \oiint_{\mathcal{S}} E(r)\,\vec{u}_r\cdot\mathrm{d}S\,\vec{u}_r = E(r)\oiint_{\mathcal{S}}\mathrm{d}S = E(r)\,4\pi r^2,
+$$
+et $q_{\text{int}} = -Q$ (seule la charge de la surface terrestre est dans $\mathcal{S}$). D'où :
+$$
+\vec{E}(M) = -\frac{Q}{4\pi\varepsilon_0 r^2}\,\vec{u}_r(M).
+$$
+
+**5.** Sur la surface terrestre, $r = R_T$ et $\|\vec{E}(R_T)\| = E_{\text{sol}}$. Avec $\varepsilon_0 \simeq \dfrac{1}{36\pi\cdot 10^9}\ \text{F}\cdot\text{m}^{-1}$ :
+$$
+Q = 4\pi\varepsilon_0 R_T^2 E_{\text{sol}} \simeq 4{,}5\cdot 10^5\ \text{C}
+$$
+et la surface terrestre porte la charge surfacique
+$$
+\sigma = -\frac{Q}{4\pi R_T^2} = -\varepsilon_0 E_{\text{sol}} \simeq -8{,}8\cdot 10^{-10}\ \text{C}\cdot\text{m}^{-2}.
+$$
+
+**6.** En coordonnées sphériques :
+$$
+\vec{E} = \begin{pmatrix} -\dfrac{Q}{4\pi\varepsilon_0 r^2} \\ 0 \\ 0 \end{pmatrix} = -\overrightarrow{\operatorname{grad}}\,V = -\begin{pmatrix} \dfrac{\partial V}{\partial r} \\[2mm] \dfrac{1}{r}\dfrac{\partial V}{\partial \theta} \\[2mm] \dfrac{1}{r\sin\theta}\dfrac{\partial V}{\partial \varphi} \end{pmatrix},
+$$
+d'où $V$ ne dépend que de $r$ et
+$$
+V(r) = -\frac{Q}{4\pi\varepsilon_0 r} + \alpha.
+$$
+Le potentiel est défini à une constante près ; on laisse $\alpha$, qu'on ne peut pas annuler en choisissant $\lim_\infty V = 0$, car $V$ n'est ici défini que sur $\left]R_T, R_T + h\right[$, et $r$ ne peut donc pas tendre vers $+\infty$.
+
+Puis :
+$$
+U = V(R_T + h) - V(R_T) = \frac{Q}{4\pi\varepsilon_0}\left(\frac{1}{R_T} - \frac{1}{R_T + h}\right) \simeq 6{,}9\cdot 10^6\ \text{V}.
+$$
+
+**7.** $U = \dfrac{Q}{C}$, donc
+$$
+C = \frac{4\pi\varepsilon_0 R_T\left(R_T + h\right)}{h} \simeq 6{,}5\cdot 10^{-2}\ \text{F}.
+$$
+*Remarque :* attendu que $h \ll R_T$, $C \simeq \dfrac{4\pi\varepsilon_0 R_T^2}{h} = \dfrac{\varepsilon_0 S}{h}$. On retrouve la formule de la capacité d'un condensateur plan ; la Terre semble plate à l'échelle humaine.
+
+```{=latex}
+\newpage
+```
+
+:::
+
+## Diode varicap ($\star\star$)
+
+On commence par étudier une diode à jonction PN. C'est un composant électronique constitué de deux pastilles cylindriques (section $S$, axe dirigé selon $\vec{u}_x$) de silicium, dopées respectivement P et N, collées en $x = 0$.
+
+```{=latex}
+\begin{center}
+\begin{tikzpicture}[scale=0.9, >=Stealth, every node/.style={font=\small}]
+  % Symbole de la diode
+  \draw (-3,2.4) -- (-0.3,2.4);
+  \draw[fill=white] (-0.3,2.1) -- (-0.3,2.7) -- (0.3,2.4) -- cycle;
+  \draw (0.3,2.1) -- (0.3,2.7);
+  \draw (0.3,2.4) -- (3,2.4);
+  \draw[->] (1.2,2.4) -- (1.8,2.4) node[above] {$i$};
+  \draw[->] (1.2,3.0) -- (-1.2,3.0) node[midway, above] {$V$};
+  % Pastilles P et N
+  \fill[gray!55] (-3,0) rectangle (0,1.2);
+  \fill[gray!25] (0,0) rectangle (3,1.2);
+  \node at (-2,0.6) {$P$};
+  \node at (2,0.6) {$N$};
+  \draw (-4,0.6) -- (-3,0.6);
+  \draw[->] (3,0.6) -- (4,0.6) node[above] {$i$};
+  \foreach \x in {-0.8,-0.5,-0.2} \foreach \y in {0.25,0.6,0.95}
+    \node[draw, circle, fill=white, inner sep=0.2pt, font=\tiny] at (\x,\y) {$-$};
+  \foreach \x in {0.2,0.45,0.7} \foreach \y in {0.25,0.6,0.95}
+    \node[font=\scriptsize] at (\x,\y) {$+$};
+  \draw[dashed] (-1,0) -- (-1,1.2);
+  \draw[dashed] (0,0) -- (0,1.2);
+  \draw[dashed] (0.9,0) -- (0.9,1.2);
+  % Axe
+  \draw[->] (-4,-0.4) -- (4.2,-0.4) node[right] {$x$};
+  \foreach \x/\l in {-1/x_A,0/0,0.9/x_D} {
+    \draw (\x,-0.5) -- (\x,-0.3);
+    \node[below] at (\x,-0.5) {$\l$};
+  }
+\end{tikzpicture}
+\end{center}
+```
+
+Un semi-conducteur dopé P possède $N_A$ accepteurs par unité de volume. Un semi-conducteur dopé N possède $N_D$ donneurs par unité de volume.
+
+**1.** Quel élément permet de créer un semi-conducteur dopé P ? dopé N ?
+
+Lors de l'établissement de la jonction, des électrons de la zone N diffusent vers la zone P, laissant place à une zone qui s'étend de $x = 0$ à $x_D$, chargée positivement. De même les trous de la zone P diffusent vers la zone N, créant ainsi entre $x_A < 0$ et $x = 0$ une zone chargée négativement. Il s'établit ainsi un équilibre, puisque les charges volumiques créent un champ électrique qui s'oppose au phénomène de diffusion.
+
+On admet que le champ électrique $\vec{E} = E(x)\,\vec{u}_x$ et le potentiel électrostatique $V(x)$ ne dépendent que de la variable spatiale $x$.
+
+La zone comprise entre $x_A$ et $x_D$ est appelée zone de déplétion, ou zone de charge d'espace ; en dehors de cette zone, la densité volumique de charge $\rho(x)$ est nulle.
+
+De plus, les équations de Maxwell dans le silicium sont identiques aux équations de Maxwell dans le vide à condition de remplacer $\varepsilon_0$ par $\varepsilon = \varepsilon_0\varepsilon_r$. On donne : $\varepsilon_0 = 8{,}85\cdot 10^{-12}\ \text{F}\cdot\text{m}^{-1}$ ; $\varepsilon_r = 11{,}8$.
+
+**2.** Établir la relation entre $x_A$, $x_D$, $N_D$ et $N_A$ qui traduit la neutralité globale de la zone de déplétion.
+
+**3.** On admet que le champ électrique est nul en dehors de la zone de charge d'espace. Calculer le champ électrique en tout point, puis tracer le graphe de $E(x)$. En déduire $V(x)$, et représenter l'évolution du potentiel en fonction de $x$.
+
+**4.** Exprimer la différence de potentiel $V_0 = V(x_D) - V(x_A)$ en fonction de $\varepsilon$, $e$, $N_A$, $N_D$, $x_A$ et $x_D$. Expérimentalement, on mesure $V_0 = 0{,}7\ \text{V}$, avec $N_A = 1{,}00\cdot 10^{21}\ \text{m}^{-3}$ et $N_D = 2{,}00\cdot 10^{23}\ \text{m}^{-3}$. Calculer numériquement la largeur de la zone de charge d'espace $w = x_D - x_A$.
+
+**5.** Lorsqu'on applique à la diode une tension $V$ (voir schéma), la nouvelle différence de potentiel entre les zones N et P est $V_0 - V$. La zone de charge d'espace est modifiée, de sorte que ses extrémités $x_A$ et $x_D$ ont varié par rapport au cas de la diode à l'équilibre ; on note $V_0 - V = V(x_D) - V(x_A)$. La diode est dite polarisée en inverse lorsque $V = -U$ avec $U > 0$.
+
+Par la suite, on polarise la diode en inverse, avec une tension $V = -U$.
+
+**a.** Décrire le comportement de la jonction. Que vaut alors le courant dans la diode ?
+
+**b.** Calculer les charges $Q_A$ et $Q_D$ des zones de charge d'espace.
+
+**c.** On définit la capacité dynamique de la jonction :
+$$
+C = \frac{\delta Q_D}{\delta U}.
+$$
+Exprimer cette capacité en fonction de $U$ notamment. Calculer $C$.
+
+**d.** Expliquer comment, avec une telle diode, on peut réaliser un filtre sélecteur de fréquence pour un poste radio.
+
+::: {.content-visible when-meta="solution"}
+
+### Solution
+
+**1.** Le bore (trivalent, accepteur d'électrons) permet de doper P ; le phosphore (pentavalent, donneur d'électrons) permet de doper N.
+
+**2.** La charge globale contenue dans la zone de déplétion est nulle :
+$$
+N_A S\left(-x_A\right)(-e) + N_D x_D S e = 0, \qquad \text{soit} \qquad N_A x_A = -N_D x_D.
+$$
+
+**3.** Le champ électrique vérifie l'équation de Maxwell-Gauss $\operatorname{div}\vec{E} = \dfrac{\rho}{\varepsilon}$ dans la zone de charge d'espace, avec $\rho = -N_A e$ pour $x_A < x < 0$ et $\rho = N_D e$ pour $0 < x < x_D$. Comme $\vec{E} = E(x)\,\vec{u}_x$, on sait que $\operatorname{div}\vec{E} = \dfrac{\mathrm{d}E}{\mathrm{d}x}$. En intégrant avec $E(x_A) = E(x_D) = 0$, on en déduit :
+$$
+\begin{cases}
+x_A < x < 0, & \dfrac{\mathrm{d}E}{\mathrm{d}x} = -\dfrac{N_A e}{\varepsilon} \\[3mm]
+0 < x < x_D, & \dfrac{\mathrm{d}E}{\mathrm{d}x} = \dfrac{N_D e}{\varepsilon}
+\end{cases}
+\quad\Rightarrow\quad
+\begin{cases}
+x_A < x < 0, & E(x) = -\dfrac{N_A e\left(x - x_A\right)}{\varepsilon} \\[3mm]
+0 < x < x_D, & E(x) = \dfrac{N_D e\left(x - x_D\right)}{\varepsilon}
+\end{cases}
+$$
+De plus, $\vec{E} = -\overrightarrow{\operatorname{grad}}\,V = -\dfrac{\mathrm{d}V}{\mathrm{d}x}\,\vec{u}_x$ ; on en déduit, après intégration :
+$$
+\begin{cases}
+x < x_A, & V(x) = 0 \\[1mm]
+x_A < x < 0, & V(x) = \dfrac{N_A e}{2\varepsilon}\left(x - x_A\right)^2 + K_1 \\[3mm]
+0 < x < x_D, & V(x) = -\dfrac{N_D e}{2\varepsilon}\left(x - x_D\right)^2 + K_2 \\[3mm]
+x_D < x, & V(x) = K_2
+\end{cases}
+$$
+Le potentiel est défini à une constante près, et il est continu. On peut fixer $V(x_A) = 0$, soit $K_1 = 0$ ; $K_2$ s'en déduit par continuité en $x = 0$. Finalement :
+
+- pour $x_A < x < 0$ : $V(x) = \dfrac{N_A e}{2\varepsilon}\left(x - x_A\right)^2$ ;
+- pour $0 < x < x_D$ : $V(x) = -\dfrac{N_D e}{2\varepsilon}\left(x - x_D\right)^2 + \dfrac{N_D e}{2\varepsilon}\,x_D^2 + \dfrac{N_A e}{2\varepsilon}\,x_A^2$.
+
+La représentation de ces grandeurs en fonction de $x$ :
+
+```{=latex}
+\begin{center}
+\begin{tikzpicture}[scale=0.9, >=Stealth, every node/.style={font=\small}]
+  \draw[->] (-3,0) -- (3,0) node[right] {$x$};
+  \draw[->] (0,-1.9) -- (0,0.8) node[above] {$E(x)$};
+  \draw[thick] (-2.8,0) -- (-2,0) -- (0,-1.5) -- (1,0) -- (2.8,0);
+  \fill (-2,0) circle (1.2pt) node[above] {$x_A$};
+  \fill (1,0) circle (1.2pt) node[above] {$x_D$};
+  \node[below] at (0,-1.55) {$\frac{N_A x_A e}{\varepsilon} = -\frac{N_D x_D e}{\varepsilon}$};
+\end{tikzpicture}
+\hspace{1cm}
+\begin{tikzpicture}[scale=0.9, >=Stealth, every node/.style={font=\small}]
+  \draw[->] (-3,0) -- (3,0) node[right] {$x$};
+  \draw[->] (0,-0.3) -- (0,2.9) node[above] {$V(x)$};
+  % x_A = -2, x_D = 1 donc N_D = 2 N_A : V = k(x+2)^2 puis -2k(x-1)^2 + 6k, avec k = 0.375
+  \draw[thick] (-2.8,0) -- (-2,0);
+  \draw[thick, domain=-2:0, samples=40] plot (\x, {0.375*(\x+2)*(\x+2)});
+  \draw[thick, domain=0:1, samples=30] plot (\x, {-0.75*(\x-1)*(\x-1) + 2.25});
+  \draw[thick] (1,2.25) -- (2.8,2.25);
+  \fill (-2,0) circle (1.2pt) node[below] {$x_A$};
+  \fill (1,0) circle (1.2pt) node[below] {$x_D$};
+  \draw[dashed] (1,0) -- (1,2.25);
+  \node[left] at (0,2.25) {$V_D$};
+  \draw[dashed] (0,2.25) -- (1,2.25);
+\end{tikzpicture}
+\end{center}
+```
+
+**4.** On obtient immédiatement, avec le choix de l'origine du potentiel en $x_A$ ($V_A = 0$) :
+$$
+V_0 = V_D = \frac{N_D e}{2\varepsilon}\,x_D^2 + \frac{N_A e}{2\varepsilon}\,x_A^2 = \frac{N_D x_D e}{2\varepsilon}\left(x_D - x_A\right), \qquad \text{soit} \qquad V_0 = w\,\frac{N_D x_D e}{2\varepsilon}.
+$$
+Il faut commencer par calculer $x_A$ et $x_D$. Or $x_A = -x_D\,\dfrac{N_D}{N_A}$ donc, dans $V_0 = \dfrac{N_D x_D^2 e}{2\varepsilon}\left(1 + \dfrac{N_D}{N_A}\right)$, on en déduit
+$$
+x_D = \sqrt{\frac{2V_0\varepsilon}{N_D e\left(1 + \frac{N_D}{N_A}\right)}} = \sqrt{\frac{2V_0 N_A\varepsilon}{e N_D\left(N_A + N_D\right)}} \qquad \text{et} \qquad x_A = -\sqrt{\frac{2V_0 N_D\varepsilon}{e N_A\left(N_A + N_D\right)}}.
+$$
+Finalement :
+$$
+w = x_D - x_A = \sqrt{\frac{2V_0\varepsilon}{e N_A N_D\left(N_A + N_D\right)}}\,\left(N_A + N_D\right), \qquad \text{soit} \qquad w = \sqrt{\frac{2\varepsilon V_0}{e}\,\frac{N_A + N_D}{N_A N_D}}.
+$$
+Numériquement : $w = 0{,}96\ \mu\text{m}$.
+
+**5.** **a.** La différence de potentiel aux bornes de la zone de charge d'espace est augmentée, le champ électrique aussi, et la zone de charge d'espace est plus large. Il n'y a aucun courant, car il n'y a pas de porteurs libres dans la zone de charge d'espace.
+
+**b.** Pour calculer les nouvelles valeurs de $Q_A = S x_A e N_A$ et $Q_D = S x_D e N_D$, on reprend les expressions établies pour la diode à l'équilibre, en remplaçant $V_0$ par $V_0 + U$. On obtient :
+$$
+Q_D = -Q_A = S N_D e\sqrt{\frac{2\varepsilon\left(V_0 + U\right)}{N_D e\left(1 + \frac{N_D}{N_A}\right)}} = S e\sqrt{\frac{2\varepsilon\left(V_0 + U\right)N_D N_A}{e\left(N_D + N_A\right)}}.
+$$
+
+**c.** On peut écrire
+$$
+Q_D = Q_{D0}\sqrt{1 + \frac{U}{V_0}} \qquad \text{avec} \qquad Q_{D0} = S\sqrt{\frac{2\varepsilon\,e V_0\,N_D N_A}{N_D + N_A}}.
+$$
+Lorsque $U$ varie de $\delta U$, on obtient, en appliquant le calcul différentiel, $\delta Q_D = Q_{D0}\,\dfrac{1}{2V_0\sqrt{1 + \frac{U}{V_0}}}\,\delta U$, soit
+$$
+C = \frac{\delta Q_D}{\delta U} = \frac{C_0}{\sqrt{1 + \dfrac{U}{V_0}}} \qquad \text{avec} \qquad C_0 = \frac{Q_{D0}}{2V_0}.
+$$
+Numériquement, on vérifie que $C_0 = \dfrac{\varepsilon S}{w}$ (condensateur plan d'épaisseur $w$) : $\dfrac{C_0}{S} \simeq 1{,}1\cdot 10^{-4}\ \text{F}\cdot\text{m}^{-2}$, soit $C_0 \simeq 110\ \text{pF}$ pour $S = 1\ \text{mm}^2$.
+
+**d.** La diode obtenue se comporte donc comme un condensateur dont on peut commander la capacité par une tension. Ainsi, en polarisant la diode en inverse et en appliquant à ses bornes une tension $V = -U$, on fait varier la capacité du condensateur. Si l'on réalise à l'aide de ce condensateur un circuit passe-bande avec une bobine d'inductance $L$, on sélectionne les fréquences dans une bande voisine de $f_0$, avec
+$$
+2\pi f_0 = \frac{1}{\sqrt{L\,C(U)}} ;
+$$
+en agissant sur $U$, on agit sur la fréquence sélectionnée par le filtre passe-bande.
+
+```{=latex}
+\newpage
+```
+
+:::
+
+&nbsp;
+
+&nbsp;
+
+**Sources des exercices :**
+- *Physique tout-en-un* de S. Cardini et. al.
+- *Physique – exercices incontournables* de Jean-Noël Beury

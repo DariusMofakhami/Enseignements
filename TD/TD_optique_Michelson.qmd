@@ -438,3 +438,11 @@ Avec $\delta = 2d$ en $A_1$, on retrouve exactement $\Delta\nu = \dfrac{c}{2d}$ 
 *Remarque :* ce résultat est général — le facteur de contraste est la transformée de Fourier du profil spectral normalisé (théorème de Wiener-Khintchine). Un profil rectangulaire donne un sinus cardinal ; un profil gaussien donnerait une gaussienne ; deux raies fines (exercice précédent) donnent un cosinus, d'où les battements du contraste.
 
 :::
+
+&nbsp;
+
+&nbsp;
+
+**Sources des exercices :**
+- *Planche de TD d'optique PC* du Lycée Dumont D’Urville à Toulon (énoncés uniquement)
+- *Physique – exercices incontournables* de Jean-Noël Beury
