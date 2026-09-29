@@ -4,3 +4,7 @@
 Ressources/
 ~$*.docx
 *.docx#
+
+# Dossiers d'images générées ou importées
+img/
+*/img/
