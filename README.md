@@ -21,4 +21,6 @@ Mes supports de cours, TD, TP et Colles. Rédigé en Quarto/LaTeX. Solutions int
 
 ## TD n°3 — Electrostatique (Th. de Gauss & condensateurs)
 
-à venir
+- 📄 [Énoncé (PDF)](https://dariusmofakhami.github.io/Enseignements/TD/TD_electrostatique.pdf)
+- ✅ [Corrigé (PDF)](https://dariusmofakhami.github.io/Enseignements/TD/TD_electrostatique_solution_tronque.pdf)
+

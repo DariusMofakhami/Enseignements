@@ -443,13 +443,13 @@ La spire circulaire ci-contre, de rayon $R$, de centre $O$, d'axe $(Oz)$ porte u
 \end{minipage}
 ```
 
-**1.** **a.** Montrer par des arguments de symétrie que, sur l'axe, le champ électrostatique $\vec{E}$ est porté par l'axe et prend la forme $\vec{E} = E\,\vec{u}_z$ où $\vec{u}_z$ est un vecteur unitaire porté par l'axe $Oz$.
+**1.** **a)** Montrer par des arguments de symétrie que, sur l'axe, le champ électrostatique $\vec{E}$ est porté par l'axe et prend la forme $\vec{E} = E\,\vec{u}_z$ où $\vec{u}_z$ est un vecteur unitaire porté par l'axe $Oz$.
 
-**b.** Comparer $E(z)$ et $E(-z)$.
+**b)** Comparer $E(z)$ et $E(-z)$.
 
-**c.** Est-il possible d'utiliser le théorème de Gauss pour calculer le champ électrique en un point quelconque de l'axe ? (on ne demande pas de le calculer)
+**c)** Est-il possible d'utiliser le théorème de Gauss pour calculer le champ électrique en un point quelconque de l'axe ? (on ne demande pas de le calculer)
 
-**d.** On donne l'expression de
+**d)** On donne l'expression de
 $$
 E(z) = \frac{\lambda}{2\varepsilon_0}\,\frac{Rz}{\left(R^2 + z^2\right)^{3/2}}.
 $$
@@ -457,17 +457,17 @@ Tracer le graphe de la fonction $E(z)$.
 
 **2.** On s'intéresse maintenant au champ électrostatique au voisinage de l'axe. On calcule donc le champ en un point $M$ défini par des coordonnées cylindriques $(r, \theta, z)$.
 
-**a.** Montrer par des arguments de symétrie très précis, qu'en $M$, le champ $\vec{E}$ n'a pas de composante orthoradiale $E_\theta$.
+**a)** Montrer par des arguments de symétrie très précis, qu'en $M$, le champ $\vec{E}$ n'a pas de composante orthoradiale $E_\theta$.
 
-**b.** Montrer que la norme de $\vec{E}$ ne dépend que de $r$ et $z$.
+**b)** Montrer que la norme de $\vec{E}$ ne dépend que de $r$ et $z$.
 
-**c.** Montrer qu'au voisinage de l'axe, le flux du champ $\vec{E}$ est conservatif. Que peut-on dire de sa circulation sur un contour fermé ?
+**c)** Montrer qu'au voisinage de l'axe, le flux du champ $\vec{E}$ est conservatif. Que peut-on dire de sa circulation sur un contour fermé ?
 
 ```{=latex}
 \noindent
 \begin{minipage}[t]{0.66\linewidth}
 \vspace{0pt}
-\textbf{d.} Calculer le flux de $\vec{E}$ à travers une surface fermée cylindrique d'axe $(Oz)$ dont les bases sont des disques de rayon $r$ petit et de cotes $z$ et $z + \mathrm{d}z$ (figure ci-contre). En déduire :
+\textbf{d)} Calculer le flux de $\vec{E}$ à travers une surface fermée cylindrique d'axe $(Oz)$ dont les bases sont des disques de rayon $r$ petit et de cotes $z$ et $z + \mathrm{d}z$ (figure ci-contre). En déduire :
 \end{minipage}
 \hfill
 \begin{minipage}[t]{0.3\linewidth}
@@ -493,7 +493,7 @@ E_r(r,z) = -\frac{r}{2}\,\frac{\mathrm{d}E_z(0,z)}{\mathrm{d}z}
 $$
 puis établir l'expression de $E_r(r,z)$.
 
-**e.** Calculer de même la circulation du champ électrostatique le long du petit rectangle de sommets $M(r,z)$, $N(r,z+\mathrm{d}z)$, $P(r+\mathrm{d}r,z+\mathrm{d}z)$ et $Q(r+\mathrm{d}r,z)$, en supposant $r$ petit et $\mathrm{d}r$ et $\mathrm{d}z$ encore plus petits. En déduire
+**e)** Calculer de même la circulation du champ électrostatique le long du petit rectangle de sommets $M(r,z)$, $N(r,z+\mathrm{d}z)$, $P(r+\mathrm{d}r,z+\mathrm{d}z)$ et $Q(r+\mathrm{d}r,z)$, en supposant $r$ petit et $\mathrm{d}r$ et $\mathrm{d}z$ encore plus petits. En déduire
 $$
 \frac{\partial E_z}{\partial r} = \frac{\partial E_r}{\partial z} \qquad \text{puis} \qquad E_z(r,z) = E_z(0,z) - \frac{r^2}{4}\,\frac{\mathrm{d}^2 E_z}{\mathrm{d}z^2}(0,z)\,;
 $$
@@ -503,13 +503,13 @@ $$
 
 ### Solution
 
-**1.** **a.** Tout plan contenant l'axe $Oz$ est plan de symétrie de la distribution. Le champ $\vec{E}$ sur l'axe appartient à ces plans, donc à leur intersection qui est l'axe $Oz$ lui-même.
+**1.** **a)** Tout plan contenant l'axe $Oz$ est plan de symétrie de la distribution. Le champ $\vec{E}$ sur l'axe appartient à ces plans, donc à leur intersection qui est l'axe $Oz$ lui-même.
 
-**b.** Le champ $\vec{E}$ a les mêmes symétries que la distribution de charges ; or le plan de la spire est plan de symétrie pour la distribution, donc plan de symétrie pour $\vec{E}$. Ainsi $\vec{E}(-z) = -\vec{E}(z)$.
+**b)** Le champ $\vec{E}$ a les mêmes symétries que la distribution de charges ; or le plan de la spire est plan de symétrie pour la distribution, donc plan de symétrie pour $\vec{E}$. Ainsi $\vec{E}(-z) = -\vec{E}(z)$.
 
-**c.** Non : la symétrie de la distribution de charges n'est pas assez élevée, elle ne permet pas de connaître la direction du champ électrique en tout point de l'espace. On ne peut pas appliquer le théorème de Gauss pour déterminer le champ électrique en un point de l'axe.
+**c)** Non : la symétrie de la distribution de charges n'est pas assez élevée, elle ne permet pas de connaître la direction du champ électrique en tout point de l'espace. On ne peut pas appliquer le théorème de Gauss pour déterminer le champ électrique en un point de l'axe.
 
-**d.** Tracé ci-dessous : $E(z)$ est impaire, maximale en $z = R/\sqrt{2}$ où elle vaut $\dfrac{\lambda}{3\sqrt{3}\,\varepsilon_0 R}$.
+**d)** Tracé ci-dessous : $E(z)$ est impaire, maximale en $z = R/\sqrt{2}$ où elle vaut $\dfrac{\lambda}{3\sqrt{3}\,\varepsilon_0 R}$.
 
 ```{=latex}
 \begin{center}
@@ -523,13 +523,13 @@ $$
 \end{center}
 ```
 
-**2.** **a.** Le plan contenant le point $M$ et l'axe $Oz$ est plan de symétrie de la distribution de charges. Or ce plan a pour vecteurs directeurs $\vec{u}_r$ et $\vec{u}_z$, donc le champ $\vec{E}$ en $M$, qui appartient à ce plan, n'a pas de composante suivant $\vec{u}_\theta$.
+**2.** **a)** Le plan contenant le point $M$ et l'axe $Oz$ est plan de symétrie de la distribution de charges. Or ce plan a pour vecteurs directeurs $\vec{u}_r$ et $\vec{u}_z$, donc le champ $\vec{E}$ en $M$, qui appartient à ce plan, n'a pas de composante suivant $\vec{u}_\theta$.
 
-**b.** La distribution de charges est invariante par rotation d'axe $Oz$, donc $\vec{E}$ est indépendant de $\theta$.
+**b)** La distribution de charges est invariante par rotation d'axe $Oz$, donc $\vec{E}$ est indépendant de $\theta$.
 
-**c.** Si l'on considère une surface fermée au voisinage de l'axe, elle ne contient pas de charges. Le théorème de Gauss nous dit que le flux à travers cette surface est nul. Par ailleurs, le champ électrostatique $\vec{E}$ est à circulation conservative : sa circulation sur un contour fermé est nulle.
+**c)** Si l'on considère une surface fermée au voisinage de l'axe, elle ne contient pas de charges. Le théorème de Gauss nous dit que le flux à travers cette surface est nul. Par ailleurs, le champ électrostatique $\vec{E}$ est à circulation conservative : sa circulation sur un contour fermé est nulle.
 
-**d.** D'après ce que l'on vient d'écrire, le flux total $\phi_t$ à travers la surface cylindrique est nul puisqu'elle ne contient pas de charges. Le flux se décompose en trois termes : le flux à travers la surface latérale $\phi_L$, celui à travers la base située en $z$ noté $\phi(z)$, et celui à travers la base située en $z + \mathrm{d}z$ noté $\phi(z + \mathrm{d}z)$. On rappelle que les vecteurs surfaces élémentaires sont orientés vers l'extérieur de la surface. Comme les intégrales portent sur de petites surfaces, elles se ramènent au produit de la composante du champ orthogonale à la surface par l'aire de celle-ci :
+**d)** D'après ce que l'on vient d'écrire, le flux total $\phi_t$ à travers la surface cylindrique est nul puisqu'elle ne contient pas de charges. Le flux se décompose en trois termes : le flux à travers la surface latérale $\phi_L$, celui à travers la base située en $z$ noté $\phi(z)$, et celui à travers la base située en $z + \mathrm{d}z$ noté $\phi(z + \mathrm{d}z)$. On rappelle que les vecteurs surfaces élémentaires sont orientés vers l'extérieur de la surface. Comme les intégrales portent sur de petites surfaces, elles se ramènent au produit de la composante du champ orthogonale à la surface par l'aire de celle-ci :
 
 - $\phi_L = \displaystyle\iint_{S_L} \vec{E}\cdot\mathrm{d}\vec{S}_L = \iint_{S_L} \vec{E}\cdot\mathrm{d}S_L\,\vec{u}_r = \iint_{S_L} E_r\,\mathrm{d}S_L = E_r(r,z)\,2\pi r\,\mathrm{d}z$ ;
 - $\phi(z) = \displaystyle\iint_{S_z} \vec{E}\cdot\left(-\mathrm{d}S_z\,\vec{u}_z\right) = -\iint_{S_z} E_z\,\mathrm{d}S_z = -\pi r^2 E_z(0,z)$ ;
@@ -987,17 +987,17 @@ De plus, les équations de Maxwell dans le silicium sont identiques aux équatio
 
 Par la suite, on polarise la diode en inverse, avec une tension $V = -U$.
 
-**a.** Décrire le comportement de la jonction. Que vaut alors le courant dans la diode ?
+**a)** Décrire le comportement de la jonction. Que vaut alors le courant dans la diode ?
 
-**b.** Calculer les charges $Q_A$ et $Q_D$ des zones de charge d'espace.
+**b)** Calculer les charges $Q_A$ et $Q_D$ des zones de charge d'espace.
 
-**c.** On définit la capacité dynamique de la jonction :
+**c)** On définit la capacité dynamique de la jonction :
 $$
 C = \frac{\delta Q_D}{\delta U}.
 $$
 Exprimer cette capacité en fonction de $U$ notamment. Calculer $C$.
 
-**d.** Expliquer comment, avec une telle diode, on peut réaliser un filtre sélecteur de fréquence pour un poste radio.
+**d)** Expliquer comment, avec une telle diode, on peut réaliser un filtre sélecteur de fréquence pour un poste radio.
 
 ::: {.content-visible when-meta="solution"}
 
@@ -1080,14 +1080,14 @@ w = x_D - x_A = \sqrt{\frac{2V_0\varepsilon}{e N_A N_D\left(N_A + N_D\right)}}\,
 $$
 Numériquement : $w = 0{,}96\ \mu\text{m}$.
 
-**5.** **a.** La différence de potentiel aux bornes de la zone de charge d'espace est augmentée, le champ électrique aussi, et la zone de charge d'espace est plus large. Il n'y a aucun courant, car il n'y a pas de porteurs libres dans la zone de charge d'espace.
+**5.** **a)** La différence de potentiel aux bornes de la zone de charge d'espace est augmentée, le champ électrique aussi, et la zone de charge d'espace est plus large. Il n'y a aucun courant, car il n'y a pas de porteurs libres dans la zone de charge d'espace.
 
-**b.** Pour calculer les nouvelles valeurs de $Q_A = S x_A e N_A$ et $Q_D = S x_D e N_D$, on reprend les expressions établies pour la diode à l'équilibre, en remplaçant $V_0$ par $V_0 + U$. On obtient :
+**b)** Pour calculer les nouvelles valeurs de $Q_A = S x_A e N_A$ et $Q_D = S x_D e N_D$, on reprend les expressions établies pour la diode à l'équilibre, en remplaçant $V_0$ par $V_0 + U$. On obtient :
 $$
 Q_D = -Q_A = S N_D e\sqrt{\frac{2\varepsilon\left(V_0 + U\right)}{N_D e\left(1 + \frac{N_D}{N_A}\right)}} = S e\sqrt{\frac{2\varepsilon\left(V_0 + U\right)N_D N_A}{e\left(N_D + N_A\right)}}.
 $$
 
-**c.** On peut écrire
+**c)** On peut écrire
 $$
 Q_D = Q_{D0}\sqrt{1 + \frac{U}{V_0}} \qquad \text{avec} \qquad Q_{D0} = S\sqrt{\frac{2\varepsilon\,e V_0\,N_D N_A}{N_D + N_A}}.
 $$
@@ -1097,7 +1097,7 @@ C = \frac{\delta Q_D}{\delta U} = \frac{C_0}{\sqrt{1 + \dfrac{U}{V_0}}} \qquad \
 $$
 Numériquement, on vérifie que $C_0 = \dfrac{\varepsilon S}{w}$ (condensateur plan d'épaisseur $w$) : $\dfrac{C_0}{S} \simeq 1{,}1\cdot 10^{-4}\ \text{F}\cdot\text{m}^{-2}$, soit $C_0 \simeq 110\ \text{pF}$ pour $S = 1\ \text{mm}^2$.
 
-**d.** La diode obtenue se comporte donc comme un condensateur dont on peut commander la capacité par une tension. Ainsi, en polarisant la diode en inverse et en appliquant à ses bornes une tension $V = -U$, on fait varier la capacité du condensateur. Si l'on réalise à l'aide de ce condensateur un circuit passe-bande avec une bobine d'inductance $L$, on sélectionne les fréquences dans une bande voisine de $f_0$, avec
+**d)** La diode obtenue se comporte donc comme un condensateur dont on peut commander la capacité par une tension. Ainsi, en polarisant la diode en inverse et en appliquant à ses bornes une tension $V = -U$, on fait varier la capacité du condensateur. Si l'on réalise à l'aide de ce condensateur un circuit passe-bande avec une bobine d'inductance $L$, on sélectionne les fréquences dans une bande voisine de $f_0$, avec
 $$
 2\pi f_0 = \frac{1}{\sqrt{L\,C(U)}} ;
 $$
@@ -1108,8 +1108,6 @@ en agissant sur $U$, on agit sur la fréquence sélectionnée par le filtre pass
 ```
 
 :::
-
-&nbsp;
 
 &nbsp;
 
