@@ -1,0 +1,665 @@
+---
+title: "Planche de Magnétostatique (PC)"
+subtitle: "– Théorème d'Ampère & distributions de courant –"
+solution: false
+# solution: true
+header-left: "TD IPESUP 2026-2027"
+header-right: "Magnétostatique (PC)"
+footer-left: "D. Mofakhami"
+footer-right: ""
+format:
+  pdf:
+    documentclass: article
+    template: td-template.tex
+    geometry: margin=2.5cm,headheight=28pt
+    fontsize: 11pt
+    number-sections: true
+    toc: false
+mainfont: "Latin Modern Roman"
+header-includes:
+  - \usepackage{esint}
+---
+
+<!--
+Pour compiler l'énoncé seul :        quarto render TD_magnetostatique.qmd
+Pour compiler avec les solutions :   quarto render TD_magnetostatique.qmd --metadata solution:true
+(ou changer directement "solution: true" dans l'en-tête ci-dessus)
+-->
+
+## Distributions cylindriques ($\star$)
+
+```{=latex}
+\noindent
+\begin{minipage}[t]{0.6\linewidth}
+\vspace{0pt}
+Un cylindre de révolution autour de l'axe $(Oz)$ a pour rayon $b$ et une longueur infinie (c'est-à-dire très grande devant $b$). Il est parcouru dans la direction et dans le sens de $(Oz)$ par un courant continu de densité uniforme de courant $\vec{J}$.
+\end{minipage}
+\hfill
+\begin{minipage}[t]{0.36\linewidth}
+\vspace{0pt}
+\begin{center}
+\begin{tikzpicture}[scale=0.85, >=Stealth, every node/.style={font=\small}]
+  \fill[gray!45] (0,0) circle (1.2);
+  \draw (0,0) circle (1.2);
+  \draw (0,0) circle (2.5pt); \fill (0,0) circle (0.8pt);
+  \node[below] at (0,-0.1) {$\vec{u}_z$};
+  \draw (0.55,-0.6) circle (2.5pt); \fill (0.55,-0.6) circle (0.8pt);
+  \node[right] at (0.6,-0.6) {$\vec{J}$};
+  \draw[->] (0,0) -- (130:1.2) node[midway, left] {$b$};
+  \coordinate (P) at (20:2.1);
+  \draw (0,0) -- (P) node[midway, above] {$r$};
+  \fill (P) circle (1.3pt) node[below] {$P$};
+  \draw[->, thick] (P) -- ++(20:0.9) node[right] {$\vec{u}_r(P)$};
+  \draw[->, thick] (P) -- ++(110:0.9) node[above] {$\vec{u}_\theta(P)$};
+\end{tikzpicture}
+\end{center}
+\end{minipage}
+```
+
+**1.** **a.** Par analyse des invariances de la distribution de courant, déterminer la dépendance du champ $\vec{B}$ en coordonnées cylindriques $(r,\theta,z)$, pour un point $P$ quelconque de l'espace.
+
+**b.** Par analyse des symétries de la distribution de courant, déterminer la direction du champ $\vec{B}$ dans la base cylindrique $(\vec{u}_r, \vec{u}_\theta, \vec{u}_z)$ pour un point $P$ quelconque de l'espace.
+
+**2.** **a.** Déterminer le vecteur champ magnétique $\vec{B}$ créé par ce courant en un point $P$ extérieur au cylindre, situé à la distance $r$ de $(Oz)$.
+
+**b.** Même question lorsque $P$ est à l'intérieur du cylindre.
+
+**c.** Donner une expression vectorielle intrinsèque (indépendante du système de coordonnées, c'est-à-dire sous forme de produit vectoriel entre $\vec{J}$ et le vecteur $\overrightarrow{OP}$) du vecteur champ calculé dans la question précédente.
+
+```{=latex}
+\begin{center}
+\begin{tikzpicture}[scale=0.85, >=Stealth, every node/.style={font=\small}]
+  % Cylindre creux (question 3)
+  \fill[gray!45, even odd rule] (0,0) circle (1.3) (0,0) circle (0.65);
+  \draw (0,0) circle (1.3);
+  \draw (0,0) circle (0.65);
+  \draw (0,0) circle (2.5pt); \fill (0,0) circle (0.8pt);
+  \node[below] at (0,-0.1) {$\vec{u}_z$};
+  \draw[->] (0,0) -- (60:1.3) node[above right] {$b_1$};
+  \draw[->] (0,0) -- (150:0.65) node[above left] {$b_2$};
+  \draw (0.95,-0.45) circle (2.5pt); \fill (0.95,-0.45) circle (0.8pt);
+  \node[below] at (0.95,-0.5) {$\vec{J}$};
+  \node at (0,-1.75) {question 3};
+\end{tikzpicture}
+\hspace{2cm}
+\begin{tikzpicture}[scale=0.85, >=Stealth, every node/.style={font=\small}]
+  % Cylindre avec cavité excentrée (question 4)
+  \fill[gray!45] (0,0) circle (1.3);
+  \draw (0,0) circle (1.3);
+  \fill[white] (0.5,0.3) circle (0.6);
+  \draw (0.5,0.3) circle (0.6);
+  \fill (0,0) circle (1.2pt) node[below left] {$O_1$};
+  \fill (0.5,0.3) circle (1.2pt) node[above right] {$O_2$};
+  \draw (-0.6,0.7) circle (2.5pt); \fill (-0.6,0.7) circle (0.8pt);
+  \node[left] at (-0.65,0.7) {$\vec{J}$};
+  \node at (0,-1.75) {question 4};
+\end{tikzpicture}
+\end{center}
+```
+
+**3.** Un cylindre de longueur infinie et de révolution autour de l'axe $(Oz)$ est creux ; la partie pleine est comprise entre les rayons $b_1$ et $b_2$ ($b_1 > b_2$). Elle est parcourue dans la direction et dans le sens de $(Oz)$ par un courant continu de densité uniforme de courant $\vec{J}$.
+
+**a.** Déterminer le vecteur champ $\vec{B}$ en un point $P$ tel que $r < b_2$.
+
+**b.** Déterminer le vecteur champ $\vec{B}$ en un point $P$ tel que $b_2 < r < b_1$.
+
+**4.** Un cylindre de longueur infinie et de révolution autour de l'axe $(O_1z)$ a pour rayon $b_1$. On creuse dans le cylindre un autre cylindre de longueur infinie et de révolution autour de l'axe $(O_2z)$, parallèle à $(O_1z)$ et de même sens ; son rayon est $b_2 < b_1$.
+
+On désigne par $a$ la distance $O_1O_2$. Dans la partie pleine circule, dans la direction et le sens de $O_1z$, un courant continu de densité uniforme $\vec{J}$.
+
+En appliquant le principe de superposition et en utilisant l'expression du champ créé par un cylindre, déterminer l'expression du champ magnétique à l'intérieur de la cavité, sous forme intrinsèque.
+
+::: {.content-visible when-meta="solution"}
+
+### Solution
+
+**1.** **a.** La distribution de courant est invariante par rotation d'axe $(Oz)$, donc $\vec{B}$ est indépendant de $\theta$. La distribution est invariante par translation selon $(Oz)$, donc $\vec{B}$ est indépendant de $z$. Le champ $\vec{B}$ ne dépend donc que de $r$.
+
+**b.** Le plan contenant $P$ et l'axe $(Oz)$ est plan de symétrie de la distribution ; le champ $\vec{B}$ est donc perpendiculaire à ce plan : il est orthoradial, suivant $\vec{u}_\theta$.
+
+**2.** **a.** Attendu la forme de $\vec{B}$, on choisit comme contour d'Ampère $\mathcal{C}$ un cercle de rayon $r$ et d'axe $(Oz)$. Le vecteur déplacement élémentaire sur un cercle est $\mathrm{d}\vec{\ell} = \mathrm{d}\ell\,\vec{u}_\theta$. La circulation de $\vec{B}$ sur ce contour fermé s'écrit :
+$$
+\oint_{\mathcal{C}} \vec{B}\cdot\mathrm{d}\vec{\ell} = \oint_{\mathcal{C}} B(r)\,\vec{u}_\theta\cdot\mathrm{d}\ell\,\vec{u}_\theta = \oint_{\mathcal{C}} B(r)\,\mathrm{d}\ell = B(r)\oint_{\mathcal{C}}\mathrm{d}\ell = 2\pi r B(r).
+$$
+Pour un point $P$ extérieur au cylindre, le courant enlacé est celui qui parcourt tout le cylindre : c'est le flux de $\vec{J}$ à travers le disque de rayon $b$. D'autre part, $\vec{J}$ est dans le sens positif par rapport au contour orienté suivant $\vec{u}_\theta$, donc $I_{\text{enlacé}} = \pi b^2 J$. Le théorème d'Ampère entraîne $2\pi r B(r) = \mu_0 \pi b^2 J$, donc
+$$
+\vec{B} = \mu_0\,\frac{J b^2}{2r}\,\vec{u}_\theta.
+$$
+
+**b.** Dans le cas où $r < b$, seule la fraction du courant qui passe à travers le contour est à prendre en compte, donc $I_{\text{enlacé}} = \pi r^2 J$. Le théorème d'Ampère entraîne $2\pi r B(r) = \mu_0 \pi r^2 J$, donc
+$$
+\vec{B} = \mu_0\,\frac{J r}{2}\,\vec{u}_\theta.
+$$
+
+**c.** Avec $\overrightarrow{OP} = r\,\vec{u}_r + z\,\vec{u}_z$ et $\vec{J} = J\,\vec{u}_z$, on a $\vec{J}\wedge\overrightarrow{OP} = Jr\,\vec{u}_\theta$, donc
+$$
+\vec{B} = \frac{\mu_0}{2}\,\vec{J}\wedge\overrightarrow{OP}.
+$$
+
+**3.** Les symétries et invariances sont les mêmes que dans la question précédente. On utilise le même contour d'Ampère, cercle de rayon $r$ et d'axe $(Oz)$. La circulation est donc $2\pi r B(r)$.
+
+```{=latex}
+\noindent
+\begin{minipage}[t]{0.68\linewidth}
+\vspace{0pt}
+\textbf{a.} Pour la zone $r < b_2$, aucun courant ne traverse le contour, donc $I_{\text{enlacé}} = 0$ et $\vec{B} = \vec{0}$.
+
+\medskip
+\textbf{b.} Pour la zone intermédiaire, le courant enlacé $I_{\text{enlacé}}$ est celui qui traverse la zone hachurée (figure ci-contre) : le flux de $\vec{J}$ vaut $I_{\text{enlacé}} = J\pi\left(r^2 - b_2^2\right)$. Le théorème d'Ampère entraîne $2\pi r B(r) = \mu_0 J\pi\left(r^2 - b_2^2\right)$, donc
+\[
+\vec{B} = \frac{\mu_0 J}{2}\left(r - \frac{b_2^2}{r}\right)\vec{u}_\theta.
+\]
+\end{minipage}
+\hfill
+\begin{minipage}[t]{0.28\linewidth}
+\vspace{0pt}
+\begin{center}
+\begin{tikzpicture}[scale=0.8, >=Stealth, every node/.style={font=\small}]
+  \fill[gray!35, even odd rule] (0,0) circle (1.4) (0,0) circle (0.6);
+  \begin{scope}
+    \clip (0,0) circle (1.0);
+    \fill[white] (0,0) circle (0.6);
+    \foreach \i in {-2,-1.85,...,2} \draw[gray!80!black] (\i,-1.2) -- ++(1.2,2.4);
+    \fill[white] (0,0) circle (0.6);
+  \end{scope}
+  \draw (0,0) circle (1.4);
+  \draw (0,0) circle (0.6);
+  \draw[thick] (0,0) circle (1.0);
+  \node at (65:1.15) {$\mathcal{C}$};
+  \draw (0,0) circle (2.5pt); \fill (0,0) circle (0.8pt);
+  \draw[->] (0,0) -- (200:0.6) node[above, xshift=4pt] {$b_2$};
+  \draw[->] (0,0) -- (-40:1.0) node[right] {$r$};
+\end{tikzpicture}
+\end{center}
+\end{minipage}
+```
+
+**4.** On superpose le champ magnétique $\vec{B}_1$ créé par un cylindre d'axe $(O_1z)$, de rayon $b_1$ et de densité de courant $\vec{J}$, avec celui $\vec{B}_2$ créé par un cylindre d'axe $(O_2z)$, de rayon $b_2$ et de densité de courant $-\vec{J}$. La superposition des densités de courant donne bien la distribution proposée.
+
+Un point $P$ intérieur à la cavité est intérieur aux deux cylindres précédents. On utilise le résultat intrinsèque déterminé à la question **2.c** pour trouver un champ uniforme :
+$$
+\vec{B}_1 = \frac{\mu_0}{2}\,\vec{J}\wedge\overrightarrow{O_1P}, \quad \vec{B}_2 = \frac{\mu_0}{2}\left(-\vec{J}\right)\wedge\overrightarrow{O_2P} \quad\Rightarrow\quad \vec{B} = \frac{\mu_0}{2}\,\vec{J}\wedge\left(\overrightarrow{O_1P} - \overrightarrow{O_2P}\right) = \frac{\mu_0}{2}\,\vec{J}\wedge\overrightarrow{O_1O_2}.
+$$
+
+```{=latex}
+\newpage
+```
+
+:::
+
+## Bobine torique ($\star$)
+
+```{=latex}
+\noindent
+\begin{minipage}[t]{0.58\linewidth}
+\vspace{0pt}
+Une bobine est constituée par un fil conducteur bobiné en spires jointives sur un tore circulaire à section carrée de côté $a$, de rayon moyen $R$. On désigne par $n$ le nombre total de spires et par $I$ le courant qui les parcourt.
+
+\medskip
+Parmi les quatre propositions pour chaque question, il peut y avoir une ou plusieurs réponses justes.
+
+\medskip
+\textit{La figure ci-contre représente la coupe du tore par le plan méridien $(xOy)$.}
+\end{minipage}
+\hfill
+\begin{minipage}[t]{0.38\linewidth}
+\vspace{0pt}
+\begin{center}
+\begin{tikzpicture}[scale=0.75, >=Stealth, every node/.style={font=\small}]
+  \draw[->] (-3.3,0) -- (4.0,0) node[right] {$x$};
+  \draw[->] (0,-1.5) -- (0,1.9) node[left] {$y$};
+  \fill[gray!30] (1.5,-0.6) rectangle (2.7,0.6);
+  \draw (1.5,-0.6) rectangle (2.7,0.6);
+  \fill[gray!30] (-2.7,-0.6) rectangle (-1.5,0.6);
+  \draw (-2.7,-0.6) rectangle (-1.5,0.6);
+  % sens du courant dans les spires (coupe)
+  \node[draw, circle, inner sep=0.6pt, font=\tiny] at (1.5,0) {$\cdot$};
+  \node[draw, circle, inner sep=0.6pt, font=\tiny] at (-1.5,0) {$\times$};
+  \fill (0,0) circle (1.2pt) node[below left] {$O$};
+  \draw[<->] (0,-1.05) -- (2.1,-1.05) node[midway, below] {$R$};
+  \draw[dashed] (2.1,-0.6) -- (2.1,-1.1);
+  \draw[<->] (2.95,0.05) -- (2.95,0.6) -- (2.95,-0.6); \node[right] at (2.95,0.35) {$a$};
+\end{tikzpicture}
+\end{center}
+\end{minipage}
+```
+
+**1.** Tout plan méridien du bobinage, c'est-à-dire tout plan contenant l'axe de révolution $(Oy)$, est :
+
+A) Plan de symétrie de la distribution de courant.
+B) Plan d'antisymétrie de la distribution de courant.
+C) Plan d'antisymétrie du champ magnétique.
+D) Plan de symétrie du champ magnétique.
+
+**2.** Il en résulte que les lignes de champ du champ magnétique passant par un point quelconque $M$ situé à l'intérieur de la bobine sont :
+
+A) Des cercles d'axe $(Oy)$.
+B) Des cercles de centre $O$.
+C) Des cercles dont le centre est le centre de la spire contenant $M$.
+D) Des carrés dont l'un des sommets contient $M$.
+
+**3.** Calculer la norme du champ magnétique qui règne en un point $M(x,y)$ quelconque du plan $(xOy)$ à l'intérieur du tore.
+$$
+\text{A) } B = \frac{\mu_0 n I}{2\pi\sqrt{x^2 + y^2}} \qquad \text{B) } B = \frac{\mu_0 n I}{2\pi x} \qquad \text{C) } B = \frac{\mu_0 n I}{2\pi y} \qquad \text{D) } B = \frac{\mu_0 n I x}{2\pi\sqrt{x^2 + y^2}}
+$$
+
+**4.** Calculer le flux $\Phi$ du champ magnétique à travers la surface d'une spire dont la normale est orientée dans le sens du champ.
+$$
+\begin{aligned}
+&\text{A) } \Phi = \frac{\mu_0 n I a}{2\pi}\ln\frac{2R + a}{2R - a} &\qquad &\text{B) } \Phi = \frac{\mu_0 n I a}{2\pi}\ln\frac{R + a}{R - a} \\[2mm]
+&\text{C) } \Phi = \frac{\mu_0 n I a}{2\pi}\ln\frac{R + 2a}{2R - 2a} &\qquad &\text{D) } \Phi = \frac{\mu_0 n I a}{2\pi}\ln\frac{R}{a}
+\end{aligned}
+$$
+
+**5.** On désigne respectivement par $B_{\min}$ et $B_{\max}$ les valeurs minimum et maximum du champ magnétique à l'intérieur de la bobine. Calculer la valeur numérique du rapport $a/R$ pour une variation relative du champ de $10\,\%$ :
+$$
+\text{A) } \frac{a}{R} = 0{,}100 \qquad \text{B) } \frac{a}{R} = 0{,}050 \qquad \text{C) } \frac{a}{R} = 0{,}075 \qquad \text{D) } \frac{a}{R} = 0{,}200
+$$
+
+::: {.content-visible when-meta="solution"}
+
+### Solution
+
+**1.** Les réponses **(A)** et **(C)** sont justes, les deux autres sont fausses.
+
+**2.** Puisque le champ $\vec{B}$ est perpendiculaire aux plans de symétrie de la distribution de courant, il est orthoradial. Seule la réponse **(A)** est juste.
+
+**3.** D'autre part, la distribution de courant est invariante par rotation d'axe $(Oy)$, donc le champ $B$ ne dépend que de la distance à l'axe, que l'on note $r$, et de $y$. D'après ce qui précède, on choisit comme contours pour calculer la circulation des cercles de rayon $r$ et d'axe $(Oy)$, orientés dans le sens trigonométrique positif par rapport à l'orientation de $(Oy)$. La circulation sur ces contours, auxquels $\vec{B}$ est tangent et le long desquels il a une norme constante, est $\mathcal{C} = 2\pi r B$.
+
+Dans le cas d'un point $M$ du plan $(xOy)$ d'abscisse $x$, on a $r = x$. Le courant enlacé par un cercle intérieur au tore est celui des $n$ spires (côté vertical à la distance $R - a/2$ de $(Oy)$). Le courant circule selon $(Oy)$, donc dans le sens positif par rapport à l'orientation du contour. On a donc $I_{\text{enlacé}} = nI$ et le théorème d'Ampère s'écrit $2\pi r B = \mu_0 n I$, donc
+$$
+B = \frac{\mu_0 n I}{2\pi r} = \frac{\mu_0 n I}{2\pi x}.
+$$
+La réponse **(B)** est correcte.
+
+**4.** Le flux du champ magnétique à travers la surface d'une spire est le même pour toutes les spires que pour celle du plan $(xOy)$ ; il s'écrit :
+$$
+\Phi = \iint \vec{B}\cdot\mathrm{d}\vec{S} = \frac{\mu_0 n I}{2\pi}\int_{y=-a/2}^{y=a/2}\int_{x=R-a/2}^{x=R+a/2}\frac{\mathrm{d}x\,\mathrm{d}y}{x} = \frac{\mu_0 n I a}{2\pi}\ln\frac{2R + a}{2R - a}.
+$$
+La réponse **(A)** est juste.
+
+**5.** On a
+$$
+B_{\max} = \frac{\mu_0 n I}{2\pi\left(R - \frac{a}{2}\right)} \qquad \text{et} \qquad B_{\min} = \frac{\mu_0 n I}{2\pi\left(R + \frac{a}{2}\right)}.
+$$
+Le champ moyen $B_{\text{moy}}$ est $(B_{\max} + B_{\min})/2$ et la variation relative recherchée est :
+$$
+10\,\% = 0{,}1 = \frac{B_{\max} - B_{\min}}{B_{\text{moy}}} = 2\,\frac{B_{\max} - B_{\min}}{B_{\max} + B_{\min}} = \frac{a}{R} \quad\Rightarrow\quad \frac{a}{R} = 0{,}100.
+$$
+La réponse **(A)** est juste.
+
+```{=latex}
+\newpage
+```
+
+:::
+
+## Câble coaxial (d'après CCP) ($\star$)
+
+**1.** Énoncer le théorème d'Ampère relatif à la circulation du champ magnétique $\vec{B}$ le long d'un contour fermé $\mathcal{C}$ constitué de points $M$ et s'appuyant sur une surface $S$. On notera $\vec{j}(P)$ la densité de courant en un point $P$ de la surface $S$.
+
+```{=latex}
+\noindent
+\begin{minipage}[t]{0.6\linewidth}
+\vspace{0pt}
+On considère un câble coaxial cylindrique de longueur supposée infinie, constitué d'un conducteur central plein de rayon $R_1$, parcouru par un courant uniforme d'intensité $I$, et d'un conducteur périphérique évidé, de rayon intérieur $R_2$, de rayon extérieur $R_3$ avec $R_1 < R_2 < R_3$, et parcouru par un courant uniforme d'intensité $I$ mais circulant en sens inverse par rapport au courant du conducteur central.
+
+\medskip
+On notera $\vec{u}_z$ le vecteur directeur unitaire de l'axe commun des 2 conducteurs. Soit un point $M$ à une distance $r$ de l'axe du câble.
+\end{minipage}
+\hfill
+\begin{minipage}[t]{0.36\linewidth}
+\vspace{0pt}
+\begin{center}
+\begin{tikzpicture}[scale=0.8, >=Stealth, every node/.style={font=\small}]
+  \fill[gray!45, even odd rule] (0,0) circle (2.0) (0,0) circle (1.4);
+  \draw (0,0) circle (2.0);
+  \draw (0,0) circle (1.4);
+  \fill[gray!45] (0,0) circle (0.55);
+  \draw (0,0) circle (0.55);
+  \draw (0,0) circle (2.5pt); \fill (0,0) circle (0.8pt);
+  \node at (-1.7,-0.2) {$-I$};
+  \node at (-0.25,-0.3) {\scriptsize $I$};
+  \draw[->] (0,0) -- (135:0.55);
+  \node at (150:0.95) {$R_1$};
+  \draw[->] (0,0) -- (-20:1.4) node[below] {$R_2$};
+  \draw[->] (0,0) -- (-65:2.0) node[below right] {$R_3$};
+  \coordinate (P) at (40:1.7);
+  \draw (0,0) -- (P);
+  \node at (55:1.0) {$r$};
+  \fill (P) circle (1.3pt) node[below right] {$M$};
+  \draw[->, thick] (P) -- ++(40:0.9) node[right] {$\vec{u}_r$};
+  \draw[->, thick] (P) -- ++(130:0.9) node[above] {$\vec{u}_\theta$};
+\end{tikzpicture}
+\end{center}
+\end{minipage}
+```
+
+**2.** **a.** Montrer que le champ magnétique $\vec{B}$ créé au point $M$ est orthoradial.
+
+**b.** Montrer qu'il peut se mettre sous la forme $\vec{B} = B(r)\,\vec{u}_\theta$, où $B(r)$ est une fonction de $r$ uniquement.
+
+**c.** Préciser alors la forme des lignes de champ.
+
+**3.** **a.** Montrer que le champ magnétique $\vec{B}$ créé au point $M$ est nul si $r > R_3$.
+
+**b.** Expliquer l'intérêt du câble coaxial par rapport à un fil simple parcouru par un courant de même intensité.
+
+**4.** Calculer les densités de courant $\vec{j}_1$ et $\vec{j}_2$, respectivement du conducteur central et du conducteur périphérique, en fonction des courants $I$ et $-I$ et des rayons $R_1$, $R_2$ et $R_3$.
+
+**5.** En appliquant le théorème d'Ampère à un contour $\mathcal{C}$ que l'on précisera, donner l'expression de la composante $B(r)$ du champ magnétique créé au point $M$ en fonction de $\mu_0$, $I$, $r$, $R_1$, $R_2$ et $R_3$ dans chacun des trois cas suivants :
+$$
+(a)\ r < R_1 \qquad (b)\ R_1 < r < R_2 \qquad (c)\ R_2 < r < R_3
+$$
+
+**6.** Vérifier que le champ magnétique est continu en $r = R_1$ et en $r = R_2$.
+
+**7.** Tracer l'allure du graphe de $B(r)$.
+
+::: {.content-visible when-meta="solution"}
+
+### Solution
+
+**1.** La surface $S$ s'appuyant sur le contour fermé orienté $\mathcal{C}$ est orientée par $\mathcal{C}$ selon la règle de la main droite. La circulation du champ $\vec{B}$ sur le contour $\mathcal{C}$ est égale au flux du vecteur densité de courant $\vec{j}$ à travers la surface $S$, multiplié par $\mu_0$ :
+$$
+\oint_{\mathcal{C}} \vec{B}(M)\cdot\mathrm{d}\vec{\ell}_M = \mu_0\iint_S \vec{j}(P)\cdot\mathrm{d}\vec{S}_P.
+$$
+
+**2.** **a.** Le plan contenant le point $M$ et l'axe $(Oz)$ est plan de symétrie de la distribution de courant, donc le champ $\vec{B}(M)$ est orthogonal à ce plan : il est orthoradial.
+
+**b.** La distribution de courant est invariante par translation selon $(Oz)$ et par rotation d'axe $(Oz)$, donc $\vec{B}$ ne dépend que de $r$.
+
+**c.** Les lignes de champ sont donc des cercles d'axe $(Oz)$.
+
+**3.** **a.** On choisit comme contour d'Ampère $\mathcal{C}$ un cercle d'axe $(Oz)$ et de rayon $r$, orienté dans le sens positif par rapport à $(Oz)$, c'est-à-dire suivant $\vec{u}_\theta$. Alors $\oint_{\mathcal{C}} \vec{B}\cdot\mathrm{d}\vec{\ell} = 2\pi r B(r)$.
+
+Si $r > R_3$, le courant enlacé par le contour est nul car égal à $I - I$. Le théorème d'Ampère donne alors $2\pi r B(r) = \mu_0 I_{\text{enlacé}} = 0$, et donc $B = 0$.
+
+**b.** L'intérêt d'un câble coaxial par rapport à un fil simple parcouru par un courant de même intensité est la nullité du champ à l'extérieur, donc l'absence de parasites induits sur le reste du circuit.
+
+**4.** L'intensité est le flux du vecteur densité de courant à travers la section du conducteur. Pour $r < R_1$, on a en norme $I = j_1\pi R_1^2$, et pour $R_2 < r < R_3$, toujours en norme, $I = j_2\pi\left(R_3^2 - R_2^2\right)$, soit avec les orientations :
+$$
+\vec{j}_1 = \frac{I}{\pi R_1^2}\,\vec{u}_z \qquad \text{et} \qquad \vec{j}_2 = -\frac{I}{\pi\left(R_3^2 - R_2^2\right)}\,\vec{u}_z.
+$$
+
+**5.** Comme précédemment, on prend comme contour d'Ampère $\mathcal{C}$ un cercle de rayon $r$ et d'axe $(Oz)$, orienté dans le sens positif par rapport à $(Oz)$, c'est-à-dire suivant $\vec{u}_\theta$. La circulation de $\vec{B}$ sur ce contour est $2\pi r B(r)$.
+
+On doit maintenant calculer le flux de $\vec{j}_1$ et $\vec{j}_2$ à travers la surface du contour (on note $j_1$ et $j_2$ les normes) :
+
+- (a) $r < R_1$ : $I_{\text{enlacé}} = j_1\pi r^2$, soit $B = \dfrac{\mu_0 j_1 r}{2} = \dfrac{\mu_0 I r}{2\pi R_1^2}$ ;
+- (b) $R_1 < r < R_2$ : $I_{\text{enlacé}} = j_1\pi R_1^2$, soit $B = \dfrac{\mu_0 j_1 R_1^2}{2r} = \dfrac{\mu_0 I}{2\pi r}$ ;
+- (c) $R_2 < r < R_3$ : $I_{\text{enlacé}} = j_1\pi R_1^2 - j_2\pi\left(r^2 - R_2^2\right)$, soit
+$$
+B = \frac{\mu_0 j_1 R_1^2}{2r} - \frac{\mu_0 j_2\left(r^2 - R_2^2\right)}{2r} = \frac{\mu_0 I}{2\pi r}\,\frac{R_3^2 - r^2}{R_3^2 - R_2^2}.
+$$
+
+**6.** La vérification de la continuité est immédiate : les expressions (a) et (b) valent toutes deux $\dfrac{\mu_0 I}{2\pi R_1}$ en $r = R_1$, et les expressions (b) et (c) valent toutes deux $\dfrac{\mu_0 I}{2\pi R_2}$ en $r = R_2$.
+
+**7.** La courbe $B(r)$ est tracée ci-dessous.
+
+```{=latex}
+\begin{center}
+\begin{tikzpicture}[xscale=1.0, yscale=1.0, >=Stealth, every node/.style={font=\small}]
+  % R1 = 1, R2 = 2.5, R3 = 3.5 ; B en unités de mu0 I / (2 pi R1), échelle 2
+  \draw[->] (0,0) -- (5,0) node[right] {$r$};
+  \draw[->] (0,0) -- (0,2.5) node[above] {$B$};
+  \draw[thick] (0,0) -- (1,2);
+  \draw[thick, domain=1:2.5, samples=40] plot (\x, {2/\x});
+  \draw[thick, domain=2.5:3.5, samples=40] plot (\x, {(2/\x)*(12.25-\x*\x)/(12.25-6.25)});
+  \draw[thick] (3.5,0) -- (4.8,0);
+  \draw[dashed] (1,0) node[below] {$R_1$} -- (1,2);
+  \draw[dashed] (2.5,0) node[below] {$R_2$} -- (2.5,0.8);
+  \node[below] at (3.5,0) {$R_3$};
+  \draw[dashed] (0,2) node[left] {$\frac{\mu_0 I}{2\pi R_1}$} -- (1,2);
+\end{tikzpicture}
+\end{center}
+```
+
+```{=latex}
+\newpage
+```
+
+:::
+
+## Champ magnétique au voisinage de l'axe d'une spire (d'après Mines) ($\star\star$)
+
+On donne une spire circulaire de rayon $R$, de centre $O$, d'axe $(Oz)$. Cette spire est parcourue par un courant électrique d'intensité $I$ constante.
+
+**1.** **a.** Montrer par des arguments de symétrie que, sur l'axe, le champ magnétostatique $\vec{B}$ est porté par l'axe et prend la forme $\vec{B} = B(z)\,\vec{u}_z$, où $\vec{u}_z$ est un vecteur unitaire porté par l'axe $(Oz)$.
+
+**b.** Comparer $B(z)$ et $B(-z)$.
+
+**c.** Le champ magnétique en un point $M$ de coordonnée $z$ sur l'axe $(Oz)$ s'écrit sous la forme
+$$
+B(z) = \frac{\mu_0 I}{2}\,\frac{R^2}{\left(R^2 + z^2\right)^{3/2}}.
+$$
+Écrire $B(z)$ sous la forme $B_0 f(u)$ où $u = \dfrac{z}{R}$ ; identifier $B_0$ et $f(u)$.
+
+**d.** Tracer l'allure du graphe de la fonction $B(z)$.
+
+**2.** On s'intéresse maintenant au champ magnétostatique au voisinage de l'axe. On calcule donc le champ en un point $M$ défini par des coordonnées cylindriques $(r, \theta, z)$.
+
+**a.** Montrer par des arguments de symétrie très précis qu'en $M$, le champ $\vec{B}$ n'a pas de composante orthoradiale $B_\theta$.
+
+**b.** Montrer que la norme de $\vec{B}$ ne dépend que de $r$ et $z$.
+
+**c.** Que peut-on dire du flux de $\vec{B}$ à travers une surface fermée ?
+
+**d.** Montrer que la circulation de $\vec{B}$ au voisinage de l'axe est conservative.
+
+**e.** Calculer le flux de $\vec{B}$ à travers une surface fermée cylindrique d'axe $(Oz)$ dont les bases sont des disques de rayon $r$ petit et de cotes $z$ et $z + \mathrm{d}z$. En déduire :
+$$
+B_r(r,z) = -\frac{r}{2}\,\frac{\mathrm{d}B_z(0,z)}{\mathrm{d}z}.
+$$
+Calculer l'expression de $B_r(r,z)$.
+
+**f.** Calculer de même la circulation du champ magnétique le long du petit rectangle de sommets $M(r,z)$, $P(r,z+\mathrm{d}z)$, $Q(r+\mathrm{d}r,z+\mathrm{d}z)$ et $R(r+\mathrm{d}r,z)$, en supposant $r$ petit et $\mathrm{d}r$ et $\mathrm{d}z$ encore plus petits. En déduire
+$$
+\frac{\partial B_z}{\partial r} = \frac{\partial B_r}{\partial z}, \qquad \text{puis} \qquad B_z(r,z) = B_z(0,z) - \frac{r^2}{4}\,\frac{\mathrm{d}^2 B_z}{\mathrm{d}z^2}(0,z).
+$$
+
+**g.** On se place au voisinage du centre $O$ d'une spire de rayon $R$. De combien peut-on s'écarter dans le plan de la spire pour que la composante axiale du champ magnétique diffère du champ $B_0$ au centre de moins de $1\,\%$ ?
+
+On donne :
+$$
+\frac{\mathrm{d}^2 B}{\mathrm{d}z^2}(z) = -\frac{3B_0}{R^2}\left(1 - 4\frac{z^2}{R^2}\right)\left(1 + \frac{z^2}{R^2}\right)^{-7/2}.
+$$
+
+::: {.content-visible when-meta="solution"}
+
+### Solution
+
+**1.** **a.** Tous les plans qui contiennent l'axe $(Oz)$ sont plans d'antisymétrie de la distribution de courant. Le champ magnétique appartenant à tous ces plans, il est porté par $\vec{u}_z$ : $\vec{B}(M) = B(M)\,\vec{u}_z$. De plus, le courant est invariant par rotation autour de l'axe $(Oz)$, donc $B(M) = B(r = 0, z)$, qu'on écrit $B(z)$.
+
+**b.** Le plan de la spire est plan de symétrie de la distribution de courant, donc $\vec{B}(-z)$ est l'opposé du symétrique de $\vec{B}(z)$ ; pour un vecteur porté par $\vec{u}_z$, cela donne $\vec{B}(-z) = \vec{B}(z)$, donc $B(-z) = B(z)$.
+
+**c.** $B(z) = \dfrac{\mu_0 I}{2}\,\dfrac{R^2}{\left(R^2 + z^2\right)^{3/2}}$ peut être mis sous la forme $B(z) = B_0 f(u)$ avec
+$$
+B_0 = B(0) = \frac{\mu_0 I}{2R} \qquad \text{et} \qquad f(u) = \left(1 + u^2\right)^{-3/2}, \quad u = \frac{z}{R}.
+$$
+
+**d.** Le graphe ci-dessous représente l'évolution de la valeur du champ magnétique le long de $(Oz)$.
+
+```{=latex}
+\begin{center}
+\begin{tikzpicture}[xscale=0.8, yscale=2.2, >=Stealth, every node/.style={font=\small}]
+  \draw[->] (-4.5,0) -- (4.7,0) node[right] {$z$};
+  \draw[->] (0,0) -- (0,1.25) node[above] {$B$};
+  \draw[thick, domain=-4.3:4.3, samples=120, smooth] plot (\x, {1/(1+\x*\x)^1.5});
+  \node[above right] at (0,1) {$B_0 = \frac{\mu_0 I}{2R}$};
+\end{tikzpicture}
+\end{center}
+```
+
+**2.** **a.** Le plan contenant $M$ et l'axe $(Oz)$ est plan d'antisymétrie de la distribution de courant, donc $\vec{B}(M)$ appartient à ce plan : il n'a pas de composante orthoradiale.
+
+**b.** La distribution de courant est invariante par toute rotation d'axe $(Oz)$, donc $\vec{B}(M) = \vec{B}(r,z)$.
+
+**c.** Le flux de $\vec{B}$ à travers une surface fermée est nul.
+
+**d.** Au voisinage de l'axe, il n'y a aucun courant. Le théorème d'Ampère appliqué à un contour voisin de l'axe montre que la circulation de $\vec{B}$ le long de ce contour est nulle.
+
+**e.** Le rayon $r$ étant petit, on considère $B_z$ uniforme sur les faces du cylindre pour le calcul du flux de $\vec{B}$. De plus, $B_r$ est uniforme sur la surface latérale de ce cylindre. Le flux magnétique à travers une surface fermée est nul, donc
+$$
+-B_z(0,z)\,\pi r^2 + B_r(r,z)\,2\pi r\,\mathrm{d}z + B_z(0,z + \mathrm{d}z)\,\pi r^2 = 0.
+$$
+Un développement limité au premier ordre en $\mathrm{d}z$ permet d'obtenir
+$$
+B_r(r,z) = -\frac{r}{2}\,\frac{\mathrm{d}B}{\mathrm{d}z}(0,z).
+$$
+Avec $\dfrac{\mathrm{d}B}{\mathrm{d}z}(0,z) = -\dfrac{3B_0}{R}\,\dfrac{z}{R}\left(1 + \dfrac{z^2}{R^2}\right)^{-5/2}$, on obtient :
+$$
+B_r(r,z) = \frac{3B_0\,r z}{2R^2}\left(1 + \frac{z^2}{R^2}\right)^{-5/2} = \frac{3\mu_0 I R^2\,r z}{4\left(R^2 + z^2\right)^{5/2}}.
+$$
+
+**f.** Le contour envisagé n'entourant aucun courant, la circulation de $\vec{B}$ le long de ce contour est nulle. On a donc
+$$
+-B_r(r,z)\,\mathrm{d}r - B_z(r + \mathrm{d}r,z)\,\mathrm{d}z + B_r(r,z + \mathrm{d}z)\,\mathrm{d}r + B_z(r,z)\,\mathrm{d}z = 0.
+$$
+Un développement limité au premier ordre en $\mathrm{d}r\,\mathrm{d}z$ donne $\dfrac{\partial B_z}{\partial r} = \dfrac{\partial B_r}{\partial z}$. En utilisant le résultat de la question précédente et en intégrant la relation obtenue entre $0$ et $r$, on en déduit
+$$
+B_z(r,z) = B(0,z) - \frac{r^2}{4}\,\frac{\mathrm{d}^2 B}{\mathrm{d}z^2}(0,z).
+$$
+
+**g.** En utilisant les résultats précédents et les données de l'énoncé, on peut exprimer le champ magnétique dans le plan de la spire ($z = 0$) :
+$$
+B_z(r,0) = B_0\left(1 + \frac{3r^2}{4R^2}\right).
+$$
+On cherche $r$ tel que $\dfrac{B_z(r,0) - B_0}{B_0} \leqslant 10^{-2}$ ; on obtient
+$$
+r \leqslant \frac{0{,}2}{\sqrt{3}}\,R \simeq 0{,}115\,R.
+$$
+
+```{=latex}
+\newpage
+```
+
+:::
+
+```{=latex}
+\newpage
+```
+
+## Magnétorésistance (d'après Mines) ($\star\star\star$)
+
+```{=latex}
+\noindent
+\begin{minipage}[t]{0.68\linewidth}
+\vspace{0pt}
+On considère un conducteur électrique se présentant sous la forme d'une couronne cylindrique d'axe $(Oz)$, de hauteur $h$, délimitée par un cylindre intérieur de rayon $r_1$ et par un cylindre extérieur de rayon $r_2$. À l'aide d'une source de tension, on impose les potentiels $V(r_1) = V_1$ et $V(r_2) = V_2$. On se place en régime permanent et on néglige les effets de bord, ce qui revient à supposer que le comportement de cette couronne est le même que si elle était infiniment haute. L'existence de deux équipotentielles cylindriques permet d'émettre l'hypothèse que le potentiel ne dépend que de $r$, $V = V(r)$, ainsi
+\[
+\Delta V(r) = \frac{1}{r}\,\frac{\mathrm{d}}{\mathrm{d}r}\left(r\,\frac{\mathrm{d}V}{\mathrm{d}r}\right).
+\]
+\end{minipage}
+\hfill
+\begin{minipage}[t]{0.28\linewidth}
+\vspace{0pt}
+\begin{center}
+\begin{tikzpicture}[scale=0.8, >=Stealth, every node/.style={font=\small}]
+  \draw (0,2) ellipse (1 and 0.3);
+  \draw (-1,2) -- (-1,0);
+  \draw (1,2) -- (1,0);
+  \draw (-1,0) arc (180:360:1 and 0.3);
+  \draw[dashed] (1,0) arc (0:180:1 and 0.3);
+  \draw (0,2) ellipse (0.45 and 0.13);
+  \draw[->] (0,2) -- (0.42,1.95);
+  \draw[->] (0,2) -- (-0.85,1.84);
+  \node[above] at (0.3,2.05) {$r_1$};
+  \node[above left] at (-0.75,2.15) {$r_2$};
+  \draw[<->] (1.3,0) -- (1.3,2) node[midway, right] {$h$};
+  \draw[->, thick] (-1.6,0.3) -- (-1.6,1.7) node[above] {$\vec{B}$};
+\end{tikzpicture}
+\end{center}
+\end{minipage}
+```
+
+**1.** Le conducteur est globalement non chargé : vérifier que l'hypothèse $V = V(r)$ est la seule possible. Déterminer le potentiel électrique en un point $M$ de ce conducteur. En déduire l'intensité $E$ du champ électrique $\vec{E}$ en ce même point, en fonction de $V_1$, $V_2$, $r_1$, $r_2$ et $r$.
+
+La couronne cylindrique est placée dans un champ magnétique $\vec{B} = B\,\vec{u}_z$ avec $B > 0$. Le conducteur contient $n$ électrons libres par $\text{m}^3$. On considère de plus le modèle de Drude, dans lequel chaque électron de vitesse $\vec{v}$ est soumis, en plus des forces électromagnétiques, à une force phénoménologique de frottement s'exprimant sous la forme $\vec{F} = -\lambda\,\vec{v}$ avec $\lambda > 0$.
+
+**2.** Quelles sont les unités de $\lambda$ ? Connaissez-vous une expression de $\lambda$ ? Si oui, la préciser en expliquant la signification de chaque terme qui intervient dans la formule.
+
+**3.** Pour chaque électron, établir, en régime permanent, la relation entre $\vec{v}$, $\vec{B}$ et $\vec{E}$, paramétrée par $\lambda$ et la charge élémentaire $e$. En déduire l'expression, dans la base cylindrique $(\vec{u}_r, \vec{u}_\theta, \vec{u}_z)$, des coordonnées de $\vec{v}$ en fonction de $e$, $\lambda$, $E$ et $B$, puis celles du vecteur densité de courant électrique $\vec{j}$.
+
+**4.** Exprimer l'intensité du courant électrique traversant une surface équipotentielle de rayon $r$. En déduire la résistance électrique $R$ de la couronne, en fonction de $e$, $n$, $\lambda$, $B$, $h$, $r_1$ et $r_2$.
+
+On note $R_0$ la résistance en l'absence de champ magnétique. Exprimer l'écart relatif $\varepsilon = \dfrac{R - R_0}{R_0}$ en fonction de $e$, $B$ et $\lambda$. Calculer la valeur numérique de $R_0$ ainsi que celle de $\varepsilon$ pour $B = 1{,}0\ \text{mT}$, $r_1 = 1{,}0\ \text{mm}$, $r_2 = 3{,}0\ \text{mm}$, $h = 1{,}0\ \text{mm}$, $n = 1{,}1\cdot 10^{21}\ \text{m}^{-3}$ et $\lambda = 1{,}8\cdot 10^{-17}$ USI. Commenter l'utilisation du phénomène pour la mesure de champs magnétiques.
+
+::: {.content-visible when-meta="solution"}
+
+### Solution
+
+**1.** Invariance par rotation autour de l'axe $(Oz)$ et par translation selon $(Oz)$ (en négligeant les effets de bord) : $V$ ne dépend que de $r$.
+
+Sans charge volumique et en statique : $\operatorname{div}\vec{E} = \operatorname{div}\left(-\overrightarrow{\operatorname{grad}}\,V\right) = \dfrac{\rho}{\varepsilon_0} = 0$, donc $\Delta V = 0$. Alors $\dfrac{\mathrm{d}}{\mathrm{d}r}\left(r\,\dfrac{\mathrm{d}V}{\mathrm{d}r}\right) = 0$, donc $r\,\dfrac{\mathrm{d}V}{\mathrm{d}r} = a$, puis $V(r) = a\ln(r) + b$. Les conditions aux limites sont
+$$
+\begin{cases}
+V(r_1) = V_1 = a\ln(r_1) + b \\
+V(r_2) = V_2 = a\ln(r_2) + b
+\end{cases}
+\qquad\text{donc}\qquad
+V(r) = \frac{V_1 - V_2}{\ln\left(\frac{r_1}{r_2}\right)}\ln(r) + \frac{V_1\ln(r_2) - V_2\ln(r_1)}{\ln\left(\frac{r_2}{r_1}\right)},
+$$
+ce qui montre que l'hypothèse $V = V(r)$ est compatible avec les conditions aux limites. Puis :
+$$
+\vec{E} = -\overrightarrow{\operatorname{grad}}\,V = \frac{V_1 - V_2}{r\ln\left(\frac{r_2}{r_1}\right)}\,\vec{u}_r.
+$$
+
+**2.** $\lambda$ s'exprime en $\text{kg}\cdot\text{s}^{-1}$ (une force divisée par une vitesse). On peut écrire $\lambda = \dfrac{m}{\tau}$, où $m$ est la masse d'un électron et $\tau$ le temps moyen entre deux chocs.
+
+**3.** On applique le PFD à un électron, dans le référentiel galiléen du conducteur :
+$$
+m\,\frac{\mathrm{d}\vec{v}}{\mathrm{d}t} = -e\vec{E} - e\,\vec{v}\wedge\vec{B} - \lambda\vec{v}.
+$$
+En régime permanent, $\dfrac{\mathrm{d}\vec{v}}{\mathrm{d}t} = \vec{0}$, donc $e\vec{E} + e\,\vec{v}\wedge\vec{B} + \lambda\vec{v} = \vec{0}$. En projection :
+$$
+e\begin{pmatrix} E \\ 0 \\ 0 \end{pmatrix} + e\begin{pmatrix} v_r \\ v_\theta \\ v_z \end{pmatrix}\wedge\begin{pmatrix} 0 \\ 0 \\ B \end{pmatrix} + \lambda\begin{pmatrix} v_r \\ v_\theta \\ v_z \end{pmatrix} = \vec{0},
+\qquad\text{soit}\qquad
+e\begin{pmatrix} E \\ 0 \\ 0 \end{pmatrix} + eB\begin{pmatrix} v_\theta \\ -v_r \\ 0 \end{pmatrix} + \lambda\begin{pmatrix} v_r \\ v_\theta \\ v_z \end{pmatrix} = \vec{0},
+$$
+puis on résout le système :
+$$
+\begin{cases}
+v_r = -\dfrac{\lambda e E}{\lambda^2 + e^2B^2} \\[3mm]
+v_\theta = -\dfrac{e^2 E B}{\lambda^2 + e^2B^2} \\[3mm]
+v_z = 0
+\end{cases}
+\qquad\text{et, avec } \vec{j} = -ne\,\vec{v} :\qquad
+\begin{cases}
+j_r = \dfrac{n e^2 \lambda E}{\lambda^2 + e^2B^2} \\[3mm]
+j_\theta = \dfrac{n e^3 E B}{\lambda^2 + e^2B^2} \\[3mm]
+j_z = 0
+\end{cases}
+$$
+
+**4.** Attendu que $V(r) = a\ln(r) + b$, une surface équipotentielle, à $V$ constant, est une surface à $r$ constant, soit un cylindre $\mathcal{S}$ de rayon $r$, de hauteur $h$, d'axe $(Oz)$. L'intensité du courant à travers $\mathcal{S}$ est :
+$$
+I = \iint_{\mathcal{S}} \vec{j}\cdot\mathrm{d}S\,\vec{u}_r = \iint_{\mathcal{S}} j_r\,\mathrm{d}S = j_r\,2\pi r h.
+$$
+Pour obtenir $R$, on exprime $I$ en fonction de $V_1 - V_2$, avec l'expression de $E$ obtenue au **1.** :
+$$
+I = j_r\,2\pi r h = \frac{n e^2 \lambda E}{\lambda^2 + e^2B^2}\,2\pi r h = \frac{n e^2 \lambda}{\lambda^2 + e^2B^2}\,\frac{V_1 - V_2}{r\ln\left(\frac{r_2}{r_1}\right)}\,2\pi r h,
+$$
+soit
+$$
+I = \frac{n e^2 \lambda}{\lambda^2 + e^2B^2}\,\frac{2\pi h}{\ln\left(\frac{r_2}{r_1}\right)}\left(V_1 - V_2\right)
+\qquad\text{donc}\qquad
+R = \frac{\lambda^2 + e^2B^2}{n e^2 \lambda\,2\pi h}\ln\left(\frac{r_2}{r_1}\right).
+$$
+*Remarque :* seule la composante radiale $j_r$ contribue à l'intensité ($j_\theta$ est tangente au cylindre $\mathcal{S}$) ; $j_r$ étant du signe de $V_1 - V_2$, la différence de potentiel à considérer est bien $V_1 - V_2$ en convention récepteur, et l'expression de $R$ est alors bien positive.
+
+En l'absence de champ ($B = 0$) :
+$$
+R_0 = \frac{\lambda}{n e^2\,2\pi h}\ln\left(\frac{r_2}{r_1}\right),
+\qquad\text{donc}\qquad
+R = R_0\,\frac{\lambda^2 + e^2B^2}{\lambda^2}
+\qquad\text{et}\qquad
+\varepsilon = \frac{\lambda^2 + e^2B^2}{\lambda^2} - 1 = \frac{e^2B^2}{\lambda^2}.
+$$
+Numériquement, $R_0 \simeq 1{,}1\cdot 10^2\ \Omega$ et $\varepsilon \simeq 7{,}9\cdot 10^{-11}$. La variation de $R$ est si faible que la mesure reste impossible : ce dispositif ne permet pas de mesurer des champs magnétiques de l'ordre du millitesla.
+
+```{=latex}
+\newpage
+```
+
+:::

@@ -22,5 +22,16 @@ Mes supports de cours, TD, TP et Colles. Rédigé en Quarto/LaTeX. Solutions int
 ## TD n°3 — Electrostatique (Th. de Gauss & condensateurs)
 
 - 📄 [Énoncé (PDF)](https://dariusmofakhami.github.io/Enseignements/TD/TD_electrostatique.pdf)
-- ✅ [Corrigé (PDF)](https://dariusmofakhami.github.io/Enseignements/TD/TD_electrostatique_solution_tronque.pdf)
+- ✅ [Corrigé (PDF)](https://dariusmofakhami.github.io/Enseignements/TD/TD_electrostatique_solution.pdf)
 
+## TD n°4 — Magnetostatique (Th. d'Ampère)
+
+- 📄 [Énoncé (PDF)](https://dariusmofakhami.github.io/Enseignements/TD/TD_magnetostatique.pdf)
+- ✅ [Corrigé (PDF)](https://dariusmofakhami.github.io/Enseignements/TD/TD_magnetostatique_solution.pdf)
+
+## Annales d'électro-magnétisme
+ 
+- 📄 [CCP 2019](https://dariusmofakhami.github.io/Enseignements/Annales/PC_CCP_2019_MODELES_ATOMIQUES.pdf)
+- 📄 [Mines 2008](https://dariusmofakhami.github.io/Enseignements/Annales/PC_MINES_2008_DISPOSITIFS_MAGNETIQUES.pdf)
+- 📄 [Centrale-Supélec 2016](https://dariusmofakhami.github.io/Enseignements/Annales/PC_CS_2016_EFFET_DYNAMO.pdf)
+- ✅ Corrigés à venir
