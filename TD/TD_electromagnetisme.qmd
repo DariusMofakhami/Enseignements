@@ -1,0 +1,529 @@
+---
+title: "Planche d'Électromagnétisme (PC)"
+subtitle: "– Équations de Maxwell & ARQS –"
+solution: false
+# solution: true
+header-left: "TD IPESUP 2026-2027"
+header-right: "Électromagnétisme (PC)"
+footer-left: "D. Mofakhami"
+footer-right: ""
+format:
+  pdf:
+    documentclass: article
+    template: td-template.tex
+    geometry: margin=2.5cm,headheight=28pt
+    fontsize: 11pt
+    number-sections: true
+    toc: false
+mainfont: "Latin Modern Roman"
+header-includes:
+  - \usepackage{esint}
+  - \usepackage[european]{circuitikz}
+---
+
+<!--
+Pour compiler l'énoncé seul :        quarto render TD_electromagnetisme.qmd
+Pour compiler avec les solutions :   quarto render TD_electromagnetisme.qmd --metadata solution:true
+(ou changer directement "solution: true" dans l'en-tête ci-dessus)
+-->
+
+## Émission radioactive ($\star\star$)
+
+Une masse radioactive ponctuelle, initialement neutre, située au point $O$, émet, à partir de l'instant $t = 0$, des particules $\alpha$ avec une vitesse $v_0$ supposée constante et de façon isotrope. À la date $t$, la charge électrique située en $O$ est
+$$
+q(t) = q_0\left(\exp\left(-\frac{t}{\tau}\right) - 1\right).
+$$
+
+**1.** Calculer le champ électrique $\vec{E}(M,t)$ et le champ magnétique $\vec{B}(M,t)$ pour $t > 0$.
+
+**2.** Exprimer la densité volumique de charge $\rho(M,t)$ et la densité volumique de courant $\vec{j}(M,t)$ pour $t > 0$.
+
+**3.** Vérifier la compatibilité des résultats obtenus avec l'équation de Maxwell-Ampère.
+
+::: {.content-visible when-meta="solution"}
+
+### Solution
+
+**1.** Soit un point $M$ de l'espace où l'on calcule le champ électrique. Tout plan contenant la droite $(OM)$ est un plan de symétrie des charges, donc $\vec{E}(M,t)$ appartient à leur intersection : il est radial, $\vec{E}(M,t) = E(M,t)\,\vec{u}_r$.
+
+Le problème est invariant par rotation autour de $O$, donc le champ ne dépend que de $r$ : $E(M,t) = E(r,t)$.
+
+On calcule $\vec{E}(r,t)$ grâce au théorème de Gauss. La surface de Gauss $\mathcal{S}$ est une sphère de rayon $r$ et de centre $O$ :
+$$
+\oiint_{\mathcal{S}} \vec{E}\cdot\mathrm{d}\vec{S} = \oiint_{\mathcal{S}} E(r,t)\,\vec{u}_r\cdot\mathrm{d}S\,\vec{u}_r = E(r,t)\oiint_{\mathcal{S}}\mathrm{d}S = E(r,t)\,4\pi r^2.
+$$
+Il faut donc connaître la charge $Q(r,t)$ contenue dans $\mathcal{S}$ à l'instant $t$ (ne pas confondre $Q$ avec la charge $q$ de la masse radioactive). À l'instant $t$, les charges émises par le point $O$ ont parcouru au plus la distance $v_0 t$. En $r > v_0 t$, il n'y a donc pas encore de charges, d'où $\rho(r > v_0 t, t) = 0$. Les charges qui arrivent en $r < v_0 t$ à l'instant $t$ ont mis la durée $\dfrac{r}{v_0}$ pour y parvenir depuis $O$ : elles furent donc émises à la date $t - \dfrac{r}{v_0}$. La charge $Q(r,t)$ comprise, à l'instant $t$, à l'intérieur de la sphère de rayon $r$ est donc égale à la charge présente en $O$ à l'instant $t - \dfrac{r}{v_0}$, soit $q\left(t - \dfrac{r}{v_0}\right)$. Pour $r > v_0 t$, la sphère contient toute la masse radioactive et toutes les particules émises : la charge totale est nulle, puisque la masse était initialement neutre. Ainsi :
+$$
+\vec{E}(r > v_0 t, t) = \vec{0}, \qquad \vec{E}(r < v_0 t, t) = \frac{1}{4\pi\varepsilon_0 r^2}\,q\left(t - \frac{r}{v_0}\right)\vec{u}_r.
+$$
+Quant au champ magnétique, les symétries des sources se retrouvent dans les effets. Les sources sont ici les charges émises, et les effets les champs électrique puis magnétique (les charges créent $\vec{E}$ et, attendu qu'il dépend du temps, il peut créer $\vec{B}$). Or tout plan contenant la droite $(OM)$ est un plan de symétrie des charges, donc $\vec{B}(M,t)$ leur est orthogonal. Le seul vecteur qui soit orthogonal à tous ces plans en même temps est le vecteur nul : $\vec{B} = \vec{0}$.
+
+**2.** La charge comprise entre les deux sphères de rayons $r$ et $r + \mathrm{d}r$ à la date $t$ est égale à $Q(r + \mathrm{d}r, t) - Q(r,t) = \dfrac{\partial Q}{\partial r}\,\mathrm{d}r = 4\pi r^2\,\mathrm{d}r\,\rho(r,t)$. Avec $Q(r,t) = q\left(t - \dfrac{r}{v_0}\right)$, pour $r < v_0 t$ :
+$$
+\rho(r,t) = \frac{1}{4\pi r^2}\,\frac{\partial}{\partial r}\left(q\left(t - \frac{r}{v_0}\right)\right) = \frac{q_0}{4\pi r^2\,\tau v_0}\exp\left(-\frac{1}{\tau}\left(t - \frac{r}{v_0}\right)\right).
+$$
+On aurait pu passer par l'équation de Maxwell-Gauss $\rho = \varepsilon_0\operatorname{div}\vec{E}$, mais l'énoncé ne rappelle pas l'expression de la divergence en coordonnées sphériques.
+
+Puis $\vec{j}(r,t) = \rho(r,t)\,\vec{v}_0 = \rho(r,t)\,v_0\,\vec{u}_r$.
+
+**3.** Avec $\vec{B} = \vec{0}$, l'équation de Maxwell-Ampère $\overrightarrow{\operatorname{rot}}\,\vec{B} = \mu_0\left(\vec{j} + \varepsilon_0\dfrac{\partial\vec{E}}{\partial t}\right)$ impose $\vec{j} + \varepsilon_0\dfrac{\partial\vec{E}}{\partial t} = \vec{0}$. On le vérifie bien :
+$$
+\varepsilon_0\frac{\partial\vec{E}}{\partial t} = \frac{1}{4\pi r^2}\,\dot{q}\left(t - \frac{r}{v_0}\right)\vec{u}_r = -\frac{q_0}{4\pi r^2\,\tau}\exp\left(-\frac{1}{\tau}\left(t - \frac{r}{v_0}\right)\right)\vec{u}_r = -\rho\,v_0\,\vec{u}_r = -\vec{j}.
+$$
+
+```{=latex}
+\newpage
+```
+
+:::
+
+## Diode à vide ($\star\star$)
+
+```{=latex}
+\noindent
+\begin{minipage}[t]{0.6\linewidth}
+\vspace{0pt}
+On considère un cylindre métallique de rayon $R$ et de hauteur $h$. Sur l'axe de révolution du cylindre, on place un fil conducteur, porté au potentiel nul, qui émet des électrons avec une vitesse quasi nulle. On se place en régime permanent et on néglige les effets de bord.
+\end{minipage}
+\hfill
+\begin{minipage}[t]{0.36\linewidth}
+\vspace{0pt}
+\begin{center}
+\begin{circuitikz}[scale=0.8, transform shape, every node/.style={font=\small}]
+  \draw (0,0) circle (1.2);
+  \fill (0,0) circle (2pt);
+  \draw (0,0) -- (0,-2.8) node[ground] {};
+  \draw (1.15,-0.4) to[V] (3.3,-0.4) -- (3.3,-1.0)
+        to[rmeter, t=A] (3.3,-2.8) node[ground] {};
+  \node at (2.2,1.25) {$U_0$};
+  \draw[<-] (1.85,0.95) -- (2.55,0.95);
+  \node at (2.2,0.7) {\scriptsize ou};
+  \draw[->] (1.85,0.45) -- (2.55,0.45);
+\end{circuitikz}
+\end{center}
+\end{minipage}
+```
+
+**1.** À quelle condition les effets de bord sont-ils négligeables ?
+
+**2.** Quel doit être le signe du potentiel du cylindre pour capter les électrons ? Comment doit être orienté le générateur de f.é.m. $U_0$ ?
+
+**3.** Le cylindre, rempli d'électrons en mouvement à la vitesse $v(r)$, est parcouru par un courant radial d'intensité $I$, et localement, la charge volumique y est $\rho(r)$. Relier $I$ à $v(r)$ et $\rho(r)$.
+
+**4.** Pourquoi l'intensité du courant dans le cylindre est-elle indépendante de $r$ ?
+
+**5.** Établir l'équation vérifiée par le potentiel $V(r)$ à la distance $r$ du fil conducteur, en fonction du courant $I$. On rappelle
+$$
+\Delta V = \frac{1}{r}\,\frac{\mathrm{d}}{\mathrm{d}r}\left(r\,\frac{\mathrm{d}V}{\mathrm{d}r}\right).
+$$
+
+**6.** On cherche une solution particulière de la forme $V(r) = V_0\,r^\alpha$. Déterminer $\alpha$ et $V_0$.
+
+::: {.content-visible when-meta="solution"}
+
+### Solution
+
+**1.** $h \gg R$.
+
+**2.** La conservation de l'énergie mécanique d'un électron s'écrit $\dfrac{1}{2}mv^2 - eV = 0$ (à l'émission, $v$ et $V$ sont nuls, et l'énergie potentielle de pesanteur est négligeable devant l'énergie électrique). Le potentiel $V$ doit donc être positif : la flèche de $U_0$ est orientée de la droite vers la gauche sur le schéma de l'énoncé.
+
+*Méthode alternative :* les électrons subissent une force électrique $\vec{F} = -e\vec{E}$ dirigée vers l'extérieur, donc le champ électrique $\vec{E}$ est orienté vers l'intérieur. Attendu que $\vec{E}$ « descend » les potentiels, et que le potentiel du fil au centre est nul, celui du cylindre est positif.
+
+**3.** Le problème est invariant par rotation autour de l'axe du fil central et par translation le long de celui-ci (on néglige les effets de bord) : toutes les grandeurs ($V$, $v$, $\rho$) ne dépendent que de $r$.
+
+L'émission d'électrons est décrite par le vecteur densité de courant $\vec{j} = \rho(r)\,\vec{v}(r)$. L'intensité du courant est égale au flux de $\vec{j}$ à travers un cylindre de rayon $r$ et de hauteur $h$ :
+$$
+I = 2\pi r h\,j(r) = 2\pi r h\,\rho(r)\,v(r).
+$$
+Avec cette orientation radiale sortante, $I < 0$ (car $\rho < 0$) : le courant circule du cylindre vers le fil.
+
+**4.** $I$ est indépendant de $r$ attendu que $\vec{j}$ est à flux conservatif en régime indépendant du temps.
+
+**5.** Le potentiel obéit à l'équation de Poisson $\Delta V = -\dfrac{\rho}{\varepsilon_0}$ ; or $\rho = \dfrac{I}{2\pi r h v}$ et $v = \sqrt{\dfrac{2eV}{m}}$ (conservation de l'énergie, question **2**). Finalement :
+$$
+\frac{\mathrm{d}}{\mathrm{d}r}\left(r\,\frac{\mathrm{d}V}{\mathrm{d}r}\right) = -\frac{I}{2\pi h\varepsilon_0}\sqrt{\frac{m}{2e}}\,V^{-1/2}.
+$$
+
+**6.** Avec $V(r) = V_0 r^\alpha$, l'équation précédente devient
+$$
+V_0\,\alpha^2\,r^{\alpha - 1} = -\frac{I}{2\pi h\varepsilon_0}\sqrt{\frac{m}{2e}}\,V_0^{-1/2}\,r^{-\alpha/2},
+\qquad\text{soit}\qquad
+I = -2\pi h\varepsilon_0\sqrt{\frac{2e}{m}}\,V_0^{3/2}\,\alpha^2\,r^{\frac{3}{2}\alpha - 1}.
+$$
+Le courant $I$ est indépendant de $r$, donc $\alpha = \dfrac{2}{3}$ ; et $U_0 = V(R) - 0$, donc $V_0 = U_0 R^{-\alpha} = U_0 R^{-2/3}$.
+
+On en déduit $I = -\dfrac{8\pi h\varepsilon_0}{9}\sqrt{\dfrac{2e}{m}}\,\dfrac{U_0^{3/2}}{R}$ : l'intensité varie comme $U_0^{3/2}$ (loi de Child-Langmuir).
+
+```{=latex}
+\newpage
+```
+
+:::
+
+## Équilibre d'une sphère conductrice ($\star\star$)
+
+On considère une sphère conductrice de centre $O$, de rayon $R$ et de conductivité électrique $\gamma$. Cette sphère est isolée et porte la charge totale $Q$.
+
+**1.** On envisage un état d'équilibre de la sphère dans lequel la charge $Q$ est uniformément répartie dans son volume. On repérera l'espace par le système de coordonnées sphériques de centre $O$.
+
+**a.** Calculer le champ électrique créé en tout point de l'espace par cette distribution de charge.
+
+**b.** Montrer que cette distribution de charge n'est pas compatible avec un état d'équilibre électrique de la sphère.
+
+**2.** On étudie l'évolution de la sphère pour tout $t > 0$, à partir de l'instant $t = 0$ où la charge est répartie uniformément dans tout le volume de la sphère. On admet que le champ électrique conserve les mêmes propriétés de symétrie qu'à la question précédente.
+
+**a.** Établir l'équation différentielle satisfaite par la densité volumique de charge $\rho$ en tout point $M$ de la sphère. En déduire l'expression de $\rho(M,t)$, puis caractériser la répartition de charge totale à l'instant $t$.
+
+**b.** Calculer, à l'instant $t$, le champ électromagnétique dans tout l'espace. Caractériser l'état d'équilibre de la sphère.
+
+**c.** Calculer la variation d'énergie électromagnétique, due aux champs électrique et magnétique, de la sphère entre l'état initial et l'état d'équilibre.
+
+On donne les expressions de la densité volumique d'énergie électrique $w_e = \dfrac{1}{2}\varepsilon_0 E^2$ et de la densité volumique d'énergie magnétique $w_m = \dfrac{1}{2\mu_0}B^2$, que l'on admettra.
+
+**d.** À l'aide d'un bilan d'énergie, analyser la nature des échanges d'énergie au cours de cette évolution.
+
+On admettra l'équation locale de conservation de l'énergie électromagnétique :
+$$
+\frac{\partial}{\partial t}\left(w_e + w_m\right) = -\operatorname{div}\left(\frac{\vec{E}\wedge\vec{B}}{\mu_0}\right) - \vec{j}\cdot\vec{E}.
+$$
+
+::: {.content-visible when-meta="solution"}
+
+### Solution
+
+**1.** **a.** La charge étant uniformément répartie dans toute la sphère, la densité volumique de charge vaut $\rho_0 = \dfrac{3Q}{4\pi R^3}$. Pour un point $M$ quelconque, tous les plans contenant $M$ et $O$ sont des plans de symétrie de la distribution de charge. Le champ électrique en $M$, $\vec{E}(M)$, appartient à tous ces plans, dont l'intersection est la droite passant par $O$, de vecteur directeur $\vec{u}_r$. Donc $\vec{E}(M)$ est porté par $\vec{u}_r$. De plus, la distribution de charge est invariante par toute rotation autour d'un axe passant par $O$, donc $\vec{E}(M)$ ne dépend que de $r$ et s'écrit $\vec{E}(M) = E(r)\,\vec{u}_r$.
+
+Les surfaces équipotentielles, qui sont des sphères de centre $O$, étant fermées, peuvent faire office de surface de Gauss. En considérant comme surface fermée la sphère de centre $O$ de rayon $r$ passant par $M$ de coordonnées $(r,\theta,\varphi)$, il vient d'après le théorème de Gauss $E(r)\,4\pi r^2 = \dfrac{Q_i}{\varepsilon_0}$, où $Q_i$ désigne la charge à l'intérieur de la surface fermée.
+
+Si $M$ est à l'intérieur de la sphère, $Q_i = \rho_0\,\dfrac{4\pi r^3}{3}$ et donc $E(r) = \dfrac{\rho_0 r}{3\varepsilon_0} = \dfrac{Q r}{4\pi\varepsilon_0 R^3}$.
+
+Si $M$ est à l'extérieur de la sphère, $Q_i = Q$ et donc $E(r) = \dfrac{Q}{4\pi\varepsilon_0 r^2}$.
+
+**b.** La sphère étant conductrice, la présence du champ électrique $\vec{E}(M) = E(r)\,\vec{u}_r$ engendre l'existence d'un courant de charge de densité $\vec{j}(M) = \gamma\vec{E}(M)$, qui provoque un déplacement de charges vers la périphérie du conducteur. Ainsi, cette distribution de charge n'est pas compatible avec une densité de courant de charge nulle, caractéristique de l'état d'équilibre électrique.
+
+**2.** **a.** En combinant la loi d'Ohm locale $\vec{j} = \gamma\vec{E}$ avec les équations locales de Maxwell-Gauss et de conservation de la charge $\operatorname{div}\vec{j} + \dfrac{\partial\rho}{\partial t} = 0$, il vient :
+$$
+\begin{cases}
+\gamma\operatorname{div}\vec{E} + \dfrac{\partial\rho}{\partial t} = 0 \\[3mm]
+\operatorname{div}\vec{E} = \dfrac{\rho}{\varepsilon_0}
+\end{cases}
+\qquad\Rightarrow\qquad
+\frac{\partial\rho}{\partial t} + \frac{\gamma}{\varepsilon_0}\,\rho = 0. \qquad (1)
+$$
+À l'instant $t = 0$, la charge étant uniformément répartie dans toute la sphère, la densité volumique de charge vaut en tout point $M$ : $\rho(M, t = 0) = \rho_0 = \dfrac{3Q}{4\pi R^3}$. À $M$ fixé, la résolution de l'équation (1) conduit à
+$$
+\rho(M,t) = \rho_0\exp\left(-\frac{t}{\tau}\right), \qquad \text{où } \tau = \frac{\varepsilon_0}{\gamma}
+$$
+représente le temps de relaxation de la charge dans le conducteur.
+
+La sphère étant isolée, sa charge totale reste égale à $Q$. Or la charge répartie dans son volume à l'instant $t$ est égale à $Q_v(t) = \dfrac{4\pi R^3\rho_0}{3}\exp\left(-\dfrac{t}{\tau}\right) = Q\exp\left(-\dfrac{t}{\tau}\right)$ ; la différence $Q - Q_v(t) = Q\left(1 - \exp\left(-\dfrac{t}{\tau}\right)\right)$ est donc nécessairement répartie sur la surface de la sphère.
+
+Cette migration des charges est due à l'existence d'un courant de charge de densité $\vec{j}$ dans la sphère conductrice, vérifiant $\vec{j} = \gamma\vec{E}$ et porté par $\vec{u}_r$. La géométrie isotrope du vecteur densité de courant de charge engendre une répartition surfacique de charge $\sigma$ homogène sur toute la surface de la sphère. On peut donc écrire :
+$$
+\sigma\,4\pi R^2 = Q - Q_v = Q\left(1 - \exp\left(-\frac{t}{\tau}\right)\right) \qquad\Rightarrow\qquad \sigma = \frac{Q}{4\pi R^2}\left(1 - \exp\left(-\frac{t}{\tau}\right)\right).
+$$
+
+**b.** Le champ électrique se déduit du théorème de Gauss, qui s'applique de la même manière qu'à la question **1**. En conservant la même surface de Gauss, il vient :
+
+- si $M$ est à l'intérieur de la sphère, $Q_i(t) = \dfrac{\rho_0\,4\pi r^3}{3}\exp\left(-\dfrac{t}{\tau}\right)$, et donc
+$$
+E(r,t) = \frac{\rho_0 r}{3\varepsilon_0}\exp\left(-\frac{t}{\tau}\right) = \frac{Q r}{4\pi\varepsilon_0 R^3}\exp\left(-\frac{t}{\tau}\right) ;
+$$
+- si $M$ est à l'extérieur de la sphère, $Q_i(t) = Q$, et donc $E(r,t) = \dfrac{Q}{4\pi\varepsilon_0 r^2}$.
+
+Il apparaît que le champ électrique à l'extérieur n'est pas affecté par la relaxation de la sphère et reste indépendant du temps.
+
+Le calcul du champ magnétique nécessite l'analyse des symétries de la densité de courant de charge, qui s'écrit sous la forme $\vec{j} = j(r)\,\vec{u}_r$. On remarque qu'en régime variable, les lignes de champ du vecteur $\vec{j}$ ne sont pas nécessairement fermées, ce qui signifie qu'il existe des lieux où la charge s'accumule.
+
+Pour un point $M$ quelconque, tous les plans contenant les points $O$ et $M$ sont des plans de symétrie de la distribution de courant. Le champ magnétique $\vec{B}(M,t)$ est orthogonal en $M$ à tous ces plans, dont l'intersection est la droite passant par $O$, de vecteur directeur $\vec{u}_r$. Ceci n'est possible que si $\vec{B}(M,t) = \vec{0}$.
+
+Au cours de la relaxation de la sphère, le vecteur densité de courant de charge, égal à
+$$
+\vec{j}(r,t) = \gamma\vec{E}(r,t) = \frac{\gamma Q r}{4\pi\varepsilon_0 R^3}\exp\left(-\frac{t}{\tau}\right)\vec{u}_r,
+$$
+décroît au cours du temps et s'annule au bout d'un temps infini.
+
+La sphère atteint donc l'équilibre électrique au bout d'un temps infini (en pratique au bout de quelques $\tau$). Toute la charge $Q$ est alors répartie en surface, selon la distribution surfacique $\sigma_\infty = \dfrac{Q}{4\pi R^2}$ ; le champ magnétique est nul, le champ électrique est nul à l'intérieur de la sphère et vaut $\vec{E}_\infty = \dfrac{Q}{4\pi\varepsilon_0 r^2}\,\vec{u}_r$ à l'extérieur de la sphère.
+
+À l'équilibre, le champ électrique étant nul à l'intérieur de la sphère, les charges, soumises à aucune force, restent immobiles.
+
+**c.** Le champ magnétique étant toujours nul, l'énergie électromagnétique est égale à l'énergie électrique :
+$$
+\mathcal{E}_{\text{em}}(t) = \iiint_{\text{Espace}}\frac{\varepsilon_0 E^2}{2}\,\mathrm{d}\tau.
+$$
+Le champ électrique à l'extérieur de la sphère restant identique tout au long de la relaxation, la variation d'énergie est donc égale à :
+$$
+\mathcal{E}_{\text{em}}(t = \infty) - \mathcal{E}_{\text{em}}(t = 0) = -\iiint_{\text{Sphère}}\frac{\varepsilon_0 E(t = 0)^2}{2}\,\mathrm{d}\tau.
+$$
+D'après la question **1**, pour tout point à l'intérieur de la sphère, $E(r) = \dfrac{Q r}{4\pi\varepsilon_0 R^3}$. Il vient donc :
+$$
+\mathcal{E}_{\text{em}}(t = \infty) - \mathcal{E}_{\text{em}}(t = 0) = -\frac{Q^2}{32\pi^2\varepsilon_0 R^6}\int_{r=0}^{R} r^2\,4\pi r^2\,\mathrm{d}r = -\frac{Q^2}{40\pi\varepsilon_0 R}.
+$$
+
+**d.** Le champ magnétique étant toujours nul, il en est de même pour le vecteur de Poynting $\vec{\Pi}_{\text{em}} = \dfrac{\vec{E}\wedge\vec{B}}{\mu_0}$. L'équation locale de conservation de l'énergie électromagnétique s'écrit alors :
+$$
+\frac{\partial w_{\text{em}}}{\partial t} + \underbrace{\operatorname{div}\vec{\Pi}_{\text{em}}}_{0} = -\vec{j}\cdot\vec{E}.
+$$
+En intégrant cette égalité sur tout l'espace, il vient :
+$$
+\frac{\mathrm{d}\mathcal{E}_{\text{em}}}{\mathrm{d}t} = -\iiint_{\text{Sphère}}\vec{j}\cdot\vec{E}\,\mathrm{d}\tau = -\iiint_{\text{Sphère}}\gamma E^2\,\mathrm{d}\tau.
+$$
+L'énergie électromagnétique est une fonction décroissante du temps, et sa dérivée temporelle est l'opposée de la puissance que la sphère conductrice consomme par effet Joule. Ainsi, la diminution de l'énergie électromagnétique s'identifie à l'énergie dissipée par effet Joule lors de la relaxation. Les courants qui ont assuré la migration des charges ont engendré une consommation d'énergie par effet Joule ; cette énergie consommée a été prélevée sur l'énergie électromagnétique.
+
+```{=latex}
+\newpage
+```
+
+:::
+
+## Mise en rotation d'une tige ($\star\star$)
+
+$U$ est une tension constante positive. Pour $t < 0$, l'interrupteur $T$ est fermé et l'interrupteur $D$ est ouvert. À la date $t = 0$, on ouvre $T$ et $D$ se ferme.
+
+La bobine a un rayon $a$, une longueur $\ell$, et comporte $n$ spires par unité de longueur. Sa résistance électrique est $R$.
+
+La bobine a un axe vertical $\Delta$. On attache au centre de la bobine, et perpendiculairement à l'axe $(Oz)$, une tige homogène de moment d'inertie $J$, de longueur $b$. La tige peut pivoter sans frottement orthogonalement à $(Oz)$. La tige, qui est isolante, porte une charge de densité linéique $\lambda$ positive et uniforme.
+
+```{=latex}
+\begin{center}
+\begin{circuitikz}[scale=0.85, transform shape, every node/.style={font=\small}]
+  \draw (0,0) to[V, l=$U$] (0,4)
+        to[ncs, l=$T$] (2.5,4)
+        to[short, i=$i(t)$] (5,4)
+        to[cute inductor, l=$L$] (5,2)
+        to[R, l=$R$] (5,0) -- (0,0);
+  \draw (2.5,0) to[nos, l=$D$, *-*] (2.5,4);
+\end{circuitikz}
+\hspace{1.5cm}
+\begin{tikzpicture}[scale=0.85, >=Stealth, every node/.style={font=\small}]
+  % Bobine (cylindre vertical)
+  \draw (0,3) ellipse (1.2 and 0.35);
+  \draw (-1.2,3) -- (-1.2,0);
+  \draw (1.2,3) -- (1.2,0);
+  \draw (-1.2,0) arc (180:360:1.2 and 0.35);
+  \draw[dashed] (1.2,0) arc (0:180:1.2 and 0.35);
+  \draw[->] (-0.2,2.67) -- (0.25,2.66);
+  \node at (-0.65,2.3) {$i(t)$};
+  % Axe
+  \draw[->] (0,-0.6) -- (0,4) node[above] {$z$};
+  \node[right] at (0.05,3.75) {$\Delta$};
+  % Tige
+  \fill (0,1.5) circle (1.5pt);
+  \node[left] at (0,1.65) {$O$};
+  \draw[very thick] (0,1.5) -- (0.8,1.3);
+  \node[below] at (0.6,1.25) {tige};
+  % Légende
+  \node at (2.4,2.4) {bobine};
+  \draw[->] (2.2,2.15) -- (1.25,1.6);
+\end{tikzpicture}
+\end{center}
+```
+
+**1.** Établir l'expression de l'intensité du courant dans la bobine pour $t < 0$, puis pour $t > 0$.
+
+**2.** Établir l'expression du champ électrique dans le solénoïde.
+
+**3.** Calculer la vitesse angulaire $\vec{\omega}(t) = \omega(t)\,\vec{u}_z$ de la tige, en considérant qu'elle est immobile en $t = 0$.
+
+::: {.content-visible when-meta="solution"}
+
+### Solution
+
+**1.** Pour $t < 0$, on a un dipôle $RL$ soumis à une tension constante $U$. Il est décrit par l'équation différentielle $L\dfrac{\mathrm{d}i}{\mathrm{d}t} + Ri = U$, qui admet comme solution en régime permanent $i = \dfrac{U}{R}$. Seul le régime permanent est intéressant, car la solution homogène s'est éteinte depuis longtemps.
+
+Pour $t > 0$, le dipôle $RL$ est court-circuité : $L\dfrac{\mathrm{d}i}{\mathrm{d}t} + Ri = 0$, et donc $i(t) = i(0)\exp\left(-\dfrac{t}{\tau}\right)$, où $\tau = \dfrac{L}{R}$. Attendu que le courant est continu dans une bobine, $i(0) = \dfrac{U}{R}$ et
+$$
+i(t) = \frac{U}{R}\exp\left(-\frac{t}{\tau}\right).
+$$
+
+**2.** Le champ magnétique dans le solénoïde (supposé long, $\ell \gg a$) est uniforme : $\vec{B} = \mu_0 n i\,\vec{u}_z$. La distribution de courant est invariante par rotation autour de $(Oz)$ et par translation selon $(Oz)$, et tout plan contenant l'axe $(Oz)$ est un plan d'antisymétrie de la distribution de courant : le champ électrique induit est donc orthoradial, $\vec{E} = E(r,t)\,\vec{u}_\theta$. On applique l'équation de Maxwell-Faraday sous forme intégrale à un cercle d'axe $(Oz)$ et de rayon $r < a$, orienté suivant $\vec{u}_\theta$ :
+$$
+\oint \vec{E}\cdot\mathrm{d}\vec{\ell} = -\frac{\mathrm{d}}{\mathrm{d}t}\iint\vec{B}\cdot\mathrm{d}\vec{S}
+\qquad\Rightarrow\qquad
+2\pi r\,E(r,t) = -\pi r^2\,\frac{\mathrm{d}B}{\mathrm{d}t},
+$$
+soit
+$$
+\vec{E}(r,t) = -\frac{r}{2}\,\frac{\mathrm{d}B}{\mathrm{d}t}\,\vec{u}_\theta = -\mu_0 n\,\frac{r}{2}\,\frac{\mathrm{d}i}{\mathrm{d}t}\,\vec{u}_\theta.
+$$
+
+**3.** La force magnétique n'influe pas sur la rotation. En effet, la vitesse d'un point de la tige est orthoradiale, suivant le vecteur $\vec{u}_\theta$, et $\vec{B}$ est suivant $\vec{u}_z$ : la force magnétique est donc radiale, suivant $\vec{u}_r$, et elle ne peut pas entraîner la tige en rotation.
+
+La force électrique est orthoradiale, donc elle permet d'entraîner la tige en rotation. Attendu que le champ électrique dépend de $r$, on calcule le moment élémentaire sur une longueur $\mathrm{d}r$ de tige, puis on intègre.
+
+La force sur une longueur $\mathrm{d}r$ de tige est $\delta\vec{f}_e = \lambda\,\mathrm{d}r\,E(r,t)\,\vec{u}_\theta$. Son moment par rapport à $O$, centre de rotation, est :
+$$
+\delta\vec{\mathcal{M}}_O = \overrightarrow{OM}\wedge\delta\vec{f}_e = r\,\vec{u}_r\wedge\lambda\,\mathrm{d}r\,E(r,t)\,\vec{u}_\theta = \lambda E(r,t)\,r\,\mathrm{d}r\,\vec{u}_z.
+$$
+Sur toute la tige de longueur $b$ :
+$$
+\vec{\mathcal{M}}_O = \int_0^b \lambda E(r,t)\,r\,\mathrm{d}r\,\vec{u}_z = -\frac{\mu_0 n\lambda}{2}\,\frac{\mathrm{d}i}{\mathrm{d}t}\,\vec{u}_z\int_0^b r^2\,\mathrm{d}r = -\frac{\mu_0 n\lambda b^3}{6}\,\frac{\mathrm{d}i}{\mathrm{d}t}\,\vec{u}_z.
+$$
+On applique le théorème du moment cinétique en $O$ à la tige (la liaison pivot est parfaite ; le poids, dirigé suivant $-\vec{u}_z$, n'intervient pas dans la rotation) :
+$$
+J\,\frac{\mathrm{d}\omega}{\mathrm{d}t}\,\vec{u}_z = \vec{\mathcal{M}}_O = -\frac{\mu_0 n\lambda b^3}{6}\,\frac{\mathrm{d}i}{\mathrm{d}t}\,\vec{u}_z,
+$$
+qui s'intègre en :
+$$
+J\big(\omega(t) - \omega(0)\big) = -\frac{\mu_0 n\lambda b^3}{6}\big(i(t) - i(0)\big)
+\qquad\Rightarrow\qquad
+\omega(t) = \frac{\mu_0 n\lambda b^3 U}{6JR}\left(1 - \exp\left(-\frac{t}{\tau}\right)\right).
+$$
+
+```{=latex}
+\newpage
+```
+
+:::
+
+## Condensateur plan dans l'ARQS électrique ($\star\star$)
+
+```{=latex}
+\noindent
+\begin{minipage}[t]{0.66\linewidth}
+\vspace{0pt}
+Un condensateur plan est formé de deux disques conducteurs parfaits identiques de rayon $a$ et d'axe commun $(Oz)$. Les deux armatures en forme de disque sont séparées d'une distance $e$.
+
+\medskip
+Comme $e \ll a$, on néglige les effets de bord ; on admet alors que le champ électrique est uniforme dans tout le volume compris entre les armatures : $\vec{E} = E(t)\,\vec{u}_z$.
+
+\medskip
+On étudie dans cet exercice la décharge du condensateur à travers une résistance, de sorte que $E(t) = E_0\exp\left(-\dfrac{t}{\tau}\right)$.
+\end{minipage}
+\hfill
+\begin{minipage}[t]{0.3\linewidth}
+\vspace{0pt}
+\begin{center}
+\begin{tikzpicture}[scale=0.85, >=Stealth, every node/.style={font=\small}]
+  \draw[->] (0,-0.6) -- (0,2.6) node[above] {$z$};
+  \draw (0,0) ellipse (1.3 and 0.35);
+  \draw (0,1.6) ellipse (1.3 and 0.35);
+  \node[left] at (-0.05,0.15) {$0$};
+  \draw[<->] (0,0) -- (1.3,0);
+  \node[below] at (0.65,-0.35) {$a$};
+  \draw[<->] (1.55,0) -- (1.55,1.6) node[midway, right] {$e$};
+\end{tikzpicture}
+\end{center}
+\end{minipage}
+```
+
+**1.** Par analogie avec l'ARQS magnétique, définir l'ARQS électrique, et donner les équations de Maxwell que vérifie le champ électromagnétique entre les deux armatures du condensateur.
+
+**2.** En électrostatique, on établit qu'un condensateur plan de capacité $C$, identique à celui considéré ici, soumis à la tension $U$, crée un champ électrique $\vec{E}_0 = \dfrac{\sigma}{\varepsilon_0}\,\vec{u}_z$ entre ses plaques, le champ électrique étant nul partout ailleurs, avec $\sigma = \dfrac{Q}{\pi a^2}$ et $Q = CU$. Que vaut la charge $Q(t)$ du condensateur considéré ? On fera un schéma du montage, en faisant figurer la différence de potentiel $U(t)$ et la charge $Q(t)$.
+
+**3.** Déterminer le champ magnétique dans le condensateur. On justifiera qu'il est de la forme $\vec{B}(M,t) = B(r,z,t)\,\vec{u}_\theta$.
+
+**4.** Calculer les contributions électrique et magnétique $\mathcal{E}_e$ et $\mathcal{E}_m$ à l'énergie électromagnétique, ainsi que leur rapport, que l'on exprimera en fonction de $a$ et de $\lambda = c\tau$. Montrer qu'en régime suffisamment lentement variable, le condensateur peut être considéré comme un objet purement électrique.
+
+On donne les expressions de la densité volumique d'énergie électrique $w_e = \dfrac{1}{2}\varepsilon_0 E^2$, de la densité volumique d'énergie magnétique $w_m = \dfrac{1}{2\mu_0}B^2$, ainsi que du vecteur de Poynting $\vec{\Pi}_{em} = \dfrac{\vec{E}\wedge\vec{B}}{\mu_0}$, que l'on admettra.
+
+**5.** Calculer le vecteur de Poynting en un point intérieur au condensateur, exprimer son flux à travers la surface $S$ du cylindre qui délimite le condensateur, et conclure.
+
+::: {.content-visible when-meta="solution"}
+
+### Solution
+
+**1.** L'approximation des régimes quasi stationnaires consiste à négliger le temps de propagation de l'information entre la source du champ électromagnétique et le point où le champ est créé, lorsque les sources sont variables dans le temps. Ici, les sources sont les charges que portent les armatures du condensateur, qui créent le champ électrique $\vec{E}$. Le champ $\vec{B}$ est créé par les variations temporelles de $\vec{E}$. Les équations de Maxwell dans l'ARQS électrique sont donc $\operatorname{div}\vec{E} = \dfrac{\rho}{\varepsilon_0} = 0$ et $\operatorname{div}\vec{B} = 0$, qui sont inchangées, et
+$$
+\overrightarrow{\operatorname{rot}}\,\vec{E} = \vec{0} \qquad\text{et}\qquad \overrightarrow{\operatorname{rot}}\,\vec{B} = \mu_0\varepsilon_0\,\frac{\partial\vec{E}}{\partial t},
+$$
+où l'équation de Maxwell-Faraday est cohérente avec un champ électrique uniforme, mais ne rend plus compte du lien entre $\vec{E}$ et $\vec{B}$, alors que l'équation de Maxwell-Ampère rend compte de l'existence d'un champ $\vec{B}$ dû aux variations temporelles de $\vec{E}$.
+
+```{=latex}
+\noindent
+\begin{minipage}[t]{0.62\linewidth}
+\vspace{0pt}
+\textbf{2.} Comme le champ électrique est uniforme, et que l'étude est faite dans le cadre de l'ARQS, le champ électrique dans le condensateur est le même qu'en régime stationnaire, mais avec $\sigma(t)$ qui dépend du temps :
+\[
+\sigma = \frac{Q}{\pi a^2} \quad\text{et}\quad E(t) = \frac{\sigma}{\varepsilon_0}, \quad\text{donc}\quad \frac{Q}{\pi a^2} = \varepsilon_0 E(t),
+\]
+et
+\[
+Q(t) = \pi a^2\varepsilon_0 E(t) = \pi a^2\varepsilon_0 E_0\exp\left(-\frac{t}{\tau}\right).
+\]
+Le schéma du montage pendant la décharge est représenté ci-contre : le champ électrique est orienté selon les potentiels décroissants (de l'armature qui porte $Q$ vers celle qui porte $-Q$), et le courant $i(t) = \dfrac{\mathrm{d}Q}{\mathrm{d}t}$ est orienté vers l'armature qui porte $Q$.
+\end{minipage}
+\hfill
+\begin{minipage}[t]{0.34\linewidth}
+\vspace{0pt}
+\begin{center}
+\begin{tikzpicture}[scale=0.85, >=Stealth, every node/.style={font=\small}]
+  \draw[->] (-1.9,-0.5) -- (-1.9,2.5) node[above] {$z$};
+  \node[left] at (-1.9,0) {$0$};
+  \draw[thick] (-1.2,0) -- (1.2,0);
+  \draw[thick] (-1.2,2) -- (1.2,2);
+  \node[below left] at (-0.3,0) {$Q$};
+  \node[above left] at (-0.3,2) {$-Q$};
+  \draw[->, thick] (0.6,0.3) -- (0.6,1.6) node[midway, right] {$\vec{E}$};
+  \draw[->] (-0.9,1.8) -- (-0.9,0.2) node[midway, left] {$U$};
+  % Résistance et fils
+  \draw (0,2) -- (0,2.6) -- (2.2,2.6) -- (2.2,1.6);
+  \draw (2.0,0.4) rectangle (2.4,1.6);
+  \node[right] at (2.4,1.0) {$R$};
+  \draw (2.2,0.4) -- (2.2,-0.6) -- (0,-0.6) -- (0,0);
+  \draw[->] (1.6,-0.6) -- (0.9,-0.6) node[below] {$i$};
+\end{tikzpicture}
+\end{center}
+\end{minipage}
+```
+
+**3.** Les sources du champ électromagnétique sont les charges que portent les armatures du condensateur. Le plan contenant l'axe du condensateur et qui passe par $M$ est plan de symétrie pour la distribution de charges, donc $\vec{B}$ lui est orthogonal : $\vec{B}$ est orthoradial et $\vec{B}(M,t) = B(M,t)\,\vec{u}_\theta$. La distribution est invariante par rotation autour de l'axe du condensateur, donc $\vec{B}(M,t) = B(r,z,t)\,\vec{u}_\theta$.
+
+On utilise le théorème de Stokes, en calculant la circulation de $\vec{B}$ sur le cercle $\mathcal{C}$ de rayon $r$ centré sur l'axe du condensateur :
+$$
+\oint_{\mathcal{C}}\vec{B}\cdot\mathrm{d}\vec{\ell} = \iint_{\text{disque}}\varepsilon_0\mu_0\,\frac{\partial\vec{E}}{\partial t}\cdot\mathrm{d}\vec{S}
+\qquad\Rightarrow\qquad
+B(r,z)\,2\pi r = \varepsilon_0\mu_0\,\pi r^2 E_0\left(\frac{-1}{\tau}\right)\exp\left(\frac{-t}{\tau}\right),
+$$
+d'où
+$$
+\vec{B}(r,z,t) = -\frac{\varepsilon_0\mu_0\,r E_0}{2\tau}\exp\left(\frac{-t}{\tau}\right)\vec{u}_\theta.
+$$
+
+**4.** En intégrant sur le volume intérieur au condensateur la densité d'énergie électrique, on obtient :
+$$
+\mathcal{E}_e = \iiint_{\text{cylindre}}\frac{\varepsilon_0 E^2}{2}\,\mathrm{d}\tau = \frac{\pi a^2 e\,\varepsilon_0}{2}\,E_0^2\exp\left(\frac{-2t}{\tau}\right).
+$$
+En intégrant sur le volume intérieur au condensateur la densité d'énergie magnétique, on obtient, avec $\mathrm{d}\tau = \mathrm{d}r\,r\,\mathrm{d}\theta\,\mathrm{d}z$ :
+$$
+\begin{aligned}
+\mathcal{E}_m &= \iiint\frac{B^2}{2\mu_0}\,\mathrm{d}\tau = \frac{1}{2\mu_0}\left(\frac{-E_0}{2\tau}\right)^2\exp\left(\frac{-2t}{\tau}\right)\left(\varepsilon_0\mu_0\right)^2\int_{r=0}^{a} r^3\,\mathrm{d}r\int_{\theta=0}^{2\pi}\mathrm{d}\theta\int_{z=0}^{e}\mathrm{d}z \\
+&= \frac{1}{2\mu_0}\left(\frac{-E_0}{2\tau}\right)^2\exp\left(\frac{-2t}{\tau}\right)\left(\frac{1}{c^2}\right)^2 2\pi e\,\frac{a^4}{4}.
+\end{aligned}
+$$
+En calculant le rapport de ces deux énergies, il vient :
+$$
+\frac{\mathcal{E}_e}{\mathcal{E}_m} = \frac{\dfrac{\pi a^2 e\,\varepsilon_0}{2}\,E_0^2\exp\left(\dfrac{-2t}{\tau}\right)}{\dfrac{1}{2\mu_0}\left(\dfrac{-E_0}{2\tau}\right)^2\exp\left(\dfrac{-2t}{\tau}\right)\left(\dfrac{1}{c^2}\right)^2 2\pi e\,\dfrac{a^4}{4}} = 8\,\frac{c^2\tau^2}{a^2} = 8\,\frac{\lambda^2}{a^2}.
+$$
+On en déduit que les deux énergies sont comparables pour des temps $\tau$ de l'ordre de $\tau_{\max} \simeq \dfrac{a}{2\sqrt{2}\,c}$ ; or $a$ est de l'ordre du centimètre, donc $\tau_{\max} \simeq 10^{-11}\ \text{s}$.
+
+Conclusion : en régime lentement variable, dont les temps caractéristiques $\tau$ sont très largement supérieurs à $\tau_{\max}$ (soit $\lambda = c\tau \gg a$), le condensateur se comporte comme un objet purement électrique, puisque
+$$
+\frac{\mathcal{E}_e}{\mathcal{E}_m} = \left(\frac{\tau}{\tau_{\max}}\right)^2 \gg 1.
+$$
+
+**5.** Comme $\vec{\Pi}_{em} = \dfrac{\vec{E}\wedge\vec{B}}{\mu_0}$, en un point situé à l'intérieur du condensateur :
+$$
+\vec{\Pi}_{em} = \frac{E(t)\,\vec{u}_z\wedge B(r,t)\,\vec{u}_\theta}{\mu_0} = -\frac{E(t)\,B(r,t)}{\mu_0}\,\vec{u}_r = \frac{E_0^2\,r}{2\tau\mu_0 c^2}\exp\left(\frac{-2t}{\tau}\right)\vec{u}_r.
+$$
+Le vecteur de Poynting étant radial, son flux à travers les deux disques (bases du cylindre) est nul. On en déduit l'énergie qui traverse un cylindre de rayon $r$ et de hauteur $e$ pendant la durée $\mathrm{d}t$ :
+$$
+\begin{aligned}
+\delta\mathcal{E}_{em} &= \iint_{\text{cylindre}}\vec{\Pi}_{em}\cdot\mathrm{d}\vec{S}\,\mathrm{d}t = \frac{E_0^2}{2\tau\mu_0 c^2}\exp\left(\frac{-2t}{\tau}\right)\mathrm{d}t\;r^2\int_{\theta=0}^{2\pi}\mathrm{d}\theta\int_0^e\mathrm{d}z \\
+&= \frac{\varepsilon_0 E_0^2}{2\tau}\exp\left(\frac{-2t}{\tau}\right)\mathrm{d}t\;2\pi r^2 e.
+\end{aligned}
+$$
+La puissance qui traverse la surface $S$ du cylindre qui délimite le condensateur ($r = a$) est :
+$$
+\mathcal{P} = \frac{\delta\mathcal{E}_{em}}{\mathrm{d}t} = \frac{\varepsilon_0 E_0^2}{\tau}\exp\left(\frac{-2t}{\tau}\right)\pi a^2 e,
+$$
+qui est positive ; cela correspond au fait que l'énergie électromagnétique diminue dans le condensateur. Lorsqu'on l'intègre entre $t = 0$ et $t \to \infty$, on obtient l'énergie qui était initialement stockée dans le condensateur :
+$$
+\int_0^\infty\mathcal{P}\,\mathrm{d}t = \frac{1}{2}\,\varepsilon_0 E_0^2\,\pi a^2 e = \mathcal{E}_e(t = 0).
+$$
+
+```{=latex}
+\newpage
+```
+
+:::

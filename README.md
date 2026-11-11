@@ -29,6 +29,10 @@ Mes supports de cours, TD, TP et Colles. Rédigé en Quarto/LaTeX. Solutions int
 - 📄 [Énoncé (PDF)](https://dariusmofakhami.github.io/Enseignements/TD/TD_magnetostatique.pdf)
 - ✅ [Corrigé (PDF)](https://dariusmofakhami.github.io/Enseignements/TD/TD_magnetostatique_solution.pdf)
 
+## TD n°5 — Electromagnétisme (Eq. de Maxwell & ARQS)
+
+- 📄 [Énoncé (PDF)](https://dariusmofakhami.github.io/Enseignements/TD/TD_electromagnetisme.pdf)
+
 ## Annales d'électro-magnétisme
  
 - 📄 [CCP 2019](https://dariusmofakhami.github.io/Enseignements/Annales/PC_CCP_2019_MODELES_ATOMIQUES.pdf)

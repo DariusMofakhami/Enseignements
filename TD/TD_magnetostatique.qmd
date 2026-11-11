@@ -356,6 +356,10 @@ $$
 
 **7.** Tracer l'allure du graphe de $B(r)$.
 
+**8.** Rappeler l'expression générale qui lie le flux de $\vec{B}$ à l'inductance propre (ou coefficient d'auto-inductance), et celle qui lie l'inductance d'un circuit avec l'énergie magnétique qu'il contient. En déduire par deux méthodes l'expression de l'inductance $L$ d'une longeur de câble $\ell$ en fonction de $\mu_0$, $\ell$, $R_1$ et $R_2$, en supposant $R_3-R_2\ll R_2$ et $R_1\ll R_2$.
+
+**9.** Application numérique pour un câble standard avec $\ell=1m$, $R_1=0.25mm$ et $R_2=2.5mm$. On rappelle $\mu_0=4\pi\times 10^-7 \, T m/A$
+
 ::: {.content-visible when-meta="solution"}
 
 ### Solution
