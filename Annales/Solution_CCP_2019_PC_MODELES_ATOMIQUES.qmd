@@ -1,0 +1,510 @@
+---
+title: "CCINP 2019 — PC Physique"
+subtitle: "– De l'évolution du concept d'atome au cours du XX^e^ siècle — Corrigé –"
+header-left: "Annales PC — Corrigé"
+header-right: "CCINP 2019 — Modèles atomiques"
+footer-left: "D. Mofakhami"
+footer-right: ""
+format:
+  pdf:
+    documentclass: article
+    template: ../TD/td-template.tex
+    geometry: margin=2.3cm,headheight=28pt
+    fontsize: 11pt
+    number-sections: true
+    toc: false
+mainfont: "Latin Modern Roman"
+header-includes:
+  - \usepackage{esint}
+---
+
+<!--
+Compilation :   quarto render Solution_CCP_2019_PC_MODELES_ATOMIQUES.qmd
+Corrigé rédigé à partir de l'énoncé PC_CCP_2019_MODELES_ATOMIQUES.pdf (même dossier).
+Pour chaque question : rappel succinct de l'énoncé (en italique), puis réponse.
+-->
+
+```{=latex}
+% Sujet de concours : titres de parties non numérotés ("Partie I — ...") et
+% sous-titres rendus à leur forme titlesec d'origine (le gabarit TD les remplace
+% par "Solution de l'exercice N").
+\let\subsection\tdoldsubsection
+\newcommand{\q}[2]{\par\medskip\noindent\textbf{\color{tdnavy}#1}\enskip\textit{#2}\par\smallskip}
+```
+
+## Partie I — Limite du modèle de J. J. Thomson à travers l'expérience de Rutherford {.unnumbered}
+
+\q{Q1.}{Pourquoi le modèle de Thomson est-il incompatible avec les observations de Rutherford ?}
+
+Dans le modèle de Thomson, la charge positive est diluée uniformément dans tout le volume de l'atome : le champ électrique qu'elle crée reste modéré partout (il n'existe pas de région où une charge est très concentrée). Les électrons, environ $7000$ fois plus légers que les particules $\alpha$, ne peuvent pas non plus les dévier notablement. Une particule $\alpha$ très énergétique traversant la feuille ne subirait donc que de faibles déviations cumulées : elle ne pourrait **jamais rebondir**, ce qui est contraire à l'observation d'une faible proportion de particules renvoyées vers l'arrière.
+
+\q{Q2.}{Force subie par la particule $\alpha$ ; énergie potentielle (nulle à l'infini) ; réécriture avec $K = Ze^2/(2\pi\varepsilon_0)$ ; propriétés assurant la conservation de $\vec{L}_O$ et de $E_M$.}
+
+$$
+\vec{F} = \frac{(2e)(Ze)}{4\pi\varepsilon_0 d^2}\,\vec{e}_r = \frac{Ze^2}{2\pi\varepsilon_0 d^2}\,\vec{e}_r = \frac{K}{d^2}\,\vec{e}_r,
+\qquad
+E_p(d) = \frac{Ze^2}{2\pi\varepsilon_0 d} = \frac{K}{d}.
+$$
+- La force est **centrale** (toujours dirigée selon $\overrightarrow{OM}$) : son moment en $O$ est nul, donc $\vec{L}_O$ se conserve (théorème du moment cinétique en $O$, point fixe d'un référentiel galiléen).
+- La force est **conservative** (elle dérive de $E_p$), et il n'y a pas d'autre force (expérience sous très faible pression, pas de frottement) : l'énergie mécanique $E_M$ se conserve.
+
+\q{Q3.}{Énergie mécanique $E_M$ en fonction de $m_\alpha$ et $v_0$.}
+
+À l'instant initial, la particule est « à l'infini », où $E_p = 0$ : $E_M = \dfrac{1}{2}m_\alpha v_0^2$.
+
+\q{Q4.}{Moment cinétique $\vec{L}_O$ en fonction de $b$, $m_\alpha$, $v_0$ (calculé en $M_0$).}
+
+$$
+\vec{L}_O = \overrightarrow{OM_0}\wedge m_\alpha\vec{v}_0 = \left(X\,\vec{e}_x + b\,\vec{e}_y\right)\wedge m_\alpha v_0\,\vec{e}_x = -b\,m_\alpha v_0\,\vec{e}_z.
+$$
+
+\q{Q5.}{$\vec{L}_O$ à un instant quelconque en fonction de $\dot{\theta}$, $m_\alpha$, $d$ ; relation entre $d$, $b$, $\dot{\theta}$, $v_0$.}
+
+En coordonnées polaires, $\vec{v} = \dot{d}\,\vec{e}_r + d\dot{\theta}\,\vec{e}_\theta$, d'où
+$$
+\vec{L}_O = d\,\vec{e}_r\wedge m_\alpha\left(\dot{d}\,\vec{e}_r + d\dot{\theta}\,\vec{e}_\theta\right) = m_\alpha d^2\dot{\theta}\,\vec{e}_z.
+$$
+La conservation de $\vec{L}_O$ donne $d^2\dot{\theta} = -b\,v_0$ ($\theta$ décroît de $\pi$ à $\varphi$ au cours du mouvement).
+
+\q{Q6.}{Au sommet $S$, $\vec{v}_S \perp \overrightarrow{OS}$ : polynôme du second degré en $d_m$ et expression de $d_m$.}
+
+En $S$, $\|\vec{L}_O\| = m_\alpha d_m v_S = m_\alpha b v_0$, donc $v_S = \dfrac{b v_0}{d_m}$. La conservation de l'énergie s'écrit
+$$
+\frac{1}{2}m_\alpha v_0^2 = \frac{1}{2}m_\alpha\frac{b^2 v_0^2}{d_m^2} + \frac{K}{d_m}
+\qquad\Leftrightarrow\qquad
+d_m^2 - \frac{2K}{m_\alpha v_0^2}\,d_m - b^2 = 0.
+$$
+Seule la racine positive convient :
+$$
+d_m = \frac{K}{m_\alpha v_0^2} + \sqrt{\left(\frac{K}{m_\alpha v_0^2}\right)^2 + b^2}.
+$$
+
+\q{Q7.}{Relation entre l'angle de déviation $\varphi$ et $b$ : $\tan(\varphi/2) = K/(b\,m_\alpha v_0^2)$.}
+
+Le principe fondamental de la dynamique s'écrit $m_\alpha\dfrac{\mathrm{d}\vec{v}}{\mathrm{d}t} = \dfrac{K}{d^2}\,\vec{e}_r$. En projection sur $\vec{e}_x$ ($\vec{e}_r\cdot\vec{e}_x = \cos\theta$), et avec $d^2 = -\dfrac{b v_0}{\dot{\theta}}$ (Q5) :
+$$
+m_\alpha\frac{\mathrm{d}v_x}{\mathrm{d}t} = \frac{K}{d^2}\cos\theta = -\frac{K}{b v_0}\,\dot{\theta}\cos\theta.
+$$
+On intègre entre $t = 0$ ($v_x = v_0$, $\theta = \pi$) et $t\to\infty$ ($\theta \to \varphi$ ; par conservation de l'énergie, $\|\vec{v}_\infty\| = v_0$, donc $v_x \to v_0\cos\varphi$) :
+$$
+m_\alpha v_0\left(\cos\varphi - 1\right) = -\frac{K}{b v_0}\left(\sin\varphi - \sin\pi\right)
+\quad\Rightarrow\quad
+m_\alpha v_0^2\cdot 2\sin^2\frac{\varphi}{2} = \frac{K}{b}\cdot 2\sin\frac{\varphi}{2}\cos\frac{\varphi}{2}
+\quad\Rightarrow\quad
+\tan\frac{\varphi}{2} = \frac{K}{b\,m_\alpha v_0^2}.
+$$
+
+\q{Q8.}{À partir de quelle valeur de $\varphi$ les particules rebondissent-elles ? Pourquoi le modèle de Perrin interprète-t-il les observations ?}
+
+La particule repart vers l'arrière (rebond) lorsque $v_{x,\infty} = v_0\cos\varphi < 0$, soit $\varphi > \dfrac{\pi}{2}$, c'est-à-dire $\tan\dfrac{\varphi}{2} > 1$, soit $b < \dfrac{K}{m_\alpha v_0^2}$.
+
+Dans le modèle de Perrin, la charge positive est concentrée dans un noyau quasi ponctuel : le champ électrique devient très intense à son voisinage, et une particule passant très près ($b$ petit) peut être fortement déviée, voire renvoyée. Le noyau étant minuscule devant l'atome, ces passages rapprochés sont rares : la plupart des particules ($b$ grand) traversent la feuille quasiment sans déviation. Les deux observations sont expliquées.
+
+\q{Q9.}{Montrer que $d_m = \frac{K}{m_\alpha v_0^2}\left(1 + \frac{1}{\sin(\varphi/2)}\right)$.}
+
+On reporte $b = \dfrac{K}{m_\alpha v_0^2\tan(\varphi/2)}$ (Q7) dans l'expression de Q6 :
+$$
+d_m = \frac{K}{m_\alpha v_0^2}\left(1 + \sqrt{1 + \frac{1}{\tan^2(\varphi/2)}}\right) = \frac{K}{m_\alpha v_0^2}\left(1 + \frac{1}{\sin(\varphi/2)}\right),
+$$
+puisque $1 + \dfrac{\cos^2}{\sin^2} = \dfrac{1}{\sin^2}$ et $\sin(\varphi/2) > 0$ pour $\varphi \in \left]0,\pi\right]$.
+
+\q{Q10.}{Valeur $\varphi_m$ minimisant la distance d'approche ; $d_m$ correspondant.}
+
+$d_m$ est minimal lorsque $\sin(\varphi/2)$ est maximal, soit $\varphi_m = \pi$ (rétrodiffusion) :
+$$
+d_m = \frac{2K}{m_\alpha v_0^2}.
+$$
+
+\q{Q11.}{Valeur de $b$ pour $\varphi = \varphi_m$ ; allure de la trajectoire avec $d_m$ ; $d_m$ borne supérieure du rayon du noyau ; valeur numérique (5 MeV, $Z = 79$).}
+
+```{=latex}
+\noindent
+\begin{minipage}[t]{0.55\linewidth}
+\vspace{0pt}
+Pour $\varphi = \pi$, $\tan(\varphi/2) \to \infty$, donc $b = 0$ : collision frontale. La particule fonce droit sur le noyau, s'arrête en $S$ à la distance $d_m$ (toute son énergie cinétique est alors convertie en énergie potentielle), puis repart en sens inverse sur la même droite.
+\end{minipage}
+\hfill
+\begin{minipage}[t]{0.42\linewidth}
+\vspace{0pt}
+\begin{center}
+\begin{tikzpicture}[scale=0.9, >=Stealth, every node/.style={font=\small}]
+  \draw[dashed, gray] (-4.6,0) -- (0.8,0) node[right] {$x$};
+  \draw[->, thick] (-4.5,0.15) -- (-2.6,0.15);
+  \draw[thick] (-2.6,0.15) -- (-1.4,0.15) arc (90:-90:0.15) -- (-2.6,-0.15);
+  \draw[->, thick] (-2.6,-0.15) -- (-4.5,-0.15);
+  \node[above] at (-3.6,0.15) {aller};
+  \node[below] at (-3.6,-0.15) {retour};
+  \fill (0,0) circle (3pt) node[above] {$O$};
+  \fill (-1.25,0) circle (1.3pt) node[above] {$S$};
+  \draw[<->] (-1.25,-0.75) -- (0,-0.75) node[midway, below] {$d_m$};
+  \draw[dotted] (-1.25,0) -- (-1.25,-0.85);
+\end{tikzpicture}
+\end{center}
+\end{minipage}
+```
+
+Jusqu'en $S$, la particule ne subit que la force coulombienne : elle n'a jamais « touché » le noyau, sinon les interactions nucléaires (forte, à courte portée) auraient modifié la loi de déviation observée. Le rayon du noyau est donc inférieur à $d_m$.
+
+Numériquement, $m_\alpha v_0^2 = 2E_c$ avec $E_c = 5\ \text{MeV} = 8{,}0\cdot 10^{-13}\ \text{J}$ :
+$$
+d_m = \frac{2K}{2E_c} = \frac{Ze^2}{2\pi\varepsilon_0 E_c} = \frac{79\times\left(1{,}6\cdot 10^{-19}\right)^2}{2\pi\times 8{,}9\cdot 10^{-12}\times 8{,}0\cdot 10^{-13}} \simeq 4{,}5\cdot 10^{-14}\ \text{m} = 45\ \text{fm}.
+$$
+Le noyau d'or a donc un rayon inférieur à quelques $10^{-14}\ \text{m}$, soit $10^4$ fois moins que la taille de l'atome ($\sim 10^{-10}\ \text{m}$).
+
+\q{Q12.}{Pourquoi faut-il des particules de haute énergie en physique nucléaire ?}
+
+$d_m = K/E_c$ décroît avec l'énergie : pour s'approcher davantage du noyau, surmonter la répulsion coulombienne et sonder les distances nucléaires ($\sim 1\ \text{fm}$, où agit l'interaction forte), il faut des énergies élevées. De plus, la longueur d'onde de de Broglie $\lambda = h/p$ doit être inférieure à la taille des structures étudiées pour pouvoir les résoudre, ce qui impose une grande quantité de mouvement.
+
+## Partie II — Limite du modèle planétaire {.unnumbered}
+
+\q{Q13.}{Vitesse $\vec{v}$ de l'électron sur une orbite circulaire de rayon $r$.}
+
+Le mouvement étant circulaire uniforme, le principe fondamental de la dynamique en projection sur $\vec{e}_r$ donne $m_e\dfrac{v^2}{r} = \dfrac{e^2}{4\pi\varepsilon_0 r^2}$, d'où
+$$
+\vec{v} = \frac{e}{\sqrt{4\pi\varepsilon_0 m_e r}}\,\vec{e}_\theta.
+$$
+
+\q{Q14.}{$E_M(r) = A\,f(r)$ avec $A < 0$.}
+
+$$
+E_M = \frac{1}{2}m_e v^2 - \frac{e^2}{4\pi\varepsilon_0 r} = \frac{e^2}{8\pi\varepsilon_0 r} - \frac{e^2}{4\pi\varepsilon_0 r} = -\frac{e^2}{8\pi\varepsilon_0}\cdot\frac{1}{r}
+\qquad\Rightarrow\qquad
+A = -\frac{e^2}{8\pi\varepsilon_0},\quad f(r) = \frac{1}{r}.
+$$
+
+\q{Q15.}{Expression et unité de $P_0$ tel que $P = P_0/r^4$ ; justifier que le rayon diminue.}
+
+Avec $\omega = \dfrac{v}{r}$, on a $\omega^2 = \dfrac{e^2}{4\pi\varepsilon_0 m_e r^3}$, donc $\omega^4 r^2 = \dfrac{e^4}{16\pi^2\varepsilon_0^2 m_e^2 r^4}$ et
+$$
+P(r) = \frac{e^6}{192\,\pi^3\varepsilon_0^3 m_e^2 c^3}\cdot\frac{1}{r^4},
+\qquad
+P_0 = \frac{e^6}{192\,\pi^3\varepsilon_0^3 m_e^2 c^3} \quad (\text{en } \text{W}\cdot\text{m}^4).
+$$
+L'électron perd de l'énergie par rayonnement : $E_M = A/r$ diminue. Comme $A < 0$, $1/r$ augmente, donc $r$ diminue : l'électron se rapproche du noyau.
+
+\q{Q16.}{Montrer que $r^2\,\frac{\mathrm{d}r}{\mathrm{d}t} = \frac{P_0}{A}$.}
+
+Bilan d'énergie : $\dfrac{\mathrm{d}E_M}{\mathrm{d}t} = -P$, soit $-\dfrac{A}{r^2}\dfrac{\mathrm{d}r}{\mathrm{d}t} = -\dfrac{P_0}{r^4}$, d'où $r^2\dfrac{\mathrm{d}r}{\mathrm{d}t} = \dfrac{P_0}{A}$ (négatif : $r$ décroît).
+
+\q{Q17.}{Durée $t_f$ pour atteindre le noyau depuis $r = R$ ; application numérique ($R = 1{,}0\cdot 10^{-10}$ m) ; commentaire.}
+
+$$
+\int_R^0 r^2\,\mathrm{d}r = \frac{P_0}{A}\,t_f \quad\Rightarrow\quad t_f = -\frac{A R^3}{3P_0} = \frac{|A|\,R^3}{3P_0}.
+$$
+Numériquement, $|A| = \dfrac{e^2}{8\pi\varepsilon_0} \simeq 1{,}14\cdot 10^{-28}\ \text{J}\cdot\text{m}$ et $P_0 \simeq 1{,}8\cdot 10^{-49}\ \text{W}\cdot\text{m}^4$, d'où
+$$
+t_f \simeq \frac{1{,}14\cdot 10^{-28}\times 10^{-30}}{3\times 1{,}8\cdot 10^{-49}} \simeq 2\cdot 10^{-10}\ \text{s}.
+$$
+L'atome classique s'effondrerait en une fraction de nanoseconde, ce qui contredit la stabilité observée de la matière : la physique classique ne peut pas décrire l'atome.
+
+## Partie III — Postulats de N. Bohr {.unnumbered}
+
+\q{Q18.}{Le postulat $L = n\hbar$ impose des orbites de rayon $r_n = r_0 n^2$ ; expression et valeur de $r_0$.}
+
+$L = m_e r v = m_e r\dfrac{e}{\sqrt{4\pi\varepsilon_0 m_e r}} = e\sqrt{\dfrac{m_e r}{4\pi\varepsilon_0}} = n\dfrac{h}{2\pi}$. En élevant au carré, $\dfrac{m_e r e^2}{4\pi\varepsilon_0} = \dfrac{n^2h^2}{4\pi^2}$, d'où
+$$
+r_n = \frac{\varepsilon_0 h^2}{\pi m_e e^2}\,n^2 = r_0 n^2,
+\qquad
+r_0 = \frac{\varepsilon_0 h^2}{\pi m_e e^2} = \frac{8{,}9\cdot 10^{-12}\times\left(6{,}6\cdot 10^{-34}\right)^2}{\pi\times 9{,}1\cdot 10^{-31}\times\left(1{,}6\cdot 10^{-19}\right)^2} \simeq 5{,}3\cdot 10^{-11}\ \text{m}
+$$
+(rayon de Bohr).
+
+\q{Q19.}{Interférence constructive de l'onde de matière après un tour : relation entre $\lambda$ et le périmètre ; retrouver le postulat de Bohr.}
+
+L'onde doit se retrouver en phase avec elle-même après un tour : le périmètre contient un nombre entier de longueurs d'onde, $\mathcal{P} = 2\pi r = n\lambda$. Avec $\lambda = \dfrac{h}{m_e v}$ (de Broglie) : $2\pi r = \dfrac{nh}{m_e v}$, soit $L = m_e r v = n\dfrac{h}{2\pi} = n\hbar$. On retrouve le postulat mécanique.
+
+\q{Q20.}{$E_M = -E_0/n^2$ ; expression de $E_0$, valeur en eV, signification.}
+
+$$
+E_M = -\frac{e^2}{8\pi\varepsilon_0 r_n} = -\frac{e^2}{8\pi\varepsilon_0 r_0}\cdot\frac{1}{n^2}
+\qquad\Rightarrow\qquad
+E_0 = \frac{e^2}{8\pi\varepsilon_0 r_0} = \frac{m_e e^4}{8\varepsilon_0^2 h^2} \simeq 2{,}16\cdot 10^{-18}\ \text{J} \simeq 13{,}5\ \text{eV}.
+$$
+$E_0$ est l'**énergie d'ionisation** de l'atome d'hydrogène dans son état fondamental ($n = 1$) : l'énergie minimale à fournir pour arracher l'électron.
+
+\q{Q21.}{Formule de Rydberg-Ritz ; expression, valeur et unité de $R_H$.}
+
+Le photon emporte l'énergie perdue par l'atome : $\dfrac{hc}{\lambda} = E_{n_i} - E_{n_f} = E_0\left(\dfrac{1}{n_f^2} - \dfrac{1}{n_i^2}\right)$, d'où
+$$
+\frac{1}{\lambda} = R_H\left(\frac{1}{n_f^2} - \frac{1}{n_i^2}\right),
+\qquad
+R_H = \frac{E_0}{hc} \simeq \frac{2{,}16\cdot 10^{-18}}{6{,}6\cdot 10^{-34}\times 3{,}0\cdot 10^8} \simeq 1{,}09\cdot 10^7\ \text{m}^{-1}.
+$$
+
+\q{Q22.}{Série de Lyman ($n_f = 1$), $\lambda_1 = 121{,}5$ nm, $\lambda_2 = 102{,}5$ nm, $\lambda_3 = 97{,}2$ nm : domaine spectral ; $R_H$ expérimental ; conclusion.}
+
+Ces longueurs d'onde ($\sim 100\ \text{nm} < 400\ \text{nm}$) appartiennent à l'**ultraviolet** (lointain). Les trois premières raies correspondent à $n_i = 2, 3, 4$, et $R_H = \dfrac{1}{\lambda\left(1 - 1/n_i^2\right)}$ :
+$$
+\frac{4}{3\times 121{,}5\cdot 10^{-9}} \simeq 1{,}097\cdot 10^7, \qquad \frac{9}{8\times 102{,}5\cdot 10^{-9}} \simeq 1{,}098\cdot 10^7, \qquad \frac{16}{15\times 97{,}2\cdot 10^{-9}} \simeq 1{,}097\cdot 10^7\ \text{m}^{-1}.
+$$
+Les trois valeurs concordent ($R_H \simeq 1{,}097\cdot 10^7\ \text{m}^{-1}$) et sont en accord, à 1 % près, avec la valeur théorique de Q21 (l'écart vient des valeurs arrondies des constantes et de l'hypothèse d'un noyau fixe). Le modèle de Bohr rend compte du spectre de l'hydrogène.
+
+## Partie IV — Expérience de Stern et Gerlach {.unnumbered}
+
+### IV.1 — Généralités {.unnumbered}
+
+\q{Q23.}{Moment magnétique $\vec{m}$ de la boucle de courant formée par l'électron ; relation $\vec{m} = \gamma_e\vec{L}$ ; expression de $\gamma_e$.}
+
+L'électron, de charge $-e$, parcourt l'orbite (périmètre $2\pi r$) à la vitesse $v$ : il équivaut à une spire de courant d'intensité $I = -\dfrac{ev}{2\pi r}$, comptée positivement dans le sens du mouvement. En orientant $\vec{e}_{z'}$ selon ce sens (règle de la main droite) :
+$$
+\vec{m} = I\pi r^2\,\vec{e}_{z'} = -\frac{e v r}{2}\,\vec{e}_{z'},
+\qquad
+\vec{L} = m_e r v\,\vec{e}_{z'}
+\qquad\Rightarrow\qquad
+\vec{m} = \gamma_e\vec{L},\quad \gamma_e = -\frac{e}{2m_e}.
+$$
+
+\q{Q24.}{Par le théorème du moment cinétique en $C$, montrer que $\|\vec{m}\|$ et $m_z$ sont constants.}
+
+Le proton étant fixe, le théorème du moment cinétique appliqué à l'électron en $C$ donne (la force coulombienne, centrale, n'a pas de moment) :
+$$
+\frac{\mathrm{d}\vec{L}}{\mathrm{d}t} = \vec{m}\wedge\vec{B}
+\qquad\Rightarrow\qquad
+\frac{\mathrm{d}\vec{m}}{\mathrm{d}t} = \gamma_e\,\vec{m}\wedge\vec{B}.
+$$
+- $\dfrac{\mathrm{d}\left(\|\vec{m}\|^2\right)}{\mathrm{d}t} = 2\,\vec{m}\cdot\dfrac{\mathrm{d}\vec{m}}{\mathrm{d}t} = 2\gamma_e\,\vec{m}\cdot\left(\vec{m}\wedge\vec{B}\right) = 0$ : $\|\vec{m}\|$ est constant.
+- $\dfrac{\mathrm{d}m_z}{\mathrm{d}t} = \vec{e}_z\cdot\dfrac{\mathrm{d}\vec{m}}{\mathrm{d}t} = \gamma_e B\,\vec{e}_z\cdot\left(\vec{m}\wedge\vec{e}_z\right) = 0$ : $m_z$ est constant.
+
+\q{Q25.}{L'extrémité de $\vec{m}$ décrit un cercle autour de $(Cz)$ à la pulsation de Larmor $\Omega_L = eB/(2m_e)$.}
+
+$$
+\frac{\mathrm{d}\vec{m}}{\mathrm{d}t} = \gamma_e\,\vec{m}\wedge B\vec{e}_z = \left(-\gamma_e B\,\vec{e}_z\right)\wedge\vec{m} = \vec{\Omega}_L\wedge\vec{m},
+\qquad
+\vec{\Omega}_L = \frac{eB}{2m_e}\,\vec{e}_z.
+$$
+Par analogie avec $\dfrac{\mathrm{d}\overrightarrow{OM}}{\mathrm{d}t} = \vec{\omega}\wedge\overrightarrow{OM}$, l'extrémité de $\vec{m}$ tourne autour de l'axe $(Cz)$ à la vitesse angulaire $\Omega_L = \dfrac{eB}{2m_e}$. Comme $\|\vec{m}\|$ et $m_z$ sont constants (Q24), elle décrit un cercle : c'est la **précession de Larmor**.
+
+### IV.2 — Le dispositif expérimental {.unnumbered}
+
+\q{Q26.}{Nécessité d'un champ non uniforme.}
+
+Dans un champ uniforme, un dipôle ne subit qu'un couple, et une force résultante nulle ($\vec{F} = (\vec{m}\cdot\overrightarrow{\operatorname{grad}})\vec{B} = \vec{0}$) : le jet ne serait pas dévié. Seul un gradient de champ produit une force dépendant de l'orientation du moment ($\propto m_z$), qui sépare les atomes selon la valeur de $m_z$.
+
+\q{Q27.}{Cohérence des lignes de champ de la figure 4 avec l'énoncé ; parité en $y$ de $B_z(y,z)$.}
+
+- Les lignes sont quasi verticales : $B_z$ est la composante dominante.
+- Elles se resserrent vers le pôle Sud effilé (en haut) : $\|\vec{B}\|$ augmente avec $z$, le champ n'est pas uniforme.
+- Elles s'incurvent symétriquement de part et d'autre du plan $y = 0$ : $B_y$ est non nulle mais plus faible, et nulle au centre (la ligne centrale est verticale).
+- Elles sont contenues dans des plans $x = $ cte, et le dispositif est invariant selon $x$ : $B_x = 0$.
+
+La figure est symétrique par rapport au plan $y = 0$ : $B_z(-y,z) = B_z(y,z)$, donc $B_z$ est une **fonction paire** de $y$ (et $B_y$ est impaire).
+
+\q{Q28.}{Équations de Maxwell dans le vide ; montrer que $(\partial B_y/\partial z)_{y=0} = 0$.}
+
+$$
+\operatorname{div}\vec{E} = 0, \qquad \operatorname{div}\vec{B} = 0, \qquad \overrightarrow{\operatorname{rot}}\,\vec{E} = -\frac{\partial\vec{B}}{\partial t}, \qquad \overrightarrow{\operatorname{rot}}\,\vec{B} = \frac{1}{c^2}\,\frac{\partial\vec{E}}{\partial t}.
+$$
+En régime stationnaire, $\overrightarrow{\operatorname{rot}}\,\vec{B} = \vec{0}$. Sa composante selon $x$ donne $\dfrac{\partial B_z}{\partial y} - \dfrac{\partial B_y}{\partial z} = 0$, d'où
+$$
+\left(\frac{\partial B_y}{\partial z}\right)_{y=0} = \left(\frac{\partial B_z}{\partial y}\right)_{y=0} = 0.
+$$
+
+\q{Q29.}{Force sur les atomes qui passent en $y = 0$.}
+
+$\vec{F} = \left(m_x\dfrac{\partial}{\partial x} + m_y\dfrac{\partial}{\partial y} + m_z\dfrac{\partial}{\partial z}\right)\vec{B}$. Le champ ne dépend pas de $x$, donc le premier terme est nul. En $y = 0$ :
+
+- $\dfrac{\partial\vec{B}}{\partial y} = \dfrac{\partial B_y}{\partial y}\,\vec{u}_y$, car $B_x = 0$ et $\dfrac{\partial B_z}{\partial y} = 0$ (parité) ;
+- $\dfrac{\partial\vec{B}}{\partial z} = \dfrac{\partial B_z}{\partial z}\,\vec{u}_z$, car $\dfrac{\partial B_y}{\partial z} = 0$ (Q28).
+
+D'où
+$$
+\vec{F}(x, y = 0, z) = m_y\left(\frac{\partial B_y}{\partial y}\right)_{(x,0,z)}\vec{u}_y + m_z\left(\frac{\partial B_z}{\partial z}\right)_{(x,0,z)}\vec{u}_z.
+$$
+
+\q{Q30.}{Justifier quantitativement (durée de passage de $6\ \mu$s, $B \simeq 1$ T) que $m_y$ peut être remplacé par sa moyenne ; expression réduite de la force.}
+
+$$
+\Omega_L = \frac{eB}{2m_e} = \frac{1{,}6\cdot 10^{-19}\times 1}{2\times 9{,}1\cdot 10^{-31}} \simeq 8{,}8\cdot 10^{10}\ \text{rad}\cdot\text{s}^{-1},
+\qquad
+T_L = \frac{2\pi}{\Omega_L} \simeq 7\cdot 10^{-11}\ \text{s}.
+$$
+Pendant les $6\ \mu\text{s}$ de passage dans l'entrefer, le moment magnétique effectue environ $6\cdot 10^{-6}/7\cdot 10^{-11} \sim 10^5$ tours de précession autour de $(Oz)$ : la composante transverse $m_y$ oscille très rapidement et sa contribution à la déviation se moyenne. Sa moyenne temporelle est nulle, tandis que $m_z$ est constant (Q24). Il reste
+$$
+\vec{F}(x, y = 0, z) = m_z\left(\frac{\partial B_z}{\partial z}\right)_{(x,0,z)}\vec{u}_z.
+$$
+
+\q{Q31.}{Justifier que l'atome est dévié vers les $z$ positifs lorsque $m_z > 0$.}
+
+Les lignes de champ se resserrent vers le pôle Sud, en haut : $B_z$ croît avec $z$, donc $\dfrac{\partial B_z}{\partial z} > 0$. Si $m_z > 0$, alors $F_z > 0$ : l'atome est dévié vers les $z$ positifs.
+
+\q{Q32.}{Pourquoi, classiquement, s'attendrait-on à une mince ligne d'impacts ?}
+
+À la sortie du four, les moments magnétiques sont orientés aléatoirement (agitation thermique) : classiquement, $m_z$ prend toutes les valeurs entre $-m$ et $+m$. La déviation, proportionnelle à $m_z$, varie donc continûment : les impacts forment un segment continu selon $z$, fin selon $y$ grâce à la collimation du jet.
+
+\q{Q33.}{Deux zones d'impact seulement (vers le haut et vers le bas) : conclusion.}
+
+$m_z$ ne prend que **deux valeurs opposées** : la projection du moment magnétique est quantifiée (quantification spatiale). L'électron de valence de l'argent n'ayant pas de moment cinétique orbital ($\ell = 0$ ; un moment orbital donnerait d'ailleurs un nombre impair $2\ell + 1$ de taches), ce moment est intrinsèque : c'est le moment magnétique de **spin** de l'électron (spin $1/2$, $m_z = \pm\mu_B$).
+
+## Partie V — L'effet Zeeman normal {.unnumbered}
+
+\q{Q34.}{Écart $\Delta\lambda$ entre deux raies consécutives ; application numérique pour $B = 1$ T.}
+
+Les trois raies correspondent aux transitions depuis $E_{2(0)}$ et $E_{2(0)} \pm \mu_B B$ vers $E_1$. Deux raies consécutives diffèrent en énergie de $\Delta E = \mu_B B = \Delta\left(\dfrac{hc}{\lambda}\right) \simeq \dfrac{hc}{\lambda_0^2}\,\Delta\lambda$ (car $\Delta\lambda \ll \lambda_0$), d'où
+$$
+\Delta\lambda = \frac{\lambda_0^2\,\mu_B B}{hc} = \frac{\lambda_0^2\,eB}{4\pi m_e c} = \frac{\left(643{,}8\cdot 10^{-9}\right)^2\times 1{,}6\cdot 10^{-19}\times 1}{4\pi\times 9{,}1\cdot 10^{-31}\times 3{,}0\cdot 10^8} \simeq 1{,}9\cdot 10^{-11}\ \text{m} = 19\ \text{pm}.
+$$
+
+\q{Q35.}{Montrer que $\delta = 2e\cos\theta$ ; différence de phase $\varphi$.}
+
+```{=latex}
+\noindent
+\begin{minipage}[t]{0.55\linewidth}
+\vspace{0pt}
+Le rayon 2 effectue en plus l'aller-retour $M_1O_1M_2$ dans la lame d'air, de longueur $\dfrac{2e}{\cos\theta}$. Soit $H$ le projeté orthogonal de $M_2$ sur le rayon 1 : après $H$ et $M_2$, les deux rayons parcourent des chemins égaux jusqu'au point $P$ (théorème de Malus). Avec $M_1M_2 = 2e\tan\theta$ et $M_1H = M_1M_2\sin\theta$ :
+\[
+\delta = \frac{2e}{\cos\theta} - 2e\tan\theta\sin\theta = \frac{2e}{\cos\theta}\left(1 - \sin^2\theta\right) = 2e\cos\theta.
+\]
+\[
+\varphi = \frac{2\pi\delta}{\lambda} = \frac{4\pi e\cos\theta}{\lambda}
+\]
+(les deux réflexions supplémentaires du rayon 2 sont identiques : leurs déphasages éventuels ajoutent une constante, ignorée ici).
+\end{minipage}
+\hfill
+\begin{minipage}[t]{0.42\linewidth}
+\vspace{0pt}
+\begin{center}
+\begin{tikzpicture}[scale=0.95, >=Stealth, every node/.style={font=\small}]
+  \draw[very thick] (0,-2.1) -- (0,1.1);
+  \draw[very thick] (2,-2.1) -- (2,1.1);
+  \draw[->] (-1,0.95) -- (-0.5,0.775);
+  \draw (-1,0.95) -- (0,0.6);
+  \draw (0,0.6) -- (2,-0.1);
+  \draw[->] (2,-0.1) -- (1,-0.45);
+  \draw (1,-0.45) -- (0,-0.8) -- (2,-1.5);
+  \draw[->] (2,-0.1) -- (3.6,-0.66) node[right] {1};
+  \draw[->] (2,-1.5) -- (3.6,-2.06) node[right] {2};
+  \draw[dashed] (2,-1.5) -- (2.4366,-0.2528);
+  \fill (2.4366,-0.2528) circle (1.2pt) node[above right] {$H$};
+  \node[above left] at (0,0.6) {$O$};
+  \node[below right] at (2,-0.2) {$M_1$};
+  \node[left] at (0,-0.8) {$O_1$};
+  \node[below right] at (2,-1.6) {$M_2$};
+  \draw[<->] (0,-2.25) -- (2,-2.25) node[midway, below] {$e$};
+\end{tikzpicture}
+\end{center}
+\end{minipage}
+```
+
+\q{Q36.}{Position de l'écran ; figure observée ; autre dispositif donnant une figure similaire.}
+
+Les rayons qui interfèrent émergent parallèles (interférences localisées à l'infini) : on place l'écran dans le **plan focal image** de la lentille. Tous les rayons d'inclinaison $\theta$ donnée convergent sur un cercle centré sur le foyer image $F'$ : on observe des **anneaux** concentriques (anneaux d'égale inclinaison). Un **interféromètre de Michelson réglé en lame d'air**, éclairé par une source étendue, donne une figure semblable (avec des franges beaucoup moins fines, car il n'y a que deux ondes).
+
+\q{Q37.}{Valeurs de $\varphi$ rendant l'intensité maximale.}
+
+Toutes les ondes transmises sont en phase lorsque $\varphi = 2\pi p$, avec $p \in \mathbb{Z}$.
+
+\q{Q38.}{Coefficient de finesse $m$ en fonction de $R$.}
+
+$R = r^2$ et, sans absorption, $t^2 = 1 - R$, d'où
+$$
+m = \frac{4r^2}{t^4} = \frac{4R}{(1 - R)^2}.
+$$
+
+\q{Q39.}{Associer les courbes a, b, c aux valeurs de $R$ (0,1 ; 0,5 ; 0,9) ; choix de $R$ pour des franges fines sur fond obscur.}
+
+Le minimum de $I_{tot}/I_0$ vaut $\dfrac{1}{1 + m}$ :
+
+- pour $R = 0{,}1$, $m \simeq 0{,}49$ et le minimum vaut $0{,}67$ : **courbe a** ;
+- pour $R = 0{,}5$, $m = 8$ et le minimum vaut $0{,}11$ : **courbe b** ;
+- pour $R = 0{,}9$, $m = 360$ et le minimum vaut $0{,}003$ : **courbe c**.
+
+Pour des franges brillantes fines sur fond obscur, on choisit $R = 0{,}9$ (courbe c).
+
+\q{Q40.}{Justification physique de la dépendance de $\Delta_{\varphi 1/2}$ avec $R$.}
+
+Plus $R$ est proche de 1, plus les réflexions successives sont nombreuses à avoir une amplitude notable : un grand nombre d'ondes interfèrent (interférences à ondes multiples). Comme pour un réseau à grand nombre de fentes, l'accord de phase de toutes ces ondes est très sélectif : les pics sont d'autant plus fins que le nombre effectif d'ondes est grand. D'où $\Delta_{\varphi 1/2} = \dfrac{2(1 - R)}{\sqrt{R}} \to 0$ quand $R \to 1$.
+
+\q{Q41.}{L'ordre $p_0$ de la frange centrale est a priori quelconque ; conséquence pour son éclairement.}
+
+Au centre ($\theta = 0$), $p_0 = \dfrac{\varphi}{2\pi} = \dfrac{2e}{\lambda}$, qui n'a aucune raison d'être entier : par exemple, $p_0 = \dfrac{2\times 10^{-2}}{643{,}8\cdot 10^{-9}} \simeq 3{,}1066\cdot 10^4$. Le centre de la figure peut donc être brillant, sombre ou d'intensité intermédiaire, selon la valeur exacte de $e/\lambda$ : il ne constitue pas, en général, un anneau brillant.
+
+\q{Q42.}{Critère simple, en fonction de $\Delta_{\rho 1/2}$, pour distinguer deux anneaux brillants voisins de rayons $\rho_1$ et $\rho_2$.}
+
+Les deux anneaux, produits par deux longueurs d'onde proches, sont séparés si l'écart entre leurs rayons dépasse leur largeur à mi-hauteur (critère du type Rayleigh) :
+$$
+\left|\rho_1 - \rho_2\right| \geq \Delta_{\rho 1/2}.
+$$
+
+\q{Q43.}{Écart minimal $\Delta\lambda_{\min}$ pour $e = 10$ mm, $R = 0{,}9$, $\lambda = 643{,}8$ nm en incidence nulle ; adaptation à l'effet Zeeman.}
+
+$$
+F = \frac{\pi\sqrt{0{,}9}}{1 - 0{,}9} \simeq 29{,}8,
+\qquad
+\Delta\lambda_{\min} = \frac{\lambda^2}{2Fe} = \frac{\left(643{,}8\cdot 10^{-9}\right)^2}{2\times 29{,}8\times 10^{-2}} \simeq 7{,}0\cdot 10^{-13}\ \text{m} = 0{,}70\ \text{pm}.
+$$
+L'écart Zeeman ($\Delta\lambda \simeq 19\ \text{pm}$ pour $1\ \text{T}$, Q34) est environ 30 fois plus grand que $\Delta\lambda_{\min}$ : l'interféromètre résout largement les composantes Zeeman, alors qu'un spectroscope à réseau courant (pouvoir de résolution de quelques $10^4$) n'y parviendrait pas.
+
+*Remarque :* l'intervalle spectral libre $\dfrac{\lambda^2}{2e} \simeq 21\ \text{pm}$ est du même ordre que l'écart Zeeman, et l'étendue totale du triplet ($\simeq 39\ \text{pm}$) le dépasse. Les composantes d'ordres voisins se chevaucheraient, ce qui compliquerait l'interprétation. En pratique, on diminuerait $e$ ou $B$.
+
+## Partie VI — Orbitales atomiques {.unnumbered}
+
+\q{Q44.}{Comportement des particules en physique quantique (une phrase).}
+
+À l'échelle microscopique, une particule n'a plus de trajectoire définie : elle est décrite par une fonction d'onde qui ne donne accès qu'à des **probabilités** de résultats de mesure (dualité onde-corpuscule, indéterminisme).
+
+\q{Q45.}{Signification de $|\varphi(\vec{r})|^2$.}
+
+C'est la **densité volumique de probabilité de présence** de l'électron : $|\varphi(\vec{r})|^2\,\mathrm{d}\tau$ est la probabilité de trouver l'électron dans le volume $\mathrm{d}\tau$ autour de $\vec{r}$.
+
+\q{Q46.}{Propriété justifiant le coefficient $1/(\pi r_0^3)$ dans $|\varphi_{1s}|^2$.}
+
+C'est la **condition de normalisation** : l'électron est certainement quelque part, donc $\iiint_{\text{espace}}|\varphi|^2\,\mathrm{d}\tau = 1$. Avec $|\varphi_{1s}|^2 = C\,e^{-2r/r_0}$ et $\mathrm{d}\tau = 4\pi r^2\,\mathrm{d}r$ (symétrie sphérique) :
+$$
+C\int_0^\infty 4\pi r^2 e^{-2r/r_0}\,\mathrm{d}r = 4\pi C\cdot 2\left(\frac{r_0}{2}\right)^3 = \pi C r_0^3 = 1
+\qquad\Rightarrow\qquad
+C = \frac{1}{\pi r_0^3}.
+$$
+
+\q{Q47.}{Énergie $E_{1s}$ à partir de l'équation de Schrödinger ; comparaison avec $E_0$.}
+
+Avec $\varphi = N e^{-r/r_0}$ : $\dfrac{\mathrm{d}\varphi}{\mathrm{d}r} = -\dfrac{\varphi}{r_0}$, et
+$$
+\Delta\varphi = \frac{1}{r^2}\frac{\mathrm{d}}{\mathrm{d}r}\left(-\frac{r^2}{r_0}\varphi\right) = \left(\frac{1}{r_0^2} - \frac{2}{r_0 r}\right)\varphi.
+$$
+L'équation de Schrödinger, divisée par $\varphi$, devient
+$$
+-\frac{\hbar^2}{2m_e r_0^2} + \frac{\hbar^2}{m_e r_0}\cdot\frac{1}{r} - \frac{e^2}{4\pi\varepsilon_0}\cdot\frac{1}{r} = E \qquad \text{pour tout } r.
+$$
+Le terme en $1/r$ doit s'annuler : $r_0 = \dfrac{4\pi\varepsilon_0\hbar^2}{m_e e^2} = \dfrac{\varepsilon_0 h^2}{\pi m_e e^2}$, qui est bien le rayon de Bohr de Q18. Il reste
+$$
+E_{1s} = -\frac{\hbar^2}{2m_e r_0^2} = -\frac{m_e e^4}{8\varepsilon_0^2 h^2} = -E_0 \simeq -13{,}5\ \text{eV} :
+$$
+la mécanique quantique retrouve exactement l'énergie du niveau fondamental du modèle de Bohr.
+
+\q{Q48.}{Montrer que la densité radiale de probabilité vaut $P(r) = 4\,\frac{r^2}{r_0^3}\,e^{-2r/r_0}$.}
+
+La probabilité de trouver l'électron entre les sphères de rayons $r$ et $r + \mathrm{d}r$ (volume $4\pi r^2\,\mathrm{d}r$, sur lequel $|\varphi_{1s}|^2$ est constant) est
+$$
+P(r)\,\mathrm{d}r = |\varphi_{1s}(r)|^2\,4\pi r^2\,\mathrm{d}r = \frac{4\pi r^2}{\pi r_0^3}\,e^{-2r/r_0}\,\mathrm{d}r
+\qquad\Rightarrow\qquad
+P(r) = 4\,\frac{r^2}{r_0^3}\,e^{-2r/r_0}.
+$$
+
+\q{Q49.}{Pourquoi la distance moyenne $\langle r\rangle = \frac{3}{2}r_0$ diffère-t-elle du maximum de $P(r)$ ?}
+
+```{=latex}
+\noindent
+\begin{minipage}[t]{0.52\linewidth}
+\vspace{0pt}
+$P(r)$ est maximale pour $\dfrac{\mathrm{d}P}{\mathrm{d}r} = 0$, soit $2r - \dfrac{2r^2}{r_0} = 0$, c'est-à-dire en $r = r_0$ : la distance la plus probable est le rayon de Bohr.
+
+\medskip
+La courbe est très dissymétrique : elle croît vite (en $r^2$) entre $0$ et $r_0$, mais décroît lentement (exponentiellement) au-delà, avec une longue « queue » vers les grandes distances. Les valeurs $r > r_0$ pèsent donc davantage dans la moyenne : $\langle r\rangle = \dfrac{3}{2}r_0 > r_0$. Distance moyenne et distance la plus probable ne coïncident que pour une distribution symétrique autour de son maximum.
+\end{minipage}
+\hfill
+\begin{minipage}[t]{0.44\linewidth}
+\vspace{0pt}
+\begin{center}
+\begin{tikzpicture}[xscale=0.8, yscale=4.5, >=Stealth, every node/.style={font=\small}]
+  \draw[->] (0,0) -- (6.4,0) node[right] {$r/r_0$};
+  \draw[->] (0,0) -- (0,0.68) node[above] {$P(r)\cdot r_0$};
+  \foreach \x in {1,2,3,4,5,6} \draw (\x,0.01) -- (\x,-0.01) node[below] {\scriptsize $\x$};
+  \draw[very thick, domain=0:6, samples=120, smooth] plot (\x, {4*\x*\x*exp(-2*\x)});
+  \draw[dashed] (1,0) -- (1,0.541);
+  \draw[dashed, blue!70!black] (1.5,0) -- (1.5,0.448);
+  \node[above] at (1,0.56) {\scriptsize max en $r_0$};
+  \draw[blue!70!black] (1.5,0.2) -- (2.6,0.42) node[right] {\scriptsize $\langle r\rangle = 1{,}5\,r_0$};
+\end{tikzpicture}
+\end{center}
+\end{minipage}
+```

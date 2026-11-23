@@ -1,0 +1,508 @@
+---
+title: "Centrale-Supélec 2016 — PC Physique 1"
+subtitle: "– L'effet dynamo, origine du champ géomagnétique ? — Corrigé –"
+header-left: "Annales PC — Corrigé"
+header-right: "CS 2016 — Effet dynamo"
+footer-left: "D. Mofakhami"
+footer-right: ""
+format:
+  pdf:
+    documentclass: article
+    template: ../TD/td-template.tex
+    geometry: margin=2.3cm,headheight=28pt
+    fontsize: 11pt
+    number-sections: true
+    toc: false
+mainfont: "Latin Modern Roman"
+header-includes:
+  - \usepackage{esint}
+  - \usepackage[european]{circuitikz}
+---
+
+<!--
+Compilation :   quarto render Solution_CS_2016_PC_EFFET_DYNAMO.qmd
+Corrigé rédigé à partir de l'énoncé PC_CS_2016_EFFET_DYNAMO.pdf (même dossier).
+Pour chaque question : rappel succinct de l'énoncé (en italique), puis réponse.
+-->
+
+```{=latex}
+% Sujet de concours : titres de parties non numérotés ("Partie I — ...") et
+% sous-titres rendus à leur forme titlesec d'origine (le gabarit TD les remplace
+% par "Solution de l'exercice N").
+\let\subsection\tdoldsubsection
+\newcommand{\q}[2]{\par\medskip\noindent\textbf{\color{tdnavy}#1}\enskip\textit{#2}\par\smallskip}
+```
+
+## Partie I — Une mesure du champ géomagnétique {.unnumbered}
+
+### I.A à I.C — Champ créé par des bobines de Helmholtz {.unnumbered}
+
+\q{I.A}{Direction et sens du champ créé sur son axe par une spire ; expression vectorielle.}
+
+```{=latex}
+\noindent
+\begin{minipage}[t]{0.6\linewidth}
+\vspace{0pt}
+Tout plan contenant l'axe $(Ox)$ est un plan d'antisymétrie de la distribution de courant : en un point $M$ de l'axe, $\vec{B}$ appartient à tous ces plans, donc à leur intersection. Le champ est \textbf{porté par l'axe} $(Ox)$.
+
+\medskip
+Son sens est donné par la règle de la main droite (ou du tire-bouchon) : si la spire est orientée positivement par rapport à $\vec{u}_x$ (courant $I > 0$ tournant dans le sens direct autour de $\vec{u}_x$), le champ est dirigé suivant $+\vec{u}_x$, de part et d'autre de la spire :
+\[
+\vec{B}_{\text{spire}}(x) = \frac{\mu_0 I}{2R}\left(1 + \left(\frac{x}{R}\right)^2\right)^{-3/2}\vec{u}_x.
+\]
+Si $I < 0$, le champ change de sens.
+\end{minipage}
+\hfill
+\begin{minipage}[t]{0.36\linewidth}
+\vspace{0pt}
+\begin{center}
+\begin{tikzpicture}[scale=0.85, >=Stealth, every node/.style={font=\small}]
+  \draw[->] (-1.2,0) -- (3.4,0) node[right] {$x$};
+  \draw[thick] (0,0) ellipse (0.35 and 1.2);
+  \draw[->, thick] (-0.35,-0.2) -- (-0.35,0.25);
+  \node[left] at (-0.4,0.1) {$I$};
+  \draw[<->] (0,0) -- (0,1.2);
+  \node at (0.6,0.8) {$R$};
+  \fill (2,0) circle (1.3pt) node[below] {$M$};
+  \draw[->, very thick, blue!70!black] (2,0) -- (3,0) node[above] {$\vec{B}_{\text{spire}}$};
+  \node[below left] at (0,0) {$O$};
+\end{tikzpicture}
+\end{center}
+\end{minipage}
+```
+
+\q{I.B}{Champ sur l'axe commun de deux bobines de $N$ spires placées en $x = \pm e/2$ ; schéma.}
+
+Chaque bobine (d'épaisseur négligeable) équivaut à une spire parcourue par $NI$. Par superposition :
+$$
+\vec{B}_{\text{bobines}}(x) = \frac{\mu_0 N I}{2R}\left[\left(1 + \frac{(x + e/2)^2}{R^2}\right)^{-3/2} + \left(1 + \frac{(x - e/2)^2}{R^2}\right)^{-3/2}\right]\vec{u}_x.
+$$
+
+```{=latex}
+\begin{center}
+\begin{tikzpicture}[scale=0.85, >=Stealth, every node/.style={font=\small}]
+  \draw[->] (-3.5,0) -- (3.8,0) node[right] {$x$};
+  \draw[thick] (-1,0) ellipse (0.3 and 1.2);
+  \draw[thick] (1,0) ellipse (0.3 and 1.2);
+  \draw[->, thick] (-1.3,-0.2) -- (-1.3,0.25);
+  \draw[->, thick] (0.7,-0.2) -- (0.7,0.25);
+  \node[above] at (-1,1.2) {$NI$};
+  \node[above] at (1,1.2) {$NI$};
+  \node[below] at (-1,-1.2) {$-\frac{e}{2}$};
+  \node[below] at (1,-1.2) {$+\frac{e}{2}$};
+  \draw (-1,-1.75) -- (-1,-2.05); \draw (1,-1.75) -- (1,-2.05);
+  \draw[<->] (-1,-1.9) -- (1,-1.9) node[midway, below] {$e$};
+  \fill (0,0) circle (1.2pt) node[above] {$O$};
+  \draw[->, very thick, blue!70!black] (2.4,0) -- (3.3,0) node[above] {$\vec{B}$};
+\end{tikzpicture}
+\end{center}
+```
+
+\q{I.C.1}{Allure de $B_{\text{bobines}}(x)$ selon $e$ ; intérêt du cas $e = e_0$.}
+
+En notant $f(u) = (1 + u^2)^{-3/2}$ le profil d'une spire ($u = x/R$), $B_{\text{bobines}}$ est la somme de deux « cloches » centrées en $\pm e/2$ (tirets ci-dessous).
+
+- Si $e > e_0$ : les deux cloches sont bien séparées ; $B$ présente deux maxima près de $\pm e/2$ et un minimum local en $x = 0$.
+- Si $e < e_0$ : les cloches se recouvrent fortement ; $B$ présente un unique maximum, pointu, en $x = 0$.
+- Si $e = e_0$ : cas intermédiaire, le maximum en $0$ est très **plat**.
+
+```{=latex}
+\begin{center}
+\begin{tikzpicture}[xscale=0.55, yscale=1.3, >=Stealth, every node/.style={font=\small}]
+  \begin{scope}
+    \draw[->] (-3.2,0) -- (3.4,0) node[right] {$x/R$};
+    \draw[->] (0,0) -- (0,2.0) node[above] {$B$};
+    \draw[dashed, gray, domain=-3:3, samples=80] plot (\x, {1/(1+(\x+0.25)^2)^1.5});
+    \draw[dashed, gray, domain=-3:3, samples=80] plot (\x, {1/(1+(\x-0.25)^2)^1.5});
+    \draw[thick, domain=-3:3, samples=100] plot (\x, {1/(1+(\x+0.25)^2)^1.5 + 1/(1+(\x-0.25)^2)^1.5});
+    \node at (0,-0.35) {$e = R/2 < e_0$};
+  \end{scope}
+  \begin{scope}[xshift=9cm]
+    \draw[->] (-3.2,0) -- (3.4,0) node[right] {$x/R$};
+    \draw[->] (0,0) -- (0,2.0) node[above] {$B$};
+    \draw[dashed, gray, domain=-3:3, samples=80] plot (\x, {1/(1+(\x+0.5)^2)^1.5});
+    \draw[dashed, gray, domain=-3:3, samples=80] plot (\x, {1/(1+(\x-0.5)^2)^1.5});
+    \draw[thick, domain=-3:3, samples=100] plot (\x, {1/(1+(\x+0.5)^2)^1.5 + 1/(1+(\x-0.5)^2)^1.5});
+    \node at (0,-0.35) {$e = e_0 = R$};
+  \end{scope}
+  \begin{scope}[xshift=18cm]
+    \draw[->] (-3.2,0) -- (3.4,0) node[right] {$x/R$};
+    \draw[->] (0,0) -- (0,2.0) node[above] {$B$};
+    \draw[dashed, gray, domain=-3:3, samples=80] plot (\x, {1/(1+(\x+1)^2)^1.5});
+    \draw[dashed, gray, domain=-3:3, samples=80] plot (\x, {1/(1+(\x-1)^2)^1.5});
+    \draw[thick, domain=-3:3, samples=100] plot (\x, {1/(1+(\x+1)^2)^1.5 + 1/(1+(\x-1)^2)^1.5});
+    \node at (0,-0.35) {$e = 2R > e_0$};
+  \end{scope}
+\end{tikzpicture}
+\end{center}
+```
+
+**Intérêt du cas $e = e_0$ :** le champ est quasi **uniforme** dans une zone étendue autour du centre $O$ ; c'est le montage de Helmholtz, utilisé pour créer un champ connu et uniforme (ici, au voisinage de la boussole).
+
+\q{I.C.2}{Justifier sans calcul, à partir des points d'inflexion de $B_{\text{spire}}$, que $B_{\text{bobines}}$ est constant à l'ordre 3 au voisinage de 0 pour $e = e_0$.}
+
+- $B_{\text{bobines}}$ est une fonction **paire** de $x$ (symétrie du montage) : ses dérivées d'ordre impair (1 et 3) sont nulles en $x = 0$.
+- Sa dérivée seconde en $0$ vaut $\dfrac{\mu_0 N I}{2R}\left[f''\!\left(\tfrac{e}{2R}\right) + f''\!\left(-\tfrac{e}{2R}\right)\right]\dfrac{1}{R^2} = \dfrac{\mu_0 N I}{R^3}\,f''\!\left(\tfrac{e}{2R}\right)$.
+- Si l'on place chaque bobine de sorte que le centre $O$ soit au **point d'inflexion** du profil de chaque spire, alors $f''(e_0/2R) = 0$ et la dérivée seconde s'annule aussi.
+
+Le développement de Taylor de $B_{\text{bobines}}$ en $0$ est alors $B(0) + 0\cdot x + 0\cdot x^2 + 0\cdot x^3 + O(x^4)$ : le champ est constant à l'ordre 3. Au voisinage de 0, les variations de $B_{\text{bobines}}$ sont en $x^4$ (plateau très plat).
+
+*Pour information* : $f''(u) \propto 4u^2 - 1$ s'annule pour $u = 1/2$, d'où $e_0/2 = R/2$, soit $e_0 = R$ (distance entre les bobines égale à leur rayon : condition de Helmholtz).
+
+### I.D à I.F — Mesure de $B_H$ par la boussole {.unnumbered}
+
+\q{I.D}{Position stable de l'aiguille de moment $\vec{M}$ placée en $O$, où le champ total vaut $B = B_{\text{bobines}}(0) + B_H$.}
+
+Le couple $\vec{\Gamma} = \vec{M}\wedge\vec{B}$ s'annule pour $\vec{M}$ colinéaire à $\vec{B}$. L'énergie potentielle $E_p = -\vec{M}\cdot\vec{B}$ est minimale lorsque $\vec{M}$ est **parallèle et de même sens** que $\vec{B}$ : c'est la position d'équilibre stable (la position antiparallèle est instable). L'aiguille s'aligne sur l'axe des bobines.
+
+\q{I.E}{Période $T_1$ des petites oscillations en fonction de $J$, $B$ et $M$ ; hypothèses.}
+
+Soit $\theta$ l'angle entre $\vec{M}$ et $\vec{B}$. Le théorème du moment cinétique par rapport à l'axe de rotation (vertical) de l'aiguille donne :
+$$
+J\ddot{\theta} = -MB\sin\theta \simeq -MB\,\theta \qquad\Rightarrow\qquad T_1 = 2\pi\sqrt{\frac{J}{MB}} = 2\pi\sqrt{\frac{J}{M\left(B_{\text{bobines}}(0) + B_H\right)}}.
+$$
+*Hypothèses :* petites oscillations ($\sin\theta \simeq \theta$) ; liaison pivot parfaite (pas de frottement, donc pas d'amortissement) ; axe de rotation vertical, de sorte que seule la composante horizontale du champ intervient (la composante verticale de $\vec{B}$ terrestre produit un couple compensé par la liaison) ; champ uniforme à l'échelle de l'aiguille (ce que garantit justement le montage de Helmholtz) ; aiguille assimilée à un dipôle rigide qui ne perturbe pas les bobines.
+
+\q{I.F}{Courant inversé dans les bobines : période $T_2$ ; exprimer $B_H$ en fonction de $T_1/T_2$ ; intérêt.}
+
+Le champ total devient $\left|B_{\text{bobines}}(0) - B_H\right|$ (l'aiguille se réoriente si besoin pour être stable), donc
+$$
+T_2 = 2\pi\sqrt{\frac{J}{M\left|B_{\text{bobines}}(0) - B_H\right|}}
+\qquad\Rightarrow\qquad
+\left(\frac{T_1}{T_2}\right)^2 = \frac{\left|B_{\text{bobines}}(0) - B_H\right|}{B_{\text{bobines}}(0) + B_H}.
+$$
+Dans le cas usuel où l'on choisit $B_{\text{bobines}}(0) > B_H$ (l'aiguille se retourne lors de l'inversion) :
+$$
+B_H = B_{\text{bobines}}(0)\,\frac{1 - (T_1/T_2)^2}{1 + (T_1/T_2)^2} = B_{\text{bobines}}(0)\,\frac{T_2^2 - T_1^2}{T_2^2 + T_1^2},
+$$
+avec, pour $e = e_0 = R$, $B_{\text{bobines}}(0) = \dfrac{\mu_0 N I}{R}\left(\dfrac{4}{5}\right)^{3/2} = \dfrac{8}{5\sqrt{5}}\,\dfrac{\mu_0 N I}{R}$, calculable à partir de $N$, $I$, $R$.
+
+(Si au contraire $B_{\text{bobines}}(0) < B_H$, on obtient $B_H = B_{\text{bobines}}(0)\,\dfrac{T_2^2 + T_1^2}{T_2^2 - T_1^2}$.)
+
+**Intérêt :** le rapport $T_1/T_2$ élimine $J$ et $M$, grandeurs propres à l'aiguille, difficiles à mesurer. Seules deux mesures de période (faciles et précises, en comptant plusieurs oscillations) et la connaissance du champ des bobines sont nécessaires.
+
+## Partie II — Nécessité d'un mécanisme d'entretien : l'effet dynamo {.unnumbered}
+
+### II.A — Limites des explications historiques {.unnumbered}
+
+\q{II.A.1}{Arguments de l'annexe 1 réfutant l'hypothèse d'un super-aimant permanent au centre de la Terre.}
+
+- **Température :** le noyau est à $4000$ °C (noyau externe) et plus de $6000$ °C (graine), bien au-delà des températures de Curie des matériaux ferromagnétiques ($\lesssim 800$ °C) : aucune aimantation permanente ne peut y subsister.
+- **Inversions de polarité :** le champ géomagnétique s'est inversé de nombreuses fois (échelle des polarités de l'annexe, plusieurs inversions par million d'années), ce qui est incompatible avec un aimant permanent figé.
+- (Le noyau externe est **liquide** et brassé par la convection : il ne peut pas constituer un aimant rigide.)
+
+\q{II.A.2.a}{Entité possédant un moment magnétique proportionnel à son moment cinétique ; facteur de proportionnalité.}
+
+L'**électron** (et plus généralement les particules chargées en rotation : atomes…). Modèle classique : électron sur une orbite circulaire de rayon $r$ à la vitesse $v$. Il équivaut à une spire parcourue par le courant $I = -\dfrac{e v}{2\pi r}$, de moment magnétique $\vec{\mathcal{M}} = I\pi r^2\,\vec{n} = -\dfrac{e v r}{2}\,\vec{n}$. Son moment cinétique est $\vec{L} = m_e r v\,\vec{n}$. D'où
+$$
+\vec{\mathcal{M}} = \gamma\,\vec{L}, \qquad \gamma = -\frac{e}{2m_e} \quad (\text{rapport gyromagnétique orbital}).
+$$
+Pour le spin de l'électron, on a la même relation avec un facteur de Landé $g \simeq 2$ : $\vec{\mathcal{M}}_s = -g\,\dfrac{e}{2m_e}\vec{S}$.
+
+\q{II.A.2.b}{Moment magnétique d'un atome de numéro $Z$ dont les électrons, répartis uniformément dans une boule de rayon $a$, tournent à $\vec{\omega} = \omega\vec{u}_z$.}
+
+La densité de charge électronique est $\rho = -\dfrac{3Ze}{4\pi a^3}$. Un élément de volume $\mathrm{d}\tau$, à la distance $r\sin\theta$ de l'axe, décrit un cercle à la pulsation $\omega$ : il équivaut à une spire de courant $\mathrm{d}I = \rho\,\mathrm{d}\tau\,\dfrac{\omega}{2\pi}$ et de surface $\pi r^2\sin^2\theta$, donc $\mathrm{d}\mathcal{M} = \dfrac{\rho\,\omega}{2}\,r^2\sin^2\theta\,\mathrm{d}\tau$. En intégrant ($\mathrm{d}\tau = r^2\sin\theta\,\mathrm{d}r\,\mathrm{d}\theta\,\mathrm{d}\varphi$) :
+$$
+\mathcal{M} = \frac{\rho\,\omega}{2}\int_0^a r^4\,\mathrm{d}r\int_0^\pi\sin^3\theta\,\mathrm{d}\theta\int_0^{2\pi}\mathrm{d}\varphi = \frac{\rho\,\omega}{2}\cdot\frac{a^5}{5}\cdot\frac{4}{3}\cdot 2\pi
+\qquad\Rightarrow\qquad
+\vec{\mathcal{M}} = -\frac{Z e a^2}{5}\,\omega\,\vec{u}_z.
+$$
+Le noyau, ponctuel et sur l'axe, ne contribue pas. On vérifie la proportionnalité au moment cinétique des électrons $\vec{L} = \dfrac{2}{5}(Zm_e)a^2\vec{\omega}$ : $\vec{\mathcal{M}} = -\dfrac{e}{2m_e}\vec{L}$.
+
+\q{II.A.2.c}{Ce modèle s'applique-t-il à la Terre ? Élément de l'annexe 1 qui le réfute.}
+
+Non : ce modèle repose sur la rotation de **charges non compensées** (le noyau atomique, ponctuel, ne contribuait pas). La Terre est globalement neutre et ses charges positives et négatives tournent ensemble : leurs contributions se compensent. De plus, si $\vec{\mathcal{M}}$ était proportionnel au moment cinétique terrestre, sa direction serait fixée par le sens de rotation de la Terre, qui ne change pas : les **inversions de polarité** du champ (annexe 1) réfutent donc cette hypothèse.
+
+### II.B — L'effet dynamo {.unnumbered}
+
+\q{II.B.1.a}{Champ $\vec{E}'$ dans le référentiel propre $\mathfrak{R}'$ de la particule de fluide (cas non relativiste).}
+
+La force de Lorentz subie par une charge $q$ est invariante par changement de référentiel galiléen (cas non relativiste). Dans $\mathfrak{R}'$, la particule est immobile et subit $q\vec{E}'$ ; dans $\mathfrak{R}$ elle subit $q(\vec{E} + \vec{v}\wedge\vec{B})$. D'où
+$$
+\vec{E}' = \vec{E} + \vec{v}\wedge\vec{B} \qquad(\text{et } \vec{B}' = \vec{B}).
+$$
+
+\q{II.B.1.b}{Relation entre $\vec{j}'$ et $\vec{j}$ pour un fluide non chargé.}
+
+$\vec{j} = \vec{j}' + \rho_e\vec{v}$ (le courant de convection des charges entraînées s'ajoute). Pour un fluide non chargé ($\rho_e = 0$) : $\vec{j} = \vec{j}'$.
+
+\q{II.B.1.c}{Loi d'Ohm dans $\mathfrak{R}$.}
+
+$\vec{j} = \vec{j}' = \sigma\vec{E}' = \sigma\left(\vec{E} + \vec{v}\wedge\vec{B}\right)$.
+
+\q{II.B.2.a}{Justifier par une équation de Maxwell que $\vec{E}_{M0} = \vec{v}\wedge\vec{B}_0$ est la source d'un champ induit $\vec{B}_1$.}
+
+Le champ électromoteur met les charges en mouvement : il crée des courants induits $\vec{j}_1 = \sigma\vec{E}_{M0} = \sigma\,\vec{v}\wedge\vec{B}_0$. D'après l'équation de Maxwell-Ampère (en régime lentement variable, voir III.A), $\overrightarrow{\operatorname{rot}}\,\vec{B}_1 = \mu_0\vec{j}_1$ : ces courants créent un champ magnétique induit $\vec{B}_1$.
+
+\q{II.B.2.b}{Montrer que $B_1$ est proportionnel à $B_0$ (coefficient $r_m$), en ordre de grandeur.}
+
+En ordre de grandeur, $\left\|\overrightarrow{\operatorname{rot}}\,\vec{B}_1\right\| \sim \dfrac{B_1}{L}$ et $j_1 \sim \sigma U B_0$, donc
+$$
+\frac{B_1}{L} \sim \mu_0\sigma U B_0 \qquad\Rightarrow\qquad B_1 \sim r_m B_0, \qquad r_m = \mu_0\sigma U L.
+$$
+
+\q{II.B.2.c}{Expression de $r_m$ en fonction de $L$, $U$ et $\lambda = 1/(\mu_0\sigma)$ ; signification ; variation avec $\sigma$.}
+
+$r_m = \dfrac{UL}{\lambda}$. C'est un **nombre de Reynolds magnétique** : $\lambda$ est une diffusivité (en $\text{m}^2\cdot\text{s}^{-1}$), et $r_m$ compare le transport du champ par l'écoulement (advection, induction) à sa diffusion (dissipation ohmique). $r_m$ croît avec $\sigma$ : meilleur est le conducteur, plus les courants induits sont intenses et plus le champ induit est grand devant le champ inducteur.
+
+### II.B.3 — Bouclage et instabilité dynamo {.unnumbered}
+
+\q{II.B.3.a}{Champ $\vec{B}_2$ induit par $\vec{B}_1$, en fonction de $\vec{B}_1$ puis de $\vec{B}_0$.}
+
+Le même raisonnement (même géométrie) donne $\vec{B}_2 = \gamma r_m\vec{B}_1 = (\gamma r_m)^2\vec{B}_0$.
+
+\q{II.B.3.b}{Champ total $\vec{B}$ en fonction de $\vec{B}_0$, $r_m$ et $\gamma$.}
+
+Par itération, $\vec{B}_n = (\gamma r_m)^n\vec{B}_0$, et
+$$
+\vec{B} = \sum_{n\geq 0}\vec{B}_n = \vec{B}_0\sum_{n\geq 0}(\gamma r_m)^n = \frac{\vec{B}_0}{1 - \gamma r_m} \qquad \text{si } |\gamma r_m| < 1.
+$$
+
+\q{II.B.3.c}{Analogie avec le laser : condition d'instabilité dynamo et champ spontané.}
+
+Comme un laser (milieu amplificateur bouclé par une cavité), le système est un **amplificateur bouclé** de gain $\gamma r_m$. Pour $\gamma r_m < 1$, le champ reste proportionnel à $B_0$ et s'annule avec lui. Lorsque $\gamma r_m \to 1$, la réponse diverge ; pour $\gamma r_m \geq 1$, la série diverge : une perturbation infinitésimale de champ (fluctuation, « bruit », comme l'émission spontanée pour le laser) est amplifiée sans qu'aucun champ extérieur soit nécessaire. C'est l'**instabilité dynamo** : un champ macroscopique peut apparaître spontanément si
+$$
+r_m \geq r_{m,c} = \frac{1}{\gamma}\quad(\gamma > 0),
+$$
+soit $\mu_0\sigma U L$ assez grand : conducteur très bon, écoulement rapide et de grande taille (d'où la facilité pour un noyau planétaire, la difficulté au laboratoire). Le champ ne croît pas indéfiniment : il est saturé par des effets non linéaires (la force de Laplace freine l'écoulement), comme le gain d'un laser est saturé par l'intensité. Il faut aussi $\gamma > 0$ : le champ induit doit renforcer le champ initial, d'où l'importance de la géométrie.
+
+### II.C — La dynamo de Bullard {.unnumbered}
+
+\q{II.C.1}{Direction de $\vec{B}_1$ créé par le courant induit dans chacune des géométries ; seule B permet une dynamo.}
+
+- **Géométrie A :** le circuit (rayon du disque, fil, axe) est entièrement contenu dans un plan $\Pi$ contenant l'axe $(Oz)$. $\Pi$ est un plan de symétrie de la distribution de courant : en un point de $\Pi$, $\vec{B}_1$ est perpendiculaire à $\Pi$ (donc horizontal, sans composante selon $\vec{u}_z$). Plus généralement, pour deux points symétriques par rapport à $\Pi$, les composantes $B_{1z}$ sont opposées : le flux de $\vec{B}_1$ à travers le disque est **nul**. Le champ induit ne peut pas renforcer $\vec{B}_0 = B_0\vec{u}_z$ : pas d'effet dynamo.
+- **Géométrie B :** le fil fait le tour de l'axe en formant une boucle quasi circulaire coaxiale au disque : il crée, au niveau du disque, un champ $\vec{B}_1$ **dirigé selon l'axe** $(Oz)$, comme une spire. Selon le sens d'enroulement et le sens de rotation, $\vec{B}_1$ peut renforcer $\vec{B}_0$ : un effet dynamo est possible.
+
+\q{II.C.2}{Pour $d \ll a \ll b$, justifier que $\vec{B}_1(P,t) = B_1(t)\,\vec{u}_z$ sur le disque.}
+
+Le disque est très proche du plan de la spire ($d \ll a$) et de rayon très petit devant celui de la spire ($a \ll b$) : il est situé au voisinage immédiat du centre de la spire. Le champ d'une spire varie sur une échelle de longueur $b$ ; au voisinage de son centre (à des distances $\ll b$), il est quasi uniforme et égal au champ au centre, dirigé selon l'axe : $\vec{B}_1 \simeq \dfrac{\mu_0 i_1}{2b}\,\vec{u}_z$, uniforme sur le disque.
+
+\q{II.C.3.a}{Exprimer $i_1$ en fonction de $M$ et $B_1$ ; montrer qu'en régime stationnaire $B_1 = \frac{1}{2\pi}\frac{M\Omega}{R}B_0$.}
+
+Le champ $\vec{B}_1$ étant uniforme sur le disque, son flux vaut $\phi = \pi a^2 B_1 = M i_1$, d'où
+$$
+i_1 = \frac{\pi a^2 B_1}{M}.
+$$
+En régime stationnaire, pas de f.é.m. d'auto-induction : la loi des mailles donne $e_1 = R i_1$, soit $\Omega B_0\dfrac{a^2}{2} = R\,\dfrac{\pi a^2 B_1}{M}$, d'où
+$$
+B_1 = \frac{1}{2\pi}\,\frac{M\Omega}{R}\,B_0.
+$$
+
+\q{II.C.3.b}{Condition de démarrage de l'effet dynamo.}
+
+Par identification avec $B_1 = \gamma r_m B_0$ (II.B.3) : $\gamma r_m = \dfrac{M\Omega}{2\pi R}$. La condition d'instabilité $\gamma r_m \geq 1$ s'écrit
+$$
+\Omega \geq \Omega_c = \frac{2\pi R}{M},
+$$
+avec $M > 0$ : le sens de rotation doit être adapté au sens d'enroulement du fil (sinon le champ induit s'oppose au champ inducteur).
+
+\q{II.C.4}{Sans champ extérieur : f.é.m. $e(t)$ en fonction de $B$, puis du courant total $i(t)$.}
+
+Par analogie avec (II.4), le champ total $\vec{B} = B\vec{u}_z$ uniforme sur le disque crée la f.é.m. $e = \Omega B\dfrac{a^2}{2}$. Ce champ étant créé par la spire seule, son flux à travers le disque est $\pi a^2 B = M i$, d'où
+$$
+e(t) = \frac{M\Omega}{2\pi}\,i(t).
+$$
+
+\q{II.C.5}{Schéma électrique équivalent ; équation différentielle pour $i(t)$ ; condition de démarrage.}
+
+```{=latex}
+\noindent
+\begin{minipage}[t]{0.58\linewidth}
+\vspace{0pt}
+Le disque en rotation se comporte comme un générateur de f.é.m. $e = \dfrac{M\Omega}{2\pi}\,i$, en série avec la résistance $R$ et l'inductance propre $L$ de la spire. La loi des mailles donne :
+\[
+L\,\frac{\mathrm{d}i}{\mathrm{d}t} + R\,i = \frac{M\Omega}{2\pi}\,i
+\quad\Rightarrow\quad
+L\,\frac{\mathrm{d}i}{\mathrm{d}t} = \left(\frac{M\Omega}{2\pi} - R\right)i.
+\]
+À $\Omega$ constant, $i(t) = i(0)\exp\left[\left(\dfrac{M\Omega}{2\pi} - R\right)\dfrac{t}{L}\right]$ : une perturbation de courant (et donc de champ) est \textbf{amplifiée} si $\dfrac{M\Omega}{2\pi} > R$, soit $\Omega > \dfrac{2\pi R}{M}$. On retrouve la condition de II.C.3.
+\end{minipage}
+\hfill
+\begin{minipage}[t]{0.38\linewidth}
+\vspace{0pt}
+\begin{center}
+\begin{circuitikz}[scale=0.85, transform shape, every node/.style={font=\small}]
+  \draw (0,0) to[V, l={$e = \frac{M\Omega}{2\pi}\,i$}] (0,3)
+        to[R, l=$R$] (3,3)
+        to[cute inductor, l=$L$] (3,0) -- (0,0);
+  \draw[->] (1.2,0) -- (1.8,0);
+  \node[below] at (1.5,0) {$i$};
+\end{circuitikz}
+\end{center}
+\end{minipage}
+```
+
+\q{II.C.6}{Quel effet n'a pas été pris en compte ?}
+
+La **rétroaction mécanique** : le courant radial $i$ dans le disque, plongé dans le champ $\vec{B}$, subit des forces de Laplace dont le moment freine la rotation (loi de Lenz). On a jusqu'ici supposé $\Omega$ imposé et constant.
+
+*Autre piste : l'auto-induction du disque.* Les courants qui circulent dans le disque créent eux-mêmes un champ magnétique, qui s'ajoute à celui de la spire. Seul le champ de la spire a été pris en compte dans le flux $\pi a^2 B = M i$. Pour un courant purement radial et réparti de façon axisymétrique, ce champ propre serait orthoradial (tout plan contenant l'axe est plan de symétrie), sans composante $B_z$ : il ne modifierait pas la f.é.m. $e = \Omega B a^2/2$. Mais en pratique :
+
+- le courant entre et sort par des contacts ponctuels (axe et balai), et la répartition n'est pas axisymétrique ;
+- la rotation du disque dans $\vec{B}$ y induit aussi des courants de Foucault, dont la partie orthoradiale crée un champ axial.
+
+Ces effets ajoutent au circuit une inductance propre (celle du disque et de ses connexions), qui s'additionne à $L$ dans l'équation électrique, et ils corrigent légèrement le flux à travers le disque. On les néglige devant l'effet de la spire.
+
+\q{II.C.7}{Disque entraîné par un couple moteur constant $\Gamma_m$ : établir le système (II.6).}
+
+Sur un élément $\mathrm{d}r$ du rayon conducteur du disque parcouru par $i$ (de l'axe vers la périphérie), la force de Laplace est $\mathrm{d}\vec{F} = i\,\mathrm{d}r\,\vec{u}_r\wedge B\vec{u}_z = -iB\,\mathrm{d}r\,\vec{u}_\theta$. Son moment par rapport à l'axe vaut $-iBr\,\mathrm{d}r$ ; en intégrant de $0$ à $a$ :
+$$
+\Gamma_L = -\frac{i B a^2}{2} = -\frac{M i^2}{2\pi} \qquad (\text{avec } \pi a^2 B = M i).
+$$
+Le théorème du moment cinétique pour le disque (liaison parfaite) donne $J\dfrac{\mathrm{d}\Omega}{\mathrm{d}t} = \Gamma_m - \dfrac{M i^2}{2\pi}$ ; avec l'équation électrique de II.C.5 :
+$$
+\begin{cases}
+J\,\dfrac{\mathrm{d}\Omega}{\mathrm{d}t} = \Gamma_m - \dfrac{M i^2}{2\pi} \\[3mm]
+L\,\dfrac{\mathrm{d}i}{\mathrm{d}t} = \left(\dfrac{M\Omega}{2\pi} - R\right)i
+\end{cases}
+$$
+Le système est non linéaire (termes $i^2$ et $\Omega i$).
+
+\q{II.C.8}{Expressions de $i$ et $\Omega$ en régime stationnaire.}
+
+- $\dfrac{\mathrm{d}i}{\mathrm{d}t} = 0$ avec $i \neq 0$ impose $\Omega_\infty = \dfrac{2\pi R}{M}$ : la vitesse se fixe exactement au seuil, quel que soit $\Gamma_m$.
+- $\dfrac{\mathrm{d}\Omega}{\mathrm{d}t} = 0$ impose $i_\infty^2 = \dfrac{2\pi\Gamma_m}{M}$, soit $i_\infty = \pm\sqrt{\dfrac{2\pi\Gamma_m}{M}}$.
+
+(La solution $i = 0$ n'est pas stationnaire en présence de $\Gamma_m$ : $\Omega$ croîtrait indéfiniment jusqu'à dépasser le seuil, où le courant est amplifié.)
+
+\q{II.C.9}{Bilan énergétique entre $t$ et $t + \mathrm{d}t$ ; signification des termes.}
+
+On multiplie la première équation par $\Omega$, la seconde par $i$, et on somme :
+$$
+J\Omega\,\frac{\mathrm{d}\Omega}{\mathrm{d}t} = \Gamma_m\Omega - \frac{M\Omega i^2}{2\pi}, \qquad L\,i\,\frac{\mathrm{d}i}{\mathrm{d}t} = \frac{M\Omega i^2}{2\pi} - R\,i^2
+\quad\Rightarrow\quad
+\mathrm{d}\left(\frac{1}{2}J\Omega^2 + \frac{1}{2}L i^2\right) = \Gamma_m\Omega\,\mathrm{d}t - R\,i^2\,\mathrm{d}t.
+$$
+- $\frac{1}{2}J\Omega^2$ : énergie cinétique de rotation du disque ; $\frac{1}{2}Li^2$ : énergie magnétique stockée.
+- $\Gamma_m\Omega\,\mathrm{d}t$ : travail fourni par le moteur ; $R\,i^2\,\mathrm{d}t$ : énergie dissipée par effet Joule.
+- Le terme de couplage $\frac{M\Omega i^2}{2\pi}$ (puissance des forces de Laplace, opposée à la puissance de la f.é.m. induite) disparaît du bilan global : il décrit la **conversion** d'énergie mécanique en énergie électromagnétique (couplage électromécanique parfait).
+
+\q{II.C.10}{Bilan en régime stationnaire ; propriété essentielle de l'effet dynamo.}
+
+En régime stationnaire, $\Gamma_m\Omega_\infty = R\,i_\infty^2$ : toute la puissance mécanique fournie est convertie puis dissipée par effet Joule. La dynamo est un **convertisseur d'énergie mécanique en énergie électromagnétique** : un champ ne peut être entretenu qu'au prix d'un apport continu d'énergie mécanique (moteur ici ; convection du noyau pour la Terre), qui compense les pertes ohmiques.
+
+\q{II.C.11}{Plusieurs solutions stationnaires ; lien avec le champ terrestre.}
+
+Le système (II.6) est invariant par $i \to -i$ : il admet deux solutions stationnaires opposées $\pm i_\infty$ (même $\Omega_\infty$), correspondant à deux champs $\pm B$ de même norme. Les deux **polarités** sont donc également possibles ; c'est la perturbation initiale qui choisit l'une d'elles. Cela rejoint l'observation de champs géomagnétiques de polarités opposées au cours de l'histoire terrestre (annexe 1). Les inversions elles-mêmes, transitions entre ces deux états, ne sont pas décrites par ce modèle simple : il faut des fluctuations (turbulence) ou des modèles plus riches (dynamos couplées), voir l'expérience VKS2.
+
+### II.D — L'expérience VKS2 {.unnumbered}
+
+\q{II.D.1}{Pourquoi le sodium ? Problèmes de sécurité.}
+
+Le sodium est « le meilleur fluide conducteur de l'électricité autour de 100-150 °C » ($\sigma_{\text{Na}} \simeq 10^7\ \text{S}\cdot\text{m}^{-1}$) : sa forte conductivité augmente $R_m = \mu_0\sigma UL$ et rend le seuil dynamo accessible au laboratoire. Il est liquide dès $98$ °C, peu dense et peu visqueux. Mais il réagit violemment avec l'eau (dégagement de dihydrogène, explosion) et s'enflamme à l'air : d'où les problèmes de sécurité évoqués.
+
+\q{II.D.2}{Caractéristiques du champ terrestre mises en évidence par VKS2.}
+
+- La génération **spontanée** d'un champ magnétique auto-entretenu par l'écoulement, sans champ extérieur (effet dynamo), au-delà d'un seuil $R_{m,c} \simeq 30$.
+- Des **renversements erratiques** de polarité, dont la durée est très courte devant la durée moyenne d'une période de polarité donnée, comme pour la Terre (lorsque les turbines tournent à des vitesses différentes, ce qui imite la rotation globale).
+
+\q{II.D.3}{Ordre de grandeur du nombre de Reynolds ; comparaison au texte.}
+
+$R_e = \dfrac{UL}{\nu}$ avec $\nu = \dfrac{\eta_{\text{Na}}}{\rho_{\text{Na}}} = \dfrac{6\cdot 10^{-4}}{900} \simeq 7\cdot 10^{-7}\ \text{m}^2\cdot\text{s}^{-1}$. Turbines de rayon $\sim 0{,}3\ \text{m}$ tournant à $\sim 1000$ tr/min ($\omega \simeq 100\ \text{rad}\cdot\text{s}^{-1}$) : $U \sim 10$ à $30\ \text{m}\cdot\text{s}^{-1}$, $L \sim 0{,}3\ \text{m}$. D'où
+$$
+R_e \sim \frac{20\times 0{,}3}{7\cdot 10^{-7}} \sim 10^7,
+$$
+en accord avec la valeur $10^6$–$10^7$ donnée dans le texte : l'écoulement est pleinement turbulent.
+
+\q{II.D.4}{Montrer que le nombre de Reynolds magnétique de l'encadré est le facteur $r_m$ de II.B.2.}
+
+L'encadré définit $R_m = \mu_0\sigma UL$ (le symbole $\mu_0$ manque dans le texte : « où [$\mu_0$] correspond à la perméabilité magnétique »). C'est exactement $r_m = \mu_0\sigma UL = UL/\lambda$ obtenu en II.B.2. Ordre de grandeur : $\mu_0\sigma_{\text{Na}} \simeq 13\ \text{s}\cdot\text{m}^{-2}$ et $UL \sim 4\ \text{m}^2\cdot\text{s}^{-1}$ donnent $R_m \sim 50$, conforme au texte.
+
+## Partie III — Relations fondamentales de la magnétohydrodynamique {.unnumbered}
+
+\q{III.A}{Équations de Maxwell dans le fluide ; montrer que le courant de déplacement est négligeable (écoulement non relativiste).}
+
+$$
+\operatorname{div}\vec{E} = \frac{\rho_e}{\varepsilon_0}, \qquad \operatorname{div}\vec{B} = 0, \qquad \overrightarrow{\operatorname{rot}}\,\vec{E} = -\frac{\partial\vec{B}}{\partial t}, \qquad \overrightarrow{\operatorname{rot}}\,\vec{B} = \mu_0\vec{j} + \mu_0\varepsilon_0\frac{\partial\vec{E}}{\partial t}.
+$$
+Soient $L$ et $U$ les échelles de longueur et de vitesse de l'écoulement, et $T = L/U$ l'échelle de temps. Le champ électrique est essentiellement le champ électromoteur : $E \sim UB$ (cohérent avec Maxwell-Faraday : $E/L \sim B/T$). Alors
+$$
+\frac{\left\|\mu_0\varepsilon_0\,\partial\vec{E}/\partial t\right\|}{\left\|\overrightarrow{\operatorname{rot}}\,\vec{B}\right\|} \sim \frac{UB/(c^2 T)}{B/L} = \frac{U^2}{c^2} \ll 1.
+$$
+Le courant de déplacement est négligeable : $\overrightarrow{\operatorname{rot}}\,\vec{B} = \mu_0\vec{j}$.
+
+\q{III.B.1}{Loi d'évolution de $\rho_e$ dans le conducteur.}
+
+$\operatorname{div}\vec{j} = \sigma\left(\operatorname{div}\vec{E} + \operatorname{div}(\vec{v}\wedge\vec{B})\right) = \sigma\left(\dfrac{\rho_e}{\varepsilon_0} + \operatorname{div}(\vec{v}\wedge\vec{B})\right)$. La conservation de la charge donne alors
+$$
+\frac{\partial\rho_e}{\partial t} + \frac{\sigma}{\varepsilon_0}\,\rho_e = -\sigma\operatorname{div}\left(\vec{v}\wedge\vec{B}\right).
+$$
+
+\q{III.B.2}{Conducteur au repos : évolution de $\rho_e$ ; temps caractéristique pour le cuivre.}
+
+Pour $\vec{v} = \vec{0}$ : $\rho_e(t) = \rho_e(0)\,e^{-t/\tau}$ avec $\tau = \dfrac{\varepsilon_0}{\sigma}$. Pour le cuivre, $\tau = \dfrac{8{,}85\cdot 10^{-12}}{59{,}6\cdot 10^6} \simeq 1{,}5\cdot 10^{-19}\ \text{s}$. Toute charge volumique disparaît quasi instantanément : un conducteur au repos est localement neutre. (Ce temps est même inférieur au temps entre collisions des électrons, $\sim 10^{-14}\ \text{s}$ : la loi d'Ohm n'est plus valable à cette échelle, mais la conclusion — neutralité très rapide — demeure.)
+
+\q{III.B.3}{Conducteur en mouvement : $\rho_e$ en régime stationnaire ; nécessité d'une charge non nulle ; ordre de grandeur pour VKS2.}
+
+En régime stationnaire : $\rho_e = -\varepsilon_0\operatorname{div}\left(\vec{v}\wedge\vec{B}\right)$. Elle est nécessaire car, d'après $\overrightarrow{\operatorname{rot}}\,\vec{B} = \mu_0\vec{j}$, on a $\operatorname{div}\vec{j} = 0$ ; si $\operatorname{div}(\vec{v}\wedge\vec{B}) \neq 0$, le champ électrique doit compenser en ayant une divergence non nulle, ce qui exige une charge volumique.
+
+Ordre de grandeur (VKS2) : $U \sim 20\ \text{m}\cdot\text{s}^{-1}$, $B \sim 50\ \text{G} = 5\cdot 10^{-3}\ \text{T}$, $L \sim 0{,}3\ \text{m}$ :
+$$
+\rho_e \sim \varepsilon_0\,\frac{UB}{L} \sim \frac{8{,}85\cdot 10^{-12}\times 20\times 5\cdot 10^{-3}}{0{,}3} \sim 3\cdot 10^{-12}\ \text{C}\cdot\text{m}^{-3}.
+$$
+Densité de charges libres du sodium (un électron libre par atome) : $n e = \dfrac{\rho_{\text{Na}}\,\mathcal{N}_A}{M_{\text{Na}}}\,e = \dfrac{900\times 6{,}02\cdot 10^{23}}{23{,}0\cdot 10^{-3}}\times 1{,}6\cdot 10^{-19} \simeq 4\cdot 10^9\ \text{C}\cdot\text{m}^{-3}$. Le rapport est $\sim 10^{-21}$ : la charge volumique est infime, le fluide reste quasi neutre.
+
+\q{III.C}{Divergence de $\vec{j}$ ; en régime stationnaire, équation liant $V$ et $\rho_e$.}
+
+En régime stationnaire, $\vec{E} = -\overrightarrow{\operatorname{grad}}\,V$ et $\operatorname{div}\vec{j} = 0$, d'où
+$$
+\operatorname{div}\vec{j} = \sigma\left(-\Delta V + \operatorname{div}(\vec{v}\wedge\vec{B})\right) = 0
+\qquad\Rightarrow\qquad
+\Delta V = \operatorname{div}\left(\vec{v}\wedge\vec{B}\right) = -\frac{\rho_e}{\varepsilon_0}.
+$$
+On retrouve l'équation de Poisson $\Delta V + \dfrac{\rho_e}{\varepsilon_0} = 0$, où la charge $\rho_e$ est imposée par l'écoulement.
+
+\q{III.D}{Établir l'équation d'induction ; interpréter ses deux termes ; nom de $\lambda$.}
+
+On prend le rotationnel de la loi d'Ohm $\dfrac{\vec{j}}{\sigma} = \vec{E} + \vec{v}\wedge\vec{B}$ ($\sigma$ uniforme), avec $\vec{j} = \dfrac{1}{\mu_0}\overrightarrow{\operatorname{rot}}\,\vec{B}$ et $\overrightarrow{\operatorname{rot}}\,\vec{E} = -\dfrac{\partial\vec{B}}{\partial t}$ :
+$$
+\frac{1}{\mu_0\sigma}\,\overrightarrow{\operatorname{rot}}\left(\overrightarrow{\operatorname{rot}}\,\vec{B}\right) = -\frac{\partial\vec{B}}{\partial t} + \overrightarrow{\operatorname{rot}}\left(\vec{v}\wedge\vec{B}\right).
+$$
+Or $\overrightarrow{\operatorname{rot}}\left(\overrightarrow{\operatorname{rot}}\,\vec{B}\right) = \overrightarrow{\operatorname{grad}}\left(\operatorname{div}\vec{B}\right) - \Delta\vec{B} = -\Delta\vec{B}$, d'où
+$$
+\frac{\partial\vec{B}}{\partial t} = \overrightarrow{\operatorname{rot}}\left(\vec{v}\wedge\vec{B}\right) + \lambda\Delta\vec{B}, \qquad \lambda = \frac{1}{\mu_0\sigma}.
+$$
+- **Terme d'induction** $\overrightarrow{\operatorname{rot}}(\vec{v}\wedge\vec{B})$ : le champ est transporté, étiré et tordu par l'écoulement ; c'est lui qui peut amplifier le champ (source de l'effet dynamo).
+- **Terme de diffusion** $\lambda\Delta\vec{B}$ : il tend à lisser et à atténuer le champ, en raison de la dissipation ohmique.
+
+$\lambda$ (en $\text{m}^2\cdot\text{s}^{-1}$) est la **diffusivité magnétique**.
+
+\q{III.E}{Interprétation énergétique de l'équation d'induction ; terme diffusif = pertes Joule.}
+
+On multiplie scalairement l'équation par $\dfrac{\vec{B}}{\mu_0}$ et on intègre sur tout l'espace :
+$$
+\frac{\mathrm{d}}{\mathrm{d}t}\iiint\frac{B^2}{2\mu_0}\,\mathrm{d}\tau = \underbrace{\iiint\frac{\vec{B}}{\mu_0}\cdot\overrightarrow{\operatorname{rot}}\left(\vec{v}\wedge\vec{B}\right)\mathrm{d}\tau}_{\text{induction}} + \frac{\lambda}{\mu_0}\iiint\vec{B}\cdot\Delta\vec{B}\,\mathrm{d}\tau.
+$$
+Pour le terme diffusif, $\Delta\vec{B} = -\overrightarrow{\operatorname{rot}}\left(\overrightarrow{\operatorname{rot}}\,\vec{B}\right)$ et, d'après le formulaire,
+$$
+\operatorname{div}\left(\overrightarrow{\operatorname{rot}}\,\vec{B}\wedge\vec{B}\right) = \vec{B}\cdot\overrightarrow{\operatorname{rot}}\left(\overrightarrow{\operatorname{rot}}\,\vec{B}\right) - \left(\overrightarrow{\operatorname{rot}}\,\vec{B}\right)^2.
+$$
+Par le théorème de Green-Ostrogradski, l'intégrale de la divergence se ramène à un flux sur une surface rejetée à l'infini, où $\vec{B}$ est nul : elle est nulle. Il reste, avec $\overrightarrow{\operatorname{rot}}\,\vec{B} = \mu_0\vec{j}$ et $\lambda = 1/(\mu_0\sigma)$ :
+$$
+\frac{\lambda}{\mu_0}\iiint\vec{B}\cdot\Delta\vec{B}\,\mathrm{d}\tau = -\frac{\lambda}{\mu_0}\iiint\left(\overrightarrow{\operatorname{rot}}\,\vec{B}\right)^2\mathrm{d}\tau = -\iiint\frac{j^2}{\sigma}\,\mathrm{d}\tau \leq 0.
+$$
+C'est l'opposé de la puissance dissipée par effet Joule : ce terme est toujours négatif, il fait **décroître** l'énergie magnétique. Le terme d'induction peut, lui, être positif : c'est par lui que l'écoulement apporte de l'énergie au champ (travail contre les forces de Laplace).
+
+\q{III.F}{Condition pour obtenir une équation de diffusion ; évolution de $\vec{B}$ ; temps caractéristique pour le noyau terrestre ; conclusion.}
+
+L'équation d'induction se réduit à l'équation de diffusion $\dfrac{\partial\vec{B}}{\partial t} = \lambda\Delta\vec{B}$ lorsque le terme d'induction est négligeable devant le terme diffusif, soit $\dfrac{UB/L}{\lambda B/L^2} = \dfrac{UL}{\lambda} \ll 1$ (ou fluide au repos). Sans champ imposé aux limites, $\vec{B}$ diffuse et **décroît** jusqu'à s'annuler (l'énergie magnétique est dissipée par effet Joule, voir III.E), sur un temps caractéristique
+$$
+\tau_d \sim \frac{L^2}{\lambda} = \mu_0\sigma L^2.
+$$
+Noyau externe : $L \sim 2\cdot 10^6\ \text{m}$ (épaisseur $2270\ \text{km}$, annexe 1), $\mu_0\sigma_{\text{noyau}} = 4\pi\cdot 10^{-7}\times 4{,}5\cdot 10^5 \simeq 0{,}57\ \text{s}\cdot\text{m}^{-2}$, d'où
+$$
+\tau_d \sim 0{,}57\times\left(2{,}3\cdot 10^6\right)^2 \simeq 3\cdot 10^{12}\ \text{s} \sim 10^5\ \text{ans}.
+$$
+Le champ géomagnétique existe depuis des milliards d'années (paléomagnétisme), bien plus longtemps que $\tau_d$ : sans mécanisme de régénération, il aurait disparu. Il doit donc être **entretenu**, ce que réalise l'effet dynamo.
+
+\q{III.G}{Nombre caractéristique $R_m$ (rapport des deux termes de l'équation d'induction) ; commentaire.}
+
+$$
+R_m = \frac{\left\|\overrightarrow{\operatorname{rot}}(\vec{v}\wedge\vec{B})\right\|}{\left\|\lambda\Delta\vec{B}\right\|} \sim \frac{UB/L}{\lambda B/L^2} = \frac{UL}{\lambda} = \mu_0\sigma UL.
+$$
+C'est l'analogue magnétique du nombre de Reynolds (rapport advection / diffusion), identique au $r_m$ de la partie II.
+
+- Si $R_m \ll 1$ : la diffusion domine, le champ décroît (pas de dynamo possible).
+- Si $R_m \gg 1$ : le champ est quasiment « gelé » dans le fluide et transporté par lui ; l'induction peut l'emporter sur la dissipation, et une dynamo devient possible au-delà d'un seuil $R_{m,c}$ ($\sim 30$ pour VKS2).
+
+Pour le noyau terrestre ($U \sim 10^{-4}\ \text{m}\cdot\text{s}^{-1}$, $L \sim 10^6\ \text{m}$) : $R_m \sim 10^2$, valeur citée dans l'annexe 2.

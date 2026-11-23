@@ -7,6 +7,7 @@ Mes supports de cours, TD, TP et Colles. Rédigé en Quarto/LaTeX. Solutions int
 - `TP/` — travaux pratiques
 - `Cours/` — cours
 - `Colles/` — supports de colles
+- `Annales/` — Enoncés d'annales et leur corrigé
 
 ## TD n°1 — Optique (Réfraction, Fentes d'Young, Réseau)
 
@@ -32,10 +33,25 @@ Mes supports de cours, TD, TP et Colles. Rédigé en Quarto/LaTeX. Solutions int
 ## TD n°5 — Electromagnétisme (Eq. de Maxwell & ARQS)
 
 - 📄 [Énoncé (PDF)](https://dariusmofakhami.github.io/Enseignements/TD/TD_electromagnetisme.pdf)
+- ✅ [Corrigé (PDF)](https://dariusmofakhami.github.io/Enseignements/TD/TD_electromagnetisme_solution.pdf)
+
+## TD n°6 — Ondes électromagnétiques (Propagation dans le vide)
+
+- 📄 [Énoncé (PDF)](https://dariusmofakhami.github.io/Enseignements/TD/TD_ondes_EM.pdf)
+
+## TD n°7 — Ondes électromagnétiques (Propagation en milieux variables)
+
+- à venir.
 
 ## Annales d'électro-magnétisme
  
 - 📄 [CCP 2019](https://dariusmofakhami.github.io/Enseignements/Annales/PC_CCP_2019_MODELES_ATOMIQUES.pdf)
-- 📄 [Mines 2008](https://dariusmofakhami.github.io/Enseignements/Annales/PC_MINES_2008_DISPOSITIFS_MAGNETIQUES.pdf)
+- ✅ [CCP 2019](https://dariusmofakhami.github.io/Enseignements/Annales/Solution_CCP_2019_PC_MODELES_ATOMIQUES.pdf)
+- 📄 [Mines 2008](https://dariusmofakhami.github.io/Enseignements/Annales/
+PC_MINES_2008_DISPOSITIFS_MAGNETIQUES.pdf)
+- ✅ [Mines 2008](https://dariusmofakhami.github.io/Enseignements/Annales/
+PC_MINES_2008_DISPOSITIFS_MAGNETIQUES.pdf)
 - 📄 [Centrale-Supélec 2016](https://dariusmofakhami.github.io/Enseignements/Annales/PC_CS_2016_EFFET_DYNAMO.pdf)
-- ✅ Corrigés à venir
+- ✅ [Centrale-Supélec 2016](https://dariusmofakhami.github.io/Enseignements/Annales/Solution_CS_2016_PC_EFFET_DYNAMO.pdf)
+
+

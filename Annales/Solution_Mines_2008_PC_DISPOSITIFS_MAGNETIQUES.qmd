@@ -1,0 +1,431 @@
+---
+title: "Mines-Ponts 2008 — PC Physique II"
+subtitle: "– Dispositifs magnétiques — Corrigé –"
+header-left: "Annales PC — Corrigé"
+header-right: "Mines 2008 — Dispositifs magnétiques"
+footer-left: "D. Mofakhami"
+footer-right: ""
+format:
+  pdf:
+    documentclass: article
+    template: ../TD/td-template.tex
+    geometry: margin=2.3cm,headheight=28pt
+    fontsize: 11pt
+    number-sections: true
+    toc: false
+mainfont: "Latin Modern Roman"
+header-includes:
+  - \usepackage{esint}
+  - \usepackage[european]{circuitikz}
+---
+
+<!--
+Compilation :   quarto render Solution_Mines_2008_PC_DISPOSITIFS_MAGNETIQUES.qmd
+Corrigé rédigé à partir de l'énoncé PC_MINES_2008_DISPOSITIFS_MAGNETIQUES.pdf (même dossier).
+Pour chaque question : rappel succinct de l'énoncé (en italique), puis réponse.
+-->
+
+```{=latex}
+% Sujet de concours : titres de parties non numérotés ("Partie I — ...") et
+% sous-titres rendus à leur forme titlesec d'origine (le gabarit TD les remplace
+% par "Solution de l'exercice N").
+\let\subsection\tdoldsubsection
+\newcommand{\q}[2]{\par\medskip\noindent\textbf{\color{tdnavy}#1}\enskip\textit{#2}\par\smallskip}
+```
+
+## Partie I — Création de champs magnétiques ayant des propriétés particulières {.unnumbered}
+
+### I.A — Champ uniforme : solénoïdes et bobines de Helmholtz {.unnumbered}
+
+\q{1 —}{Champ $\vec{B}_{\text{sol}}$ à l'intérieur d'un solénoïde infini ($N$ spires, longueur $\ell$, courant $I$).}
+
+*Symétries et invariances :* la distribution est invariante par rotation autour de l'axe $(Oz)$ et par translation selon $(Oz)$ (solénoïde infini), donc $\vec{B}$ ne dépend que de $r$. Tout plan perpendiculaire à l'axe est un plan de symétrie des courants, donc $\vec{B}$ lui est perpendiculaire : $\vec{B} = B(r)\,\vec{e}_z$.
+
+*Théorème d'Ampère* sur un rectangle de longueur $h$ dont deux côtés sont parallèles à l'axe, aux distances $r_1$ et $r_2$ :
+
+- si les deux côtés sont à l'extérieur, aucun courant n'est enlacé : $B(r_1) = B(r_2)$, donc $B$ est uniforme à l'extérieur, et nul puisqu'il s'annule à l'infini ;
+- si un côté est à l'intérieur et l'autre à l'extérieur, le courant enlacé est $\dfrac{N}{\ell}hI$, d'où $B_{\text{int}}\,h = \mu_0\dfrac{N}{\ell}hI$.
+
+$$
+\vec{B}_{\text{sol}} = \mu_0\,\frac{N}{\ell}\,I\,\vec{e}_z \qquad (\text{uniforme à l'intérieur, nul à l'extérieur}).
+$$
+
+\q{2 —}{$\vec{B}_{coz}(0)$ en fonction de $\mu_0$, $R$, $I$, puis $\vec{B}_{coz}(u)$ en fonction de $\vec{B}_{coz}(0)$ et $u = z/R$.}
+
+Par la loi de Biot et Savart (tous les plans contenant $Oz$ sont d'antisymétrie, donc $\vec{B}$ est axial sur l'axe), chaque élément $\mathrm{d}\vec{\ell}$ de la spire contribue $\dfrac{\mu_0 I}{4\pi}\dfrac{\mathrm{d}\ell}{R^2 + z^2}\sin\alpha$ selon $\vec{e}_z$, avec $\sin\alpha = \dfrac{R}{\sqrt{R^2 + z^2}}$. D'où
+$$
+\vec{B}_{coz}(z) = \frac{\mu_0 I}{2}\,\frac{R^2}{\left(R^2 + z^2\right)^{3/2}}\,\vec{e}_z,
+\qquad
+\vec{B}_{coz}(0) = \frac{\mu_0 I}{2R}\,\vec{e}_z,
+\qquad
+\vec{B}_{coz}(u) = \vec{B}_{coz}(0)\left(1 + u^2\right)^{-3/2}.
+$$
+
+\q{3 —}{Champ $\vec{B}_{hoz}(u)$ sur l'axe des bobines de Helmholtz ; tracé comparé des champs normalisés ; constat en $u \approx 0$.}
+
+Les bobines (de $N$ spires) sont centrées en $z = -d = -R/2$ ($O_1$) et en $z = +d = +R/2$ ($O_2$), parcourues dans le même sens. Par superposition :
+$$
+\vec{B}_{hoz}(u) = \frac{\mu_0 N I}{2R}\left[\left(1 + \left(u + \tfrac{1}{2}\right)^2\right)^{-3/2} + \left(1 + \left(u - \tfrac{1}{2}\right)^2\right)^{-3/2}\right]\vec{e}_z,
+\qquad
+\left\|\vec{B}_{hoz}(0)\right\| = \frac{8}{5\sqrt{5}}\,\frac{\mu_0 N I}{R}.
+$$
+
+```{=latex}
+\begin{center}
+\begin{tikzpicture}[xscale=1.3, yscale=3, >=Stealth, every node/.style={font=\small}]
+  \draw[->] (-3.2,0) -- (3.4,0) node[right] {$u = z/R$};
+  \draw[->] (0,0) -- (0,1.2) node[above] {champ normalisé};
+  \foreach \x in {-3,-2,-1,1,2,3} \draw (\x,0.02) -- (\x,-0.02) node[below] {\scriptsize $\x$};
+  \draw (0.04,1) -- (-0.04,1) node[left] {\scriptsize $1$};
+  \draw[thick, dashed, domain=-3:3, samples=120, smooth] plot (\x, {1/(1+\x*\x)^1.5});
+  \draw[very thick, blue!70!black, domain=-3:3, samples=120, smooth] plot (\x, {(1/(1+(\x+0.5)^2)^1.5 + 1/(1+(\x-0.5)^2)^1.5)/1.43108});
+  \draw[very thick, blue!70!black] (-3,-0.25) -- (-2.5,-0.25) node[right, black] {Helmholtz : $\|\vec{B}_{hoz}(u)\| / \|\vec{B}_{hoz}(0)\|$};
+  \draw[thick, dashed] (-3,-0.38) -- (-2.5,-0.38) node[right] {spire seule : $\|\vec{B}_{coz}(u)\| / \|\vec{B}_{coz}(0)\|$};
+\end{tikzpicture}
+\end{center}
+```
+
+**Constat :** au voisinage de $u = 0$, le champ des bobines de Helmholtz est beaucoup plus plat que celui d'une spire seule : le maximum est « aplati », le champ est quasi uniforme sur une zone de l'ordre de $\pm 0{,}4R$.
+
+\q{4 —}{Parité de $g(u) = \|\vec{B}_{hoz}(u)\|$ ; développement limité $\tilde{g}(u)$ à l'ordre 4, avec $\gamma = 8N\mu_0 I/(5\sqrt{5}R)$.}
+
+Le plan $z = 0$ est un plan de symétrie de la distribution de courant : les deux bobines sont symétriques l'une de l'autre, avec des courants de même sens. Le champ en $-z$ est donc l'opposé du symétrique du champ en $z$ ; pour un vecteur porté par $\vec{e}_z$ (normal au plan), cela donne $\vec{B}(-z) = \vec{B}(z)$. Donc $g$ est paire.
+
+Avec le développement fourni, les termes impairs se compensent, et il n'y a pas de terme en $u^2$ :
+$$
+g(u) = \frac{\mu_0 N I}{2R}\cdot\frac{8}{5\sqrt{5}}\left[\left(1 - \tfrac{6}{5}u + \tfrac{32}{25}u^3 - \tfrac{144}{125}u^4\right) + \left(1 + \tfrac{6}{5}u - \tfrac{32}{25}u^3 - \tfrac{144}{125}u^4\right)\right] + o(u^4),
+$$
+$$
+\tilde{g}(u) = \gamma\left(1 - \frac{144}{125}\,u^4\right).
+$$
+L'absence de terme en $u^2$ est précisément la propriété de la configuration de Helmholtz ($d = R/2$) : le champ est uniforme jusqu'à l'ordre 3.
+
+\q{5 —}{Intervalle centré sur l'origine où $\tilde{g}$ varie de moins de 2~\%.}
+
+$$
+\frac{\gamma - \tilde{g}(u)}{\gamma} = \frac{144}{125}\,u^4 \leq 0{,}02
+\quad\Leftrightarrow\quad
+|u| \leq \left(\frac{0{,}02\times 125}{144}\right)^{1/4} \simeq 0{,}363.
+$$
+L'intervalle est $|z| \leq 0{,}36\,R$, soit une amplitude d'environ $0{,}73\,R$.
+
+\q{6 —}{Montrer que $B_{hr} = B_{hr}(r,z)$, $B_{hz} = B_{hz}(r,z)$ et $B_{h\theta} = 0$.}
+
+- La distribution est invariante par rotation autour de $(Oz)$ : les composantes ne dépendent pas de $\theta$.
+- Le plan contenant $M$ et l'axe $(Oz)$ est un plan d'antisymétrie de la distribution de courant (les courants y sont orthoradiaux, donc perpendiculaires à ce plan) : $\vec{B}(M)$ appartient à ce plan, donc $B_{h\theta} = 0$.
+
+\q{7 —}{Avec $B_{hz}(r,z) = \tilde{g}(z) + \alpha r^2\tilde{g}''(z) + \beta(r)$, déterminer $\alpha$ et $\beta(r)$ par les équations de Maxwell ; en déduire $B_{hz}$ et $B_{hr}$.}
+
+Au voisinage de l'axe, il n'y a ni courant ni charge : $\operatorname{div}\vec{B} = 0$ et $\overrightarrow{\operatorname{rot}}\,\vec{B} = \vec{0}$. On note $\tilde{g}(z) = \gamma\left(1 - \dfrac{144}{125}\dfrac{z^4}{R^4}\right)$, d'où
+$$
+\tilde{g}' = -\frac{576\gamma}{125}\frac{z^3}{R^4}, \qquad \tilde{g}'' = -\frac{1728\gamma}{125}\frac{z^2}{R^4}, \qquad \tilde{g}''' = -\frac{3456\gamma}{125}\frac{z}{R^4}, \qquad \tilde{g}'''' = -\frac{3456\gamma}{125 R^4}.
+$$
+
+- *Flux conservatif :* $\dfrac{1}{r}\dfrac{\partial(rB_{hr})}{\partial r} = -\dfrac{\partial B_{hz}}{\partial z} = -\tilde{g}' - \alpha r^2\tilde{g}'''$. En intégrant depuis $r = 0$ (où $rB_{hr} = 0$) :
+$$
+B_{hr} = -\frac{r}{2}\,\tilde{g}'(z) - \frac{\alpha r^3}{4}\,\tilde{g}'''(z).
+$$
+- *Composante $\theta$ du rotationnel nulle :* $\dfrac{\partial B_{hr}}{\partial z} = \dfrac{\partial B_{hz}}{\partial r}$, soit
+$$
+-\frac{r}{2}\,\tilde{g}'' - \frac{\alpha r^3}{4}\,\tilde{g}'''' = 2\alpha r\,\tilde{g}'' + \beta'(r).
+$$
+L'identification des termes en $\tilde{g}''$ (qui dépendent de $z$) donne $-\dfrac{1}{2} = 2\alpha$, soit $\alpha = -\dfrac{1}{4}$. Il reste $\beta'(r) = \dfrac{r^3}{16}\,\tilde{g}'''' = -\dfrac{216\gamma}{125}\,\dfrac{r^3}{R^4}$. Avec $\beta(0) = 0$ (pour retrouver $B_{hz}(0,z) = \tilde{g}(z)$ sur l'axe) :
+$$
+\alpha = -\frac{1}{4}, \qquad \beta(r) = -\frac{54\gamma}{125}\,\frac{r^4}{R^4}.
+$$
+On en déduit :
+$$
+B_{hz}(r,z) = \gamma\left[1 - \frac{144z^4 - 432r^2z^2 + 54r^4}{125R^4}\right] = \gamma\left[1 - \frac{18}{125}\,\frac{8z^4 - 24r^2z^2 + 3r^4}{R^4}\right],
+$$
+$$
+B_{hr}(r,z) = \frac{288\gamma\,rz^3 - 216\gamma\,r^3z}{125R^4} = \frac{72\gamma}{125}\,\frac{rz\left(4z^2 - 3r^2\right)}{R^4}.
+$$
+(On vérifie que $B_{hz}$ ainsi obtenu satisfait l'équation de Laplace.)
+
+### Comparaison solénoïde / Helmholtz pour un détecteur {.unnumbered}
+
+*Cahier des charges :* $B = 0{,}5\ \text{T}$ dans un cylindre de hauteur $H = 4\ \text{m}$ et de diamètre $4\ \text{m}$ ; fil de section carrée de $2\ \text{mm}$ de côté, $I \leq 100\ \text{A}$.
+
+\q{8 —}{Solénoïde de longueur $\ell = 8\ \text{m}$ : nombre de spires et longueur de fil.}
+
+Le rayon des spires doit être au moins égal au rayon du détecteur : $R = 2\ \text{m}$. Dans l'approximation du solénoïde infini, $B = \mu_0\dfrac{N}{\ell}I$, d'où
+$$
+N = \frac{B\ell}{\mu_0 I} = \frac{0{,}5\times 8}{4\pi\cdot 10^{-7}\times 100} \simeq 3{,}2\cdot 10^4\ \text{spires}.
+$$
+Sur une longueur de $8\ \text{m}$, une couche contient $8/(2\cdot 10^{-3}) = 4000$ spires jointives : il faut donc **8 couches** (épaisseur totale $1{,}6\ \text{cm}$, négligeable devant $R$). Longueur de fil :
+$$
+L_{\text{fil}} = N\times 2\pi R \simeq 3{,}2\cdot 10^4\times 2\pi\times 2 \simeq 4\cdot 10^5\ \text{m} = 400\ \text{km}.
+$$
+*Remarque :* avec $\ell/R = 4$, l'approximation du solénoïde infini est grossière. Pour un solénoïde fini, le champ au centre vaut $\mu_0\frac{N}{\ell}I\times\frac{\ell/2}{\sqrt{(\ell/2)^2 + R^2}} \simeq 0{,}89\,\mu_0\frac{N}{\ell}I$, et il chute d'environ 7 % aux extrémités du détecteur ($z = \pm 2\ \text{m}$). Il faudrait environ 12 % de spires en plus pour garantir $0{,}5\ \text{T}$ au centre.
+
+\q{9 —}{Bobines de Helmholtz, champ uniforme à 2~\% près sur toute la hauteur $H$ : rayon, nombre de spires par bobine, longueur de fil.}
+
+D'après la question 5, il faut $\dfrac{H/2}{R} \leq 0{,}363$, soit
+$$
+R \geq \frac{2}{0{,}363} \simeq 5{,}5\ \text{m}.
+$$
+Au centre, $\gamma = \dfrac{8N\mu_0 I}{5\sqrt{5}R} = B$, d'où
+$$
+N = \frac{5\sqrt{5}\,R\,B}{8\mu_0 I} = \frac{11{,}18\times 5{,}5\times 0{,}5}{8\times 4\pi\cdot 10^{-7}\times 100} \simeq 3{,}1\cdot 10^4\ \text{spires par bobine}.
+$$
+Longueur de fil pour les deux bobines :
+$$
+L_{\text{fil}} = 2N\times 2\pi R \simeq 2\times 3{,}1\cdot 10^4\times 2\pi\times 5{,}5 \simeq 2{,}1\cdot 10^6\ \text{m} = 2100\ \text{km}.
+$$
+*Remarque :* d'après la question 7, le champ varie aussi radialement : sur le bord du détecteur ($r = z = 2\ \text{m}$), l'écart relatif atteint environ $3\ \%$. Le cahier des charges n'est donc tenu qu'à quelques pour cent près dans tout le volume.
+
+\q{10 —}{Source la plus économe en fil ; puissance Joule ($\sigma = 6\cdot 10^7\ \text{S}\cdot\text{m}^{-1}$) ; commentaire ; solution technologique.}
+
+Le solénoïde utilise environ 5 fois moins de fil : on le retient. Sa résistance vaut
+$$
+R_{\text{él}} = \frac{L_{\text{fil}}}{\sigma S} = \frac{4\cdot 10^5}{6\cdot 10^7\times 4\cdot 10^{-6}} \simeq 1{,}7\cdot 10^3\ \Omega,
+\qquad
+\mathcal{P}_J = R_{\text{él}}\,I^2 \simeq 1{,}7\cdot 10^3\times 10^4 \simeq 17\ \text{MW}.
+$$
+C'est une puissance considérable (celle d'une petite centrale), sous une tension de $170\ \text{kV}$ : le bobinage fondrait en l'absence d'un refroidissement colossal. En pratique, on utilise des **bobinages supraconducteurs** (résistance nulle, donc pas de pertes Joule), refroidis à l'hélium liquide. Le solénoïde du détecteur DELPHI du CERN était ainsi supraconducteur.
+
+### I.B — Champ linéaire : bobines de « Mholtzhel » {.unnumbered}
+
+\q{11 —}{Champ $\vec{B}_{moz}(u)$ sur l'axe pour deux bobines à $d = \sqrt{3}R/2$ parcourues par des courants opposés.}
+
+On oriente la bobine $O_1$ (en $z = -d$) dans le sens direct autour de $\vec{e}_z$, et la bobine $O_2$ (en $z = +d$) en sens inverse :
+$$
+\vec{B}_{moz}(u) = \frac{\mu_0 N I}{2R}\left[\left(1 + \left(u + \tfrac{\sqrt{3}}{2}\right)^2\right)^{-3/2} - \left(1 + \left(u - \tfrac{\sqrt{3}}{2}\right)^2\right)^{-3/2}\right]\vec{e}_z.
+$$
+Le champ est nul en $O$ (par antisymétrie) et impair en $u$.
+
+\q{12 —}{Montrer que le champ est quasi linéaire, $\vec{B}_{moz}(z) = az\,\vec{e}_z$, et exprimer $a$.}
+
+Avec le développement fourni, les termes pairs (en $x^0$, $x^2$, $x^4$) se compensent dans la différence, et il n'y a pas de terme en $x^3$ :
+$$
+\vec{B}_{moz}(u) = \frac{\mu_0 N I}{2R}\cdot\frac{8\sqrt{7}}{49}\left[-\frac{12\sqrt{3}}{7}\,u + \frac{2112\sqrt{3}}{2401}\,u^5 + o(u^5)\right]\vec{e}_z
+= -\frac{48\sqrt{21}}{343}\,\frac{\mu_0 N I}{R}\,u\left[1 - \frac{176}{343}\,u^4 + o(u^4)\right]\vec{e}_z.
+$$
+Le champ est linéaire en $z$ jusqu'à l'ordre 4 inclus (premier écart en $u^5$). Avec $u = z/R$, $\vec{B}_{moz}(z) \simeq az\,\vec{e}_z$, avec
+$$
+|a| = \frac{48\sqrt{21}}{343}\,\frac{\mu_0 N I}{R^2} \simeq 0{,}641\,\frac{\mu_0 N I}{R^2}.
+$$
+Le signe de $a$ dépend du sens des courants (avec l'orientation choisie ci-dessus, $a < 0$ ; on inverse les deux courants pour obtenir $a > 0$).
+
+```{=latex}
+\begin{center}
+\begin{tikzpicture}[xscale=1.2, yscale=1.6, >=Stealth, every node/.style={font=\small}]
+  \draw[->] (-2.6,0) -- (2.8,0) node[right] {$u = z/R$};
+  \draw[->] (0,-1.25) -- (0,1.35) node[above] {$B_{moz}\big/\frac{\mu_0 N I}{2R}$};
+  \foreach \x in {-2,-1,1,2} \draw (\x,0.03) -- (\x,-0.03) node[below] {\scriptsize $\x$};
+  \fill[blue!10] (-0.444,-1.2) rectangle (0.444,1.2);
+  \draw[thick, dashed, domain=-0.95:0.95] plot (\x, {1.2826*\x});
+  \draw[very thick, blue!70!black, domain=-2.5:2.5, samples=150, smooth] plot (\x, {1/(1+(\x-0.866)^2)^1.5 - 1/(1+(\x+0.866)^2)^1.5});
+  \node[above] at (0,-1.2) {\scriptsize $|u| < 0{,}44$};
+  \node[right] at (0.9,1.1) {pente $\frac{96\sqrt{21}}{343}$};
+\end{tikzpicture}
+\end{center}
+```
+
+\q{13 —}{Intervalle centré sur $O$ où le champ est linéaire à 2~\% près.}
+
+$$
+\frac{176}{343}\,u^4 \leq 0{,}02
+\quad\Leftrightarrow\quad
+|u| \leq \left(\frac{0{,}02\times 343}{176}\right)^{1/4} \simeq 0{,}444.
+$$
+L'intervalle est $|z| \leq 0{,}44\,R$, soit une amplitude d'environ $0{,}89\,R$ (zone colorée sur la figure).
+
+\q{14 —}{Nombre de spires pour $a = 10\ \text{T}\cdot\text{m}^{-1}$ avec $I = 10\ \text{A}$ et $R = 10\ \text{cm}$.}
+
+$$
+N = \frac{|a|\,R^2}{0{,}641\,\mu_0 I} = \frac{10\times 10^{-2}}{0{,}641\times 4\pi\cdot 10^{-7}\times 10} \simeq 1{,}2\cdot 10^4\ \text{spires par bobine}.
+$$
+
+## Partie II — L'expérience de Stern et Gerlach {.unnumbered}
+
+\q{15 —}{Température $T$ du four pour $E_{co} = 1{,}6\cdot 10^{-20}\ \text{J}$.}
+
+Pour un gaz parfait monoatomique, l'énergie cinétique moyenne d'un atome est $\dfrac{3}{2}kT$ (équipartition), d'où
+$$
+T = \frac{2E_{co}}{3k} = \frac{2\times 1{,}6\cdot 10^{-20}}{3\times 1{,}38\cdot 10^{-23}} \simeq 7{,}7\cdot 10^2\ \text{K}.
+$$
+
+\q{16 —}{Force magnétique ; trajectoire $z(x)$ dans la zone de champ, en fonction de $a$, $\mathcal{M}_z$ et $E_{co}$.}
+
+$E_p = -\vec{\mathcal{M}}\cdot\vec{B} = -\mathcal{M}_z\,a z$, d'où la force
+$$
+\vec{F} = -\overrightarrow{\operatorname{grad}}\,E_p = a\,\mathcal{M}_z\,\vec{e}_z,
+$$
+constante. Le principe fondamental de la dynamique donne $\ddot{x} = 0$ et $m\ddot{z} = a\mathcal{M}_z$ ; avec $x = v_0 t$, $z(0) = 0$ et $\dot{z}(0) = 0$ :
+$$
+z = \frac{a\mathcal{M}_z}{2m}\,t^2 = \frac{a\mathcal{M}_z}{2m v_0^2}\,x^2 = \frac{a\mathcal{M}_z}{4E_{co}}\,x^2 \qquad (\text{parabole}).
+$$
+
+\q{17 —}{Cote $z_0$ de l'impact sur l'écran.}
+
+```{=latex}
+\noindent
+\begin{minipage}[t]{0.55\linewidth}
+\vspace{0pt}
+En sortie de la zone de champ ($x = \ell$) : $z(\ell) = \dfrac{a\mathcal{M}_z\ell^2}{4E_{co}}$ et $\dfrac{\mathrm{d}z}{\mathrm{d}x}(\ell) = \dfrac{a\mathcal{M}_z\ell}{2E_{co}}$. Au-delà, le mouvement est rectiligne uniforme (tangente à la parabole) sur la distance $D$ :
+\[
+z_0 = \frac{a\mathcal{M}_z\ell^2}{4E_{co}} + D\,\frac{a\mathcal{M}_z\ell}{2E_{co}} = \frac{a\mathcal{M}_z\,\ell}{2E_{co}}\left(\frac{\ell}{2} + D\right).
+\]
+\end{minipage}
+\hfill
+\begin{minipage}[t]{0.42\linewidth}
+\vspace{0pt}
+\begin{center}
+\begin{tikzpicture}[scale=0.75, >=Stealth, every node/.style={font=\small}]
+  \fill[blue!8] (0,-0.3) rectangle (1.5,2.2);
+  \node at (0.75,-1.35) {\scriptsize zone où $\vec{B} = az\,\vec{e}_z$};
+  \draw[->] (-0.5,0) -- (5.8,0) node[right] {$x$};
+  \draw[->] (0,-0.3) -- (0,2.8) node[left] {$z$};
+  \draw[thick, domain=0:1.5, samples=30] plot (\x, {0.25*\x*\x});
+  \draw[thick] (1.5,0.5625) -- (5,2.3125);
+  \draw (5,-0.3) -- (5,2.6) node[above] {écran};
+  \fill (5,2.3125) circle (1.5pt) node[right] {$z_0$};
+  \draw[<->] (0,-0.6) -- (1.5,-0.6) node[midway, below] {$\ell$};
+  \draw[<->] (1.5,-0.6) -- (5,-0.6) node[midway, below] {$D$};
+\end{tikzpicture}
+\end{center}
+\end{minipage}
+```
+
+\q{18 —}{Deux taches symétriques par rapport à $Ox$ : conclusion.}
+
+Classiquement, $\vec{\mathcal{M}}$ serait orienté au hasard et $\mathcal{M}_z$ prendrait toutes les valeurs entre $-\mathcal{M}$ et $+\mathcal{M}$ : on observerait une tache étalée continûment. Deux taches seulement, symétriques, montrent que $\mathcal{M}_z$ ne prend que **deux valeurs opposées** $\pm\mathcal{M}_z$ : la projection du moment magnétique est **quantifiée**. C'est la mise en évidence du spin $1/2$ de l'électron (pour le lithium, un seul électron de valence non apparié, de moment orbital nul).
+
+\q{19 —}{Valeur de $\mathcal{M}_z$ pour $E_{co} = 1{,}6\cdot 10^{-20}\ \text{J}$, $a = 10\ \text{T}\cdot\text{m}^{-1}$, $\ell = 10\ \text{cm}$, $D = 10\ \text{m}$, $z_0 = \pm 3\ \text{mm}$.}
+
+$$
+|\mathcal{M}_z| = \frac{2E_{co}\,|z_0|}{a\,\ell\left(\frac{\ell}{2} + D\right)} = \frac{2\times 1{,}6\cdot 10^{-20}\times 3\cdot 10^{-3}}{10\times 0{,}1\times 10{,}05} \simeq 9{,}6\cdot 10^{-24}\ \text{J}\cdot\text{T}^{-1}.
+$$
+C'est très proche du magnéton de Bohr, $\mu_B = \dfrac{e\hbar}{2m_e} \simeq 9{,}27\cdot 10^{-24}\ \text{J}\cdot\text{T}^{-1}$ : moment magnétique de spin d'un électron.
+
+## Partie III — Identification de particules dans une chambre à projection temporelle {.unnumbered}
+
+### III.A — Électron d'ionisation dans la chambre de dérive {.unnumbered}
+
+\q{20 —}{Équations différentielles pour $v_x$, $v_y$, $v_z$ (paramètres $e$, $B$, $\mu$, $U$, $L$) ; $v_z(t)$ et $v_{\lim}$, avec $\tau = m_e/\mu$.}
+
+Le champ électrique vaut $\vec{E} = -\dfrac{U}{L}\,\vec{e}_z$. Le principe fondamental de la dynamique appliqué à $\mathbf{e}_i$ (poids négligé) s'écrit $m_e\dfrac{\mathrm{d}\vec{v}}{\mathrm{d}t} = -e\vec{E} - e\,\vec{v}\wedge\vec{B} - \mu\vec{v}$. Avec $\vec{v}\wedge\vec{B} = B\left(v_y\,\vec{e}_x - v_x\,\vec{e}_y\right)$ :
+$$
+\begin{cases}
+m_e\,\dot{v}_x = -eB\,v_y - \mu\,v_x \\[1mm]
+m_e\,\dot{v}_y = eB\,v_x - \mu\,v_y \\[1mm]
+m_e\,\dot{v}_z = \dfrac{eU}{L} - \mu\,v_z
+\end{cases}
+$$
+La troisième équation s'intègre en
+$$
+v_z(t) = v_{\lim} + \left(v_{ez} - v_{\lim}\right)e^{-t/\tau}, \qquad v_{\lim} = \frac{eU}{\mu L}, \qquad \tau = \frac{m_e}{\mu},
+$$
+où $v_{ez} = \vec{v}_e\cdot\vec{e}_z$.
+
+\q{21 —}{Valeur de $v_{\lim}$ ; temps $T$ au-delà duquel $v_z$ est à 1~\% de $v_{\lim}$.}
+
+$$
+v_{\lim} = \frac{1{,}6\cdot 10^{-19}\times 63\cdot 10^3}{9{,}6\cdot 10^{-20}\times 2{,}1} = 5{,}0\cdot 10^4\ \text{m}\cdot\text{s}^{-1}.
+$$
+En négligeant $v_{ez}$, $\dfrac{|v_z - v_{\lim}|}{v_{\lim}} = e^{-t/\tau} < 10^{-2}$ pour $t > T = \tau\ln 100$. Avec $\tau = \dfrac{9{,}11\cdot 10^{-31}}{9{,}6\cdot 10^{-20}} \simeq 9{,}5\cdot 10^{-12}\ \text{s}$ :
+$$
+T = 4{,}6\,\tau \simeq 4{,}4\cdot 10^{-11}\ \text{s}.
+$$
+
+\q{22 —}{Équation pour $\underline{u} = v_x + i v_y$ ; expressions de $v_x(t)$ et $v_y(t)$, avec $\omega_e = eB/m_e$.}
+
+En combinant les deux premières équations (première $+\ i\times$ seconde) :
+$$
+\frac{\mathrm{d}\underline{u}}{\mathrm{d}t} = \left(i\omega_e - \frac{1}{\tau}\right)\underline{u}
+\qquad\Rightarrow\qquad
+\underline{u}(t) = \underline{u}(0)\,e^{-t/\tau}\,e^{i\omega_e t},
+$$
+avec $\underline{u}(0) = v_{ex}$ (car $\vec{v}_e\cdot\vec{e}_y = 0$). D'où
+$$
+v_x(t) = v_{ex}\,e^{-t/\tau}\cos(\omega_e t), \qquad v_y(t) = v_{ex}\,e^{-t/\tau}\sin(\omega_e t).
+$$
+
+\q{23 —}{Mouvement après le régime transitoire ; obtention de la coordonnée $z$ du point d'ionisation.}
+
+Après quelques $\tau$ (soit quelques $10^{-11}\ \text{s}$), les composantes transverses de la vitesse se sont annulées. Le déplacement transverse pendant le transitoire, de l'ordre de $v_{ex}\tau$, est négligeable, et le champ $\vec{B}$ (enroulement en spirale amortie) limite encore l'écart latéral. L'électron adopte alors un **mouvement rectiligne uniforme** parallèle à l'axe, à la vitesse $v_{\lim}\,\vec{e}_z$, vers la chambre proportionnelle : il conserve les coordonnées $(x,y)$ du point d'ionisation.
+
+L'instant de la collision étant connu (croisement des faisceaux), la mesure de la durée de dérive $t_d$ jusqu'à l'extrémité de la chambre ($z = z_{\text{fin}}$) donne directement la cote du point d'ionisation :
+$$
+z_{\text{ionisation}} = z_{\text{fin}} - v_{\lim}\,t_d.
+$$
+(Durée maximale de dérive : $L/v_{\lim} \simeq 42\ \mu\text{s}$, très grande devant $T$ : le transitoire est bien négligeable.)
+
+### III.B — Chambres proportionnelle et à fils {.unnumbered}
+
+\q{24 —}{Nombre d'ionisations produites par un électron de dérive (50~\% de l'énergie $eU'$ utilisée, $E_i = 1520\ \text{kJ}\cdot\text{mol}^{-1}$).}
+
+L'électron reçoit l'énergie $eU' = 1{,}6\cdot 10^{-19}\times 1500 = 2{,}4\cdot 10^{-16}\ \text{J}$, dont la moitié sert aux ionisations. L'énergie d'ionisation d'un atome d'argon vaut $\dfrac{E_i}{\mathcal{N}} = \dfrac{1{,}52\cdot 10^6}{6{,}02\cdot 10^{23}} \simeq 2{,}5\cdot 10^{-18}\ \text{J}$ (soit $15{,}8\ \text{eV}$). D'où
+$$
+n_{\text{ion}} = \frac{0{,}5\times 2{,}4\cdot 10^{-16}}{2{,}5\cdot 10^{-18}} \simeq 48\ \text{ionisations}.
+$$
+
+\q{25 —}{Champ $\vec{E}_f$ à l'extérieur d'un fil infini de charge linéique $\lambda = q/h$ ; potentiel associé.}
+
+Les invariances (rotation autour de l'axe, translation selon l'axe) et les symétries (tout plan contenant l'axe ou perpendiculaire à l'axe est plan de symétrie) donnent $\vec{E}_f = E(r)\,\vec{e}_r$. Le théorème de Gauss sur un cylindre coaxial de rayon $r > a$ et de hauteur $h$ donne $E\,2\pi r h = \dfrac{\lambda h}{\varepsilon_0}$ :
+$$
+\vec{E}_f = \frac{\lambda}{2\pi\varepsilon_0 r}\,\vec{e}_r,
+\qquad
+V(r) = -\frac{\lambda}{2\pi\varepsilon_0}\ln\frac{r}{r_0} \quad (r_0 : \text{constante arbitraire}).
+$$
+
+\q{26 —}{Potentiel créé par deux fils de charges opposées (nul pour $r_1 = r_2$) ; capacité $C = \pi\varepsilon_0 h/\ln\frac{d-a}{a}$ ; valeur numérique.}
+
+Par superposition, les constantes se compensant pour un potentiel nul sur le plan médiateur ($r_1 = r_2$) :
+$$
+V(M) = -\frac{q}{2\pi\varepsilon_0 h}\ln r_1 + \frac{q}{2\pi\varepsilon_0 h}\ln r_2 = \frac{q}{2\pi\varepsilon_0 h}\ln\frac{r_2}{r_1}.
+$$
+Sur la surface du fil positif, du côté de l'autre fil, $r_1 = a$ et $r_2 = d - a$ : $V_+ = \dfrac{q}{2\pi\varepsilon_0 h}\ln\dfrac{d-a}{a}$. Par symétrie, $V_- = -V_+$. D'où
+$$
+C = \frac{q}{V_+ - V_-} = \frac{\pi\varepsilon_0 h}{\ln\left(\frac{d-a}{a}\right)}.
+$$
+Ce calcul suppose les fils assimilables à des lignes chargées sur leur axe, ce qui est exact pour $d \gg a$ ; ici, $d = 3a$ et la formule n'est qu'approchée. Numériquement :
+$$
+C = \frac{\pi\times\frac{10^{-9}}{36\pi}\times 10^{-3}}{\ln 2} \simeq 4{,}0\cdot 10^{-14}\ \text{F} = 40\ \text{fF}.
+$$
+
+\q{27 —}{Valeurs de $q_0$ et $q_1$ ; équation différentielle pour $U_R$ et résolution ($t = 0$ à l'arrivée de l'avalanche).}
+
+```{=latex}
+\noindent
+\begin{minipage}[t]{0.6\linewidth}
+\vspace{0pt}
+En régime permanent sans avalanche, le condensateur est chargé sous $W$ :
+\[
+q_0 = CW \simeq 4{,}0\cdot 10^{-14}\ \text{C}.
+\]
+L'avalanche apporte environ $10^5$ électrons sur l'armature positive :
+\[
+q_1 = q_0 - 10^5 e = 4{,}0\cdot 10^{-14} - 1{,}6\cdot 10^{-14} \simeq 2{,}4\cdot 10^{-14}\ \text{C}.
+\]
+On note $q$ la charge de l'armature positive et $i = \dfrac{\mathrm{d}q}{\mathrm{d}t}$ le courant qui la charge, avec $U_R = Ri$ (convention récepteur, figure ci-contre).
+\end{minipage}
+\hfill
+\begin{minipage}[t]{0.36\linewidth}
+\vspace{0pt}
+\begin{center}
+\begin{circuitikz}[scale=0.8, transform shape, every node/.style={font=\small}]
+  \draw (0,0) to[C, l={$C$}] (0,2.5)
+        to[R, l={$R$}, i<={$i$}] (3,2.5)
+        to[battery1, l={$W$}] (3,0) -- (0,0);
+\end{circuitikz}
+\end{center}
+\end{minipage}
+```
+
+La loi des mailles s'écrit $W = \dfrac{q}{C} + U_R$. En la dérivant ($W$ constant) avec $\dfrac{\mathrm{d}q}{\mathrm{d}t} = \dfrac{U_R}{R}$ :
+$$
+\frac{\mathrm{d}U_R}{\mathrm{d}t} + \frac{U_R}{RC} = 0.
+$$
+À $t = 0^+$, la charge de l'armature est passée brutalement de $q_0$ à $q_1$, donc $U_R(0^+) = W - \dfrac{q_1}{C} = \dfrac{q_0 - q_1}{C} = \dfrac{10^5 e}{C} \simeq 0{,}4\ \text{V}$. D'où
+$$
+U_R(t) = \frac{10^5 e}{C}\,e^{-t/(RC)} \simeq 0{,}4\ \text{V}\times e^{-t/(RC)} :
+$$
+le générateur recharge le condensateur, et le signal mesuré aux bornes de $R$ est une impulsion de durée $\sim RC$.
+
+\q{28 —}{Choix de $R$ pour que $\tau'$ soit négligeable ; nécessité de l'avalanche ; obtention de $x$ et $y$.}
+
+- **Choix de $R$ :** l'influence s'établit en $\tau' = 10^{-12}\ \text{s}$ ; pour que ce temps soit négligeable devant celui de la réponse du circuit, il faut $RC \gg \tau'$, soit $R \gg \dfrac{\tau'}{C} = \dfrac{10^{-12}}{4\cdot 10^{-14}} = 25\ \Omega$ (par exemple $R \sim 1$ à $10\ \text{k}\Omega$). Il faut aussi que $RC$ reste petit devant l'intervalle entre deux signaux successifs, pour ne pas les confondre.
+- **Nécessité de l'avalanche :** un seul électron produirait $U_R(0) = \dfrac{e}{C} \simeq 4\ \mu\text{V}$, indétectable devant le bruit électronique. L'avalanche ($10^5$ électrons) donne $\sim 0{,}4\ \text{V}$, facilement mesurable.
+- **Coordonnées $x$ et $y$ :** l'électron de dérive conserve les coordonnées transverses $(x,y)$ du point d'ionisation (question 23). Le fil touché par l'avalanche (repéré parmi un réseau de fils parallèles) donne une coordonnée ; un second réseau de fils perpendiculaires (ou un plan de pavés segmentés) donne l'autre. Avec $z$ obtenu par le temps de dérive, on reconstitue en trois dimensions chaque point de la trajectoire de la particule fille.
