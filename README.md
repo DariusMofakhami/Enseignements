@@ -47,10 +47,8 @@ Mes supports de cours, TD, TP et Colles. Rédigé en Quarto/LaTeX. Solutions int
  
 - 📄 [CCP 2019](https://dariusmofakhami.github.io/Enseignements/Annales/PC_CCP_2019_MODELES_ATOMIQUES.pdf)
 - ✅ [CCP 2019](https://dariusmofakhami.github.io/Enseignements/Annales/Solution_CCP_2019_PC_MODELES_ATOMIQUES.pdf)
-- 📄 [Mines 2008](https://dariusmofakhami.github.io/Enseignements/Annales/
-PC_MINES_2008_DISPOSITIFS_MAGNETIQUES.pdf)
-- ✅ [Mines 2008](https://dariusmofakhami.github.io/Enseignements/Annales/
-PC_MINES_2008_DISPOSITIFS_MAGNETIQUES.pdf)
+- 📄 [Mines 2008](https://dariusmofakhami.github.io/Enseignements/Annales/PC_MINES_2008_DISPOSITIFS_MAGNETIQUES.pdf)
+- ✅ [Mines 2008](https://dariusmofakhami.github.io/Enseignements/Annales/PC_MINES_2008_DISPOSITIFS_MAGNETIQUES.pdf)
 - 📄 [Centrale-Supélec 2016](https://dariusmofakhami.github.io/Enseignements/Annales/PC_CS_2016_EFFET_DYNAMO.pdf)
 - ✅ [Centrale-Supélec 2016](https://dariusmofakhami.github.io/Enseignements/Annales/Solution_CS_2016_PC_EFFET_DYNAMO.pdf)
 
