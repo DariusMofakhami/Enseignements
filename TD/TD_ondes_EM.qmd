@@ -1,0 +1,674 @@
+---
+title: "Planche d'Ondes électromagnétiques (PC)"
+subtitle: "– Ondes électromagnétiques dans le vide –"
+solution: false
+# solution: true
+header-left: "TD IPESUP 2026-2027"
+header-right: "Ondes électromagnétiques (PC)"
+footer-left: "D. Mofakhami"
+footer-right: ""
+format:
+  pdf:
+    documentclass: article
+    template: td-template.tex
+    geometry: margin=2.5cm,headheight=28pt
+    fontsize: 11pt
+    number-sections: true
+    toc: false
+mainfont: "Latin Modern Roman"
+header-includes:
+  - \usepackage{esint}
+---
+
+<!--
+Pour compiler l'énoncé seul :        quarto render TD_ondes_electromagnetiques.qmd
+Pour compiler avec les solutions :   quarto render TD_ondes_electromagnetiques.qmd --metadata solution:true
+(ou changer directement "solution: true" dans l'en-tête ci-dessus)
+-->
+
+## Réception d'un signal radio émis depuis la côte, par un bateau ($\star$)
+
+Un bateau navigue en mer à $D = 10\ \text{km}$ de la côte. À bord du bateau, on souhaite capter une émission radio FM de fréquence $f_0 = 100\ \text{MHz}$ à l'aide d'une antenne réceptrice placée sur le mât du bateau.
+
+```{=latex}
+\begin{center}
+\begin{tikzpicture}[scale=0.9, >=Stealth, every node/.style={font=\small}]
+  % mer
+  \fill[gray!25] (-6,-0.6) rectangle (1.2,0);
+  \draw (-6,0) -- (1.2,0);
+  % bateau, mât et antenne
+  \fill[gray!70] (-0.6,0.2) -- (0.6,0.2) -- (0.25,-0.35) -- (-0.25,-0.35) -- cycle;
+  \draw[very thick] (0,0.2) -- (0,2.6);
+  \draw[thick] (-0.2,2.1) -- (0.2,2.1);
+  % axes
+  \draw[->] (0,0) -- (1.7,0) node[right] {$x$};
+  \draw[->] (0,2.6) -- (0,3.5) node[left] {$y$};
+  \node[below right] at (0.05,0) {$O$};
+  % rayons incidents (angle exagéré)
+  \foreach \d in {0,0.3,0.6} {
+    \draw (-5.6,2.0+\d) -- ++(-15:3.8);
+    \draw[->] (-5.6,2.0+\d) -- ++(-15:2.4);
+  }
+  \draw[dotted] (-5.6,2.6) -- (-1.6,2.6);
+  \draw (-5.6,2.6) ++(0:1.6) arc (0:-15:1.6);
+  \node at ($(-5.6,2.6)+(-7:1.95)$) {$\alpha$};
+  \draw[->, thick] (-5.0,3.4) -- ++(-15:1.6) node[above right] {$\vec{k}_i$};
+\end{tikzpicture}
+\end{center}
+```
+
+Un émetteur situé sur la côte, à une hauteur $H$ au-dessus du niveau de la mer, émet une onde électromagnétique plane progressive polarisée rectilignement selon $\vec{u}_z$, d'amplitude $E_0$. L'onde émise se propage selon une direction qui fait un angle $\alpha$ avec la direction $\vec{u}_x$. L'onde émise, provenant de l'émetteur situé sur la côte, se réfléchit en partie sur la mer, mais parvient aussi directement sur le récepteur situé sur le mât du bateau.
+
+Par temps calme et mer plate, la surface de la mer se comporte comme un miroir parfaitement réfléchissant pour les ondes électromagnétiques.
+
+**1.** Estimer l'angle $\alpha$, et donner les expressions des vecteurs d'onde de l'onde qui arrive directement sur le bateau et de celle qui arrive sur le bateau après réflexion.
+
+**2.** Montrer que si on assimile la mer à un conducteur parfait, le coefficient de réflexion en amplitude de champ électrique est égal à $-1$. En déduire les expressions des champs électriques des deux ondes.
+
+**3.** Donner l'expression du champ électrique reçu par le détecteur situé à une altitude $y$ au-dessus du niveau de la mer sur le mât. Montrer que le détecteur doit être placé suffisamment haut sur le mât pour que le signal émis soit reçu. On pourra s'appuyer sur une application numérique effectuée pour $H = 10\ \text{m}$ et pour $H = 100\ \text{m}$.
+
+**4.** Interpréter cette situation en termes d'interférences.
+
+::: {.content-visible when-meta="solution"}
+
+### Solution
+
+**1.** $\alpha = \arcsin\left(\dfrac{H}{D}\right) \simeq \dfrac{H}{D}$, soit $\alpha \simeq 10^{-3}\ \text{rad}$ pour $H = 10\ \text{m}$ et $\alpha \simeq 10^{-2}\ \text{rad}$ pour $H = 100\ \text{m}$. L'onde électromagnétique émise arrive en incidence oblique (rasante) sur la mer et est polarisée perpendiculairement au plan d'incidence, selon $\vec{u}_z$.
+
+On note $\lambda_0 = \dfrac{c}{f_0} = 3{,}0\ \text{m}$ et $k_0 = \dfrac{2\pi}{\lambda_0}$. Le vecteur d'onde de l'onde incidente, supposée plane, est
+$$
+\vec{k}_i = k_0\left(\cos\alpha\,\vec{u}_x - \sin\alpha\,\vec{u}_y\right).
+$$
+Le vecteur d'onde de l'onde réfléchie est $\vec{k}_r = k_x\,\vec{u}_x + k_y\,\vec{u}_y$ ; on commence par le déterminer. L'onde réfléchie est aussi polarisée selon $\vec{u}_z$, soit $\underline{\vec{E}}_r = \underline{E}_{0r}\,\vec{u}_z\exp\left(j\left(\omega t - \vec{k}_r\cdot\overrightarrow{OM}\right)\right)$.
+
+```{=latex}
+\begin{center}
+\begin{tikzpicture}[scale=0.9, >=Stealth, every node/.style={font=\small}]
+  % surface de la mer (conducteur parfait)
+  \draw (-6.6,0) -- (0.6,0);
+  \foreach \i in {-6.4,-6.0,...,0.4} \draw (\i,0) -- ++(-0.2,-0.25);
+  \draw[->] (0,0) -- (1.3,0) node[right] {$x$};
+  \draw[->] (0,0) -- (0,3.6) node[left] {$y$};
+  \node[below right] at (0,0) {$O$};
+  % rayon réfléchi : P1 -> R -> M
+  \coordinate (P1) at (-6.3,1.35);
+  \coordinate (R) at (-3.15,0);
+  \coordinate (M) at (0,1.35);
+  \draw (P1) -- (R) -- (M);
+  \draw[->] (P1) -- ($(P1)!0.45!(R)$);
+  \draw[->] (R) -- ($(R)!0.75!(M)$);
+  % rayon direct
+  \draw (-4.55,3.30) -- (M);
+  \draw[->] (-4.55,3.30) -- (-3.2,2.72);
+  \fill (M) circle (1.5pt) node[right] {$M$ (récepteur)};
+  % polarisations selon u_z (sortant)
+  \foreach \p/\l in {{(-4.095,0.405)}/{$\vec{E}_i$}, {(-1.6,0.69)}/{$\vec{E}_r$}, {(-2.3,2.34)}/{$\vec{E}_i$}} {
+    \draw \p circle (0.12); \fill \p circle (0.035);
+    \node[above, yshift=3pt] at \p {\l};
+  }
+  % angle alpha
+  \draw[dotted] (P1) -- ++(1.6,0);
+  \draw (P1) ++(0:1.2) arc (0:-23.2:1.2);
+  \node at ($(P1)+(-11:1.5)$) {$\alpha$};
+\end{tikzpicture}
+\end{center}
+```
+
+L'eau de mer étant assimilée à un conducteur parfait, les champs électrique et magnétique y sont nuls. Attendu que la composante tangentielle du champ électrique est continue sur la surface de la mer en $y = 0$ :
+$$
+\vec{u}_z\cdot\left(\underline{\vec{E}}_i(y = 0^+,t) + \underline{\vec{E}}_r(y = 0^+,t)\right) = \vec{u}_z\cdot\underline{\vec{E}}_{\text{tot}}(y = 0^-) = 0,
+$$
+soit
+$$
+E_0\exp\left(j\left(\omega t - k_0\cos\alpha\,x\right)\right) + \underline{E}_{0r}\exp\left(j\left(\omega t - k_x x\right)\right) = 0.
+$$
+Comme cette relation est vérifiée pour tout $x$, on en déduit $k_x = k_0\cos\alpha$. Par ailleurs, l'onde réfléchie vérifie l'équation de d'Alembert ; comme elle se propage dans le milieu $y > 0$, l'équation de dispersion est $k_x^2 + k_y^2 = \dfrac{\omega^2}{c^2} = k_0^2$, soit $k_y = \pm k_0\sin\alpha$. L'onde réfléchie repart vers les $y$ croissants, donc $k_y = k_0\sin\alpha$, d'où
+$$
+\vec{k}_r = k_0\left(\cos\alpha\,\vec{u}_x + \sin\alpha\,\vec{u}_y\right).
+$$
+
+**2.** De la continuité de la composante tangentielle de $\vec{E}$, on déduit aussi $E_0 + \underline{E}_{0r} = 0$ : le coefficient de réflexion en champ électrique est $r = \dfrac{\underline{E}_{0r}}{E_0} = -1$. Finalement, les champs incident et réfléchi sont :
+$$
+\begin{cases}
+\underline{\vec{E}}_i = E_0\,\vec{u}_z\exp\left(j\left(\omega t - \vec{k}_i\cdot\overrightarrow{OM}\right)\right) \\[2mm]
+\underline{\vec{E}}_r = -E_0\,\vec{u}_z\exp\left(j\left(\omega t - \vec{k}_r\cdot\overrightarrow{OM}\right)\right)
+\end{cases}
+$$
+
+**3.** Au niveau du récepteur, le champ électrique total est la somme des deux champs : le champ incident qui arrive directement et le champ réfléchi par la mer, qui arrive en $M$ après réflexion. Comme les deux champs sont portés par $\vec{u}_z$, le champ résultant est aussi porté par $\vec{u}_z$. Par ailleurs, le bateau est situé en $x = 0$ ; on obtient :
+$$
+\begin{aligned}
+\underline{\vec{E}}_{\text{tot}}(x = 0,y,z,t) &= E_0\,\vec{u}_z\exp(j\omega t)\left(\exp\left(jk_0\sin\alpha\,y\right) - \exp\left(-jk_0\sin\alpha\,y\right)\right) \\
+&= 2jE_0\,\vec{u}_z\exp(j\omega t)\sin\left(k_0\sin\alpha\,y\right).
+\end{aligned}
+$$
+L'amplitude du champ reçu, $2E_0\left|\sin\left(k_0\sin\alpha\,y\right)\right|$, est nulle au niveau de la mer. On cherche la valeur $y_{\max}$ pour laquelle le champ électrique est maximal pour la première fois quand $y$ croît à partir de $y = 0$ : $k_0\sin\alpha\,y_{\max} = \dfrac{\pi}{2}$, soit
+$$
+y_{\max} = \frac{\lambda_0}{4\sin\alpha} \simeq \frac{\lambda_0 D}{4H}.
+$$
+Numériquement : pour $H = 10\ \text{m}$, on trouve $y_{\max} = 750\ \text{m}$, et pour $H = 100\ \text{m}$, $y_{\max} = 75\ \text{m}$. Pour une antenne placée en haut d'un mât d'une quinzaine de mètres, l'amplitude reçue vaut environ $3\ \%$ de son maximum $2E_0$ dans le premier cas (signal quasiment nul, comme en $y = 0$), et environ $30\ \%$ dans le second, plus proche de la position du maximum. Le signal n'est correctement reçu que si l'antenne est suffisamment haute devant $y_{\max}$, d'où l'intérêt d'émetteurs placés en hauteur.
+
+**4.** On peut interpréter cette situation comme résultant d'interférences entre deux ondes planes progressives harmoniques : l'onde incidente d'une part et l'onde réfléchie d'autre part. Leur différence de marche géométrique en $M$ vaut $2y\sin\alpha$, à laquelle s'ajoute le déphasage de $\pi$ dû à la réflexion ($r = -1$). En $(x = 0, y = 0)$, les ondes interfèrent de façon destructive : les champs sont déphasés de $\pi$. En $y_{\max}$, les champs interfèrent de façon constructive : le déphasage entre le champ incident et le champ réfléchi est nul (modulo $2\pi$).
+
+```{=latex}
+\newpage
+```
+
+:::
+
+## Guide d'onde plan ($\star\star$)
+
+```{=latex}
+\noindent
+\begin{minipage}[t]{0.55\linewidth}
+\vspace{0pt}
+On étudie la propagation guidée d'une onde électromagnétique harmonique de pulsation $\omega$, entre deux plans $x = 0$ et $x = a$ parfaitement conducteurs. L'espace compris entre les deux plans est vide de charge ; on l'assimile à du vide. On visualise ci-contre une portion des plans conducteurs, qui s'étendent à l'infini selon $\vec{u}_y$ et $\vec{u}_z$.
+\end{minipage}
+\hfill
+\begin{minipage}[t]{0.42\linewidth}
+\vspace{0pt}
+\begin{center}
+\begin{tikzpicture}[scale=0.8, >=Stealth, every node/.style={font=\small}]
+  % plan x = 0 (contient O)
+  \fill[gray!35] (-2.8,-0.6) -- (2.2,-0.6) -- (3.8,0.6) -- (-1.2,0.6) -- cycle;
+  % axes
+  \draw[->] (0,0) -- (4.4,0) node[right] {$z$};
+  \draw[->] (0,0) -- (-1.5,-1.125) node[below left] {$y$};
+  \draw[->] (0,0) -- (0,2.9) node[left] {$x$};
+  \node[below right] at (0,0) {$O$};
+  % champ E et onde guidée
+  \draw[->, thick] (0,1.0) -- (-0.8,0.4) node[left] {$\vec{E}$};
+  \draw[->, domain=1:2.4, samples=40] plot (\x, {1.0 + 0.12*sin(720*(\x-1))});
+  % plan x = a
+  \fill[gray!35, opacity=0.6] (-2.8,1.4) -- (2.2,1.4) -- (3.8,2.6) -- (-1.2,2.6) -- cycle;
+  \draw (-2.8,1.4) -- (2.2,1.4) -- (3.8,2.6) -- (-1.2,2.6) -- cycle;
+  \node[left] at (0,2.0) {$a$};
+\end{tikzpicture}
+\end{center}
+\end{minipage}
+```
+
+On souhaite que l'onde, et son énergie ou l'information qu'elle transporte, se propage dans la direction de l'axe $(Oz)$ selon les $z$ croissants. On envisage une onde transverse électrique, c'est-à-dire une onde dont le champ électrique est polarisé perpendiculairement à la direction de propagation choisie, donc de la forme :
+$$
+\underline{\vec{E}} = \vec{u}_y\,f(x,y)\exp\left(j\left(\omega t - kz\right)\right).
+$$
+
+**1.** Rappeler l'équation de propagation vérifiée par les champs $\vec{E}$ et $\vec{B}$ dans le guide d'onde.
+
+**2.** Montrer que $f(x,y)$ ne peut pas dépendre de $y$.
+
+**3.** Étude du champ électrique :
+
+**a.** Rappeler les conditions aux limites que doit vérifier le champ électrique au niveau des plans.
+
+**b.** Établir l'équation différentielle que vérifie $f$. Déduire de la question précédente que la fonction $f$ est nécessairement sinusoïdale, et qu'il existe un ensemble discret de solutions possibles, qu'on notera $f_n(x)$. Chaque solution correspond à un mode particulier de propagation. Donner l'expression de $\vec{E}_n$.
+
+**c.** Établir l'équation de dispersion ; en déduire les expressions de la vitesse de phase et de la vitesse de groupe. Commenter le résultat obtenu.
+
+**4.** Étude du champ magnétique :
+
+**a.** Déduire le champ $\vec{B}_n$ du champ $\vec{E}_n$.
+
+**b.** Commenter le résultat.
+
+**5.** Pour finir, on étudie l'aspect énergétique.
+
+**a.** Établir les expressions du vecteur de Poynting $\vec{\Pi}_{em}$ et de la densité volumique d'énergie électromagnétique $w_{em}$ à l'instant $t$ en un point $M$ situé dans le guide d'onde. Calculer leurs valeurs moyennes temporelles. Commenter.
+
+**b.** Calculer la vitesse $\vec{v}_e = v_e\,\vec{u}_z$ de déplacement de l'énergie, en considérant une section droite $S = ab$ du guide d'onde pendant une durée $\mathrm{d}t$, et en reliant l'énergie qui la traverse entre $t$ et $t + \mathrm{d}t$ à l'énergie contenue dans un volume $\delta V = \vec{v}_e\cdot\vec{u}_z\,\mathrm{d}t\,ab$ à l'instant $t$. Comparer $v_e$ et $v_g$. On donne $\displaystyle\int_0^a\sin^2\left(\frac{n\pi x}{a}\right)\mathrm{d}x = \frac{a}{2}$.
+
+::: {.content-visible when-meta="solution"}
+
+### Solution
+
+**1.** Dans le vide ($\rho = 0$, $\vec{j} = \vec{0}$), on prend le rotationnel de l'équation de Maxwell-Faraday : $\overrightarrow{\operatorname{rot}}\left(\overrightarrow{\operatorname{rot}}\,\vec{E}\right) = \overrightarrow{\operatorname{grad}}\left(\operatorname{div}\vec{E}\right) - \Delta\vec{E} = -\Delta\vec{E}$ et $\overrightarrow{\operatorname{rot}}\left(-\dfrac{\partial\vec{B}}{\partial t}\right) = -\mu_0\varepsilon_0\dfrac{\partial^2\vec{E}}{\partial t^2}$. On obtient l'équation de d'Alembert à trois dimensions :
+$$
+\frac{\partial^2\vec{E}}{\partial t^2} = c^2\Delta\vec{E} ;
+$$
+le champ $\vec{B}$ vérifie la même équation.
+
+**2.** L'équation de Maxwell-Gauss, $\operatorname{div}\underline{\vec{E}} = 0$ dans l'espace vide de charge, donne :
+$$
+\frac{\partial E_x}{\partial x} + \frac{\partial E_y}{\partial y} + \frac{\partial E_z}{\partial z} = \frac{\partial E_y}{\partial y} = 0.
+$$
+On en déduit que $E_y$ ne dépend pas de $y$, donc $f$ ne dépend que de $x$.
+
+**3.** **a.** Le champ choisi est tangent aux plans conducteurs en $x = a$ et en $x = 0$, or la composante tangentielle du champ électrique est toujours continue. Par ailleurs, les plans étant parfaitement conducteurs, on sait que les champs électrique et magnétique y sont nuls. On en déduit les conditions aux limites pour $\underline{\vec{E}}$ :
+$$
+\begin{cases}
+E_y(x = a,z,t) = 0 \\
+E_y(x = 0,z,t) = 0
+\end{cases}
+\qquad\Rightarrow\qquad
+\begin{cases}
+f(a) = 0 \\
+f(0) = 0
+\end{cases}
+$$
+
+**b.** L'équation différentielle vérifiée par $f$ se déduit de l'équation de propagation $\dfrac{\partial^2\underline{\vec{E}}}{\partial t^2} = c^2\Delta\underline{\vec{E}}$, soit
+$$
+(j\omega)^2 f(x)\exp\left(j(\omega t - kz)\right) = c^2\left(\frac{\mathrm{d}^2 f}{\mathrm{d}x^2} + (-jk)^2 f\right)\exp\left(j(\omega t - kz)\right).
+$$
+En simplifiant par les exponentielles, $-\omega^2 f(x) = c^2\left(\dfrac{\mathrm{d}^2 f}{\mathrm{d}x^2} - k^2 f\right)$, soit
+$$
+\frac{\mathrm{d}^2 f}{\mathrm{d}x^2} = \left(k^2 - \frac{\omega^2}{c^2}\right)f(x).
+$$
+C'est une équation différentielle linéaire du second ordre à coefficients constants. La solution est exponentielle si $k^2 - \dfrac{\omega^2}{c^2} > 0$, affine si ce terme est nul, et sinusoïdale si $k^2 - \dfrac{\omega^2}{c^2} < 0$. Dans les deux premiers cas, il serait impossible de vérifier les conditions aux limites $f(a) = 0$ et $f(0) = 0$ sans avoir $f = 0$. On en déduit que $f$ est nécessairement sinusoïdale, soit $k^2 - \dfrac{\omega^2}{c^2} = -\alpha^2$ avec $\alpha > 0$ une constante positive, et $f(x) = f_0\sin(\alpha x + \varphi)$.
+
+La condition $f(0) = 0$ impose $\varphi = 0$ (à $\pi$ près, le signe étant absorbé dans $f_0$), d'où $f(x) = f_0\sin\alpha x$ ; puis $f(a) = 0$ implique $f_0\sin\alpha a = 0$, soit $\alpha a = n\pi$ avec $n \in \mathbb{N}^*$.
+
+Finalement : $f_n(x) = E_{0n}\sin\left(n\pi\dfrac{x}{a}\right)$ et
+$$
+\underline{\vec{E}}_n = \vec{u}_y\,E_{0n}\sin\left(n\pi\frac{x}{a}\right)\exp\left(j(\omega t - kz)\right),
+$$
+dont l'expression réelle est $\vec{E}_n = \vec{u}_y\,E_{0n}\sin\left(n\pi\dfrac{x}{a}\right)\cos(\omega t - kz)$.
+
+*Commentaires :* le champ électrique de l'onde n'a pas la forme du champ d'une onde plane. Considéré dans un plan $z = z_0$, il a la forme d'une onde stationnaire ; par contre, considéré dans un plan $x = x_0$, il a la forme d'une onde progressive selon $\vec{u}_z$.
+
+**c.** L'équation de dispersion est la relation qui relie $k$ et $\omega$, déduite de l'équation de propagation. On a établi précédemment $k^2 - \dfrac{\omega^2}{c^2} = -\alpha^2$, avec $\alpha = \dfrac{n\pi}{a}$, dont on déduit :
+$$
+k^2 = \frac{\omega^2}{c^2} - \left(\frac{n\pi}{a}\right)^2.
+$$
+Il apparaît une condition sur la valeur de la pulsation pour que l'onde puisse se propager selon l'axe $(Oz)$ : il faut que $k$ soit réel, donc que $\dfrac{\omega^2}{c^2} > \left(\dfrac{n\pi}{a}\right)^2$, soit $\dfrac{\omega}{c} > \dfrac{n\pi}{a}$, ou encore $\omega > \omega_{c,n}$ avec
+$$
+\omega_{c,n} = \frac{n\pi c}{a}
+$$
+la pulsation de coupure basse du mode $n$ : seule une onde de pulsation $\omega > \omega_{c,n}$ peut se propager dans le guide sous la forme d'un mode transverse électrique de champ $\vec{E}_n$. (Pour $\omega < \omega_{c,n}$, $k$ est imaginaire pur : l'onde est évanescente selon $z$.)
+
+Lorsque $\omega > \omega_{c,n}$, la valeur de $k_n$ est :
+$$
+k_n = \frac{\omega}{c}\sqrt{1 - \frac{n^2c^2\pi^2}{a^2\omega^2}}.
+$$
+La **vitesse de phase** s'en déduit :
+$$
+v_{\varphi,n} = \frac{\omega}{k_n} = \frac{c}{\sqrt{1 - \dfrac{n^2c^2\pi^2}{a^2\omega^2}}}.
+$$
+La **vitesse de groupe** est définie par $v_{g,n} = \dfrac{\mathrm{d}\omega}{\mathrm{d}k_n}$. La différentielle de l'équation de dispersion est $2k_n\,\mathrm{d}k_n = \dfrac{2\omega\,\mathrm{d}\omega}{c^2} - 0$, soit
+$$
+v_{g,n} = \frac{\mathrm{d}\omega}{\mathrm{d}k_n} = \frac{c^2}{v_{\varphi,n}} = c\sqrt{1 - \frac{n^2c^2\pi^2}{a^2\omega^2}}.
+$$
+On constate que $v_{\varphi,n} > c$ et $v_{g,n} < c$, ce qui respecte la condition de la relativité selon laquelle l'énergie ne peut pas se déplacer plus vite que la lumière dans le vide. Le guide est un milieu dispersif ($v_\varphi$ dépend de $\omega$).
+
+**4.** **a.** Le champ $\underline{\vec{B}}_n$ est relié à $\underline{\vec{E}}_n$ par l'équation de Maxwell-Faraday $\overrightarrow{\operatorname{rot}}\,\underline{\vec{E}}_n = -\dfrac{\partial\underline{\vec{B}}_n}{\partial t}$, soit $\vec{\nabla}\wedge\underline{\vec{E}}_n = -\dfrac{\partial\underline{\vec{B}}_n}{\partial t}$.
+
+*Attention :* il ne faut pas utiliser la relation de structure des ondes planes progressives harmoniques, qui n'est ici pas valable, puisque l'onde n'est pas plane.
+
+$$
+\vec{\nabla}\wedge\underline{\vec{E}}_n = \vec{u}_x\frac{\partial}{\partial x}\wedge\underline{E}_y\vec{u}_y + \vec{u}_z\frac{\partial}{\partial z}\wedge\underline{E}_y\vec{u}_y = \vec{u}_z\frac{\partial\underline{E}_y}{\partial x} - \vec{u}_x\frac{\partial\underline{E}_y}{\partial z},
+$$
+$$
+\vec{\nabla}\wedge\underline{\vec{E}}_n = \vec{u}_z\,\frac{n\pi}{a}E_{0n}\cos\frac{n\pi x}{a}\exp\left(j(\omega t - kz)\right) + jk\,E_{0n}\,\vec{u}_x\sin\frac{n\pi x}{a}\exp\left(j(\omega t - kz)\right).
+$$
+On en déduit les équations vérifiées par les composantes du champ $\underline{\vec{B}}_n$ :
+$$
+\begin{cases}
+-\dfrac{\partial\underline{B}_{nx}}{\partial t} = jk\,E_{0n}\sin\dfrac{n\pi x}{a}\exp\left(j(\omega t - kz)\right) \\[4mm]
+-\dfrac{\partial\underline{B}_{nz}}{\partial t} = \dfrac{n\pi}{a}E_{0n}\cos\dfrac{n\pi x}{a}\exp\left(j(\omega t - kz)\right)
+\end{cases}
+\Rightarrow
+\begin{cases}
+\underline{B}_{nx} = \dfrac{-jk}{j\omega}E_{0n}\sin\dfrac{n\pi x}{a}\exp\left(j(\omega t - kz)\right) \\[4mm]
+\underline{B}_{nz} = \dfrac{-n\pi}{j\omega a}E_{0n}\cos\dfrac{n\pi x}{a}\exp\left(j(\omega t - kz)\right)
+\end{cases}
+$$
+(la constante d'intégration, champ statique, est prise nulle), et les expressions réelles des champs :
+$$
+\begin{cases}
+B_{nx} = -\dfrac{k}{\omega}E_{0n}\sin\dfrac{n\pi x}{a}\cos(\omega t - kz) \\[4mm]
+B_{nz} = -\dfrac{n\pi}{a\omega}E_{0n}\cos\dfrac{n\pi x}{a}\sin(\omega t - kz)
+\end{cases}
+$$
+
+**b.** On remarque que le champ magnétique n'est pas transverse ($B_{nz} \neq 0$), ce qui est cohérent avec le fait que l'onde qui se propage dans le guide n'est pas une onde plane. Par contre, si on calcule $\operatorname{div}\vec{B} = \dfrac{\partial B_x}{\partial x} + \dfrac{\partial B_z}{\partial z}$, on obtient bien $\operatorname{div}\vec{B} = 0$. On vérifie aussi que la composante normale $B_{nx}$ s'annule sur les plans $x = 0$ et $x = a$, comme l'impose sa continuité avec le champ nul dans le conducteur.
+
+**5.** **a.** Le vecteur de Poynting est $\vec{\Pi}_{em} = \dfrac{\vec{E}\wedge\vec{B}}{\mu_0}$, soit $\vec{\Pi}_{em} = \dfrac{E_{ny}\vec{u}_y\wedge\left(B_{nx}\vec{u}_x + B_{nz}\vec{u}_z\right)}{\mu_0}$, c'est-à-dire
+$$
+\vec{\Pi}_{em} = \frac{-E_{ny}B_{nx}\,\vec{u}_z + E_{ny}B_{nz}\,\vec{u}_x}{\mu_0}.
+$$
+Le vecteur de Poynting a deux composantes. Celle selon $\vec{u}_z$ est
+$$
+\Pi_{nz} = -\frac{1}{\mu_0}E_{0n}\sin\left(\frac{n\pi x}{a}\right)\cos(\omega t - kz)\cdot\frac{-k}{\omega}E_{0n}\sin\left(\frac{n\pi x}{a}\right)\cos(\omega t - kz) = \frac{k}{\mu_0\omega}\left(E_{0n}\sin\frac{n\pi x}{a}\cos(\omega t - kz)\right)^2 ;
+$$
+celle selon $\vec{u}_x$ est
+$$
+\Pi_{nx} = -\frac{n\pi}{\mu_0 a\omega}E_{0n}^2\sin\left(\frac{n\pi x}{a}\right)\cos\left(\frac{n\pi x}{a}\right)\cos(\omega t - kz)\sin(\omega t - kz).
+$$
+En passant aux valeurs moyennes temporelles : $\langle\Pi_{nx}\rangle = 0$ et
+$$
+\langle\Pi_{nz}\rangle = \frac{k}{2\mu_0\omega}\left(E_{0n}\sin\frac{n\pi x}{a}\right)^2.
+$$
+On constate que le vecteur de Poynting n'est pas nul en valeur moyenne selon $\vec{u}_z$ : l'énergie se propage bien selon la direction $\vec{u}_z$. Selon $\vec{u}_x$, l'énergie oscille entre les plans sans transport moyen.
+
+On calcule la densité volumique d'énergie électromagnétique :
+$$
+w_{em} = \frac{1}{2}\varepsilon_0\left(E_{0n}\sin\frac{n\pi x}{a}\cos(\omega t - k_nz)\right)^2 + \frac{1}{2\mu_0}\left(\frac{-k_n}{\omega}E_{0n}\sin\frac{n\pi x}{a}\cos(\omega t - k_nz)\right)^2 + \frac{1}{2\mu_0}\left(\frac{-n\pi}{a\omega}E_{0n}\cos\frac{n\pi x}{a}\sin(\omega t - k_nz)\right)^2,
+$$
+soit en moyenne temporelle :
+$$
+\langle w_{em}\rangle = \frac{1}{4}\varepsilon_0\left(E_{0n}\sin\frac{n\pi x}{a}\right)^2 + \frac{1}{4\mu_0}\left(\frac{-n\pi}{a\omega}E_{0n}\cos\frac{n\pi x}{a}\right)^2 + \frac{1}{4\mu_0}\left(\frac{-k_n}{\omega}E_{0n}\sin\frac{n\pi x}{a}\right)^2,
+$$
+$$
+\langle w_{em}\rangle = \frac{1}{4}E_{0n}^2\left(\left(\sin\frac{n\pi x}{a}\right)^2\left(\varepsilon_0 + \frac{k_n^2}{\mu_0\omega^2}\right) + \left(\cos\frac{n\pi x}{a}\right)^2\frac{n^2\pi^2}{\mu_0 a^2\omega^2}\right).
+$$
+
+```{=latex}
+\noindent
+\begin{minipage}[t]{0.58\linewidth}
+\vspace{0pt}
+\textbf{b.} Pour calculer l'énergie $\delta\mathcal{E}_{tr}$ qui traverse la section $ab$ entre $t$ et $t + \mathrm{d}t$, on découpe cette section en surfaces élémentaires $\mathrm{d}\vec{S} = \mathrm{d}x\,b\,\vec{u}_z$ et on intègre le flux du vecteur de Poynting sur la section, avec $\displaystyle\int_0^a\left(\sin\frac{n\pi x}{a}\right)^2\mathrm{d}x = \frac{a}{2}$ :
+\end{minipage}
+\hfill
+\begin{minipage}[t]{0.38\linewidth}
+\vspace{0pt}
+\begin{center}
+\begin{tikzpicture}[scale=0.8, >=Stealth, every node/.style={font=\small}]
+  % plans x=0 et x=a (contours)
+  \draw[gray] (-2.2,-0.9) -- (2.6,-0.9) -- (3.8,0) -- (-1.0,0);
+  \draw[gray] (-2.2,1.1) -- (2.6,1.1) -- (3.8,2) -- (-1.0,2);
+  % section en z0 et tranche jusqu'à z0 + v_e dt
+  \fill[gray!40] (1,0) -- (1,2) -- (-0.2,1.1) -- (-0.2,-0.9) -- cycle;
+  \draw (1,0) -- (1,2) -- (-0.2,1.1) -- (-0.2,-0.9) -- cycle;
+  \draw[dashed] (1.8,0) -- (1.8,2) -- (0.6,1.1) -- (0.6,-0.9) -- cycle;
+  \draw[dashed] (1,0) -- (1.8,0); \draw[dashed] (1,2) -- (1.8,2);
+  \draw[dashed] (-0.2,1.1) -- (0.6,1.1); \draw[dashed] (-0.2,-0.9) -- (0.6,-0.9);
+  % axes
+  \draw[->] (-1.0,0) -- (4.3,0) node[right] {$z$};
+  \draw[->] (-1.0,0) -- (-1.0,2.7) node[left] {$x$};
+  \draw[->] (-1.0,0) -- (-2.2,-0.9) node[below left] {$y$};
+  \node[below left] at (-1.0,0) {$O$};
+  \node[left] at (-1.0,2) {$a$};
+  \draw[<->] (-0.2,-1.15) -- (1,-0.25);
+  \node at (0.6,-1.0) {$b$};
+  \draw[->, thick] (1,2.35) -- (1.8,2.35) node[right] {$v_e\,\mathrm{d}t$};
+\end{tikzpicture}
+\end{center}
+\end{minipage}
+```
+
+$$
+\delta\mathcal{E}_{tr} = \int_0^a\langle\Pi_z\rangle\,\mathrm{d}t\,b\,\mathrm{d}x = \int_0^a\frac{k_n}{2\mu_0\omega}\left(E_{0n}\sin\frac{n\pi x}{a}\right)^2\mathrm{d}t\,b\,\mathrm{d}x = E_{0n}^2\,\frac{ba}{2}\,\frac{k_n}{2\mu_0\omega}\,\mathrm{d}t.
+$$
+L'énergie $\delta\mathcal{E}_{\text{cont}}$ contenue dans la tranche de volume $\delta V = v_e\,\mathrm{d}t\,ab$ est (avec aussi $\int_0^a\cos^2 = a/2$) :
+$$
+\begin{aligned}
+\delta\mathcal{E}_{\text{cont}} &= v_e\,\mathrm{d}t\,b\int_0^a\frac{1}{4}E_{0n}^2\left(\left(\sin\frac{n\pi x}{a}\right)^2\left(\varepsilon_0 + \frac{k_n^2}{\mu_0\omega^2}\right) + \left(\cos\frac{n\pi x}{a}\right)^2\frac{n^2\pi^2}{\mu_0a^2\omega^2}\right)\mathrm{d}x \\
+&= v_e\,\mathrm{d}t\,\frac{ab}{8}E_{0n}^2\left(\varepsilon_0 + \frac{k_n^2}{\mu_0\omega^2} + \frac{n^2\pi^2}{\mu_0a^2\omega^2}\right).
+\end{aligned}
+$$
+Or, d'après l'équation de dispersion, $\dfrac{k_n^2}{\omega^2} + \dfrac{n^2\pi^2}{a^2\omega^2} = \dfrac{1}{c^2}$, donc
+$$
+\delta\mathcal{E}_{\text{cont}} = v_e\,\mathrm{d}t\,\frac{ab}{8}E_{0n}^2\left(\varepsilon_0 + \frac{1}{\mu_0c^2}\right) = v_e\,\mathrm{d}t\,\frac{ab}{8}E_{0n}^2\left(2\varepsilon_0\right).
+$$
+En égalant les deux expressions $\delta\mathcal{E}_{tr}$ et $\delta\mathcal{E}_{\text{cont}}$, il vient $E_{0n}^2\,\dfrac{ba}{2}\,\dfrac{k_n}{2\mu_0\omega}\,\mathrm{d}t = v_e\,\mathrm{d}t\,\dfrac{ab}{8}E_{0n}^2\left(2\varepsilon_0\right)$, soit $\dfrac{k_n}{\mu_0\omega} = v_e\varepsilon_0$, puis
+$$
+v_e = c^2\,\frac{k_n}{\omega} = \frac{c^2}{v_{\varphi,n}} = v_{g,n}.
+$$
+La vitesse de déplacement de l'énergie, au sens de cet énoncé, est égale à la vitesse de groupe. On justifie ainsi, sur cet exemple, l'interprétation de la vitesse de groupe comme celle du déplacement de l'énergie.
+
+```{=latex}
+\newpage
+```
+
+:::
+
+## Pression de radiation ($\star\star$)
+
+**1.** Le champ électrique d'une onde lumineuse plane, monochromatique, de fréquence $\nu$, se propageant dans la direction et le sens de $\vec{u}_x$, est $\vec{E} = E_0\cos(\omega t - kx)\,\vec{u}_y$. L'éclairement $\mathcal{E}$ est la puissance moyenne qui traverse une surface d'aire unité perpendiculaire à la direction de propagation. Exprimer $\mathcal{E}$ en fonction de $\varepsilon_0$, $c$ et $E_0$.
+
+**2.** Cette onde est modélisée comme un faisceau de photons qui se propagent dans la direction et le sens de $\vec{u}_x$. L'énergie d'un photon est $\hbar\omega$ et sa quantité de mouvement $\hbar\vec{k}$, où $\hbar = h/(2\pi)$ est la constante de Planck réduite.
+
+**a.** Exprimer le nombre $N_0$ de photons qui traversent, par unité de temps, une surface d'aire unité perpendiculaire à $(Ox)$, en fonction de $\mathcal{E}$ et de la fréquence $\nu$.
+
+**b.** L'onde arrive sur une surface plane perpendiculaire à l'axe $(Ox)$, d'aire $S$, parfaitement réfléchissante. Les photons rebondissent sur cette surface.
+
+Quelle est la quantité de mouvement reçue par la paroi au cours d'un choc photon-paroi ? Quelle est la force subie par la paroi en fonction de $\mathcal{E}$, $S$ et $c$ ? Exprimer la pression $p$ subie par la paroi en fonction de $\mathcal{E}$ et $c$, puis en fonction de $\varepsilon_0$ et $E_0$.
+
+**c.** Reprendre la question ci-dessus lorsque la paroi est parfaitement absorbante.
+
+**d.** Calculer numériquement $\mathcal{E}$, $E_0$ et $p$ sur une paroi totalement absorbante pour un laser ayant un diamètre $d = 5{,}0\ \text{mm}$ et une puissance moyenne $\mathcal{P} = 100\ \text{W}$ (laser utilisé industriellement pour la découpe de feuilles).
+
+**3.** **a.** L'onde est maintenant absorbée par une sphère de rayon $a$, bien inférieur au rayon du faisceau. Quelle est, en fonction de $\mathcal{E}$, $a$ et $c$, la force $\vec{F}$ subie par la sphère ?
+
+**b.** Le Soleil donne au voisinage de la Terre, juste au-dessus de l'atmosphère terrestre, l'éclairement $\mathcal{E} = 1{,}4\cdot 10^3\ \text{W}\cdot\text{m}^{-2}$. L'émission est isotrope, la distance Terre-Soleil est égale à $D = 150\cdot 10^6\ \text{km}$ et, sur une surface de dimensions petites devant $D$, l'onde arrivant du Soleil est plane. Quelle est la puissance $\mathcal{P}_0$ émise par le Soleil ?
+
+**c.** Un objet sphérique, de rayon $a$, de masse volumique $\mu$, est, dans le vide interplanétaire, à la distance $r$ du Soleil et absorbe totalement le rayonnement solaire. Évaluer le rapport entre la force due à l'absorption du rayonnement solaire et la force gravitationnelle exercée par le Soleil sur cet objet dans les deux cas suivants :
+
+- météorite : $\mu = 3{,}0\cdot 10^3\ \text{kg}\cdot\text{m}^{-3}$ et $a = 1\ \text{m}$ ;
+- poussière interstellaire : $\mu = 1{,}0\cdot 10^3\ \text{kg}\cdot\text{m}^{-3}$ et $a = 0{,}1\ \mu\text{m}$.
+
+Commenter.
+
+On précise la constante de la gravitation universelle $\mathcal{G} = 6{,}67\cdot 10^{-11}\ \text{N}\cdot\text{m}^2\cdot\text{kg}^{-2}$ et la masse du Soleil $M_S = 2{,}0\cdot 10^{30}\ \text{kg}$.
+
+::: {.content-visible when-meta="solution"}
+
+### Solution
+
+**1.** L'éclairement est le flux moyen du vecteur de Poynting à travers une surface d'aire unité orthogonale à la direction de propagation. L'onde est plane, progressive et harmonique, donc
+$$
+\vec{B} = \frac{k\,\vec{u}_x}{\omega}\wedge\vec{E} = \frac{E_0}{c}\cos(\omega t - kx)\,\vec{u}_z \quad\text{car}\quad \frac{\omega}{k} = c.
+$$
+Puis $\vec{\Pi} = \dfrac{\vec{E}\wedge\vec{B}}{\mu_0} = \dfrac{E_0^2}{\mu_0 c}\cos^2(\omega t - kx)\,\vec{u}_x$ et $\langle\vec{\Pi}\rangle = \dfrac{E_0^2}{2\mu_0c}\,\vec{u}_x = \dfrac{\varepsilon_0cE_0^2}{2}\,\vec{u}_x$, dont le flux à travers une surface $S\,\vec{u}_x$ est $\langle\vec{\Pi}\rangle\cdot S\,\vec{u}_x = \dfrac{\varepsilon_0cE_0^2S}{2}$. Alors
+$$
+\mathcal{E} = \frac{\varepsilon_0 cE_0^2}{2}.
+$$
+
+**2.** **a.** Chaque photon a une énergie $h\nu$, donc l'énergie qui traverse la surface $S$ pendant la durée $\mathrm{d}t$ est égale à $\delta W = N_0h\nu S\,\mathrm{d}t$ (attention : $N_0$ est un nombre de photons par unité de temps et de surface). Elle est d'autre part égale à $\delta W = \mathcal{E}S\,\mathrm{d}t$. Alors
+$$
+N_0 = \frac{\mathcal{E}}{h\nu}.
+$$
+
+**b.** La quantité de mouvement du photon incident est $\vec{p}_i = \hbar\vec{k} = \dfrac{h}{2\pi}\dfrac{\omega}{c}\,\vec{u}_x = \dfrac{h\nu}{c}\,\vec{u}_x$. Le photon rebondit sur la surface ; la quantité de mouvement du photon réfléchi est donc $\vec{p}_r = -\dfrac{h\nu}{c}\,\vec{u}_x$. La paroi reçoit donc la quantité de mouvement
+$$
+\delta\vec{p}_{\text{paroi}} = -\delta\vec{p}_{\text{photon}} = 2\,\frac{h\nu}{c}\,\vec{u}_x.
+$$
+Entre $t$ et $t + \mathrm{d}t$, il y a $N_0S\,\mathrm{d}t$ photons qui arrivent sur la paroi ; celle-ci reçoit donc la quantité de mouvement $\Delta\vec{p} = N_0S\,\dfrac{2h\nu}{c}\,\mathrm{d}t\,\vec{u}_x = \vec{F}\,\mathrm{d}t$. La force subie par la paroi est
+$$
+\vec{F} = N_0S\,\frac{2h\nu}{c}\,\vec{u}_x = 2\mathcal{E}\,\frac{S}{c}\,\vec{u}_x.
+$$
+La pression subie par la paroi est donc $p = 2\dfrac{\mathcal{E}}{c} = \varepsilon_0E_0^2$.
+
+**c.** Si la paroi est totalement absorbante, elle reçoit la quantité de mouvement $\dfrac{h\nu}{c}\,\vec{u}_x$ au cours d'un choc, donc
+$$
+p = \frac{\mathcal{E}}{c} = \frac{\varepsilon_0E_0^2}{2}.
+$$
+
+**d.** $\mathcal{E} = \dfrac{\mathcal{P}}{S} = \dfrac{4\mathcal{P}}{\pi d^2} = 5{,}1\ \text{MW}\cdot\text{m}^{-2}$, $E_0 = \sqrt{\dfrac{2\mathcal{E}}{\varepsilon_0c}} = 6{,}2\cdot 10^4\ \text{V}\cdot\text{m}^{-1}$ et $p = \dfrac{\mathcal{E}}{c} = 1{,}7\cdot 10^{-2}\ \text{Pa}$.
+
+Cette pression est infime (elle doublerait pour une paroi réfléchissante : $3{,}4\cdot 10^{-2}\ \text{Pa}$), alors que l'éclairement est considérable : c'est l'échauffement, et non la pression de radiation, qui découpe les feuilles.
+
+```{=latex}
+\noindent
+\begin{minipage}[t]{0.58\linewidth}
+\vspace{0pt}
+\textbf{3.} \textbf{a.} Seule la demi-sphère tournée vers le faisceau est éclairée (figure ci-contre). On repère un point de sa surface par l'angle $\theta$ entre le rayon et l'axe $-\vec{u}_x$ (dirigé vers la source), et par l'angle $\varphi$ autour de $(Ox)$ : l'élément de surface vaut $\mathrm{d}S = a\,\mathrm{d}\theta\;a\sin\theta\,\mathrm{d}\varphi$. Sa normale faisant l'angle $\theta$ avec le faisceau, le nombre de photons qui l'atteignent entre $t$ et $t + \mathrm{d}t$ est $N_0\,\mathrm{d}S\cos\theta\,\mathrm{d}t$ (seule compte la surface projetée perpendiculairement au faisceau). Chaque photon absorbé cède $\dfrac{h\nu}{c}\,\vec{u}_x$ ; la sphère reçoit donc la quantité de mouvement :
+\end{minipage}
+\hfill
+\begin{minipage}[t]{0.38\linewidth}
+\vspace{0pt}
+\begin{center}
+\begin{tikzpicture}[scale=0.9, >=Stealth, every node/.style={font=\small}]
+  \fill[gray!30] (0,1.4) arc (90:270:1.4) -- cycle;
+  \draw (0,0) circle (1.4);
+  \foreach \yy in {-1.2,-0.6,0.6,1.2} \draw[->] (-3.2,\yy) -- (-2.1,\yy);
+  \draw[->] (-3.2,0) -- (-2.1,0);
+  \node[above] at (-2.65,1.3) {$\mathcal{E}$};
+  \draw[dashed] (-2.0,0) -- (0,0);
+  \draw[->] (0,0) -- (2.2,0) node[right] {$x$};
+  \coordinate (P) at (140:1.4);
+  \draw (0,0) -- (P);
+  \draw[->, thick] (P) -- ($(P)+(140:0.7)$) node[above left] {$\vec{n}$};
+  \fill (P) circle (1.5pt);
+  \node[right] at ($(P)+(0.05,0.05)$) {$\mathrm{d}S$};
+  \draw (0,0) ++(180:0.55) arc (180:140:0.55);
+  \node at (166:0.85) {$\theta$};
+  \fill (0,0) circle (1.2pt) node[below right] {$O$};
+\end{tikzpicture}
+\end{center}
+\end{minipage}
+```
+
+$$
+\Delta\vec{p} = \int_{\theta=0}^{\pi/2}\int_{\varphi=0}^{2\pi}\frac{h\nu}{c}N_0\cos\theta\,\mathrm{d}S\,\mathrm{d}t\,\vec{u}_x = \frac{h\nu}{c}N_0a^2\,\mathrm{d}t\,\vec{u}_x\int_{\theta=0}^{\pi/2}\sin\theta\cos\theta\,\mathrm{d}\theta\int_{\varphi=0}^{2\pi}\mathrm{d}\varphi = \frac{h\nu}{c}N_0\,\pi a^2\,\mathrm{d}t\,\vec{u}_x,
+$$
+ce qui correspond à la force
+$$
+\vec{F} = N_0\,\frac{h\nu}{c}\,\pi a^2\,\vec{u}_x = \frac{\mathcal{E}}{c}\,\pi a^2\,\vec{u}_x.
+$$
+On retrouve la force exercée sur un disque absorbant de rayon $a$ perpendiculaire au faisceau : seule la section efficace $\pi a^2$ intervient.
+
+**b.** $\mathcal{P}_0 = \mathcal{E}\,4\pi D^2 = 4{,}0\cdot 10^{26}\ \text{W}$.
+
+**c.** La force gravitationnelle subie par l'objet est dirigée vers le Soleil et vaut $F_{\text{grav}} = \mathcal{G}\,\dfrac{4}{3}\pi a^3\mu\,\dfrac{M_S}{r^2}$.
+
+À la distance $r$ du Soleil, l'éclairement est $\mathcal{E}(r) = \dfrac{\mathcal{P}_0}{4\pi r^2}$, donc la force due à l'absorption du rayonnement solaire s'écrit
+$$
+F_{\text{abs}} = \pi a^2\,\frac{\mathcal{E}(r)}{c} = \frac{a^2}{4r^2}\,\frac{\mathcal{P}_0}{c},
+$$
+dirigée en sens opposé à la force gravitationnelle. Le rapport des deux, indépendant de $r$, vaut
+$$
+\frac{F_{\text{abs}}}{F_{\text{grav}}} = \frac{3\mathcal{P}_0}{16\pi c\,\mathcal{G}M_S\,a\mu}.
+$$
+L'application numérique donne $F_{\text{abs}}/F_{\text{grav}} \simeq 2{,}0\cdot 10^{-7}$ dans le cas de la météorite et $F_{\text{abs}}/F_{\text{grav}} \simeq 6$ dans le cas de la poussière interstellaire.
+
+Dans le cas d'une météorite, la force due à l'absorption du rayonnement solaire est tout à fait négligeable devant l'attraction gravitationnelle. En revanche, dans le cas d'une poussière interstellaire, elle peut devenir plus importante que celle-ci : la résultante des forces sur la poussière est alors dirigée à l'opposé du Soleil, elle le fuit. Cela explique que la queue de poussières des comètes soit orientée à l'opposé du Soleil.
+
+```{=latex}
+\newpage
+```
+
+:::
+
+## Réflexion sur un métal sous incidence oblique ($\star\star$)
+
+```{=latex}
+\noindent
+\begin{minipage}[t]{0.5\linewidth}
+\vspace{0pt}
+Une onde plane monochromatique, de pulsation $\omega$, de vecteur d'onde $\vec{k}_i$, polarisée rectilignement selon le vecteur unitaire $\vec{u}$ (contenu dans le plan d'incidence, voir figure), se propage dans le vide et arrive sous une incidence $\alpha$ sur le plan $y = 0$ d'un métal conducteur parfait, occupant le demi-espace $y < 0$.
+
+\medskip
+Les champs électriques incident et réfléchi sont de la forme $\underline{\vec{E}}_i = E_0\,\vec{u}\exp\left(i\left(\omega t - \vec{k}_i\cdot\vec{r}\right)\right)$ et $\underline{\vec{E}}_r = \vec{E}_{0r}\exp\left(i\left(\omega t - \vec{k}_r\cdot\vec{r}\right)\right)$. On pose $k_0 = \dfrac{\omega}{c}$.
+\end{minipage}
+\hfill
+\begin{minipage}[t]{0.46\linewidth}
+\vspace{0pt}
+\begin{center}
+\begin{tikzpicture}[scale=0.9, >=Stealth, every node/.style={font=\small}]
+  % métal
+  \draw (-3,0) -- (3,0);
+  \foreach \i in {-2.9,-2.5,...,2.9} \draw (\i,0) -- ++(-0.2,-0.25);
+  \draw[->] (3,0) -- (3.5,0) node[right] {$x$};
+  \draw[dashed, ->] (0,0) -- (0,3.1) node[left] {$y$};
+  % rayons (alpha = 40 degrés)
+  \draw[dotted] (-2.2,2.62) -- (0,0) -- (2.2,2.62);
+  % onde incidente
+  \coordinate (Pi) at (-1.4,1.67);
+  \draw (Pi) circle (0.12); \fill (Pi) circle (0.035);
+  \node[left] at ($(Pi)+(-0.1,-0.15)$) {$\vec{B}_i$};
+  \draw[->, thick] (Pi) -- ++(40:0.8) node[above] {$\vec{E}_i$};
+  \draw[->, thick] (Pi) -- ++(-50:0.8) node[below left] {$\vec{k}_i$};
+  % onde réfléchie
+  \coordinate (Pr) at (1.4,1.67);
+  \draw (Pr) circle (0.12); \fill (Pr) circle (0.035);
+  \node[right] at ($(Pr)+(0.1,-0.15)$) {$\vec{B}_r$};
+  \draw[->, thick] (Pr) -- ++(140:0.8) node[above] {$\vec{E}_r$};
+  \draw[->, thick] (Pr) -- ++(50:0.8) node[above right] {$\vec{k}_r$};
+  % angles
+  \draw[->] (0,0) ++(90:0.8) arc (90:130:0.8);
+  \node at (110:1.05) {$\alpha$};
+  \draw[->] (0,0) ++(90:1.2) arc (90:50:1.2);
+  \node at (70:1.45) {$\alpha'$};
+  \node at (2.2,-0.55) {métal};
+\end{tikzpicture}
+\end{center}
+\end{minipage}
+```
+
+**1.** Quels sont les signes des angles $\alpha$ et $\alpha'$ ?
+
+**2.** Exprimer les normes de $\vec{k}_i$ et $\vec{k}_r$ en fonction de $k_0$.
+
+**3.** Exprimer les composantes de $\vec{k}_i$ et $\vec{k}_r$ dans la base $(\vec{u}_x, \vec{u}_y, \vec{u}_z)$.
+
+**4.** Exprimer les composantes de $\vec{E}_i$ et $\vec{E}_r$ dans la base $(\vec{u}_x, \vec{u}_y, \vec{u}_z)$.
+
+**5.** Exprimer $\alpha'$ en fonction de $\alpha$, puis $E_{0r}$ en fonction de $E_0$.
+
+**6.** Établir les champs magnétiques $\vec{B}_i$ et $\vec{B}_r$. Les amplitudes seront exprimées en fonction de $E_0$.
+
+**7.** Établir l'expression de la densité superficielle de charge $\sigma$ créée à l'interface.
+
+**8.** Établir l'expression du courant surfacique $\vec{\jmath}_s$ créé à l'interface.
+
+::: {.content-visible when-meta="solution"}
+
+### Solution
+
+**1.** L'axe $(Oz)$ sort de la feuille, donc $\alpha > 0$ et $\alpha' < 0$ (angles orientés dans le sens trigonométrique, comptés à partir de la normale $\vec{u}_y$). Il faudra donc prêter attention à $\sin\alpha'$, qui est négatif.
+
+**2.** L'onde réfléchie a la même pulsation $\omega$ que l'onde incidente (ce que l'on justifiera à la question 5) ; donc, attendu qu'elles se propagent dans le même milieu,
+$$
+k_i = \left\|\vec{k}_i\right\| = \frac{\omega}{c} = k_0 \qquad\text{et}\qquad k_r = \left\|\vec{k}_r\right\| = \frac{\omega}{c} = k_0.
+$$
+
+**3.**
+$$
+\vec{k}_i = k_0\begin{pmatrix}\sin\alpha \\ -\cos\alpha \\ 0\end{pmatrix}
+\qquad\text{et}\qquad
+\vec{k}_r = k_0\begin{pmatrix}-\sin\alpha' \\ \cos\alpha' \\ 0\end{pmatrix}.
+$$
+Attention : $\alpha' < 0$, donc $-\sin\alpha' > 0$, et la projection de $\vec{k}_r$ sur $\vec{u}_x$ est bien positive.
+
+**4.**
+$$
+\underline{\vec{E}}_i = E_0\begin{pmatrix}\cos\alpha \\ \sin\alpha \\ 0\end{pmatrix}e^{i\left(\omega t - \vec{k}_i\cdot\vec{r}\right)}
+\qquad\text{et}\qquad
+\underline{\vec{E}}_r = E_{0r}\begin{pmatrix}-\cos\alpha' \\ -\sin\alpha' \\ 0\end{pmatrix}e^{i\left(\omega t - \vec{k}_r\cdot\vec{r}\right)}.
+$$
+Attention : attendu que $\alpha' < 0$, $-\sin\alpha' > 0$, et la projection de $\vec{E}_r$ sur $\vec{u}_y$ est bien positive.
+
+**5.** La composante tangentielle du champ électrique, c'est-à-dire celle sur $\vec{u}_x$, est continue à l'interface en $y = 0$. Ainsi, $\forall x$, $\forall t$, $E_{i,tg}(x,0,t) + E_{r,tg}(x,0,t) = E_{\text{métal},tg}(x,0,t) = 0$, soit :
+$$
+E_0\cos\alpha\exp\left(i\left(\omega t - k_0\sin\alpha\,x\right)\right) - E_{0r}\cos\alpha'\exp\left(i\left(\omega t + k_0\sin\alpha'\,x\right)\right) = 0.
+$$
+Cette relation est vraie $\forall x$, donc $-k_0\sin\alpha = k_0\sin\alpha'$, soit $\alpha' = -\alpha$, car les angles sont compris entre $0$ et $\dfrac{\pi}{2}$ en valeur absolue : c'est la loi de la réflexion de Snell-Descartes.
+
+Attendu que cette relation est vraie $\forall t$, on retrouve que les deux ondes ont la même pulsation. Les exponentielles complexes se simplifient ; il reste $E_0\cos\alpha - E_{0r}\cos\alpha' = 0$, soit $E_{0r} = E_0$.
+
+**6.** L'onde est plane, progressive et harmonique, donc $\underline{\vec{B}}_i = \dfrac{\vec{k}_i}{\omega}\wedge\underline{\vec{E}}_i$. On développe le produit vectoriel ($\sin^2\alpha + \cos^2\alpha = 1$) et, attendu que $\dfrac{k_0}{\omega} = \dfrac{1}{c}$ :
+$$
+\underline{\vec{B}}_i = \frac{E_0}{c}\begin{pmatrix}0 \\ 0 \\ 1\end{pmatrix}\exp\left(i\left(\omega t - \vec{k}_i\cdot\vec{r}\right)\right).
+$$
+De même,
+$$
+\underline{\vec{B}}_r = \frac{\vec{k}_r}{\omega}\wedge\underline{\vec{E}}_r = \frac{E_0}{c}\begin{pmatrix}0 \\ 0 \\ 1\end{pmatrix}\exp\left(i\left(\omega t - \vec{k}_r\cdot\vec{r}\right)\right).
+$$
+
+**7.** La relation de passage à l'interface en $y = 0$, sur la composante normale du champ électrique, c'est-à-dire suivant $\vec{u}_y$, est, $\forall x$, $\forall t$ : $\left(\vec{E}_{\text{vide}}(x,0,t) - \vec{E}_{\text{métal}}(x,0,t)\right)\cdot\vec{u}_y = \dfrac{\sigma}{\varepsilon_0}$. Attendu que le champ est nul dans le métal parfait :
+$$
+E_0\sin\alpha\exp\left(i\left(\omega t - k_0\sin\alpha\,x\right)\right) - E_{0r}\sin\alpha'\exp\left(i\left(\omega t + k_0\sin\alpha'\,x\right)\right) = \frac{\underline{\sigma}}{\varepsilon_0},
+$$
+qui devient, avec $\alpha' = -\alpha$ et $E_{0r} = E_0$ : $\underline{\sigma} = 2\varepsilon_0E_0\sin\alpha\exp\left(i\left(\omega t - k_0\sin\alpha\,x\right)\right)$, soit en notation réelle
+$$
+\sigma = 2\varepsilon_0E_0\sin\alpha\cos\left(\omega t - k_0\sin\alpha\,x\right).
+$$
+
+**8.** La relation de passage à l'interface en $y = 0$, sur la composante tangentielle du champ magnétique, c'est-à-dire suivant $\vec{u}_x$ et $\vec{u}_z$, est, $\forall x$, $\forall t$ : $\vec{B}_{\text{vide},tg}(x,0,t) - \vec{B}_{\text{métal},tg}(x,0,t) = \mu_0\,\vec{\jmath}_s\wedge\vec{u}_y$. Attendu que le champ est nul dans le métal parfait :
+$$
+\frac{E_0}{c}\exp\left(i\left(\omega t - k_0\sin\alpha\,x\right)\right)\vec{u}_z + \frac{E_0}{c}\exp\left(i\left(\omega t + k_0\sin\alpha'\,x\right)\right)\vec{u}_z = \mu_0\,\underline{\vec{\jmath}}_s\wedge\vec{u}_y.
+$$
+$\vec{\jmath}_s$ doit être porté par $\vec{u}_x$ pour que son produit vectoriel avec $\vec{u}_y$ soit selon $\vec{u}_z$. Alors
+$$
+\underline{\vec{\jmath}}_s = \frac{2E_0}{\mu_0c}\exp\left(i\left(\omega t - k_0\sin\alpha\,x\right)\right)\vec{u}_x,
+\qquad\text{soit en notation réelle}\qquad
+\vec{\jmath}_s = \frac{2E_0}{\mu_0c}\cos\left(\omega t - k_0\sin\alpha\,x\right)\vec{u}_x.
+$$
+*Vérification :* la conservation de la charge surfacique, $\dfrac{\partial j_{s,x}}{\partial x} + \dfrac{\partial\sigma}{\partial t} = \dfrac{2E_0\sin\alpha}{\mu_0c}\,k_0\sin(\cdots) - 2\varepsilon_0E_0\sin\alpha\,\omega\sin(\cdots) = 0$, est bien satisfaite, puisque $\dfrac{k_0}{\mu_0c} = \dfrac{\omega}{\mu_0c^2} = \varepsilon_0\omega$.
+
+```{=latex}
+\newpage
+```
+
+:::
