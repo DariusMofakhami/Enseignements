@@ -1,0 +1,5 @@
+# Configuration Jekyll (GitHub Pages)
+# Les sources Quarto ne sont pas des pages du site :
+# Jekyll ne doit pas les interpréter (accolades TikZ/LaTeX prises pour du Liquid).
+exclude:
+  - "*.qmd"
