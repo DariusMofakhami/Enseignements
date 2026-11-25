@@ -1,0 +1,799 @@
+---
+title: "Planche d'Ondes électromagnétiques 2 (PC)"
+subtitle: "– Ondes dans les milieux conducteurs et les plasmas –"
+solution: false
+# solution: true
+header-left: "TD IPESUP 2026-2027"
+header-right: "Ondes électromagnétiques 2 (PC)"
+footer-left: "D. Mofakhami"
+footer-right: ""
+format:
+  pdf:
+    documentclass: article
+    template: td-template.tex
+    geometry: margin=2.5cm,headheight=28pt
+    fontsize: 11pt
+    number-sections: true
+    toc: false
+mainfont: "Latin Modern Roman"
+header-includes:
+  - \usepackage{esint}
+---
+
+<!--
+Pour compiler l'énoncé seul :        quarto render TD_ondes_EM_2.qmd
+Pour compiler avec les solutions :   quarto render TD_ondes_EM_2.qmd --metadata solution:true
+(ou changer directement "solution: true" dans l'en-tête ci-dessus)
+-->
+
+## Ondes dans l'océan (d'après Centrale) ($\star$)
+
+Pour tenir compte des propriétés de polarisabilité de l'eau de mer, il faut remplacer $\varepsilon_0$ par $\varepsilon = \varepsilon_0\varepsilon_r$ dans les équations de Maxwell. L'eau de mer a une permittivité électrique relative réelle $\varepsilon_r = 81$. La loi d'Ohm locale s'y applique avec $\gamma = 4\ \text{S}\cdot\text{m}^{-1}$. On cherche à déterminer l'équation de propagation des ondes électromagnétiques dans l'eau ainsi que les conditions de passage au niveau de l'interface air-océan.
+
+**Équation de propagation dans l'eau de mer**
+
+**1.** Montrer que la densité volumique de charge $\rho$ vérifie l'équation $\dfrac{\partial\rho}{\partial t} + \dfrac{\rho}{\tau} = 0$, où on exprimera $\tau$ en fonction de $\varepsilon$ et $\gamma$. Pour des ondes de fréquences inférieures à $1\ \text{MHz}$, en déduire qu'il est légitime de prendre par la suite $\rho = 0$.
+
+**2.** Après avoir comparé $\gamma$ à $\varepsilon\omega$ pour des ondes de fréquences inférieures à $1\ \text{MHz}$, simplifier l'équation de Maxwell-Ampère. En déduire l'équation aux dérivées partielles vérifiée par le champ électrique.
+
+**Réflexion et transmission à l'interface air-eau**
+
+On appelle $Oz$ l'axe vertical descendant, et on choisit la surface de l'océan, supposée localement plane, en $z = 0$, l'eau se trouvant donc dans la région des $z > 0$.
+
+**3.** Écrire, en notation complexe, l'expression du champ électromagnétique d'une onde plane monochromatique (de pulsation temporelle $\omega$) progressive polarisée rectilignement selon l'axe $Ox$, se propageant dans l'air (assimilé au vide) vers l'océan dans une direction perpendiculaire à l'interface air-océan. On appellera $E_0$ et $B_0$ les amplitudes respectives des champs électrique et magnétique et on notera $k$ la norme du vecteur d'onde associé. Quelle est la relation entre $E_0$ et $B_0$ ?
+
+**4.** En déduire la moyenne temporelle du vecteur de Poynting $\vec{P}$ en fonction de $\varepsilon_0$, $c$ et $E_0$.
+
+L'onde précédente arrive à la surface de l'eau et on cherche, dans l'eau, une solution de l'équation de propagation établie à la question 2 sous la forme ($\underline{t}$ est une constante complexe) :
+$$
+\underline{\vec{E}}_t = \underline{t}\,E_0\,\vec{u}_x\exp\left(j\left(\omega t - \underline{k}_t z\right)\right).
+$$
+
+**5.** Exprimer $\underline{k}_t$ en fonction de $\delta = \sqrt{\dfrac{2}{\omega\mu_0\gamma}}$.
+
+Le champ électrique réfléchi à l'interface air-océan est ($\underline{r}$ est un coefficient complexe) :
+$$
+\underline{\vec{E}}_r = \underline{r}\,E_0\,\vec{u}_x\exp\left(j\left(\omega t + k_r z\right)\right).
+$$
+
+**6.** Quelles sont les conditions de passage pour le champ électromagnétique à cette interface ? En déduire $\underline{r}$ et $\underline{t}$, qu'on exprimera en fonction de $\underline{\alpha} = \dfrac{a}{1 - j}$ où $a = \dfrac{\delta\omega}{c} = \sqrt{\dfrac{2\omega\varepsilon_0}{\gamma}}$.
+
+**7.** Déduire des résultats précédents l'expression complète du champ électromagnétique transmis en faisant apparaître un facteur d'atténuation et un facteur de propagation. Préciser la vitesse de phase.
+
+**8.** Déterminer la moyenne temporelle du vecteur de Poynting $\vec{P}$ de l'onde transmise en fonction de $\varepsilon_0$, $c$, $a$, $E_0$ et $z/\delta$. On pourra utiliser la formule $\left\langle\vec{E}\wedge\vec{B}\right\rangle = \dfrac{1}{2}\operatorname{Re}\left(\underline{\vec{E}}\wedge\underline{\vec{B}}^{*}\right)$.
+
+**9.** En déduire le facteur de transmission en énergie $T$ en fonction de $a$. Donner la valeur numérique de $\dfrac{\langle P(z,t)\rangle}{\langle P(0,t)\rangle}$ à une profondeur $z = 10\ \text{m}$ pour des ondes de fréquences $1{,}0\ \text{kHz}$ et $1{,}0\ \text{MHz}$. Conclure.
+
+::: {.content-visible when-meta="solution"}
+
+### Solution
+
+**1.** L'équation de Maxwell-Gauss $\operatorname{div}\vec{E} = \dfrac{\rho}{\varepsilon}$ et l'équation de conservation de la charge $\dfrac{\partial\rho}{\partial t} = -\operatorname{div}\vec{j} = -\operatorname{div}\left(\gamma\vec{E}\right)$ impliquent
+$$
+\frac{\partial\rho}{\partial t} + \frac{\gamma}{\varepsilon}\,\rho = 0.
+$$
+Alors $\rho(M,t) = \rho(M,0)\exp\left(-\dfrac{t}{\tau}\right)$ s'annule après quelques
+$$
+\tau = \frac{\varepsilon}{\gamma} = 1{,}8\cdot 10^{-10}\ \text{s} = 1{,}8\cdot 10^{-4}\,T,
+$$
+où $T$ est la période de l'onde ($f = 1\ \text{MHz}$, et a fortiori pour des fréquences plus basses). À l'échelle de temps de l'onde, on a donc immédiatement $\rho = 0$.
+
+**2.** Pour des ondes harmoniques :
+$$
+\frac{\left\|\varepsilon\,\dfrac{\partial\vec{E}}{\partial t}\right\|}{\left\|\vec{j}_{th}\right\|} = \frac{\varepsilon\omega E}{\gamma E} = \frac{\varepsilon\omega}{\gamma} \leqslant 1{,}1\cdot 10^{-3}.
+$$
+Le courant de déplacement est négligeable : $\overrightarrow{\operatorname{rot}}\,\vec{B} = \mu_0\vec{j} = \mu_0\gamma\vec{E}$.
+
+Puis $\overrightarrow{\operatorname{rot}}\left(\overrightarrow{\operatorname{rot}}\,\vec{E}\right) = -\dfrac{\partial}{\partial t}\overrightarrow{\operatorname{rot}}\,\vec{B}$, qui se développe en $\overrightarrow{\operatorname{grad}}\underbrace{\left(\operatorname{div}\vec{E}\right)}_{0} - \Delta\vec{E} = -\mu_0\gamma\dfrac{\partial\vec{E}}{\partial t}$, et donc
+$$
+\Delta\vec{E} = \mu_0\gamma\,\frac{\partial\vec{E}}{\partial t} \qquad (\text{équation de diffusion}).
+$$
+
+```{=latex}
+\noindent
+\begin{minipage}[t]{0.6\linewidth}
+\vspace{0pt}
+\textbf{3.} L'onde se déplace dans le sens des $z$ croissants dans le vide illimité ($\omega/k = c$) :
+\[
+\underline{\vec{E}} = E_0\,\vec{u}_x\exp\left(j(\omega t - kz)\right)
+\]
+\[
+\Rightarrow\ \underline{\vec{B}} = \frac{k\,\vec{u}_z}{\omega}\wedge\underline{\vec{E}} = \frac{E_0}{c}\,\vec{u}_y\exp\left(j(\omega t - kz)\right),
+\]
+d'où $B_0 = \dfrac{E_0}{c}$.
+\end{minipage}
+\hfill
+\begin{minipage}[t]{0.36\linewidth}
+\vspace{0pt}
+\begin{center}
+\begin{tikzpicture}[scale=0.8, >=Stealth, every node/.style={font=\small}]
+  \fill[blue!12] (-2.4,0) rectangle (2.4,-2.2);
+  \draw (-2.4,0) -- (2.4,0);
+  \draw[->] (1.9,1.7) -- (1.9,-2.6) node[right] {$z$};
+  \node[right] at (1.95,0.2) {$0$};
+  \node at (-1.5,1.4) {air};
+  \node at (-1.3,-1.8) {océan};
+  \draw[->, thick] (-0.7,1.6) -- (-0.7,0.1);
+  \node[left] at (-0.7,0.9) {\scriptsize incidente};
+  \draw[->, thick] (0.3,0.1) -- (0.3,1.6);
+  \node[right] at (0.3,0.9) {\scriptsize réfléchie};
+  \draw[->, thick] (-0.2,-0.1) -- (-0.2,-1.5);
+  \node[right] at (-0.2,-0.8) {\scriptsize transmise};
+\end{tikzpicture}
+\end{center}
+\end{minipage}
+```
+
+**4.** $\vec{P} = \dfrac{\vec{E}\wedge\vec{B}}{\mu_0} = \dfrac{E_0^2}{\mu_0c}\cos^2(\omega t - kz)\,\vec{u}_z \quad\Rightarrow\quad \langle\vec{P}\rangle = \dfrac{\varepsilon_0E_0^2}{2}\,c\,\vec{u}_z$.
+
+**5.** En reportant $\underline{\vec{E}}_t$ dans l'équation de la question 2 : $(-j\underline{k}_t)^2\,\underline{\vec{E}}_t = \mu_0\gamma\,j\omega\,\underline{\vec{E}}_t$, d'où
+$$
+\underline{k}_t^2 = -j\omega\mu_0\gamma = \omega\mu_0\gamma\exp\left(-j\frac{\pi}{2}\right)
+\qquad\Rightarrow\qquad
+\underline{k}_t = \pm\sqrt{\omega\mu_0\gamma}\,\frac{1 - j}{\sqrt{2}} = \pm\frac{1 - j}{\delta},
+$$
+et $\underline{\vec{E}}_t$ devient $\underline{\vec{E}}_t = \underline{t}\,E_0\,\vec{u}_x\exp\left(\mp\dfrac{z}{\delta}\right)\exp\left(j\left(\omega t \mp \dfrac{z}{\delta}\right)\right)$.
+
+L'onde est amortie et se propage suivant les $z$ croissants si $\underline{k}_t = \dfrac{1 - j}{\delta}$.
+
+**6.** $\vec{E}$ est tangent à l'interface, donc il est continu : $\underline{\vec{E}}_i(0,t) + \underline{\vec{E}}_r(0,t) = \underline{\vec{E}}_t(0,t)$ implique $1 + \underline{r} = \underline{t}$.
+
+L'eau n'a pas une conductivité infinie, donc il n'y a pas de courant surfacique, $\vec{\jmath}_s = \vec{0}$ ; $\vec{B}$ est continu : $\underline{\vec{B}}_i(0,t) + \underline{\vec{B}}_r(0,t) = \underline{\vec{B}}_t(0,t)$, où
+$$
+\underline{\vec{B}}_r = -\frac{k\,\vec{u}_z}{\omega}\wedge\underline{\vec{E}}_r = -\frac{\underline{r}E_0}{c}\,\vec{u}_y\exp\left(j(\omega t + kz)\right)
+\quad\text{et}\quad
+\underline{\vec{B}}_t = \frac{\underline{k}_t\,\vec{u}_z}{\omega}\wedge\underline{\vec{E}}_t = \underline{t}\,E_0\,\frac{\underline{k}_t}{\omega}\,\vec{u}_y\exp\left(j(\omega t - \underline{k}_tz)\right).
+$$
+*Remarque :* $k_r = k$, car les ondes incidente et réfléchie ont la même pulsation $\omega$ dans le même milieu (même équation de dispersion).
+
+Ainsi $1 - \underline{r} = \underline{t}\,\dfrac{\underline{k}_t}{\omega}\,c = \underline{t}\,(1 - j)\,\dfrac{c}{\delta\omega} = \dfrac{\underline{t}}{\underline{\alpha}}$, et finalement
+$$
+\underline{r} = \frac{\underline{\alpha} - 1}{\underline{\alpha} + 1}
+\qquad\text{et}\qquad
+\underline{t} = \frac{2\underline{\alpha}}{\underline{\alpha} + 1}.
+$$
+
+**7.** Le champ électromagnétique transmis s'écrit :
+$$
+\begin{aligned}
+\underline{\vec{E}}_t &= \frac{2\underline{\alpha}}{\underline{\alpha} + 1}\,E_0\,\vec{u}_x\underbrace{\exp\left(-\frac{z}{\delta}\right)}_{\text{atténuation}}\underbrace{\exp\left(j\left(\omega t - \frac{z}{\delta}\right)\right)}_{\text{propagation}}, \\
+\underline{\vec{B}}_t &= \frac{2\underline{\alpha}}{\underline{\alpha} + 1}\,E_0\,\frac{1 - j}{\delta\omega}\,\vec{u}_y\exp\left(-\frac{z}{\delta}\right)\exp\left(j\left(\omega t - \frac{z}{\delta}\right)\right).
+\end{aligned}
+$$
+La vitesse de phase est $v_\varphi = \dfrac{\omega}{\operatorname{Re}(\underline{k}_t)} = \omega\delta$.
+
+**8.** Avec $\delta\omega = ac$ :
+$$
+\underline{\vec{E}}_t\wedge\underline{\vec{B}}_t^{*} = \left|\frac{2\underline{\alpha}}{\underline{\alpha} + 1}\right|^2E_0^2\,\frac{1 + j}{\delta\omega}\,\vec{u}_z\exp\left(-2\frac{z}{\delta}\right)
+\quad\text{où}\quad
+\left|\frac{2\underline{\alpha}}{\underline{\alpha} + 1}\right|^2 = \left|\frac{2a}{a + 1 - j}\right|^2 = \frac{4a^2}{(a + 1)^2 + 1},
+$$
+soit
+$$
+\underline{\vec{E}}_t\wedge\underline{\vec{B}}_t^{*} = \frac{4a^2}{a^2 + 2a + 2}\,E_0^2\,\frac{1 + j}{ac}\,\vec{u}_z\exp\left(-2\frac{z}{\delta}\right),
+\qquad
+\left\langle\vec{E}_t\wedge\vec{B}_t\right\rangle = \frac{1}{2}\operatorname{Re}\left(\underline{\vec{E}}_t\wedge\underline{\vec{B}}_t^{*}\right) = \frac{2a}{a^2 + 2a + 2}\,\frac{E_0^2}{c}\,\vec{u}_z\exp\left(-2\frac{z}{\delta}\right),
+$$
+et enfin
+$$
+\langle\vec{P}_t\rangle = \frac{2a}{a^2 + 2a + 2}\,\varepsilon_0E_0^2\,c\,\vec{u}_z\exp\left(-2\frac{z}{\delta}\right).
+$$
+
+**9.** $T = \dfrac{\langle P_t(0,t)\rangle}{\langle P_i(0,t)\rangle} = \dfrac{4a}{a^2 + 2a + 2}$ et $\dfrac{\langle P_t(z,t)\rangle}{\langle P_t(0,t)\rangle} = \exp\left(-2\dfrac{z}{\delta}\right)$, d'où le tableau suivant :
+
+```{=latex}
+\begin{center}
+\renewcommand{\arraystretch}{1.6}
+\begin{tabular}{|c|c|c|}
+\hline
+$f$ (Hz) & $10^3$ & $10^6$ \\ \hline
+$\delta$ (m) & $8{,}0$ & $0{,}25$ \\ \hline
+$T \simeq 2a$ & $3\cdot 10^{-4}$ & $1\cdot 10^{-2}$ \\ \hline
+$\dfrac{\langle P_t(10\ \text{m},t)\rangle}{\langle P_t(0,t)\rangle}$ & $8{,}1\cdot 10^{-2}$ & $3{,}0\cdot 10^{-35}$ \\ \hline
+\end{tabular}
+\end{center}
+```
+
+($a \ll 1$, donc $T \simeq 2a$ : l'essentiel de l'énergie incidente est déjà réfléchi à la surface.) Les ondes électromagnétiques utiles en communication, autour du MHz, sont totalement absorbées par l'eau de mer. Les communications directes avec un sous-marin en plongée sont impossibles à ces fréquences : il faut soit monter en surface, soit utiliser des ondes de très basse fréquence (moins atténuées, mais de très faible débit), soit passer par des ondes ultrasonores.
+
+```{=latex}
+\newpage
+```
+
+:::
+
+## Réflexion métallique et ionisation (d'après Centrale) ($\star\star$)
+
+Lors de la réflexion d'une onde électromagnétique de forte intensité sur une surface métallique, celle-ci risque d'être endommagée du fait de l'ionisation du milieu sous l'effet du champ électrique. Le but de ce problème est de déterminer l'ordre de grandeur de la puissance maximale de l'onde incidente pour éviter ce phénomène.
+
+Le métal (de l'or) occupe tout le demi-espace $z > 0$, le demi-espace $z < 0$ étant de l'air assimilé au vide. L'onde incidente est supposée monochromatique et se propage dans le vide suivant l'axe $Oz$ dans le sens des $z$ croissants (incidence normale). La longueur d'onde dans le vide de cette onde est $\lambda = 1050\ \text{nm}$.
+
+**A — Propagation d'une onde électromagnétique dans le métal**
+
+Calculons la conductivité du milieu. Le métal est constitué d'ions et d'électrons libres. On note $n$ le nombre d'électrons libres par unité de volume, $q = -e$ la charge d'un électron et $m$ sa masse. La vitesse d'un électron au point $M$ à l'instant $t$ est notée $\vec{v}(M,t)$.
+
+On adopte le modèle suivant (modèle de Drude) :
+
+- les électrons sont traités dans le cadre de la mécanique classique ;
+- le déplacement des électrons est faible devant la longueur d'onde, et l'accélération des électrons en $M$ est $\dfrac{\partial\vec{v}}{\partial t}(M,t)$ ;
+- les électrons subissent de la part du réseau cristallin une force de la forme $-\dfrac{m}{\tau}\,\vec{v}(M,t)$ ;
+- l'effet du champ magnétique sur un électron est négligeable.
+
+**1.** Que représente $\tau$ ?
+
+**2.** En appliquant le principe fondamental de la dynamique à un électron, donner l'équation différentielle vérifiée par $\vec{v}(M,t)$.
+
+On se place pour toute la suite dans le cas d'un régime sinusoïdal forcé de pulsation $\omega$ : $\vec{v}(M,t) = \operatorname{Re}\left(\underline{\vec{v}}(M,t)\right)$ avec $\underline{\vec{v}}(M,t) = \underline{\vec{v}}(M)\,e^{j\omega t}$.
+
+**3.** Donner l'expression de $\underline{\vec{v}}(M,t)$ en fonction du champ électrique complexe $\underline{\vec{E}}(M,t)$.
+
+**4.** Justifier que la contribution des ions au vecteur densité de courant électrique $\underline{\vec{J}}(M,t)$ soit négligeable.
+
+**5.** Montrer que l'on peut écrire $\underline{\vec{J}}(M,t) = \underline{\sigma}\,\underline{\vec{E}}(M,t)$ avec $\underline{\sigma} = \dfrac{\sigma_0}{1 + j\omega\tau}$, où $\sigma_0$ est une constante réelle à exprimer en fonction des données. À quoi correspond $\sigma_0$ ?
+
+**6.** On donne : masse volumique de l'or $\mu = 19300\ \text{kg}\cdot\text{m}^{-3}$, masse molaire de l'or $M = 197\ \text{g}\cdot\text{mol}^{-1}$ et $\sigma_0 = 4{,}5\cdot 10^7\ \text{S}\cdot\text{m}^{-1}$.
+
+En supposant que chaque atome donne un électron libre, calculer la densité d'électrons $n$ dans l'or ainsi que la constante $\tau$.
+
+Montrer, en tenant compte des applications numériques précédentes, que l'on peut simplifier l'expression de la conductivité à $\underline{\sigma} = -j\dfrac{nq^2}{m\omega}$.
+
+On suppose que le milieu n'est pas magnétique et qu'à tout instant et en chaque point la densité volumique de charge électrique est nulle.
+
+**7.** Écrire les équations de Maxwell vérifiées par les champs électrique et magnétique dans le conducteur.
+
+**8.** En déduire l'équation d'onde vérifiée par le champ électrique.
+
+On cherche à étudier la propagation d'un champ de la forme $\underline{\vec{E}}(M,t) = \underline{E}_0\,e^{j(\omega t - kz)}\,\vec{u}_x$.
+
+**9.** Dans quelle direction l'onde se propage-t-elle ? Comment est-elle polarisée ?
+
+**10.** Montrer que $k$ doit être solution de $k^2 = \dfrac{\omega^2 - \omega_p^2}{c^2}$, où $c$ est la vitesse de la lumière dans le vide et $\omega_p$ une constante caractéristique du matériau dont on donnera l'expression.
+
+**11.** Calculer $\omega_p$ et montrer que $\omega^2$ est négligeable devant $\omega_p^2$.
+
+**12.** En déduire $k$ en fonction de $\omega_p$ et $c$ ainsi que les expressions des champs électrique et magnétique. Quelle est la nature de l'onde ?
+
+**13.** Calculer numériquement la distance caractéristique sur laquelle les champs sont non négligeables. Justifier l'hypothèse de milieu semi-infini.
+
+**B — Réflexion d'une onde électromagnétique**
+
+Nous voulons exprimer l'amplitude complexe du champ dans le conducteur en fonction de l'amplitude de l'onde incidente.
+
+```{=latex}
+\begin{center}
+\begin{tikzpicture}[scale=0.9, >=Stealth, every node/.style={font=\small}]
+  \fill[gray!40] (0,-1.2) rectangle (4,1.2);
+  \draw[->] (-4.2,0) -- (4.6,0) node[right] {$z$};
+  \node[below left] at (0,0) {$0$};
+  \draw[->, thick] (-3.6,0.85) -- (-1.0,0.85);
+  \node at (-2.3,0.4) {onde incidente};
+  \draw[->, thick] (-1.0,-0.85) -- (-3.6,-0.85);
+  \node at (-2.3,-0.4) {onde réfléchie};
+  \draw[->, thick] (0.6,0.85) -- (3.2,0.85);
+  \node at (1.9,0.4) {onde transmise};
+  \node at (-0.6,-1.5) {\textit{vide}};
+  \node at (0.6,-1.5) {\textit{métal}};
+\end{tikzpicture}
+\end{center}
+```
+
+Les champs électriques des ondes incidente et réfléchie dans le vide sont respectivement :
+$$
+\underline{\vec{E}}_i(z,t) = E_0\,e^{j\omega(t - z/c)}\,\vec{u}_x
+\qquad\text{et}\qquad
+\underline{\vec{E}}_r(z,t) = \underline{r}\,E_0\,e^{j\omega(t + z/c)}\,\vec{u}_x,
+$$
+où $\underline{r}$ est le coefficient, éventuellement complexe, de réflexion.
+
+**14.** Donner les expressions des champs magnétiques correspondants.
+
+**15.** Quelles relations les champs électriques et magnétiques des ondes incidente, réfléchie et transmise doivent-ils vérifier à l'interface ?
+
+**16.** En déduire l'expression du coefficient de réflexion. Que peut-on dire de l'amplitude de l'onde réfléchie par rapport à celle de l'onde incidente ?
+
+**17.** Donner l'expression de l'amplitude $E(0) = \left|\underline{E}(0)\right|$ du champ électrique à la surface du conducteur en fonction de $E_0$, $\omega$ et $\omega_p$.
+
+**18.** On note $v_0$ la vitesse maximale atteinte par les électrons dans le conducteur. En tenant compte des ordres de grandeur de $\omega$ et $\omega_p$, montrer que :
+$$
+v_0 = 2E_0\sqrt{\frac{\varepsilon_0}{nm}}.
+$$
+
+**C — Ionisation dans le métal, limite en puissance**
+
+Les électrons accélérés risquent d'ioniser par impact les atomes voisins ; l'équilibre de la matière ainsi rompu provoque l'éjection de particules hautement ionisées et la destruction du dépôt.
+
+**19.** Sachant que l'or a pour numéro atomique $Z = 79$ et un rayon atomique $r_a = 140\ \text{pm}$, estimer l'ordre de grandeur de l'énergie nécessaire pour provoquer une ionisation. Calculer cette énergie.
+
+En fait, les tables donnent une énergie de l'ordre de $9\ \text{eV}$. Comment peut-on expliquer l'écart entre les deux valeurs ? On prendra la valeur tabulée pour la suite des calculs.
+
+**20.** En supposant que lors d'un choc électron-ion toute l'énergie cinétique de l'électron est transmise à l'ion, quel est l'ordre de grandeur de la vitesse susceptible de créer une ionisation supplémentaire ?
+
+**21.** Quelle est l'amplitude du champ électrique de l'onde incidente susceptible de donner lieu à une telle vitesse ?
+
+**22.** Calculer le vecteur de Poynting de l'onde incidente. Quelle est la puissance moyenne de cette onde sachant que la section du faisceau est de l'ordre de $260\ \text{cm}^2$ ?
+
+**23.** Expérimentalement, pour une impulsion d'une picoseconde, on mesure un seuil d'endommagement de $0{,}5\ \text{J}\cdot\text{cm}^{-2}$. Comparer au résultat précédent et commenter la pertinence du modèle.
+
+**D — Données**
+
+**24.** Préciser les unités des données suivantes :
+
+```{=latex}
+\begin{center}
+\begin{tabular}{ll}
+Célérité de la lumière dans le vide & $c = 3{,}00\cdot 10^{8}$ SI \\
+Perméabilité du vide & $\mu_0 = 4\pi\cdot 10^{-7}$ SI \\
+Permittivité du vide & $\varepsilon_0 = 8{,}85\cdot 10^{-12}$ SI \\
+Charge de l'électron & $q = -e = -1{,}60\cdot 10^{-19}$ SI \\
+Masse de l'électron & $m = 9{,}11\cdot 10^{-31}$ SI \\
+Constante d'Avogadro & $\mathcal{N}_A = 6{,}02\cdot 10^{23}$ SI
+\end{tabular}
+\end{center}
+```
+
+::: {.content-visible when-meta="solution"}
+
+### Solution
+
+**1.** $\tau$ est le **temps moyen entre deux chocs** d'un porteur de charge (temps de relaxation).
+
+**2.** $m\dfrac{\partial\vec{v}}{\partial t} = -e\vec{E} - \dfrac{m}{\tau}\,\vec{v}$ (pesanteur négligée devant la force électrique).
+
+**3.** $mj\omega\,\underline{\vec{v}} = -e\underline{\vec{E}} - \dfrac{m}{\tau}\,\underline{\vec{v}} \quad\Rightarrow\quad \underline{\vec{v}} = -\dfrac{e\tau}{m}\,\dfrac{1}{1 + j\tau\omega}\,\underline{\vec{E}}$.
+
+**4.** Dans un métal, les ions, liés au réseau cristallin et beaucoup plus lourds, sont fixes, alors que les électrons sont mobiles.
+
+**5.** $\underline{\vec{J}} = n(-e)\,\underline{\vec{v}} = \dfrac{ne^2\tau}{m}\,\dfrac{1}{1 + j\tau\omega}\,\underline{\vec{E}}$, donc $\sigma_0 = \dfrac{ne^2\tau}{m}$ : $\sigma_0$ est la conductivité électrique statique.
+
+**6.** $n = \mathcal{N}_A\,\dfrac{\mu}{M} = 5{,}9\cdot 10^{28}\ \text{m}^{-3} \quad\Rightarrow\quad \tau = \dfrac{m\sigma_0}{ne^2} = 2{,}7\cdot 10^{-14}\ \text{s}$.
+
+Dans le vide, $\dfrac{\omega}{k} = c = \dfrac{\omega\lambda}{2\pi}$ ; ainsi, avec $\lambda = 1050\ \text{nm}$, $\omega = \dfrac{2\pi c}{\lambda} = 1{,}8\cdot 10^{15}\ \text{rad}\cdot\text{s}^{-1}$.
+
+D'où $\omega\tau = 49 \gg 1$, donc $\underline{\sigma} \simeq \dfrac{ne^2\tau}{m}\,\dfrac{1}{j\tau\omega} = -j\dfrac{nq^2}{m\omega}$.
+
+**7.** Avec $\rho = 0$ :
+$$
+\operatorname{div}\vec{E} = 0, \qquad \operatorname{div}\vec{B} = 0, \qquad \overrightarrow{\operatorname{rot}}\,\vec{E} = -\frac{\partial\vec{B}}{\partial t}, \qquad \overrightarrow{\operatorname{rot}}\,\vec{B} = \mu_0\vec{J} + \varepsilon_0\mu_0\frac{\partial\vec{E}}{\partial t}.
+$$
+
+**8.** $\overrightarrow{\operatorname{rot}}\left(\overrightarrow{\operatorname{rot}}\,\underline{\vec{E}}\right) = -\dfrac{\partial}{\partial t}\overrightarrow{\operatorname{rot}}\,\underline{\vec{B}} \quad\Rightarrow\quad \overrightarrow{\operatorname{grad}}\left(\operatorname{div}\underline{\vec{E}}\right) - \Delta\underline{\vec{E}} = -\mu_0\underline{\sigma}\dfrac{\partial\underline{\vec{E}}}{\partial t} - \varepsilon_0\mu_0\dfrac{\partial^2\underline{\vec{E}}}{\partial t^2}$.
+
+Avec $\operatorname{div}\vec{E} = 0$ :
+$$
+\Delta\underline{\vec{E}} - \frac{1}{c^2}\,\frac{\partial^2\underline{\vec{E}}}{\partial t^2} = \mu_0\underline{\sigma}\,\frac{\partial\underline{\vec{E}}}{\partial t}
+$$
+(écrite en notation complexe, puisque $\underline{\sigma}$ dépend de $\omega$).
+
+**9.** L'onde se propage dans le sens des $z$ croissants ; elle est polarisée rectilignement suivant $\vec{u}_x$.
+
+**10.** Le champ proposé est solution de l'équation de propagation si :
+$$
+-k^2\underline{\vec{E}} + \frac{\omega^2}{c^2}\,\underline{\vec{E}} = \mu_0\underline{\sigma}\,j\omega\,\underline{\vec{E}} = \frac{\mu_0ne^2}{m}\,\underline{\vec{E}}.
+$$
+Avec $\underline{\vec{E}} \neq \vec{0}$, $k^2 = \dfrac{\omega^2}{c^2} - \dfrac{\mu_0ne^2}{m} = \dfrac{\omega^2}{c^2} - \dfrac{1}{c^2}\,\dfrac{ne^2}{m\varepsilon_0}$, et donc
+$$
+k^2 = \frac{\omega^2 - \omega_p^2}{c^2} \qquad\text{où}\qquad \omega_p = \sqrt{\frac{ne^2}{m\varepsilon_0}} \quad(\text{pulsation plasma}).
+$$
+
+**11.** $\omega_p = 1{,}4\cdot 10^{16}\ \text{rad}\cdot\text{s}^{-1} \gg \omega = 1{,}8\cdot 10^{15}\ \text{rad}\cdot\text{s}^{-1}$, soit $\left(\dfrac{\omega}{\omega_p}\right)^2 \simeq 2\cdot 10^{-2} \ll 1$.
+
+**12.** $k^2 \simeq -\dfrac{\omega_p^2}{c^2}$, donc $k = \pm j\dfrac{\omega_p}{c}$, et $\underline{\vec{E}}$ devient $\underline{\vec{E}}(M,t) = \underline{E}_0\exp(j\omega t)\exp\left(\pm\dfrac{\omega_p}{c}z\right)\vec{u}_x$.
+
+L'onde doit être amortie quand $z$ croît, ainsi
+$$
+k = -j\frac{\omega_p}{c} \qquad\text{et}\qquad \underline{\vec{E}}(z,t) = \underline{E}_0\exp(j\omega t)\exp\left(-\frac{\omega_p}{c}z\right)\vec{u}_x.
+$$
+L'équation de Maxwell-Faraday donne, comme pour une onde plane mais avec $k \in \mathbb{C}$ :
+$$
+\underline{\vec{B}} = \frac{k\,\vec{u}_z}{\omega}\wedge\underline{\vec{E}} = -j\,\frac{\omega_p}{\omega}\,\frac{\underline{E}_0}{c}\exp(j\omega t)\exp\left(-\frac{\omega_p}{c}z\right)\vec{u}_y.
+$$
+On obtient une **onde évanescente** : les champs oscillent en phase en tout point et leur amplitude décroît exponentiellement, sans propagation.
+
+**13.** L'onde est amortie sur une distance caractéristique $\delta = \dfrac{c}{\omega_p} = 2{,}2\cdot 10^{-8}\ \text{m}$. Au-delà de $5\delta \simeq 0{,}1\ \mu\text{m}$, il n'y a plus d'onde : dès que l'épaisseur du dépôt d'or dépasse quelques dixièmes de micromètre, tout se passe comme si le métal était infini suivant $\vec{u}_z$.
+
+**14.** On manipule des ondes planes progressives harmoniques avec $k = \dfrac{\omega}{c}$ :
+$$
+\underline{\vec{B}}_i = \frac{k\,\vec{u}_z}{\omega}\wedge\underline{\vec{E}}_i = \frac{E_0}{c}\,e^{j\omega(t - z/c)}\,\vec{u}_y,
+\qquad
+\underline{\vec{B}}_r = -\frac{k\,\vec{u}_z}{\omega}\wedge\underline{\vec{E}}_r = -\frac{\underline{r}E_0}{c}\,e^{j\omega(t + z/c)}\,\vec{u}_y.
+$$
+
+**15.** $\vec{E}$ est tangent à l'interface : $\forall t$, $\underline{\vec{E}}_i(0,t) + \underline{\vec{E}}_r(0,t) = \underline{\vec{E}}_t(0,t)$.
+
+$\vec{B}$ est tangent à l'interface. La conductivité du métal n'est pas infinie, il n'y a donc pas de courant surfacique, et : $\forall t$, $\underline{\vec{B}}_i(0,t) + \underline{\vec{B}}_r(0,t) = \underline{\vec{B}}_t(0,t)$.
+
+**16.** D'après la question 12, $\underline{\vec{E}}_t = \underline{t}\,E_0\exp(j\omega t)\exp\left(-\dfrac{\omega_p}{c}z\right)\vec{u}_x$ et $\underline{\vec{B}}_t = -j\dfrac{\omega_p}{\omega}\,\dfrac{\underline{t}\,E_0}{c}\exp(j\omega t)\exp\left(-\dfrac{\omega_p}{c}z\right)\vec{u}_y$ ($\underline{t}E_0$ est l'amplitude de $\underline{\vec{E}}_t$, notée ainsi pour ne pas la confondre avec celle de $\underline{\vec{E}}_i$). Les relations de passage deviennent :
+$$
+\begin{cases}
+1 + \underline{r} = \underline{t} \\[1mm]
+1 - \underline{r} = -j\dfrac{\omega_p}{\omega}\,\underline{t}
+\end{cases}
+\qquad\Rightarrow\qquad
+\underline{r} = \frac{1 + j\dfrac{\omega_p}{\omega}}{1 - j\dfrac{\omega_p}{\omega}}.
+$$
+$|\underline{r}| = 1$ (numérateur et dénominateur conjugués), donc $\vec{E}_i$ et $\vec{E}_r$ ont la même amplitude : la réflexion est totale.
+
+**17.** $E(0)$ est l'amplitude de $\underline{\vec{E}}_i(0,t) + \underline{\vec{E}}_r(0,t)$, ou de $\underline{\vec{E}}_t(0,t)$ :
+$$
+E(0) = |1 + \underline{r}|\,E_0 = \frac{2}{\left|1 - j\dfrac{\omega_p}{\omega}\right|}\,E_0 = \frac{2}{\sqrt{1 + \left(\dfrac{\omega_p}{\omega}\right)^2}}\,E_0 \simeq 2\,\frac{\omega}{\omega_p}\,E_0 \quad(\text{car } \omega_p \gg \omega).
+$$
+
+**18.** D'après les questions 3 et 6 ($\omega\tau \gg 1$) : $\underline{\vec{J}} = -ne\,\underline{\vec{v}} = -j\dfrac{ne^2}{m\omega}\,\underline{\vec{E}}$, donc $\underline{\vec{v}} = j\dfrac{e}{m\omega}\,\underline{\vec{E}}$.
+
+L'amplitude du champ électrique est maximale en $z = 0$. En module :
+$$
+v_0 = \frac{e}{m\omega}\,E(0) = \frac{2e}{m\omega_p}\,E_0 = 2E_0\sqrt{\frac{\varepsilon_0}{nm}}.
+$$
+
+**19.** L'or a 79 protons et 79 électrons. Considérons l'électron le plus éloigné du noyau, situé à $r_a = 140\ \text{pm} = 140\cdot 10^{-12}\ \text{m}$. Il voit une charge $+e = 79e - 78e$ (les 78 électrons situés entre le noyau et lui écrantent le noyau). Il est lié à l'atome par la force électrique
+$$
+\vec{f} = -\frac{e^2}{4\pi\varepsilon_0r^2}\,\vec{u}_r = -\overrightarrow{\operatorname{grad}}\,\mathcal{E}_p \quad\Rightarrow\quad \mathcal{E}_p = -\frac{e^2}{4\pi\varepsilon_0r} + \text{constante}.
+$$
+Avec $\mathcal{E}_p(\infty) = 0$ : $\mathcal{E}_p(r_a) = -1{,}6\cdot 10^{-18}\ \text{J} = -10{,}3\ \text{eV}$ ($1\ \text{eV} = 1{,}6\cdot 10^{-19}\ \text{J}$). L'énergie de première ionisation est donc de l'ordre de $10\ \text{eV}$, qui est le bon ordre de grandeur.
+
+L'écart avec la valeur tabulée vient de la grossièreté du modèle : l'écrantage par les 78 autres électrons n'est pas parfait, l'énergie cinétique de l'électron est négligée, le « rayon atomique » est mal défini, et l'électron relève de la mécanique quantique.
+
+**20.** $\dfrac{1}{2}mv^2 = 9\times 1{,}6\cdot 10^{-19}\ \text{J} \quad\Rightarrow\quad v = 1{,}8\cdot 10^6\ \text{m}\cdot\text{s}^{-1}$.
+
+**21.** $v = 2E_0\sqrt{\dfrac{\varepsilon_0}{nm}} \quad\Rightarrow\quad E_0 = \dfrac{v}{2}\sqrt{\dfrac{nm}{\varepsilon_0}} = 6{,}9\cdot 10^{10}\ \text{V}\cdot\text{m}^{-1}$.
+
+**22.** $\vec{\Pi}_i = \dfrac{\vec{E}_i\wedge\vec{B}_i}{\mu_0} = \dfrac{E_0^2}{\mu_0c}\cos^2\left(\omega(t - z/c)\right)\vec{u}_z$.
+
+La puissance moyenne transportée par l'onde vaut donc $\mathcal{P} = \dfrac{E_0^2}{2\mu_0c}\,S = 1{,}6\cdot 10^{17}\ \text{W}$.
+
+**23.** $\mathcal{P}_{\text{exp}} = \dfrac{0{,}5\ \text{J}\cdot\text{cm}^{-2}\times 260\ \text{cm}^2}{10^{-12}\ \text{s}} = 1{,}3\cdot 10^{14}\ \text{W}$.
+
+Le modèle surestime le seuil d'endommagement d'un facteur $10^3$ environ : il n'est pas pertinent. D'autres phénomènes doivent être pris en compte (échauffement progressif des électrons et du réseau au cours des nombreuses périodes de l'impulsion, effets non linéaires, ionisation en cascade, défauts de surface…).
+
+**24.** $c$ en $\text{m}\cdot\text{s}^{-1}$ ; $\mu_0$ en $\text{H}\cdot\text{m}^{-1}$ ; $\varepsilon_0$ en $\text{F}\cdot\text{m}^{-1}$ ; $e$ en $\text{C}$ ; $m$ en $\text{kg}$ ; $\mathcal{N}_A$ en $\text{mol}^{-1}$.
+
+```{=latex}
+\newpage
+```
+
+:::
+
+## Ondes magnétohydrodynamiques dans un plasma (d'après Mines) ($\star\star$)
+
+Le couplage entre le mouvement des particules chargées dans un plasma et le champ électromagnétique régnant dans ce dernier peut, dans certaines conditions, aboutir à la propagation d'ondes dites magnétohydrodynamiques. De telles ondes ont été étudiées pour la première fois par le physicien suédois Hannes Alfvén en 1942. Elles sont fondamentales pour l'étude des plasmas astrophysiques, tels que ceux qui entourent les étoiles. Pour cette découverte et les découvertes qui en ont découlé, Alfvén obtint le prix Nobel en 1970.
+
+Le plasma étudié ici sera considéré comme très bon conducteur, de conductivité $\gamma \to \infty$. Dans ce contexte, l'équation simplifiée de la dynamique dans une unité de volume du plasma, qui reste **neutre**, s'écrit $nm\dfrac{\partial\vec{v}}{\partial t} = \vec{\jmath}\wedge\vec{B}$, où $n$ est la densité particulaire et $m$ la masse d'un ion.
+
+**1.** Expliquer d'où provient l'équation du mouvement et pourquoi seuls les ions sont pris en compte dans l'accélération.
+
+On étudie un mode particulier d'oscillations du plasma dans lequel $\vec{B} = B_0\vec{u}_z + \vec{b}_1(z,t)$, où $B_0\vec{u}_z$ est un champ statique intense et $\vec{b}_1$ une onde de faible amplitude, $\left\|\vec{b}_1\right\| \ll B_0$, qu'on décrira en notation complexe comme une onde plane progressive et monochromatique :
+$$
+\underline{\vec{b}}_1 = \underline{\vec{b}}_{10}\exp\left(i(\omega t - kz)\right).
+$$
+
+**2.** En utilisant l'équation de Maxwell-flux, montrer que $\underline{\vec{b}}_{10}\cdot\vec{u}_z = 0$.
+
+**3.** À quelle condition sur $\gamma$ et $\omega$ le courant de déplacement est-il négligeable devant le courant de conduction ? Exprimer alors, en notation complexe, la densité volumique de courant $\vec{\jmath}_{th}$ sous forme d'un produit vectoriel fonction de $\underline{\vec{b}}_1$, $k$ et de la perméabilité du vide $\mu_0$.
+
+**4.** En se limitant aux termes du premier ordre en $\vec{b}_1$, montrer que la vitesse d'ensemble $\vec{v}$ du plasma est aussi une onde plane, $\underline{\vec{v}} = \underline{\vec{v}}_0\exp\left(i(\omega t - kz)\right)$, où $\underline{\vec{v}} = -\dfrac{B_0k}{\omega\mu_0nm}\,\underline{\vec{b}}_1$. On rappelle $\vec{a}\wedge\left(\vec{b}\wedge\vec{c}\right) = \left(\vec{a}\cdot\vec{c}\right)\vec{b} - \left(\vec{a}\cdot\vec{b}\right)\vec{c}$.
+
+La conductivité du plasma est telle que $\gamma \to \infty$. On montre alors, en examinant la loi d'Ohm locale, que $\vec{E} = -\vec{v}\wedge\vec{B}$.
+
+**5.** En écrivant l'équation de Maxwell-Faraday, montrer que les ondes étudiées se propagent sans dispersion à la célérité $c_A$ (vitesse d'Alfvén), que l'on exprimera en fonction de $B_0$, $\mu_0$ et de la masse volumique $\rho$ du plasma.
+
+**6.** Le plasma étudié est du mercure liquide ($\rho = 1{,}4\cdot 10^4\ \text{kg}\cdot\text{m}^{-3}$) dans un champ magnétique $B_0 = 0{,}5\ \text{T}$. Calculer $c_A$.
+
+::: {.content-visible when-meta="solution"}
+
+### Solution
+
+**1.** L'équation est le principe fondamental de la dynamique appliqué à une unité de volume du plasma :
+
+- seuls les ions sont pris en compte dans l'accélération, car la masse des électrons est au moins 1836 fois plus faible : ils n'interviennent pas dans l'inertie du fluide ;
+- il n'y a pas de force électrique résultante, car le plasma est neutre ;
+- la force magnétique (de Laplace) sur un élément de volume $\mathrm{d}\tau$ du plasma s'écrit $\mathrm{d}\vec{F} = \vec{\jmath}\,\mathrm{d}\tau\wedge\vec{B}$.
+
+**2.** $\operatorname{div}\underline{\vec{B}} = \underbrace{\operatorname{div}\left(B_0\vec{u}_z\right)}_{0} + \operatorname{div}\underline{\vec{b}}_1 = -ik\,\vec{u}_z\cdot\underline{\vec{b}}_1 = 0 \quad\Rightarrow\quad \vec{u}_z\cdot\underline{\vec{b}}_{10} = 0$ : l'onde est transverse.
+
+**3.** Avec $\vec{\jmath}_{th} = \gamma\vec{E}$ :
+$$
+\frac{\left\|\varepsilon_0\mu_0\dfrac{\partial\vec{E}}{\partial t}\right\|}{\left\|\mu_0\vec{\jmath}_{th}\right\|} = \frac{\varepsilon_0\omega}{\gamma} \underset{\gamma\to\infty}{\longrightarrow} 0 :
+$$
+le courant de déplacement est négligeable dès que $\omega \ll \gamma/\varepsilon_0$. Alors $\overrightarrow{\operatorname{rot}}\,\underline{\vec{B}} = \underbrace{\overrightarrow{\operatorname{rot}}\left(B_0\vec{u}_z\right)}_{\vec{0}} + \overrightarrow{\operatorname{rot}}\,\underline{\vec{b}}_1 = \mu_0\underline{\vec{\jmath}}$ implique
+$$
+\underline{\vec{\jmath}} = -\frac{ik\,\vec{u}_z\wedge\underline{\vec{b}}_1}{\mu_0}.
+$$
+
+**4.** Le principe fondamental de la dynamique linéarisé devient $nmi\omega\,\underline{\vec{v}} = \underline{\vec{\jmath}}\wedge\left(B_0\vec{u}_z + \underline{\vec{b}}_1\right)$, soit :
+$$
+nmi\omega\,\underline{\vec{v}} = -\left(\frac{ik\,\vec{u}_z\wedge\underline{\vec{b}}_1}{\mu_0}\right)\wedge B_0\vec{u}_z - \underbrace{\left(\frac{ik\,\vec{u}_z\wedge\underline{\vec{b}}_1}{\mu_0}\right)\wedge\underline{\vec{b}}_1}_{\text{ordre 2 en } b_1}.
+$$
+Au premier ordre en $\vec{b}_1$ : $nmi\omega\,\underline{\vec{v}} = \dfrac{ik}{\mu_0}B_0\,\vec{u}_z\wedge\left(\vec{u}_z\wedge\underline{\vec{b}}_1\right)$, d'où :
+$$
+nmi\omega\,\underline{\vec{v}} = -\frac{ik}{\mu_0}\left(\left(B_0\vec{u}_z\cdot\vec{u}_z\right)\underline{\vec{b}}_1 - \underbrace{\left(\vec{u}_z\cdot\underline{\vec{b}}_1\right)}_{0,\ \text{question 2}}B_0\vec{u}_z\right) = -\frac{ikB_0}{\mu_0}\,\underline{\vec{b}}_1
+\qquad\Rightarrow\qquad
+\underline{\vec{v}} = -\frac{B_0k}{\omega\mu_0nm}\,\underline{\vec{b}}_1.
+$$
+La vitesse est une onde plane de même pulsation et de même vecteur d'onde que $\vec{b}_1$, et lui est colinéaire (transverse).
+
+**5.** La loi d'Ohm locale $\vec{\jmath} = \gamma\left(\vec{E} + \vec{v}\wedge\vec{B}\right)$, avec $\vec{\jmath}$ fini et $\gamma \to \infty$, impose $\vec{E} = -\vec{v}\wedge\vec{B}$. D'une part :
+$$
+\overrightarrow{\operatorname{rot}}\,\underline{\vec{E}} = -\frac{\partial\underline{\vec{B}}}{\partial t} = -\frac{\partial B_0\vec{u}_z}{\partial t} - \frac{\partial\underline{\vec{b}}_1}{\partial t} = -i\omega\,\underline{\vec{b}}_1.
+$$
+D'autre part, au premier ordre en $b_1$ ($\vec{v}\wedge\vec{b}_1$ est d'ordre 2) :
+$$
+\overrightarrow{\operatorname{rot}}\,\underline{\vec{E}} = -\overrightarrow{\operatorname{rot}}\left(\underline{\vec{v}}\wedge B_0\vec{u}_z\right) = ik\,\vec{u}_z\wedge\left(\underline{\vec{v}}\wedge B_0\vec{u}_z\right) = ik\left(\vec{u}_z\cdot B_0\vec{u}_z\right)\underline{\vec{v}} - \underbrace{ik\left(\vec{u}_z\cdot\underline{\vec{v}}\right)}_{0}B_0\vec{u}_z = ikB_0\,\underline{\vec{v}},
+$$
+avec $\vec{u}_z\cdot\underline{\vec{v}} = 0$ car, d'après la question 2, $\vec{u}_z\cdot\underline{\vec{b}}_1 = 0$. Puis, en reportant l'expression de $\underline{\vec{v}}$ :
+$$
+-ikB_0\,\frac{B_0k}{\omega\mu_0nm}\,\underline{\vec{b}}_1 = -i\omega\,\underline{\vec{b}}_1.
+$$
+Comme $\underline{\vec{b}}_1 \neq \vec{0}$, avec $\rho = nm$ :
+$$
+\frac{\omega^2}{k^2} = \frac{B_0^2}{\mu_0\rho}
+\qquad\text{et}\qquad
+v_\varphi = \frac{B_0}{\sqrt{\mu_0\rho}} = c_A.
+$$
+$v_\varphi$ est indépendante de $\omega$, donc le milieu n'est pas dispersif.
+
+**6.** $c_A = \dfrac{0{,}5}{\sqrt{4\pi\cdot 10^{-7}\times 1{,}4\cdot 10^4}} = 3{,}8\ \text{m}\cdot\text{s}^{-1}$.
+
+```{=latex}
+\newpage
+```
+
+:::
+
+## Onde acoustique dans un plasma ($\star\star\star$)
+
+On étudie la propagation d'ondes dans un plasma d'hydrogène dilué neutre au repos (les densités particulaires d'ions et d'électrons sont alors identiques : $n_i = n_e = n_0$). On note $m$ la masse d'un électron et $\vec{v}$ son champ des vitesses. Les électrons forment un gaz parfait dans lequel progresse une onde.
+
+Au repos, la pression électronique vaut $P_e = P_0$ et $\vec{v} = \vec{0}$, $n_e = n_0$, $\vec{E} = \vec{0}$, $\vec{B} = \vec{0}$. Lors du passage de l'onde :
+$$
+\begin{aligned}
+&P_e = P_0 + p_1(M,t) &\qquad &\vec{E} = \vec{E}_1(M,t) &\qquad &\vec{B} = \vec{B}_1(M,t) \\
+&n_e = n_0 + n_1(M,t) &\qquad &\vec{v} = \vec{v}_1(M,t) & &
+\end{aligned}
+$$
+L'onde est de faible amplitude : tous les calculs seront menés au 1^er^ ordre, les termes indicés par 1 étant des infiniment petits d'ordre 1. L'influence de la pesanteur est négligée.
+
+**1.** Pourquoi ne tient-on pas compte du mouvement des protons ?
+
+**2.** On se place dans l'approximation acoustique. En rappeler le contenu.
+
+**3.** Quel est le lien entre la masse volumique électronique $\rho_e$, la densité particulaire électronique $n_e$ et $m$ ?
+
+**4.** Sachant que le gaz d'électrons reste isentropique lors du passage de l'onde, établir l'équation thermodynamique linéarisée reliant $n_1$, $n_0$, $p_1$, $P_0$ et $\gamma$, rapport des capacités thermiques à pression et volume constants.
+
+**5.** À quelle condition la force magnétique est-elle négligeable devant la force électrique pour un électron ?
+
+Écrire la force électrique s'exerçant sur les électrons dans un volume $\mathrm{d}V$ de plasma. En déduire le principe fondamental de la dynamique linéarisé, reliant $\vec{v}_1$, $p_1$ et $\vec{E}_1$. On rappelle que le principe fondamental de la dynamique linéarisé s'écrit pour le gaz électronique :
+$$
+\rho_e\frac{\partial\vec{v}}{\partial t} = -\overrightarrow{\operatorname{grad}}\,P_e + \overrightarrow{\text{autres forces volumiques}}.
+$$
+
+**6.** Écrire l'équation de continuité linéarisée, reliant $n_0$, $n_1$ et $\vec{v}_1$.
+
+**7.** Écrire l'équation de Maxwell-Gauss linéarisée reliant $\vec{E}_1$ à $n_1$ (ne pas oublier les protons).
+
+**8.** Déterminer l'équation aux dérivées partielles vérifiée par $p_1(M,t)$ sous la forme :
+$$
+\Delta p_1 - \frac{1}{c^2}\,\frac{\partial^2 p_1}{\partial t^2} = f(\omega_0,c)\,p_1,
+$$
+où $f$ est une constante à exprimer en fonction de $c = \sqrt{\dfrac{\gamma P_0}{mn_0}}$ et $\omega_0 = \sqrt{\dfrac{n_0e^2}{m\varepsilon_0}}$.
+
+**9.** Établir l'équation de dispersion. À quelle condition l'onde se propage-t-elle ? Calculer alors les vitesses de phase et de groupe ; les tracer en fonction de $\omega$.
+
+**10.** On étudie la propagation dans le plasma d'une onde de la forme :
+$$
+\underline{p}_1(x,t) = \underline{p}_{10}\exp\left(j(\omega t - kx)\right)
+\qquad\text{et}\qquad
+\underline{\vec{E}}_1(x,t) = \underline{E}_{10}\,\vec{u}_x\exp\left(j(\omega t - kx)\right).
+$$
+Le champ électrique est-il transverse ou longitudinal ? $\vec{E}$ serait-il polarisé de la même façon dans le vide ?
+
+**11.** Calculer $\underline{n}_1(x,t)$. On exprimera $\underline{n}_{10}$ en fonction de $n_0$ et $\dfrac{p_{10}}{\gamma P_0}$.
+
+**12.** Montrer que $\vec{v}_1$ est porté par $\vec{u}_x$ ; calculer $\underline{\vec{v}}_1$ et exprimer $\underline{v}_{10}$ en fonction de $\dfrac{\omega}{k}$ et $\dfrac{p_{10}}{\gamma P_0}$.
+
+**13.** Calculer $\vec{B}_1$.
+
+**14.** Exprimer $\underline{E}_{10}$ en fonction de $\dfrac{en_0}{k\varepsilon_0}$ et $\dfrac{p_{10}}{\gamma P_0}$.
+
+**15.** Calculer le vecteur de Poynting électromagnétique, puis le vecteur de Poynting acoustique en fonction de $\dfrac{\omega}{k}$ et $\dfrac{p_{10}^2}{\gamma P_0}$.
+
+**16.** Les calculs des questions suivantes peuvent paraître fastidieux mais restent simples.
+
+Calculer l'énergie cinétique par unité de volume $e_c$ transportée par l'onde, puis sa valeur moyenne en fonction de $\dfrac{\omega}{ck}$ et $\dfrac{p_{10}^2}{\gamma P_0}$.
+
+**17.** Calculer l'énergie potentielle par unité de volume $e_p$ transportée par l'onde, puis sa valeur moyenne en fonction du coefficient de compressibilité isentropique $\chi_S$ et de $p_{10}^2$.
+
+Exprimer $\chi_S$ en fonction de $\gamma P_0$ et en déduire $\langle e_p\rangle$ en fonction de $\dfrac{p_{10}^2}{\gamma P_0}$.
+
+**18.** Calculer l'énergie électrique par unité de volume $e_e$ transportée par l'onde, puis sa valeur moyenne en fonction de $\dfrac{\omega_0}{ck}$ et $\dfrac{p_{10}^2}{\gamma P_0}$.
+
+**19.** En déduire l'énergie totale moyenne par unité de volume $\langle e\rangle$ transportée par l'onde en fonction de $\dfrac{\omega}{ck}$ et $\dfrac{p_{10}^2}{\gamma P_0}$.
+
+**20.** Calculer la vitesse de l'énergie $v_e$ en montrant que $v_e = \dfrac{\langle\Pi\rangle}{\langle e\rangle}$.
+
+::: {.content-visible when-meta="solution"}
+
+### Solution
+
+**1.** Les protons sont environ 2000 fois plus lourds que les électrons, alors qu'ils sont soumis à une force électromagnétique de même norme (ils portent la même charge en valeur absolue). Leur accélération est donc 2000 fois plus faible : on les considère immobiles.
+
+**2.** Tous les calculs sont menés au premier ordre, avec $|p_1| \ll P_0$, $|n_1| \ll n_0$ et $|v_1| \ll c$ (célérité dont la valeur reste à préciser), ou encore $a \ll \lambda$ ($a$ est l'amplitude du déplacement des particules de fluide).
+
+**3.** $\rho_e = mn_e$.
+
+**4.** Loi de Laplace (évolution isentropique d'un gaz parfait d'électrons) :
+$$
+\frac{P_e}{\rho_e^\gamma} = \text{constante} = \underbrace{\frac{P_0}{\rho_0^\gamma} = \frac{P_0}{(mn_0)^\gamma}}_{\text{au repos}} = \underbrace{\frac{P_0 + p_1}{m^\gamma(n_0 + n_1)^\gamma}}_{\text{avec onde}}.
+$$
+Ainsi $P_0 = (P_0 + p_1)\left(1 + \dfrac{n_1}{n_0}\right)^{-\gamma} \simeq (P_0 + p_1)\left(1 - \gamma\dfrac{n_1}{n_0}\right)$. Au 1^er^ ordre, $P_0 = P_0 + p_1 - P_0\gamma\dfrac{n_1}{n_0}$, donc
+$$
+p_1 = \gamma P_0\,\frac{n_1}{n_0}.
+$$
+*Autre méthode :* $\dfrac{P_e}{\rho_e^\gamma} = \text{constante}$, donc, par différentiation logarithmique, $\dfrac{\mathrm{d}P_e}{P_e} - \gamma\dfrac{\mathrm{d}n_e}{n_e} = 0$, et $\dfrac{p_1}{P_0} = \gamma\dfrac{n_1}{n_0}$.
+
+**5.** La force magnétique est négligeable devant la force électrique pour des électrons non relativistes ($v \ll$ célérité de la lumière, puisque $B \sim E/c_{\text{lumière}}$ pour une onde électromagnétique).
+
+La force électrique s'exerçant sur les électrons du volume $\mathrm{d}V$ est :
+$$
+\mathrm{d}\vec{f}_{\text{élec}} = -en_e\,\mathrm{d}V\,\vec{E}_1 = -e(n_0 + n_1)\,\vec{E}_1\,\mathrm{d}V = \underbrace{-en_0\vec{E}_1\,\mathrm{d}V}_{\text{au 1}^{\text{er}}\text{ ordre}}.
+$$
+Au 1^er^ ordre ($\rho_e \simeq mn_0$) :
+$$
+mn_0\,\frac{\partial\vec{v}_1}{\partial t} = -\overrightarrow{\operatorname{grad}}\,p_1 - n_0e\,\vec{E}_1.
+$$
+
+**6.** $\dfrac{\partial\rho_e}{\partial t} = -\operatorname{div}\left(\rho_e\vec{v}_1\right) \quad\Rightarrow\quad \dfrac{\partial n_1}{\partial t} = -n_0\operatorname{div}\vec{v}_1$ (au 1^er^ ordre, après division par $m$).
+
+**7.** En notant $\rho_{\text{ch}}$ la densité volumique de charge (électrons et protons) :
+$$
+\operatorname{div}\vec{E}_1 = \frac{\rho_{\text{ch}}}{\varepsilon_0} = \frac{-e(n_0 + n_1) + en_0}{\varepsilon_0} \quad\Rightarrow\quad \operatorname{div}\vec{E}_1 = -\frac{en_1}{\varepsilon_0}.
+$$
+
+**8.** On prend la divergence du principe fondamental de la dynamique : $mn_0\dfrac{\partial}{\partial t}\operatorname{div}\vec{v}_1 = -\operatorname{div}\left(\overrightarrow{\operatorname{grad}}\,p_1\right) - n_0e\operatorname{div}\vec{E}_1$.
+
+Avec les questions 6 et 7 : $-m\dfrac{\partial^2n_1}{\partial t^2} = -\Delta p_1 + \dfrac{e^2n_0n_1}{\varepsilon_0}$, puis avec la question 4 ($n_1 = n_0p_1/(\gamma P_0)$) :
+$$
+\Delta p_1 - \frac{mn_0}{\gamma P_0}\,\frac{\partial^2p_1}{\partial t^2} = \frac{e^2n_0^2}{\gamma P_0\varepsilon_0}\,p_1.
+$$
+Avec $c = \sqrt{\dfrac{\gamma P_0}{mn_0}}$ et $\omega_0 = \sqrt{\dfrac{n_0e^2}{m\varepsilon_0}}$ :
+$$
+\Delta p_1 - \frac{1}{c^2}\,\frac{\partial^2p_1}{\partial t^2} = \left(\frac{\omega_0}{c}\right)^2p_1,
+\qquad\text{soit}\qquad
+f(\omega_0,c) = \left(\frac{\omega_0}{c}\right)^2.
+$$
+
+```{=latex}
+\noindent
+\begin{minipage}[t]{0.52\linewidth}
+\vspace{0pt}
+\textbf{9.} Une onde plane progressive harmonique $\underline{p}_1 = \underline{p}_{10}\exp\left(j(\omega t - \vec{k}\cdot\vec{r})\right)$ est solution si :
+\[
+(-jk)^2 - \left(\frac{j\omega}{c}\right)^2 = \left(\frac{\omega_0}{c}\right)^2 \ \Rightarrow\ k^2 = \frac{\omega^2 - \omega_0^2}{c^2}.
+\]
+L'onde est évanescente si $\omega < \omega_0$ ($k$ imaginaire pur) et se propage si $\omega > \omega_0$. Dans ce dernier cas :
+\[
+v_\varphi = \frac{\omega}{k} = \frac{c}{\sqrt{1 - \left(\dfrac{\omega_0}{\omega}\right)^2}}.
+\]
+Le milieu est \textbf{dispersif}. Pour la vitesse de groupe, $c^2k^2 = \omega^2 - \omega_0^2$, donc $c^2\,2k\,\mathrm{d}k = 2\omega\,\mathrm{d}\omega - 0$, ainsi
+\[
+v_g = \frac{\mathrm{d}\omega}{\mathrm{d}k} = \frac{c^2}{v_\varphi} = c\sqrt{1 - \left(\frac{\omega_0}{\omega}\right)^2}.
+\]
+\end{minipage}
+\hfill
+\begin{minipage}[t]{0.44\linewidth}
+\vspace{0pt}
+\begin{center}
+\begin{tikzpicture}[xscale=0.9, yscale=1.1, >=Stealth, every node/.style={font=\small}]
+  \draw[->] (0,0) -- (6.4,0) node[below] {$\omega$};
+  \draw[->] (0,0) -- (0,3.4);
+  \draw[dashed] (0,1) node[left] {$c$} -- (6.1,1);
+  \draw[dashed] (1,0) node[below] {$\omega_0$} -- (1,3.3);
+  \draw[thick, domain=1.06:6.1, samples=100, smooth] plot (\x, {1/sqrt(1-1/(\x*\x))});
+  \draw[thick, domain=1.0001:6.1, samples=100, smooth] plot (\x, {sqrt(1-1/(\x*\x))});
+  \node at (2.2,2.0) {$v_\varphi$};
+  \node at (2.2,0.55) {$v_g$};
+\end{tikzpicture}
+\end{center}
+\end{minipage}
+```
+
+On constate que $v_\varphi > c$ et $v_g < c$, avec $v_\varphi\,v_g = c^2$ ; les deux tendent vers $c$ à haute fréquence.
+
+**10.** $\vec{E}$ est **longitudinal** ($\vec{E}_1 \parallel \vec{u}_x$, direction de propagation). Une onde plane progressive harmonique dans le vide serait transverse ($\operatorname{div}\vec{E} = 0$). La différence vient de ce que, dans le plasma, la densité de charge $\rho_{\text{ch}} \neq 0$.
+
+**11.** D'après la question 4 : $\underline{n}_1(x,t) = n_0\,\dfrac{\underline{p}_{10}}{\gamma P_0}\exp\left(j(\omega t - kx)\right)$, soit $\underline{n}_{10} = n_0\,\dfrac{\underline{p}_{10}}{\gamma P_0}$.
+
+**12.** $\overrightarrow{\operatorname{grad}}\,p_1$ et $\vec{E}_1$ sont portés par $\vec{u}_x$, donc $\partial\vec{v}_1/\partial t$ l'est aussi (principe fondamental de la dynamique linéarisé), et $\vec{v}_1$ également (il est nul au repos). Puis :
+$$
+\frac{\partial\underline{n}_1}{\partial t} = -n_0\operatorname{div}\underline{\vec{v}}_1
+\quad\Rightarrow\quad
+j\omega\,\underline{n}_1 = n_0\,jk\,\underline{v}_1
+\quad\Rightarrow\quad
+\underline{\vec{v}}_1(x,t) = \frac{\omega}{k}\,\frac{\underline{p}_{10}}{\gamma P_0}\exp\left(j(\omega t - kx)\right)\vec{u}_x.
+$$
+
+**13.** $\vec{k}$ et $\underline{\vec{E}}_1$ sont colinéaires ; l'équation de Maxwell-Faraday donne $-j\omega\underline{\vec{B}}_1 = \overrightarrow{\operatorname{rot}}\,\underline{\vec{E}}_1 = -jk\,\vec{u}_x\wedge\underline{\vec{E}}_1$, soit
+$$
+\underline{\vec{B}}_1 = \frac{k}{\omega}\,\vec{u}_x\wedge\underline{\vec{E}}_1 = \vec{0}.
+$$
+
+**14.** $\operatorname{div}\underline{\vec{E}}_1 = -\dfrac{e\underline{n}_1}{\varepsilon_0} \quad\Rightarrow\quad -jk\,\underline{E}_1 = -\dfrac{e\underline{n}_1}{\varepsilon_0} \quad\Rightarrow\quad \underline{E}_{10} = -j\,\dfrac{en_0}{k\varepsilon_0}\,\dfrac{\underline{p}_{10}}{\gamma P_0}$.
+
+**15.** Le vecteur de Poynting électromagnétique est nul, car $\vec{B}_1 = \vec{0}$.
+
+Le vecteur de Poynting acoustique est (avec $p_{10}$ réel) :
+$$
+\vec{\Pi} = p_1\vec{v}_1 = p_{10}\cos(\omega t - kx)\times\frac{\omega}{k}\,\frac{p_{10}}{\gamma P_0}\cos(\omega t - kx)\,\vec{u}_x
+= \frac{\omega}{k}\,\frac{p_{10}^2}{\gamma P_0}\cos^2(\omega t - kx)\,\vec{u}_x
+\quad\Rightarrow\quad
+\langle\vec{\Pi}\rangle = \frac{1}{2}\,\frac{\omega}{k}\,\frac{p_{10}^2}{\gamma P_0}\,\vec{u}_x.
+$$
+
+**16.** Énergie cinétique : $e_c = \dfrac{1}{2}\rho_0v_1^2 = \dfrac{1}{2}mn_0\left(\dfrac{\omega}{k}\right)^2\left(\dfrac{p_{10}}{\gamma P_0}\right)^2\cos^2(\omega t - kx)$. Donc, avec $mn_0 = \gamma P_0/c^2$ :
+$$
+\langle e_c\rangle = \frac{1}{4}mn_0\left(\frac{\omega}{k}\right)^2\left(\frac{p_{10}}{\gamma P_0}\right)^2 = \frac{1}{4}\left(\frac{\omega}{ck}\right)^2\frac{p_{10}^2}{\gamma P_0}.
+$$
+
+**17.** Énergie potentielle : $e_p = \dfrac{1}{2}\chi_Sp_1^2 = \dfrac{1}{2}\chi_Sp_{10}^2\cos^2(\omega t - kx)$, donc $\langle e_p\rangle = \dfrac{1}{4}\chi_Sp_{10}^2$.
+
+Or $\chi_S = \dfrac{1}{\rho}\left(\dfrac{\partial\rho}{\partial P}\right)_S = \dfrac{1}{\rho_0}\,\dfrac{\rho_1}{p_1} = \dfrac{1}{mn_0}\,\dfrac{mn_1}{p_1} = \dfrac{1}{n_0}\,\dfrac{n_1}{p_1}$. Avec la loi de Laplace linéarisée :
+$$
+\chi_S = \frac{1}{\gamma P_0} \quad\Rightarrow\quad \langle e_p\rangle = \frac{1}{4}\,\frac{p_{10}^2}{\gamma P_0}.
+$$
+
+**18.** Énergie électrique (en notation réelle, $E_1 = \dfrac{en_0}{k\varepsilon_0}\,\dfrac{p_{10}}{\gamma P_0}\sin(\omega t - kx)$) :
+$$
+e_e = \frac{\varepsilon_0E_1^2}{2} = \frac{1}{2\varepsilon_0}\left(\frac{en_0}{k}\right)^2\left(\frac{p_{10}}{\gamma P_0}\right)^2\sin^2(\omega t - kx),
+$$
+$$
+\langle e_e\rangle = \frac{1}{4\varepsilon_0}\left(\frac{en_0}{k}\right)^2\left(\frac{p_{10}}{\gamma P_0}\right)^2 = \frac{1}{4}mn_0\,\frac{n_0e^2}{m\varepsilon_0}\,\frac{1}{k^2}\left(\frac{p_{10}}{\gamma P_0}\right)^2
+= \frac{1}{4}\,\frac{mn_0}{\gamma P_0}\left(\frac{\omega_0}{k}\right)^2\frac{p_{10}^2}{\gamma P_0} = \frac{1}{4}\left(\frac{\omega_0}{ck}\right)^2\frac{p_{10}^2}{\gamma P_0}.
+$$
+
+**19.** Énergie totale :
+$$
+\langle e\rangle = \langle e_c\rangle + \langle e_p\rangle + \langle e_e\rangle = \frac{1}{4}\,\frac{p_{10}^2}{\gamma P_0}\left(\left(\frac{\omega}{ck}\right)^2 + 1 + \left(\frac{\omega_0}{ck}\right)^2\right),
+$$
+et, avec la relation de dispersion $(ck)^2 = \omega^2 - \omega_0^2$ :
+$$
+\langle e\rangle = \frac{1}{4}\,\frac{p_{10}^2}{\gamma P_0}\,\frac{\omega^2 + (ck)^2 + \omega_0^2}{(ck)^2} = \frac{1}{2}\,\frac{p_{10}^2}{\gamma P_0}\left(\frac{\omega}{ck}\right)^2.
+$$
+
+```{=latex}
+\noindent
+\begin{minipage}[t]{0.6\linewidth}
+\vspace{0pt}
+\textbf{20.} L'énergie qui traverse une surface $\mathrm{d}S$ (normale à $\vec{u}_x$) pendant $\mathrm{d}t$ est celle contenue, à l'instant $t$, dans le cylindre de base $\mathrm{d}S$ et de longueur $v_e\,\mathrm{d}t$ (figure ci-contre) :
+\[
+\mathrm{d}E = \langle\vec{\Pi}\rangle\cdot\mathrm{d}\vec{S}\,\mathrm{d}t = \langle e\rangle\,v_e\,\mathrm{d}t\,\mathrm{d}S.
+\]
+\end{minipage}
+\hfill
+\begin{minipage}[t]{0.36\linewidth}
+\vspace{0pt}
+\begin{center}
+\begin{tikzpicture}[scale=0.85, >=Stealth, every node/.style={font=\small}]
+  \draw (0,0) ellipse (0.3 and 0.7);
+  \draw (2.5,0) ellipse (0.3 and 0.7);
+  \draw (0,0.7) -- (2.5,0.7);
+  \draw (0,-0.7) -- (2.5,-0.7);
+  \draw[->, thick] (2.5,0.25) -- (3.5,0.25);
+  \draw[->, thick] (2.5,-0.25) -- (3.5,-0.25) node[below right] {$\vec{\Pi}$};
+  \node at (3.3,0.95) {$\mathrm{d}\vec{S} = \mathrm{d}S\,\vec{u}_x$};
+  \draw[<->] (0,-1.05) -- (2.5,-1.05) node[midway, below] {$v_e\,\mathrm{d}t$};
+\end{tikzpicture}
+\end{center}
+\end{minipage}
+```
+
+Donc
+$$
+v_e = \frac{\langle\Pi\rangle}{\langle e\rangle} = \frac{c^2k}{\omega} = \frac{c^2}{v_\varphi} = v_g.
+$$
+La vitesse de l'énergie est la vitesse de groupe.
+
+```{=latex}
+\newpage
+```
+
+:::

@@ -41,7 +41,8 @@ Mes supports de cours, TD, TP et Colles. Rédigé en Quarto/LaTeX. Solutions int
 
 ## TD n°7 — Ondes électromagnétiques (Propagation en milieux variables)
 
-- à venir.
+- 📄 [Énoncé (PDF)](https://dariusmofakhami.github.io/Enseignements/TD/TD_ondes_EM_2.pdf)
+
 
 ## Annales d'électro-magnétisme
  
